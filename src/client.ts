@@ -20,12 +20,12 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
-  File,
+  APIFile,
+  APIFilesMyOffsetPage,
   FileDeleteResponse,
   FileListParams,
   FileRetrieveResponse,
   Files,
-  FilesMyOffsetPage,
   ResponseOk,
 } from './resources/files';
 import {
@@ -883,11 +883,11 @@ export declare namespace Chunkify {
 
   export {
     Files as Files,
-    type File as File,
+    type APIFile as APIFile,
     type ResponseOk as ResponseOk,
     type FileRetrieveResponse as FileRetrieveResponse,
     type FileDeleteResponse as FileDeleteResponse,
-    type FilesMyOffsetPage as FilesMyOffsetPage,
+    type APIFilesMyOffsetPage as APIFilesMyOffsetPage,
     type FileListParams as FileListParams,
   };
 

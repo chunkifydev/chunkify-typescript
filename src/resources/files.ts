@@ -21,8 +21,8 @@ export class Files extends APIResource {
   list(
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<FilesMyOffsetPage, File> {
-    return this._client.getAPIList('/api/files', MyOffsetPage<File>, { query, ...options });
+  ): PagePromise<APIFilesMyOffsetPage, APIFile> {
+    return this._client.getAPIList('/api/files', MyOffsetPage<APIFile>, { query, ...options });
   }
 
   /**
@@ -33,9 +33,9 @@ export class Files extends APIResource {
   }
 }
 
-export type FilesMyOffsetPage = MyOffsetPage<File>;
+export type APIFilesMyOffsetPage = MyOffsetPage<APIFile>;
 
-export interface File {
+export interface APIFile {
   /**
    * Unique identifier of the file
    */
@@ -136,7 +136,7 @@ export interface ResponseOk {
  * Successful response
  */
 export interface FileRetrieveResponse extends ResponseOk {
-  data?: File;
+  data?: APIFile;
 }
 
 /**
@@ -329,11 +329,11 @@ export namespace FileListParams {
 
 export declare namespace Files {
   export {
-    type File as File,
+    type APIFile as APIFile,
     type ResponseOk as ResponseOk,
     type FileRetrieveResponse as FileRetrieveResponse,
     type FileDeleteResponse as FileDeleteResponse,
-    type FilesMyOffsetPage as FilesMyOffsetPage,
+    type APIFilesMyOffsetPage as APIFilesMyOffsetPage,
     type FileListParams as FileListParams,
   };
 }
