@@ -29,10 +29,11 @@ const client = new Chunkify({
   projectAccessToken: process.env['CHUNKIFY_TOKEN'], // This is the default and can be omitted
 });
 
-const page = await client.files.list();
-const file = page.data[0];
-
-console.log(file.id);
+const job = await client.jobs.create({
+  format: { mp4_h264: { width: 1920, height: 1080, crf: 21 } },
+  source_id: 'src_2G6MJiNz71bHQGNzGwKx5cJwPFS',
+  transcoder: { quantity: 4, type: '8vCPU' },
+});
 ```
 
 ### Request & Response types
@@ -132,22 +133,22 @@ List methods in the Chunkify API are paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
-async function fetchAllFiles(params) {
-  const allFiles = [];
+async function fetchAllSources(params) {
+  const allSources = [];
   // Automatically fetches more pages as needed.
-  for await (const file of client.files.list()) {
-    allFiles.push(file);
+  for await (const source of client.sources.list({ limit: 30 })) {
+    allSources.push(source);
   }
-  return allFiles;
+  return allSources;
 }
 ```
 
 Alternatively, you can request a single page at a time:
 
 ```ts
-let page = await client.files.list();
-for (const file of page.data) {
-  console.log(file);
+let page = await client.sources.list({ limit: 30 });
+for (const source of page.data) {
+  console.log(source);
 }
 
 // Convenience methods are provided for manually paginating:
@@ -259,7 +260,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.files.list({
+client.jobs.create({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
