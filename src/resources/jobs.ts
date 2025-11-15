@@ -563,7 +563,7 @@ export type JobCancelResponse = unknown;
  * Successful response
  */
 export interface JobGetFilesResponse extends FilesAPI.ResponseOk {
-  data?: Array<FilesAPI.File>;
+  data?: Array<FilesAPI.APIFile>;
 }
 
 /**

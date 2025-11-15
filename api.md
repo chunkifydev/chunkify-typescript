@@ -2,7 +2,7 @@
 
 Types:
 
-- <code><a href="./src/resources/files.ts">File</a></code>
+- <code><a href="./src/resources/files.ts">APIFile</a></code>
 - <code><a href="./src/resources/files.ts">ResponseOk</a></code>
 - <code><a href="./src/resources/files.ts">FileRetrieveResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileDeleteResponse</a></code>
@@ -10,7 +10,7 @@ Types:
 Methods:
 
 - <code title="get /api/files/{fileId}">client.files.<a href="./src/resources/files.ts">retrieve</a>(fileID) -> FileRetrieveResponse</code>
-- <code title="get /api/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FilesMyOffsetPage</code>
+- <code title="get /api/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> APIFilesMyOffsetPage</code>
 - <code title="delete /api/files/{fileId}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID) -> unknown</code>
 
 # Jobs

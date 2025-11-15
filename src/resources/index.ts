@@ -2,12 +2,12 @@
 
 export {
   Files,
-  type File,
+  type APIFile,
   type ResponseOk,
   type FileRetrieveResponse,
   type FileDeleteResponse,
   type FileListParams,
-  type FilesMyOffsetPage,
+  type APIFilesMyOffsetPage,
 } from './files';
 export {
   Jobs,
