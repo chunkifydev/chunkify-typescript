@@ -1,0 +1,114 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import { APIResource } from '../core/resource';
+import * as FilesAPI from './files';
+import { APIPromise } from '../core/api-promise';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
+
+export class Tokens extends APIResource {
+  /**
+   * Create a new access token for either account-wide or project-specific access.
+   * Project tokens require a valid project slug.
+   */
+  create(body: TokenCreateParams, options?: RequestOptions): APIPromise<TokenCreateResponse> {
+    return this._client.post('/api/tokens', { body, ...options });
+  }
+
+  /**
+   * Retrieve a list of all API tokens for your account, including both
+   * account-scoped and project-scoped tokens. For each token, the response includes
+   * its name, scope, creation date, and usage statistics. The token values are not
+   * included in the response for security reasons.
+   */
+  list(options?: RequestOptions): APIPromise<TokenListResponse> {
+    return this._client.get('/api/tokens', options);
+  }
+
+  /**
+   * Revoke an access token by its ID. This action is irreversible and will
+   * immediately invalidate the token.
+   */
+  revoke(tokenID: string, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.delete(path`/api/tokens/${tokenID}`, options);
+  }
+}
+
+export interface Token {
+  /**
+   * Unique identifier of the token
+   */
+  id?: string;
+
+  /**
+   * The actual token value (only returned on creation)
+   */
+  token?: string;
+
+  /**
+   * Timestamp when the token was created
+   */
+  created_at?: string;
+
+  /**
+   * Name given to the token
+   */
+  name?: string;
+
+  /**
+   * ID of the project this token belongs to
+   */
+  project_id?: string;
+
+  /**
+   * Access scope of the token (e.g.project, team)
+   */
+  scope?: string;
+}
+
+/**
+ * Successful response
+ */
+export interface TokenCreateResponse extends FilesAPI.ResponseOk {
+  data?: Token;
+}
+
+/**
+ * Successful response
+ */
+export interface TokenListResponse extends FilesAPI.ResponseOk {
+  data?: Array<Token>;
+}
+
+/**
+ * No content response
+ */
+export type TokenRevokeResponse = unknown;
+
+export interface TokenCreateParams {
+  /**
+   * Scope specifies the scope of the token, which must be either "team" or
+   * "project".
+   */
+  scope: 'team' | 'project';
+
+  /**
+   * Name is the name of the token, which can be up to 64 characters long.
+   */
+  name?: string;
+
+  /**
+   * ProjectId is required if the scope is set to "project".
+   */
+  project_id?: string;
+}
+
+export declare namespace Tokens {
+  export {
+    type Token as Token,
+    type TokenCreateResponse as TokenCreateResponse,
+    type TokenListResponse as TokenListResponse,
+    type TokenRevokeResponse as TokenRevokeResponse,
+    type TokenCreateParams as TokenCreateParams,
+  };
+}
