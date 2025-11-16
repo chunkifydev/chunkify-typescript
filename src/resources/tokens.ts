@@ -73,14 +73,14 @@ export interface Token {
 /**
  * Successful response
  */
-export interface TokenCreateResponse extends FilesAPI.ResponseOk {
+export interface TokenCreateResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Token;
 }
 
 /**
  * Successful response
  */
-export interface TokenListResponse extends FilesAPI.ResponseOk {
+export interface TokenListResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Array<Token>;
 }
 

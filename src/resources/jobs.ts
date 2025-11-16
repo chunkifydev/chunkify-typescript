@@ -575,28 +575,28 @@ export interface Vp9 extends VideoCommon {
 /**
  * Successful response
  */
-export interface JobCreateResponse extends FilesAPI.ResponseOk {
+export interface JobCreateResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Job;
 }
 
 /**
  * Successful response
  */
-export interface JobRetrieveResponse extends FilesAPI.ResponseOk {
+export interface JobRetrieveResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Job;
 }
 
 /**
  * Successful response
  */
-export interface JobGetFilesResponse extends FilesAPI.ResponseOk {
+export interface JobGetFilesResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Array<FilesAPI.APIFile>;
 }
 
 /**
  * Successful response
  */
-export interface JobGetLogsResponse extends FilesAPI.ResponseOk {
+export interface JobGetLogsResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Array<JobGetLogsResponse.Data>;
 }
 
@@ -637,7 +637,7 @@ export namespace JobGetLogsResponse {
 /**
  * Successful response
  */
-export interface JobGetTranscodersResponse extends FilesAPI.ResponseOk {
+export interface JobGetTranscodersResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Array<JobGetTranscodersResponse.Data>;
 }
 

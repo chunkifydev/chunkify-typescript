@@ -22,7 +22,7 @@ describe('resource storages', () => {
 
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.storages.create({ provider: 'aws', 'storage.StorageProvider': {} });
+    const response = await client.storages.create({ provider: 'aws' });
   });
 
   // Prism tests are disabled

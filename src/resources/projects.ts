@@ -87,21 +87,21 @@ export interface Project {
 /**
  * Successful response
  */
-export interface ProjectCreateResponse extends FilesAPI.ResponseOk {
+export interface ProjectCreateResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Project;
 }
 
 /**
  * Successful response
  */
-export interface ProjectRetrieveResponse extends FilesAPI.ResponseOk {
+export interface ProjectRetrieveResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Project;
 }
 
 /**
  * Successful response
  */
-export interface ProjectListResponse extends FilesAPI.ResponseOk {
+export interface ProjectListResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Array<Project>;
 }
 
