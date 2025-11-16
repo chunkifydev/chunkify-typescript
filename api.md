@@ -16,8 +16,8 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/jobs.ts">APIError</a></code>
 - <code><a href="./src/resources/jobs.ts">Av1</a></code>
+- <code><a href="./src/resources/jobs.ts">ChunkifyError</a></code>
 - <code><a href="./src/resources/jobs.ts">H264</a></code>
 - <code><a href="./src/resources/jobs.ts">H265</a></code>
 - <code><a href="./src/resources/jobs.ts">Hls</a></code>

@@ -10,8 +10,8 @@ export {
 } from './files';
 export {
   Jobs,
-  type APIError,
   type Av1,
+  type ChunkifyError,
   type H264,
   type H265,
   type Hls,
