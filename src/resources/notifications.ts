@@ -5,6 +5,7 @@ import * as FilesAPI from './files';
 import * as WebhooksAPI from './webhooks';
 import { APIPromise } from '../core/api-promise';
 import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -36,8 +37,11 @@ export class Notifications extends APIResource {
   /**
    * Delete a notification.
    */
-  delete(notificationID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/notifications/${notificationID}`, options);
+  delete(notificationID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/notifications/${notificationID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -93,11 +97,6 @@ export interface NotificationCreateResponse extends FilesAPI.ResponseOk {
 export interface NotificationRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Notification;
 }
-
-/**
- * No content response
- */
-export type NotificationDeleteResponse = unknown;
 
 export interface NotificationCreateParams {
   /**
@@ -186,7 +185,6 @@ export declare namespace Notifications {
     type Notification as Notification,
     type NotificationCreateResponse as NotificationCreateResponse,
     type NotificationRetrieveResponse as NotificationRetrieveResponse,
-    type NotificationDeleteResponse as NotificationDeleteResponse,
     type NotificationsMyOffsetPage as NotificationsMyOffsetPage,
     type NotificationCreateParams as NotificationCreateParams,
     type NotificationListParams as NotificationListParams,

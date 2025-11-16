@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -29,8 +30,11 @@ export class Tokens extends APIResource {
    * Revoke an access token by its ID. This action is irreversible and will
    * immediately invalidate the token.
    */
-  revoke(tokenID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/tokens/${tokenID}`, options);
+  revoke(tokenID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/tokens/${tokenID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -80,11 +84,6 @@ export interface TokenListResponse extends FilesAPI.ResponseOk {
   data?: Array<Token>;
 }
 
-/**
- * No content response
- */
-export type TokenRevokeResponse = unknown;
-
 export interface TokenCreateParams {
   /**
    * Scope specifies the scope of the token, which must be either "team" or
@@ -108,7 +107,6 @@ export declare namespace Tokens {
     type Token as Token,
     type TokenCreateResponse as TokenCreateResponse,
     type TokenListResponse as TokenListResponse,
-    type TokenRevokeResponse as TokenRevokeResponse,
     type TokenCreateParams as TokenCreateParams,
   };
 }

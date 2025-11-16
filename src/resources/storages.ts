@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -33,8 +34,11 @@ export class Storages extends APIResource {
    * Delete a storage configuration. The storage must not be currently attached to
    * the project.
    */
-  delete(storageID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/storages/${storageID}`, options);
+  delete(storageID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/storages/${storageID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -106,11 +110,6 @@ export interface StorageListResponse extends FilesAPI.ResponseOk {
   data?: Array<Storage>;
 }
 
-/**
- * No content response
- */
-export type StorageDeleteResponse = unknown;
-
 export interface StorageCreateParams {
   /**
    * Provider specifies the storage provider.
@@ -126,7 +125,6 @@ export declare namespace Storages {
     type StorageCreateResponse as StorageCreateResponse,
     type StorageRetrieveResponse as StorageRetrieveResponse,
     type StorageListResponse as StorageListResponse,
-    type StorageDeleteResponse as StorageDeleteResponse,
     type StorageCreateParams as StorageCreateParams,
   };
 }

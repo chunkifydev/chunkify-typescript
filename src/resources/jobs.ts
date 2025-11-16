@@ -5,6 +5,7 @@ import * as JobsAPI from './jobs';
 import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
 import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -36,15 +37,21 @@ export class Jobs extends APIResource {
   /**
    * Delete a job.
    */
-  delete(jobID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/jobs/${jobID}`, options);
+  delete(jobID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/jobs/${jobID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
    * Cancel a job.
    */
-  cancel(jobID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.post(path`/api/jobs/${jobID}/cancel`, options);
+  cancel(jobID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/api/jobs/${jobID}/cancel`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -536,6 +543,36 @@ export interface VideoCommon {
 }
 
 /**
+ * FFmpeg encoding parameters specific to VP9 encoding.
+ */
+export interface Vp9 extends VideoCommon {
+  /**
+   * CpuUsed specifies the CPU usage level for VP9 encoding. Range: 0 to 8. Lower
+   * values mean better quality but slower encoding, higher values mean faster
+   * encoding but lower quality. Recommended values: 0-2 for high quality, 2-4 for
+   * good quality, 4-6 for balanced, 6-8 for speed
+   */
+  cpu_used?: string;
+
+  /**
+   * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+   * values mean better quality but larger file size. Range: 15 to 35. Recommended
+   * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
+   * quality.
+   */
+  crf?: number;
+
+  /**
+   * Quality specifies the VP9 encoding quality preset. Valid values:
+   *
+   * - good: Balanced quality preset, good for most applications
+   * - best: Best quality preset, slower encoding
+   * - realtime: Fast encoding preset, suitable for live streaming
+   */
+  quality?: 'good' | 'best' | 'realtime';
+}
+
+/**
  * Successful response
  */
 export interface JobCreateResponse extends FilesAPI.ResponseOk {
@@ -548,16 +585,6 @@ export interface JobCreateResponse extends FilesAPI.ResponseOk {
 export interface JobRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Job;
 }
-
-/**
- * No content response
- */
-export type JobDeleteResponse = unknown;
-
-/**
- * No content response
- */
-export type JobCancelResponse = unknown;
 
 /**
  * Successful response
@@ -787,9 +814,9 @@ export namespace JobCreateParams {
     mp4_h265?: JobsAPI.H265;
 
     /**
-     * FFmpeg encoding parameters common to all video formats.
+     * FFmpeg encoding parameters specific to VP9 encoding.
      */
-    webm_vp9?: JobsAPI.VideoCommon;
+    webm_vp9?: JobsAPI.Vp9;
   }
 
   export namespace Format {
@@ -956,10 +983,9 @@ export declare namespace Jobs {
     type Hls as Hls,
     type Job as Job,
     type VideoCommon as VideoCommon,
+    type Vp9 as Vp9,
     type JobCreateResponse as JobCreateResponse,
     type JobRetrieveResponse as JobRetrieveResponse,
-    type JobDeleteResponse as JobDeleteResponse,
-    type JobCancelResponse as JobCancelResponse,
     type JobGetFilesResponse as JobGetFilesResponse,
     type JobGetLogsResponse as JobGetLogsResponse,
     type JobGetTranscodersResponse as JobGetTranscodersResponse,
