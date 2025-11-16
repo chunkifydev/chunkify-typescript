@@ -3,7 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
-import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -33,8 +33,8 @@ export class Sources extends APIResource {
   list(
     query: SourceListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<SourcesMyOffsetPage, Source> {
-    return this._client.getAPIList('/api/sources', MyOffsetPage<Source>, { query, ...options });
+  ): PagePromise<SourcesPaginatedResults, Source> {
+    return this._client.getAPIList('/api/sources', PaginatedResults<Source>, { query, ...options });
   }
 
   /**
@@ -48,7 +48,7 @@ export class Sources extends APIResource {
   }
 }
 
-export type SourcesMyOffsetPage = MyOffsetPage<Source>;
+export type SourcesPaginatedResults = PaginatedResults<Source>;
 
 export interface Source {
   /**
@@ -149,7 +149,7 @@ export interface SourceCreateParams {
   metadata?: { [key: string]: string };
 }
 
-export interface SourceListParams extends MyOffsetPageParams {
+export interface SourceListParams extends PaginatedResultsParams {
   /**
    * Filter by source ID
    */
@@ -318,7 +318,7 @@ export declare namespace Sources {
     type Source as Source,
     type SourceCreateResponse as SourceCreateResponse,
     type SourceRetrieveResponse as SourceRetrieveResponse,
-    type SourcesMyOffsetPage as SourcesMyOffsetPage,
+    type SourcesPaginatedResults as SourcesPaginatedResults,
     type SourceCreateParams as SourceCreateParams,
     type SourceListParams as SourceListParams,
   };

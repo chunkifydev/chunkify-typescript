@@ -3,7 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
-import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -30,8 +30,8 @@ export class Uploads extends APIResource {
   list(
     query: UploadListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<UploadsMyOffsetPage, Upload> {
-    return this._client.getAPIList('/api/uploads', MyOffsetPage<Upload>, { query, ...options });
+  ): PagePromise<UploadsPaginatedResults, Upload> {
+    return this._client.getAPIList('/api/uploads', PaginatedResults<Upload>, { query, ...options });
   }
 
   /**
@@ -45,7 +45,7 @@ export class Uploads extends APIResource {
   }
 }
 
-export type UploadsMyOffsetPage = MyOffsetPage<Upload>;
+export type UploadsPaginatedResults = PaginatedResults<Upload>;
 
 export interface Upload {
   /**
@@ -143,7 +143,7 @@ export interface UploadCreateParams {
   timeout?: number;
 }
 
-export interface UploadListParams extends MyOffsetPageParams {
+export interface UploadListParams extends PaginatedResultsParams {
   /**
    * Filter by upload ID
    */
@@ -191,7 +191,7 @@ export declare namespace Uploads {
     type Upload as Upload,
     type UploadCreateResponse as UploadCreateResponse,
     type UploadRetrieveResponse as UploadRetrieveResponse,
-    type UploadsMyOffsetPage as UploadsMyOffsetPage,
+    type UploadsPaginatedResults as UploadsPaginatedResults,
     type UploadCreateParams as UploadCreateParams,
     type UploadListParams as UploadListParams,
   };

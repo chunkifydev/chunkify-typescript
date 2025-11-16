@@ -9,7 +9,7 @@ Types:
 Methods:
 
 - <code title="get /api/files/{fileId}">client.files.<a href="./src/resources/files.ts">retrieve</a>(fileID) -> FileRetrieveResponse</code>
-- <code title="get /api/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> APIFilesMyOffsetPage</code>
+- <code title="get /api/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> APIFilesPaginatedResults</code>
 - <code title="delete /api/files/{fileId}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID) -> void</code>
 
 # Jobs
@@ -33,7 +33,7 @@ Methods:
 
 - <code title="post /api/jobs">client.jobs.<a href="./src/resources/jobs.ts">create</a>({ ...params }) -> JobCreateResponse</code>
 - <code title="get /api/jobs/{jobId}">client.jobs.<a href="./src/resources/jobs.ts">retrieve</a>(jobID) -> JobRetrieveResponse</code>
-- <code title="get /api/jobs">client.jobs.<a href="./src/resources/jobs.ts">list</a>({ ...params }) -> JobsMyOffsetPage</code>
+- <code title="get /api/jobs">client.jobs.<a href="./src/resources/jobs.ts">list</a>({ ...params }) -> JobsPaginatedResults</code>
 - <code title="delete /api/jobs/{jobId}">client.jobs.<a href="./src/resources/jobs.ts">delete</a>(jobID) -> void</code>
 - <code title="post /api/jobs/{jobId}/cancel">client.jobs.<a href="./src/resources/jobs.ts">cancel</a>(jobID) -> void</code>
 - <code title="get /api/jobs/{jobId}/files">client.jobs.<a href="./src/resources/jobs.ts">getFiles</a>(jobID) -> JobGetFilesResponse</code>
@@ -52,7 +52,7 @@ Methods:
 
 - <code title="post /api/notifications">client.notifications.<a href="./src/resources/notifications.ts">create</a>({ ...params }) -> NotificationCreateResponse</code>
 - <code title="get /api/notifications/{notificationId}">client.notifications.<a href="./src/resources/notifications.ts">retrieve</a>(notificationID) -> NotificationRetrieveResponse</code>
-- <code title="get /api/notifications">client.notifications.<a href="./src/resources/notifications.ts">list</a>({ ...params }) -> NotificationsMyOffsetPage</code>
+- <code title="get /api/notifications">client.notifications.<a href="./src/resources/notifications.ts">list</a>({ ...params }) -> NotificationsPaginatedResults</code>
 - <code title="delete /api/notifications/{notificationId}">client.notifications.<a href="./src/resources/notifications.ts">delete</a>(notificationID) -> void</code>
 
 # Projects
@@ -84,7 +84,7 @@ Methods:
 
 - <code title="post /api/sources">client.sources.<a href="./src/resources/sources.ts">create</a>({ ...params }) -> SourceCreateResponse</code>
 - <code title="get /api/sources/{sourceId}">client.sources.<a href="./src/resources/sources.ts">retrieve</a>(sourceID) -> SourceRetrieveResponse</code>
-- <code title="get /api/sources">client.sources.<a href="./src/resources/sources.ts">list</a>({ ...params }) -> SourcesMyOffsetPage</code>
+- <code title="get /api/sources">client.sources.<a href="./src/resources/sources.ts">list</a>({ ...params }) -> SourcesPaginatedResults</code>
 - <code title="delete /api/sources/{sourceId}">client.sources.<a href="./src/resources/sources.ts">delete</a>(sourceID) -> void</code>
 
 # Storages
@@ -129,7 +129,7 @@ Methods:
 
 - <code title="post /api/uploads">client.uploads.<a href="./src/resources/uploads.ts">create</a>({ ...params }) -> UploadCreateResponse</code>
 - <code title="get /api/uploads/{uploadId}">client.uploads.<a href="./src/resources/uploads.ts">retrieve</a>(uploadID) -> UploadRetrieveResponse</code>
-- <code title="get /api/uploads">client.uploads.<a href="./src/resources/uploads.ts">list</a>({ ...params }) -> UploadsMyOffsetPage</code>
+- <code title="get /api/uploads">client.uploads.<a href="./src/resources/uploads.ts">list</a>({ ...params }) -> UploadsPaginatedResults</code>
 - <code title="delete /api/uploads/{uploadId}">client.uploads.<a href="./src/resources/uploads.ts">delete</a>(uploadID) -> void</code>
 
 # Webhooks

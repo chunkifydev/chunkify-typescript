@@ -6,7 +6,7 @@ export {
   type ResponseOk,
   type FileRetrieveResponse,
   type FileListParams,
-  type APIFilesMyOffsetPage,
+  type APIFilesPaginatedResults,
 } from './files';
 export {
   Jobs,
@@ -25,7 +25,7 @@ export {
   type JobCreateParams,
   type JobListParams,
   type JobGetLogsParams,
-  type JobsMyOffsetPage,
+  type JobsPaginatedResults,
 } from './jobs';
 export {
   Notifications,
@@ -34,7 +34,7 @@ export {
   type NotificationRetrieveResponse,
   type NotificationCreateParams,
   type NotificationListParams,
-  type NotificationsMyOffsetPage,
+  type NotificationsPaginatedResults,
 } from './notifications';
 export {
   Projects,
@@ -53,7 +53,7 @@ export {
   type SourceRetrieveResponse,
   type SourceCreateParams,
   type SourceListParams,
-  type SourcesMyOffsetPage,
+  type SourcesPaginatedResults,
 } from './sources';
 export {
   Storages,
@@ -77,7 +77,7 @@ export {
   type UploadRetrieveResponse,
   type UploadCreateParams,
   type UploadListParams,
-  type UploadsMyOffsetPage,
+  type UploadsPaginatedResults,
 } from './uploads';
 export {
   Webhooks,
