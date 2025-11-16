@@ -266,19 +266,10 @@ export interface H265 extends VideoCommon {
   x265_keyint?: number;
 }
 
+/**
+ * FFmpeg encoding parameters specific to HLS packaging.
+ */
 export interface Hls {
-  /**
-   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
-   * 32Kbps and 512Kbps.
-   */
-  audio_bitrate: number;
-
-  /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate: number;
-
   /**
    * HlsEnc enables encryption for HLS segments when set to true.
    */
