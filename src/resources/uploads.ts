@@ -140,7 +140,7 @@ export interface UploadCreateParams {
   /**
    * The upload URL will be valid for the given timeout in seconds
    */
-  timeout?: number;
+  validity_timeout?: number;
 }
 
 export interface UploadListParams extends PaginatedResultsParams {
