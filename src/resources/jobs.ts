@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as JobsAPI from './jobs';
 import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
@@ -77,201 +76,6 @@ export class Jobs extends APIResource {
 }
 
 export type JobsPaginatedResults = PaginatedResults<Job>;
-
-/**
- * FFmpeg encoding parameters specific to AV1 encoding.
- */
-export interface Av1 {
-  /**
-   * Crf (Constant Rate Factor) controls the quality of the output video. Lower
-   * values mean better quality but larger file size. Range: 16 to 63. Recommended
-   * values: 16-35 for high quality, 35-45 for good quality, 45-63 for acceptable
-   * quality.
-   */
-  crf?: number;
-
-  /**
-   * Level specifies the AV1 profile level. Valid values: 30-31 (main), 41 (main10).
-   * Higher levels support higher resolutions and bitrates but require more
-   * processing power.
-   */
-  level?: 30 | 31 | 41;
-
-  movflags?: string;
-
-  /**
-   * Preset controls the encoding efficiency and processing intensity. Lower presets
-   * use more optimization features, creating smaller files with better quality but
-   * requiring more compute time. Higher presets encode faster but produce larger
-   * files.
-   *
-   * Preset ranges:
-   *
-   * - 6-7: Fast encoding for real-time applications (smaller files)
-   * - 8-10: Balanced efficiency and speed for general use
-   * - 11-13: Fastest encoding for real-time applications (larger files)
-   */
-  preset?: '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13';
-
-  /**
-   * Profilev specifies the AV1 profile. Valid values:
-   *
-   * - main: Main profile, good for most applications
-   * - main10: Main 10-bit profile, supports 10-bit color
-   * - mainstillpicture: Still picture profile, optimized for single images
-   */
-  profilev?: 'main' | 'main10' | 'mainstillpicture';
-}
-
-/**
- * FFmpeg encoding parameters specific to H.264/AVC encoding.
- */
-export interface H264 {
-  /**
-   * Crf (Constant Rate Factor) controls the quality of the output video. Lower
-   * values mean better quality but larger file size. Range: 16 to 35. Recommended
-   * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
-   * quality.
-   */
-  crf?: number;
-
-  /**
-   * Level specifies the H.264 profile level. Valid values: 10-13 (baseline), 20-22
-   * (main), 30-32 (high), 40-42 (high), 50-51 (high). Higher levels support higher
-   * resolutions and bitrates but require more processing power.
-   */
-  level?: 10 | 11 | 12 | 13 | 20 | 21 | 22 | 30 | 31 | 32 | 40 | 41 | 42 | 50 | 51;
-
-  movflags?: string;
-
-  /**
-   * Preset specifies the encoding speed preset. Valid values (from fastest to
-   * slowest):
-   *
-   * - ultrafast: Fastest encoding, lowest quality
-   * - superfast: Very fast encoding, lower quality
-   * - veryfast: Fast encoding, moderate quality
-   * - faster: Faster encoding, good quality
-   * - fast: Fast encoding, better quality
-   * - medium: Balanced preset, best quality
-   */
-  preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
-
-  /**
-   * Profilev specifies the H.264 profile. Valid values:
-   *
-   * - baseline: Basic profile, good for mobile devices
-   * - main: Main profile, good for most applications
-   * - high: High profile, best quality but requires more processing
-   * - high10: High 10-bit profile, supports 10-bit color
-   * - high422: High 4:2:2 profile, supports 4:2:2 color sampling
-   * - high444: High 4:4:4 profile, supports 4:4:4 color sampling
-   */
-  profilev?: 'baseline' | 'main' | 'high' | 'high10' | 'high422' | 'high444';
-
-  /**
-   * X264KeyInt specifies the maximum number of frames between keyframes for H.264
-   * encoding. Range: 1 to 300. Higher values can improve compression but may affect
-   * seeking.
-   */
-  x264_keyint?: number;
-}
-
-/**
- * FFmpeg encoding parameters specific to H.265/HEVC encoding. It extends
- * FfmpegCommon with H.265-specific options for quality control and encoding
- * profiles.
- */
-export interface H265 {
-  /**
-   * Crf (Constant Rate Factor) controls the quality of the output video. Lower
-   * values mean better quality but larger file size. Range: 16 to 35. Recommended
-   * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
-   * quality.
-   */
-  crf?: number;
-
-  /**
-   * Level specifies the H.265 profile level. Valid values: 30-31 (main), 41
-   * (main10). Higher levels support higher resolutions and bitrates but require more
-   * processing power.
-   */
-  level?: 30 | 31 | 41;
-
-  movflags?: string;
-
-  /**
-   * Preset specifies the encoding speed preset. Valid values (from fastest to
-   * slowest):
-   *
-   * - ultrafast: Fastest encoding, lowest quality
-   * - superfast: Very fast encoding, lower quality
-   * - veryfast: Fast encoding, moderate quality
-   * - faster: Faster encoding, good quality
-   * - fast: Fast encoding, better quality
-   * - medium: Balanced preset, best quality
-   */
-  preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
-
-  /**
-   * Profilev specifies the H.265 profile. Valid values:
-   *
-   * - main: Main profile, good for most applications
-   * - main10: Main 10-bit profile, supports 10-bit color
-   * - mainstillpicture: Still picture profile, optimized for single images
-   */
-  profilev?: 'main' | 'main10' | 'mainstillpicture';
-
-  /**
-   * X265KeyInt specifies the maximum number of frames between keyframes for H.265
-   * encoding. Range: 1 to 300. Higher values can improve compression but may affect
-   * seeking.
-   */
-  x265_keyint?: number;
-}
-
-/**
- * FFmpeg encoding parameters specific to HLS packaging.
- */
-export interface Hls {
-  /**
-   * HlsEnc enables encryption for HLS segments when set to true.
-   */
-  hls_enc?: boolean;
-
-  /**
-   * HlsEncIv specifies the initialization vector for encryption. Maximum length: 64
-   * characters. Required when HlsEnc is true.
-   */
-  hls_enc_iv?: string;
-
-  /**
-   * HlsEncKey specifies the encryption key for HLS segments. Maximum length: 64
-   * characters. Required when HlsEnc is true.
-   */
-  hls_enc_key?: string;
-
-  /**
-   * HlsEncKeyUrl specifies the URL where clients can fetch the encryption key.
-   * Required when HlsEnc is true.
-   */
-  hls_enc_key_url?: string;
-
-  /**
-   * HlsSegmentType specifies the type of HLS segments. Valid values:
-   *
-   * - mpegts: Traditional MPEG-TS segments, better compatibility
-   * - fmp4: Fragmented MP4 segments, better efficiency
-   */
-  hls_segment_type?: 'mpegts' | 'fmp4';
-
-  /**
-   * HlsTime specifies the duration of each HLS segment in seconds. Range: 1 to 10.
-   * Shorter segments provide faster startup but more overhead, longer segments are
-   * more efficient.
-   */
-  hls_time?: number;
-}
 
 export interface Job {
   /**
@@ -415,140 +219,6 @@ export namespace Job {
      */
     type?: string;
   }
-}
-
-/**
- * FFmpeg encoding parameters common to all video formats.
- */
-export interface VideoCommon {
-  /**
-   * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
-   * 50Mbps.
-   */
-  bufsize?: number;
-
-  /**
-   * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
-   * (stereo), 5 (5.1), 7 (7.1)
-   */
-  channels?: 1 | 2 | 5 | 7;
-
-  /**
-   * DisableAudio indicates whether to disable audio processing.
-   */
-  disable_audio?: boolean;
-
-  /**
-   * DisableVideo indicates whether to disable video processing.
-   */
-  disable_video?: boolean;
-
-  /**
-   * Duration specifies the duration to process in seconds. Must be a positive value.
-   */
-  duration?: number;
-
-  /**
-   * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
-   */
-  framerate?: number;
-
-  /**
-   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
-   */
-  gop?: number;
-
-  /**
-   * Height specifies the output video height in pixels. Must be between -2 and 7680.
-   * Use -2 for automatic calculation while maintaining aspect ratio.
-   */
-  height?: number;
-
-  /**
-   * Maxrate specifies the maximum video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  maxrate?: number;
-
-  /**
-   * Minrate specifies the minimum video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  minrate?: number;
-
-  /**
-   * PixFmt specifies the pixel format. Valid value: yuv420p
-   */
-  pixfmt?:
-    | 'yuv410p'
-    | 'yuv411p'
-    | 'yuv420p'
-    | 'yuv422p'
-    | 'yuv440p'
-    | 'yuv444p'
-    | 'yuvJ411p'
-    | 'yuvJ420p'
-    | 'yuvJ422p'
-    | 'yuvJ440p'
-    | 'yuvJ444p'
-    | 'yuv420p10le'
-    | 'yuv422p10le'
-    | 'yuv440p10le'
-    | 'yuv444p10le'
-    | 'yuv420p12le'
-    | 'yuv422p12le'
-    | 'yuv440p12le'
-    | 'yuv444p12le'
-    | 'yuv420p10be'
-    | 'yuv422p10be'
-    | 'yuv440p10be'
-    | 'yuv444p10be'
-    | 'yuv420p12be'
-    | 'yuv422p12be'
-    | 'yuv440p12be'
-    | 'yuv444p12be';
-
-  /**
-   * Seek specifies the timestamp to start processing from (in seconds). Must be a
-   * positive value.
-   */
-  seek?: number;
-
-  /**
-   * Width specifies the output video width in pixels. Must be between -2 and 7680.
-   * Use -2 for automatic calculation while maintaining aspect ratio.
-   */
-  width?: number;
-}
-
-/**
- * FFmpeg encoding parameters specific to VP9 encoding.
- */
-export interface Vp9 {
-  /**
-   * CpuUsed specifies the CPU usage level for VP9 encoding. Range: 0 to 8. Lower
-   * values mean better quality but slower encoding, higher values mean faster
-   * encoding but lower quality. Recommended values: 0-2 for high quality, 2-4 for
-   * good quality, 4-6 for balanced, 6-8 for speed
-   */
-  cpu_used?: string;
-
-  /**
-   * Crf (Constant Rate Factor) controls the quality of the output video. Lower
-   * values mean better quality but larger file size. Range: 15 to 35. Recommended
-   * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
-   * quality.
-   */
-  crf?: number;
-
-  /**
-   * Quality specifies the VP9 encoding quality preset. Valid values:
-   *
-   * - good: Balanced quality preset, good for most applications
-   * - best: Best quality preset, slower encoding
-   * - realtime: Fast encoding preset, suitable for live streaming
-   */
-  quality?: 'good' | 'best' | 'realtime';
 }
 
 /**
@@ -822,7 +492,7 @@ export namespace JobCreateParams {
     /**
      * HLS AV1 configuration
      */
-    export interface HlsAv1 extends JobsAPI.Hls, JobsAPI.Av1, JobsAPI.VideoCommon {
+    export interface HlsAv1 {
       /**
        * AudioBitrate specifies the audio bitrate in bits per second. Must be between
        * 32Kbps and 512Kbps.
@@ -830,16 +500,193 @@ export namespace JobCreateParams {
       audio_bitrate?: number;
 
       /**
+       * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
+       * 50Mbps.
+       */
+      bufsize?: number;
+
+      /**
+       * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
+       * (stereo), 5 (5.1), 7 (7.1)
+       */
+      channels?: 1 | 2 | 5 | 7;
+
+      /**
+       * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+       * values mean better quality but larger file size. Range: 16 to 63. Recommended
+       * values: 16-35 for high quality, 35-45 for good quality, 45-63 for acceptable
+       * quality.
+       */
+      crf?: number;
+
+      /**
+       * DisableAudio indicates whether to disable audio processing.
+       */
+      disable_audio?: boolean;
+
+      /**
+       * DisableVideo indicates whether to disable video processing.
+       */
+      disable_video?: boolean;
+
+      /**
+       * Duration specifies the duration to process in seconds. Must be a positive value.
+       */
+      duration?: number;
+
+      /**
+       * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+       */
+      framerate?: number;
+
+      /**
+       * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+       */
+      gop?: number;
+
+      /**
+       * Height specifies the output video height in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      height?: number;
+
+      /**
+       * HlsEnc enables encryption for HLS segments when set to true.
+       */
+      hls_enc?: boolean;
+
+      /**
+       * HlsEncIv specifies the initialization vector for encryption. Maximum length: 64
+       * characters. Required when HlsEnc is true.
+       */
+      hls_enc_iv?: string;
+
+      /**
+       * HlsEncKey specifies the encryption key for HLS segments. Maximum length: 64
+       * characters. Required when HlsEnc is true.
+       */
+      hls_enc_key?: string;
+
+      /**
+       * HlsEncKeyUrl specifies the URL where clients can fetch the encryption key.
+       * Required when HlsEnc is true.
+       */
+      hls_enc_key_url?: string;
+
+      /**
+       * HlsSegmentType specifies the type of HLS segments. Valid values:
+       *
+       * - mpegts: Traditional MPEG-TS segments, better compatibility
+       * - fmp4: Fragmented MP4 segments, better efficiency
+       */
+      hls_segment_type?: 'mpegts' | 'fmp4';
+
+      /**
+       * HlsTime specifies the duration of each HLS segment in seconds. Range: 1 to 10.
+       * Shorter segments provide faster startup but more overhead, longer segments are
+       * more efficient.
+       */
+      hls_time?: number;
+
+      /**
+       * Level specifies the AV1 profile level. Valid values: 30-31 (main), 41 (main10).
+       * Higher levels support higher resolutions and bitrates but require more
+       * processing power.
+       */
+      level?: 30 | 31 | 41;
+
+      /**
+       * Maxrate specifies the maximum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      maxrate?: number;
+
+      /**
+       * Minrate specifies the minimum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      minrate?: number;
+
+      movflags?: string;
+
+      /**
+       * PixFmt specifies the pixel format. Valid value: yuv420p
+       */
+      pixfmt?:
+        | 'yuv410p'
+        | 'yuv411p'
+        | 'yuv420p'
+        | 'yuv422p'
+        | 'yuv440p'
+        | 'yuv444p'
+        | 'yuvJ411p'
+        | 'yuvJ420p'
+        | 'yuvJ422p'
+        | 'yuvJ440p'
+        | 'yuvJ444p'
+        | 'yuv420p10le'
+        | 'yuv422p10le'
+        | 'yuv440p10le'
+        | 'yuv444p10le'
+        | 'yuv420p12le'
+        | 'yuv422p12le'
+        | 'yuv440p12le'
+        | 'yuv444p12le'
+        | 'yuv420p10be'
+        | 'yuv422p10be'
+        | 'yuv440p10be'
+        | 'yuv444p10be'
+        | 'yuv420p12be'
+        | 'yuv422p12be'
+        | 'yuv440p12be'
+        | 'yuv444p12be';
+
+      /**
+       * Preset controls the encoding efficiency and processing intensity. Lower presets
+       * use more optimization features, creating smaller files with better quality but
+       * requiring more compute time. Higher presets encode faster but produce larger
+       * files.
+       *
+       * Preset ranges:
+       *
+       * - 6-7: Fast encoding for real-time applications (smaller files)
+       * - 8-10: Balanced efficiency and speed for general use
+       * - 11-13: Fastest encoding for real-time applications (larger files)
+       */
+      preset?: '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13';
+
+      /**
+       * Profilev specifies the AV1 profile. Valid values:
+       *
+       * - main: Main profile, good for most applications
+       * - main10: Main 10-bit profile, supports 10-bit color
+       * - mainstillpicture: Still picture profile, optimized for single images
+       */
+      profilev?: 'main' | 'main10' | 'mainstillpicture';
+
+      /**
+       * Seek specifies the timestamp to start processing from (in seconds). Must be a
+       * positive value.
+       */
+      seek?: number;
+
+      /**
        * VideoBitrate specifies the video bitrate in bits per second. Must be between
        * 100Kbps and 50Mbps.
        */
       video_bitrate?: number;
+
+      /**
+       * Width specifies the output video width in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      width?: number;
     }
 
     /**
      * HLS H264 configuration
      */
-    export interface HlsH264 extends JobsAPI.Hls, JobsAPI.H264, JobsAPI.VideoCommon {
+    export interface HlsH264 {
       /**
        * AudioBitrate specifies the audio bitrate in bits per second. Must be between
        * 32Kbps and 512Kbps.
@@ -847,16 +694,202 @@ export namespace JobCreateParams {
       audio_bitrate?: number;
 
       /**
+       * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
+       * 50Mbps.
+       */
+      bufsize?: number;
+
+      /**
+       * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
+       * (stereo), 5 (5.1), 7 (7.1)
+       */
+      channels?: 1 | 2 | 5 | 7;
+
+      /**
+       * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+       * values mean better quality but larger file size. Range: 16 to 35. Recommended
+       * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
+       * quality.
+       */
+      crf?: number;
+
+      /**
+       * DisableAudio indicates whether to disable audio processing.
+       */
+      disable_audio?: boolean;
+
+      /**
+       * DisableVideo indicates whether to disable video processing.
+       */
+      disable_video?: boolean;
+
+      /**
+       * Duration specifies the duration to process in seconds. Must be a positive value.
+       */
+      duration?: number;
+
+      /**
+       * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+       */
+      framerate?: number;
+
+      /**
+       * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+       */
+      gop?: number;
+
+      /**
+       * Height specifies the output video height in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      height?: number;
+
+      /**
+       * HlsEnc enables encryption for HLS segments when set to true.
+       */
+      hls_enc?: boolean;
+
+      /**
+       * HlsEncIv specifies the initialization vector for encryption. Maximum length: 64
+       * characters. Required when HlsEnc is true.
+       */
+      hls_enc_iv?: string;
+
+      /**
+       * HlsEncKey specifies the encryption key for HLS segments. Maximum length: 64
+       * characters. Required when HlsEnc is true.
+       */
+      hls_enc_key?: string;
+
+      /**
+       * HlsEncKeyUrl specifies the URL where clients can fetch the encryption key.
+       * Required when HlsEnc is true.
+       */
+      hls_enc_key_url?: string;
+
+      /**
+       * HlsSegmentType specifies the type of HLS segments. Valid values:
+       *
+       * - mpegts: Traditional MPEG-TS segments, better compatibility
+       * - fmp4: Fragmented MP4 segments, better efficiency
+       */
+      hls_segment_type?: 'mpegts' | 'fmp4';
+
+      /**
+       * HlsTime specifies the duration of each HLS segment in seconds. Range: 1 to 10.
+       * Shorter segments provide faster startup but more overhead, longer segments are
+       * more efficient.
+       */
+      hls_time?: number;
+
+      /**
+       * Level specifies the H.264 profile level. Valid values: 10-13 (baseline), 20-22
+       * (main), 30-32 (high), 40-42 (high), 50-51 (high). Higher levels support higher
+       * resolutions and bitrates but require more processing power.
+       */
+      level?: 10 | 11 | 12 | 13 | 20 | 21 | 22 | 30 | 31 | 32 | 40 | 41 | 42 | 50 | 51;
+
+      /**
+       * Maxrate specifies the maximum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      maxrate?: number;
+
+      /**
+       * Minrate specifies the minimum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      minrate?: number;
+
+      movflags?: string;
+
+      /**
+       * PixFmt specifies the pixel format. Valid value: yuv420p
+       */
+      pixfmt?:
+        | 'yuv410p'
+        | 'yuv411p'
+        | 'yuv420p'
+        | 'yuv422p'
+        | 'yuv440p'
+        | 'yuv444p'
+        | 'yuvJ411p'
+        | 'yuvJ420p'
+        | 'yuvJ422p'
+        | 'yuvJ440p'
+        | 'yuvJ444p'
+        | 'yuv420p10le'
+        | 'yuv422p10le'
+        | 'yuv440p10le'
+        | 'yuv444p10le'
+        | 'yuv420p12le'
+        | 'yuv422p12le'
+        | 'yuv440p12le'
+        | 'yuv444p12le'
+        | 'yuv420p10be'
+        | 'yuv422p10be'
+        | 'yuv440p10be'
+        | 'yuv444p10be'
+        | 'yuv420p12be'
+        | 'yuv422p12be'
+        | 'yuv440p12be'
+        | 'yuv444p12be';
+
+      /**
+       * Preset specifies the encoding speed preset. Valid values (from fastest to
+       * slowest):
+       *
+       * - ultrafast: Fastest encoding, lowest quality
+       * - superfast: Very fast encoding, lower quality
+       * - veryfast: Fast encoding, moderate quality
+       * - faster: Faster encoding, good quality
+       * - fast: Fast encoding, better quality
+       * - medium: Balanced preset, best quality
+       */
+      preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
+
+      /**
+       * Profilev specifies the H.264 profile. Valid values:
+       *
+       * - baseline: Basic profile, good for mobile devices
+       * - main: Main profile, good for most applications
+       * - high: High profile, best quality but requires more processing
+       * - high10: High 10-bit profile, supports 10-bit color
+       * - high422: High 4:2:2 profile, supports 4:2:2 color sampling
+       * - high444: High 4:4:4 profile, supports 4:4:4 color sampling
+       */
+      profilev?: 'baseline' | 'main' | 'high' | 'high10' | 'high422' | 'high444';
+
+      /**
+       * Seek specifies the timestamp to start processing from (in seconds). Must be a
+       * positive value.
+       */
+      seek?: number;
+
+      /**
        * VideoBitrate specifies the video bitrate in bits per second. Must be between
        * 100Kbps and 50Mbps.
        */
       video_bitrate?: number;
+
+      /**
+       * Width specifies the output video width in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      width?: number;
+
+      /**
+       * X264KeyInt specifies the maximum number of frames between keyframes for H.264
+       * encoding. Range: 1 to 300. Higher values can improve compression but may affect
+       * seeking.
+       */
+      x264_keyint?: number;
     }
 
     /**
      * HLS H265 configuration
      */
-    export interface HlsH265 extends JobsAPI.Hls, JobsAPI.H265, JobsAPI.VideoCommon {
+    export interface HlsH265 {
       /**
        * AudioBitrate specifies the audio bitrate in bits per second. Must be between
        * 32Kbps and 512Kbps.
@@ -864,10 +897,193 @@ export namespace JobCreateParams {
       audio_bitrate?: number;
 
       /**
+       * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
+       * 50Mbps.
+       */
+      bufsize?: number;
+
+      /**
+       * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
+       * (stereo), 5 (5.1), 7 (7.1)
+       */
+      channels?: 1 | 2 | 5 | 7;
+
+      /**
+       * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+       * values mean better quality but larger file size. Range: 16 to 35. Recommended
+       * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
+       * quality.
+       */
+      crf?: number;
+
+      /**
+       * DisableAudio indicates whether to disable audio processing.
+       */
+      disable_audio?: boolean;
+
+      /**
+       * DisableVideo indicates whether to disable video processing.
+       */
+      disable_video?: boolean;
+
+      /**
+       * Duration specifies the duration to process in seconds. Must be a positive value.
+       */
+      duration?: number;
+
+      /**
+       * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+       */
+      framerate?: number;
+
+      /**
+       * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+       */
+      gop?: number;
+
+      /**
+       * Height specifies the output video height in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      height?: number;
+
+      /**
+       * HlsEnc enables encryption for HLS segments when set to true.
+       */
+      hls_enc?: boolean;
+
+      /**
+       * HlsEncIv specifies the initialization vector for encryption. Maximum length: 64
+       * characters. Required when HlsEnc is true.
+       */
+      hls_enc_iv?: string;
+
+      /**
+       * HlsEncKey specifies the encryption key for HLS segments. Maximum length: 64
+       * characters. Required when HlsEnc is true.
+       */
+      hls_enc_key?: string;
+
+      /**
+       * HlsEncKeyUrl specifies the URL where clients can fetch the encryption key.
+       * Required when HlsEnc is true.
+       */
+      hls_enc_key_url?: string;
+
+      /**
+       * HlsSegmentType specifies the type of HLS segments. Valid values:
+       *
+       * - mpegts: Traditional MPEG-TS segments, better compatibility
+       * - fmp4: Fragmented MP4 segments, better efficiency
+       */
+      hls_segment_type?: 'mpegts' | 'fmp4';
+
+      /**
+       * HlsTime specifies the duration of each HLS segment in seconds. Range: 1 to 10.
+       * Shorter segments provide faster startup but more overhead, longer segments are
+       * more efficient.
+       */
+      hls_time?: number;
+
+      /**
+       * Level specifies the H.265 profile level. Valid values: 30-31 (main), 41
+       * (main10). Higher levels support higher resolutions and bitrates but require more
+       * processing power.
+       */
+      level?: 30 | 31 | 41;
+
+      /**
+       * Maxrate specifies the maximum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      maxrate?: number;
+
+      /**
+       * Minrate specifies the minimum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      minrate?: number;
+
+      movflags?: string;
+
+      /**
+       * PixFmt specifies the pixel format. Valid value: yuv420p
+       */
+      pixfmt?:
+        | 'yuv410p'
+        | 'yuv411p'
+        | 'yuv420p'
+        | 'yuv422p'
+        | 'yuv440p'
+        | 'yuv444p'
+        | 'yuvJ411p'
+        | 'yuvJ420p'
+        | 'yuvJ422p'
+        | 'yuvJ440p'
+        | 'yuvJ444p'
+        | 'yuv420p10le'
+        | 'yuv422p10le'
+        | 'yuv440p10le'
+        | 'yuv444p10le'
+        | 'yuv420p12le'
+        | 'yuv422p12le'
+        | 'yuv440p12le'
+        | 'yuv444p12le'
+        | 'yuv420p10be'
+        | 'yuv422p10be'
+        | 'yuv440p10be'
+        | 'yuv444p10be'
+        | 'yuv420p12be'
+        | 'yuv422p12be'
+        | 'yuv440p12be'
+        | 'yuv444p12be';
+
+      /**
+       * Preset specifies the encoding speed preset. Valid values (from fastest to
+       * slowest):
+       *
+       * - ultrafast: Fastest encoding, lowest quality
+       * - superfast: Very fast encoding, lower quality
+       * - veryfast: Fast encoding, moderate quality
+       * - faster: Faster encoding, good quality
+       * - fast: Fast encoding, better quality
+       * - medium: Balanced preset, best quality
+       */
+      preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
+
+      /**
+       * Profilev specifies the H.265 profile. Valid values:
+       *
+       * - main: Main profile, good for most applications
+       * - main10: Main 10-bit profile, supports 10-bit color
+       * - mainstillpicture: Still picture profile, optimized for single images
+       */
+      profilev?: 'main' | 'main10' | 'mainstillpicture';
+
+      /**
+       * Seek specifies the timestamp to start processing from (in seconds). Must be a
+       * positive value.
+       */
+      seek?: number;
+
+      /**
        * VideoBitrate specifies the video bitrate in bits per second. Must be between
        * 100Kbps and 50Mbps.
        */
       video_bitrate?: number;
+
+      /**
+       * Width specifies the output video width in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      width?: number;
+
+      /**
+       * X265KeyInt specifies the maximum number of frames between keyframes for H.265
+       * encoding. Range: 1 to 300. Higher values can improve compression but may affect
+       * seeking.
+       */
+      x265_keyint?: number;
     }
 
     /**
@@ -906,7 +1122,7 @@ export namespace JobCreateParams {
     /**
      * AV1 configuration
      */
-    export interface MP4Av1 extends JobsAPI.Av1, JobsAPI.VideoCommon {
+    export interface MP4Av1 {
       /**
        * AudioBitrate specifies the audio bitrate in bits per second. Must be between
        * 32Kbps and 512Kbps.
@@ -914,16 +1130,155 @@ export namespace JobCreateParams {
       audio_bitrate?: number;
 
       /**
+       * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
+       * 50Mbps.
+       */
+      bufsize?: number;
+
+      /**
+       * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
+       * (stereo), 5 (5.1), 7 (7.1)
+       */
+      channels?: 1 | 2 | 5 | 7;
+
+      /**
+       * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+       * values mean better quality but larger file size. Range: 16 to 63. Recommended
+       * values: 16-35 for high quality, 35-45 for good quality, 45-63 for acceptable
+       * quality.
+       */
+      crf?: number;
+
+      /**
+       * DisableAudio indicates whether to disable audio processing.
+       */
+      disable_audio?: boolean;
+
+      /**
+       * DisableVideo indicates whether to disable video processing.
+       */
+      disable_video?: boolean;
+
+      /**
+       * Duration specifies the duration to process in seconds. Must be a positive value.
+       */
+      duration?: number;
+
+      /**
+       * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+       */
+      framerate?: number;
+
+      /**
+       * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+       */
+      gop?: number;
+
+      /**
+       * Height specifies the output video height in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      height?: number;
+
+      /**
+       * Level specifies the AV1 profile level. Valid values: 30-31 (main), 41 (main10).
+       * Higher levels support higher resolutions and bitrates but require more
+       * processing power.
+       */
+      level?: 30 | 31 | 41;
+
+      /**
+       * Maxrate specifies the maximum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      maxrate?: number;
+
+      /**
+       * Minrate specifies the minimum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      minrate?: number;
+
+      movflags?: string;
+
+      /**
+       * PixFmt specifies the pixel format. Valid value: yuv420p
+       */
+      pixfmt?:
+        | 'yuv410p'
+        | 'yuv411p'
+        | 'yuv420p'
+        | 'yuv422p'
+        | 'yuv440p'
+        | 'yuv444p'
+        | 'yuvJ411p'
+        | 'yuvJ420p'
+        | 'yuvJ422p'
+        | 'yuvJ440p'
+        | 'yuvJ444p'
+        | 'yuv420p10le'
+        | 'yuv422p10le'
+        | 'yuv440p10le'
+        | 'yuv444p10le'
+        | 'yuv420p12le'
+        | 'yuv422p12le'
+        | 'yuv440p12le'
+        | 'yuv444p12le'
+        | 'yuv420p10be'
+        | 'yuv422p10be'
+        | 'yuv440p10be'
+        | 'yuv444p10be'
+        | 'yuv420p12be'
+        | 'yuv422p12be'
+        | 'yuv440p12be'
+        | 'yuv444p12be';
+
+      /**
+       * Preset controls the encoding efficiency and processing intensity. Lower presets
+       * use more optimization features, creating smaller files with better quality but
+       * requiring more compute time. Higher presets encode faster but produce larger
+       * files.
+       *
+       * Preset ranges:
+       *
+       * - 6-7: Fast encoding for real-time applications (smaller files)
+       * - 8-10: Balanced efficiency and speed for general use
+       * - 11-13: Fastest encoding for real-time applications (larger files)
+       */
+      preset?: '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13';
+
+      /**
+       * Profilev specifies the AV1 profile. Valid values:
+       *
+       * - main: Main profile, good for most applications
+       * - main10: Main 10-bit profile, supports 10-bit color
+       * - mainstillpicture: Still picture profile, optimized for single images
+       */
+      profilev?: 'main' | 'main10' | 'mainstillpicture';
+
+      /**
+       * Seek specifies the timestamp to start processing from (in seconds). Must be a
+       * positive value.
+       */
+      seek?: number;
+
+      /**
        * VideoBitrate specifies the video bitrate in bits per second. Must be between
        * 100Kbps and 50Mbps.
        */
       video_bitrate?: number;
+
+      /**
+       * Width specifies the output video width in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      width?: number;
     }
 
     /**
      * H264 configuration
      */
-    export interface MP4H264 extends JobsAPI.H264, JobsAPI.VideoCommon {
+    export interface MP4H264 {
       /**
        * AudioBitrate specifies the audio bitrate in bits per second. Must be between
        * 32Kbps and 512Kbps.
@@ -931,16 +1286,164 @@ export namespace JobCreateParams {
       audio_bitrate?: number;
 
       /**
+       * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
+       * 50Mbps.
+       */
+      bufsize?: number;
+
+      /**
+       * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
+       * (stereo), 5 (5.1), 7 (7.1)
+       */
+      channels?: 1 | 2 | 5 | 7;
+
+      /**
+       * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+       * values mean better quality but larger file size. Range: 16 to 35. Recommended
+       * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
+       * quality.
+       */
+      crf?: number;
+
+      /**
+       * DisableAudio indicates whether to disable audio processing.
+       */
+      disable_audio?: boolean;
+
+      /**
+       * DisableVideo indicates whether to disable video processing.
+       */
+      disable_video?: boolean;
+
+      /**
+       * Duration specifies the duration to process in seconds. Must be a positive value.
+       */
+      duration?: number;
+
+      /**
+       * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+       */
+      framerate?: number;
+
+      /**
+       * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+       */
+      gop?: number;
+
+      /**
+       * Height specifies the output video height in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      height?: number;
+
+      /**
+       * Level specifies the H.264 profile level. Valid values: 10-13 (baseline), 20-22
+       * (main), 30-32 (high), 40-42 (high), 50-51 (high). Higher levels support higher
+       * resolutions and bitrates but require more processing power.
+       */
+      level?: 10 | 11 | 12 | 13 | 20 | 21 | 22 | 30 | 31 | 32 | 40 | 41 | 42 | 50 | 51;
+
+      /**
+       * Maxrate specifies the maximum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      maxrate?: number;
+
+      /**
+       * Minrate specifies the minimum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      minrate?: number;
+
+      movflags?: string;
+
+      /**
+       * PixFmt specifies the pixel format. Valid value: yuv420p
+       */
+      pixfmt?:
+        | 'yuv410p'
+        | 'yuv411p'
+        | 'yuv420p'
+        | 'yuv422p'
+        | 'yuv440p'
+        | 'yuv444p'
+        | 'yuvJ411p'
+        | 'yuvJ420p'
+        | 'yuvJ422p'
+        | 'yuvJ440p'
+        | 'yuvJ444p'
+        | 'yuv420p10le'
+        | 'yuv422p10le'
+        | 'yuv440p10le'
+        | 'yuv444p10le'
+        | 'yuv420p12le'
+        | 'yuv422p12le'
+        | 'yuv440p12le'
+        | 'yuv444p12le'
+        | 'yuv420p10be'
+        | 'yuv422p10be'
+        | 'yuv440p10be'
+        | 'yuv444p10be'
+        | 'yuv420p12be'
+        | 'yuv422p12be'
+        | 'yuv440p12be'
+        | 'yuv444p12be';
+
+      /**
+       * Preset specifies the encoding speed preset. Valid values (from fastest to
+       * slowest):
+       *
+       * - ultrafast: Fastest encoding, lowest quality
+       * - superfast: Very fast encoding, lower quality
+       * - veryfast: Fast encoding, moderate quality
+       * - faster: Faster encoding, good quality
+       * - fast: Fast encoding, better quality
+       * - medium: Balanced preset, best quality
+       */
+      preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
+
+      /**
+       * Profilev specifies the H.264 profile. Valid values:
+       *
+       * - baseline: Basic profile, good for mobile devices
+       * - main: Main profile, good for most applications
+       * - high: High profile, best quality but requires more processing
+       * - high10: High 10-bit profile, supports 10-bit color
+       * - high422: High 4:2:2 profile, supports 4:2:2 color sampling
+       * - high444: High 4:4:4 profile, supports 4:4:4 color sampling
+       */
+      profilev?: 'baseline' | 'main' | 'high' | 'high10' | 'high422' | 'high444';
+
+      /**
+       * Seek specifies the timestamp to start processing from (in seconds). Must be a
+       * positive value.
+       */
+      seek?: number;
+
+      /**
        * VideoBitrate specifies the video bitrate in bits per second. Must be between
        * 100Kbps and 50Mbps.
        */
       video_bitrate?: number;
+
+      /**
+       * Width specifies the output video width in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      width?: number;
+
+      /**
+       * X264KeyInt specifies the maximum number of frames between keyframes for H.264
+       * encoding. Range: 1 to 300. Higher values can improve compression but may affect
+       * seeking.
+       */
+      x264_keyint?: number;
     }
 
     /**
      * H265 configuration
      */
-    export interface MP4H265 extends JobsAPI.H265, JobsAPI.VideoCommon {
+    export interface MP4H265 {
       /**
        * AudioBitrate specifies the audio bitrate in bits per second. Must be between
        * 32Kbps and 512Kbps.
@@ -948,16 +1451,161 @@ export namespace JobCreateParams {
       audio_bitrate?: number;
 
       /**
+       * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
+       * 50Mbps.
+       */
+      bufsize?: number;
+
+      /**
+       * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
+       * (stereo), 5 (5.1), 7 (7.1)
+       */
+      channels?: 1 | 2 | 5 | 7;
+
+      /**
+       * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+       * values mean better quality but larger file size. Range: 16 to 35. Recommended
+       * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
+       * quality.
+       */
+      crf?: number;
+
+      /**
+       * DisableAudio indicates whether to disable audio processing.
+       */
+      disable_audio?: boolean;
+
+      /**
+       * DisableVideo indicates whether to disable video processing.
+       */
+      disable_video?: boolean;
+
+      /**
+       * Duration specifies the duration to process in seconds. Must be a positive value.
+       */
+      duration?: number;
+
+      /**
+       * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+       */
+      framerate?: number;
+
+      /**
+       * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+       */
+      gop?: number;
+
+      /**
+       * Height specifies the output video height in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      height?: number;
+
+      /**
+       * Level specifies the H.265 profile level. Valid values: 30-31 (main), 41
+       * (main10). Higher levels support higher resolutions and bitrates but require more
+       * processing power.
+       */
+      level?: 30 | 31 | 41;
+
+      /**
+       * Maxrate specifies the maximum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      maxrate?: number;
+
+      /**
+       * Minrate specifies the minimum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      minrate?: number;
+
+      movflags?: string;
+
+      /**
+       * PixFmt specifies the pixel format. Valid value: yuv420p
+       */
+      pixfmt?:
+        | 'yuv410p'
+        | 'yuv411p'
+        | 'yuv420p'
+        | 'yuv422p'
+        | 'yuv440p'
+        | 'yuv444p'
+        | 'yuvJ411p'
+        | 'yuvJ420p'
+        | 'yuvJ422p'
+        | 'yuvJ440p'
+        | 'yuvJ444p'
+        | 'yuv420p10le'
+        | 'yuv422p10le'
+        | 'yuv440p10le'
+        | 'yuv444p10le'
+        | 'yuv420p12le'
+        | 'yuv422p12le'
+        | 'yuv440p12le'
+        | 'yuv444p12le'
+        | 'yuv420p10be'
+        | 'yuv422p10be'
+        | 'yuv440p10be'
+        | 'yuv444p10be'
+        | 'yuv420p12be'
+        | 'yuv422p12be'
+        | 'yuv440p12be'
+        | 'yuv444p12be';
+
+      /**
+       * Preset specifies the encoding speed preset. Valid values (from fastest to
+       * slowest):
+       *
+       * - ultrafast: Fastest encoding, lowest quality
+       * - superfast: Very fast encoding, lower quality
+       * - veryfast: Fast encoding, moderate quality
+       * - faster: Faster encoding, good quality
+       * - fast: Fast encoding, better quality
+       * - medium: Balanced preset, best quality
+       */
+      preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
+
+      /**
+       * Profilev specifies the H.265 profile. Valid values:
+       *
+       * - main: Main profile, good for most applications
+       * - main10: Main 10-bit profile, supports 10-bit color
+       * - mainstillpicture: Still picture profile, optimized for single images
+       */
+      profilev?: 'main' | 'main10' | 'mainstillpicture';
+
+      /**
+       * Seek specifies the timestamp to start processing from (in seconds). Must be a
+       * positive value.
+       */
+      seek?: number;
+
+      /**
        * VideoBitrate specifies the video bitrate in bits per second. Must be between
        * 100Kbps and 50Mbps.
        */
       video_bitrate?: number;
+
+      /**
+       * Width specifies the output video width in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      width?: number;
+
+      /**
+       * X265KeyInt specifies the maximum number of frames between keyframes for H.265
+       * encoding. Range: 1 to 300. Higher values can improve compression but may affect
+       * seeking.
+       */
+      x265_keyint?: number;
     }
 
     /**
      * VP9 configuration
      */
-    export interface WebmVp9 extends JobsAPI.Vp9, JobsAPI.VideoCommon {
+    export interface WebmVp9 {
       /**
        * AudioBitrate specifies the audio bitrate in bits per second. Must be between
        * 32Kbps and 512Kbps.
@@ -965,10 +1613,134 @@ export namespace JobCreateParams {
       audio_bitrate?: number;
 
       /**
+       * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
+       * 50Mbps.
+       */
+      bufsize?: number;
+
+      /**
+       * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
+       * (stereo), 5 (5.1), 7 (7.1)
+       */
+      channels?: 1 | 2 | 5 | 7;
+
+      /**
+       * CpuUsed specifies the CPU usage level for VP9 encoding. Range: 0 to 8. Lower
+       * values mean better quality but slower encoding, higher values mean faster
+       * encoding but lower quality. Recommended values: 0-2 for high quality, 2-4 for
+       * good quality, 4-6 for balanced, 6-8 for speed
+       */
+      cpu_used?: string;
+
+      /**
+       * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+       * values mean better quality but larger file size. Range: 15 to 35. Recommended
+       * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
+       * quality.
+       */
+      crf?: number;
+
+      /**
+       * DisableAudio indicates whether to disable audio processing.
+       */
+      disable_audio?: boolean;
+
+      /**
+       * DisableVideo indicates whether to disable video processing.
+       */
+      disable_video?: boolean;
+
+      /**
+       * Duration specifies the duration to process in seconds. Must be a positive value.
+       */
+      duration?: number;
+
+      /**
+       * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+       */
+      framerate?: number;
+
+      /**
+       * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+       */
+      gop?: number;
+
+      /**
+       * Height specifies the output video height in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      height?: number;
+
+      /**
+       * Maxrate specifies the maximum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      maxrate?: number;
+
+      /**
+       * Minrate specifies the minimum video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      minrate?: number;
+
+      /**
+       * PixFmt specifies the pixel format. Valid value: yuv420p
+       */
+      pixfmt?:
+        | 'yuv410p'
+        | 'yuv411p'
+        | 'yuv420p'
+        | 'yuv422p'
+        | 'yuv440p'
+        | 'yuv444p'
+        | 'yuvJ411p'
+        | 'yuvJ420p'
+        | 'yuvJ422p'
+        | 'yuvJ440p'
+        | 'yuvJ444p'
+        | 'yuv420p10le'
+        | 'yuv422p10le'
+        | 'yuv440p10le'
+        | 'yuv444p10le'
+        | 'yuv420p12le'
+        | 'yuv422p12le'
+        | 'yuv440p12le'
+        | 'yuv444p12le'
+        | 'yuv420p10be'
+        | 'yuv422p10be'
+        | 'yuv440p10be'
+        | 'yuv444p10be'
+        | 'yuv420p12be'
+        | 'yuv422p12be'
+        | 'yuv440p12be'
+        | 'yuv444p12be';
+
+      /**
+       * Quality specifies the VP9 encoding quality preset. Valid values:
+       *
+       * - good: Balanced quality preset, good for most applications
+       * - best: Best quality preset, slower encoding
+       * - realtime: Fast encoding preset, suitable for live streaming
+       */
+      quality?: 'good' | 'best' | 'realtime';
+
+      /**
+       * Seek specifies the timestamp to start processing from (in seconds). Must be a
+       * positive value.
+       */
+      seek?: number;
+
+      /**
        * VideoBitrate specifies the video bitrate in bits per second. Must be between
        * 100Kbps and 50Mbps.
        */
       video_bitrate?: number;
+
+      /**
+       * Width specifies the output video width in pixels. Must be between -2 and 7680.
+       * Use -2 for automatic calculation while maintaining aspect ratio.
+       */
+      width?: number;
     }
   }
 
@@ -1079,13 +1851,7 @@ export interface JobGetLogsParams {
 
 export declare namespace Jobs {
   export {
-    type Av1 as Av1,
-    type H264 as H264,
-    type H265 as H265,
-    type Hls as Hls,
     type Job as Job,
-    type VideoCommon as VideoCommon,
-    type Vp9 as Vp9,
     type JobCreateResponse as JobCreateResponse,
     type JobRetrieveResponse as JobRetrieveResponse,
     type JobGetFilesResponse as JobGetFilesResponse,

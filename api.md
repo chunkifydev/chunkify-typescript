@@ -16,13 +16,7 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/jobs.ts">Av1</a></code>
-- <code><a href="./src/resources/jobs.ts">H264</a></code>
-- <code><a href="./src/resources/jobs.ts">H265</a></code>
-- <code><a href="./src/resources/jobs.ts">Hls</a></code>
 - <code><a href="./src/resources/jobs.ts">Job</a></code>
-- <code><a href="./src/resources/jobs.ts">VideoCommon</a></code>
-- <code><a href="./src/resources/jobs.ts">Vp9</a></code>
 - <code><a href="./src/resources/jobs.ts">JobCreateResponse</a></code>
 - <code><a href="./src/resources/jobs.ts">JobRetrieveResponse</a></code>
 - <code><a href="./src/resources/jobs.ts">JobGetFilesResponse</a></code>

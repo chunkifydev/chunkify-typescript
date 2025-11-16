@@ -10,13 +10,7 @@ export {
 } from './files';
 export {
   Jobs,
-  type Av1,
-  type H264,
-  type H265,
-  type Hls,
   type Job,
-  type VideoCommon,
-  type Vp9,
   type JobCreateResponse,
   type JobRetrieveResponse,
   type JobGetFilesResponse,
