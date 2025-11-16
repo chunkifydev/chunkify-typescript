@@ -83,6 +83,12 @@ export type JobsMyOffsetPage = MyOffsetPage<Job>;
  */
 export interface Av1 extends VideoCommon {
   /**
+   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+   * 32Kbps and 512Kbps.
+   */
+  audio_bitrate?: number;
+
+  /**
    * Crf (Constant Rate Factor) controls the quality of the output video. Lower
    * values mean better quality but larger file size. Range: 16 to 63. Recommended
    * values: 16-35 for high quality, 35-45 for good quality, 45-63 for acceptable
@@ -121,12 +127,24 @@ export interface Av1 extends VideoCommon {
    * - mainstillpicture: Still picture profile, optimized for single images
    */
   profilev?: 'main' | 'main10' | 'mainstillpicture';
+
+  /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
 }
 
 /**
  * FFmpeg encoding parameters specific to H.264/AVC encoding.
  */
 export interface H264 extends VideoCommon {
+  /**
+   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+   * 32Kbps and 512Kbps.
+   */
+  audio_bitrate?: number;
+
   /**
    * Crf (Constant Rate Factor) controls the quality of the output video. Lower
    * values mean better quality but larger file size. Range: 16 to 35. Recommended
@@ -170,6 +188,12 @@ export interface H264 extends VideoCommon {
   profilev?: 'baseline' | 'main' | 'high' | 'high10' | 'high422' | 'high444';
 
   /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
    * X264KeyInt specifies the maximum number of frames between keyframes for H.264
    * encoding. Range: 1 to 300. Higher values can improve compression but may affect
    * seeking.
@@ -183,6 +207,12 @@ export interface H264 extends VideoCommon {
  * profiles.
  */
 export interface H265 extends VideoCommon {
+  /**
+   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+   * 32Kbps and 512Kbps.
+   */
+  audio_bitrate?: number;
+
   /**
    * Crf (Constant Rate Factor) controls the quality of the output video. Lower
    * values mean better quality but larger file size. Range: 16 to 35. Recommended
@@ -223,6 +253,12 @@ export interface H265 extends VideoCommon {
   profilev?: 'main' | 'main10' | 'mainstillpicture';
 
   /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
    * X265KeyInt specifies the maximum number of frames between keyframes for H.265
    * encoding. Range: 1 to 300. Higher values can improve compression but may affect
    * seeking.
@@ -230,9 +266,6 @@ export interface H265 extends VideoCommon {
   x265_keyint?: number;
 }
 
-/**
- * FFmpeg encoding parameters specific to HLS packaging.
- */
 export interface Hls {
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
@@ -434,12 +467,6 @@ export namespace Job {
  */
 export interface VideoCommon {
   /**
-   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
-   * 32Kbps and 512Kbps.
-   */
-  audio_bitrate?: number;
-
-  /**
    * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
    * 50Mbps.
    */
@@ -531,12 +558,6 @@ export interface VideoCommon {
    * positive value.
    */
   seek?: number;
-
-  /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate?: number;
 
   /**
    * Width specifies the output video width in pixels. Must be between -2 and 7680.
