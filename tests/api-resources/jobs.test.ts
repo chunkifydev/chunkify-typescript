@@ -25,8 +25,6 @@ describe('resource jobs', () => {
     const response = await client.jobs.create({
       format: {
         hls_av1: {
-          audio_bitrate: 32000,
-          video_bitrate: 100000,
           hls_enc: false,
           hls_enc_iv: '0123456789abcdef',
           hls_enc_key: '0123456789abcdef',
@@ -35,8 +33,6 @@ describe('resource jobs', () => {
           hls_time: 6,
         },
         hls_h264: {
-          audio_bitrate: 32000,
-          video_bitrate: 100000,
           hls_enc: false,
           hls_enc_iv: '0123456789abcdef',
           hls_enc_key: '0123456789abcdef',
@@ -45,8 +41,6 @@ describe('resource jobs', () => {
           hls_time: 6,
         },
         hls_h265: {
-          audio_bitrate: 32000,
-          video_bitrate: 100000,
           hls_enc: false,
           hls_enc_iv: '0123456789abcdef',
           hls_enc_key: '0123456789abcdef',
