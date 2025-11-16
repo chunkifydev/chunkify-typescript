@@ -1,46 +1,77 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">ChunkifyError</a></code>
+- <code><a href="./src/resources/shared.ts">ResponseError</a></code>
+- <code><a href="./src/resources/shared.ts">ResponseOk</a></code>
+
 # Files
 
 Types:
 
-- <code><a href="./src/resources/files.ts">File</a></code>
-- <code><a href="./src/resources/files.ts">ResponseOk</a></code>
+- <code><a href="./src/resources/files.ts">APIFile</a></code>
 - <code><a href="./src/resources/files.ts">FileRetrieveResponse</a></code>
 
 Methods:
 
 - <code title="get /api/files/{fileId}">client.files.<a href="./src/resources/files.ts">retrieve</a>(fileID) -> FileRetrieveResponse</code>
-- <code title="get /api/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FilesPaginatedResults</code>
+- <code title="get /api/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> APIFilesPaginatedResults</code>
 - <code title="delete /api/files/{fileId}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID) -> void</code>
 
 # Jobs
 
 Types:
 
-- <code><a href="./src/resources/jobs.ts">HlsAv1</a></code>
-- <code><a href="./src/resources/jobs.ts">HlsH264</a></code>
-- <code><a href="./src/resources/jobs.ts">HlsH265</a></code>
-- <code><a href="./src/resources/jobs.ts">Job</a></code>
-- <code><a href="./src/resources/jobs.ts">Jpg</a></code>
-- <code><a href="./src/resources/jobs.ts">MP4Av1</a></code>
-- <code><a href="./src/resources/jobs.ts">MP4H264</a></code>
-- <code><a href="./src/resources/jobs.ts">MP4H265</a></code>
-- <code><a href="./src/resources/jobs.ts">WebmVp9</a></code>
-- <code><a href="./src/resources/jobs.ts">JobCreateResponse</a></code>
-- <code><a href="./src/resources/jobs.ts">JobRetrieveResponse</a></code>
-- <code><a href="./src/resources/jobs.ts">JobGetFilesResponse</a></code>
-- <code><a href="./src/resources/jobs.ts">JobGetLogsResponse</a></code>
-- <code><a href="./src/resources/jobs.ts">JobGetTranscodersResponse</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">HlsAv1</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">HlsH264</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">HlsH265</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">Job</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">Jpg</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">MP4Av1</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">MP4H264</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">MP4H265</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">WebmVp9</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">JobCreateResponse</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">JobRetrieveResponse</a></code>
 
 Methods:
 
-- <code title="post /api/jobs">client.jobs.<a href="./src/resources/jobs.ts">create</a>({ ...params }) -> JobCreateResponse</code>
-- <code title="get /api/jobs/{jobId}">client.jobs.<a href="./src/resources/jobs.ts">retrieve</a>(jobID) -> JobRetrieveResponse</code>
-- <code title="get /api/jobs">client.jobs.<a href="./src/resources/jobs.ts">list</a>({ ...params }) -> JobsPaginatedResults</code>
-- <code title="delete /api/jobs/{jobId}">client.jobs.<a href="./src/resources/jobs.ts">delete</a>(jobID) -> void</code>
-- <code title="post /api/jobs/{jobId}/cancel">client.jobs.<a href="./src/resources/jobs.ts">cancel</a>(jobID) -> void</code>
-- <code title="get /api/jobs/{jobId}/files">client.jobs.<a href="./src/resources/jobs.ts">getFiles</a>(jobID) -> JobGetFilesResponse</code>
-- <code title="get /api/jobs/{jobId}/logs">client.jobs.<a href="./src/resources/jobs.ts">getLogs</a>(jobID, { ...params }) -> JobGetLogsResponse</code>
-- <code title="get /api/jobs/{jobId}/transcoders">client.jobs.<a href="./src/resources/jobs.ts">getTranscoders</a>(jobID) -> JobGetTranscodersResponse</code>
+- <code title="post /api/jobs">client.jobs.<a href="./src/resources/jobs/jobs.ts">create</a>({ ...params }) -> JobCreateResponse</code>
+- <code title="get /api/jobs/{jobId}">client.jobs.<a href="./src/resources/jobs/jobs.ts">retrieve</a>(jobID) -> JobRetrieveResponse</code>
+- <code title="get /api/jobs">client.jobs.<a href="./src/resources/jobs/jobs.ts">list</a>({ ...params }) -> JobsPaginatedResults</code>
+- <code title="delete /api/jobs/{jobId}">client.jobs.<a href="./src/resources/jobs/jobs.ts">delete</a>(jobID) -> void</code>
+- <code title="post /api/jobs/{jobId}/cancel">client.jobs.<a href="./src/resources/jobs/jobs.ts">cancel</a>(jobID) -> void</code>
+
+## Files
+
+Types:
+
+- <code><a href="./src/resources/jobs/files.ts">FileListResponse</a></code>
+
+Methods:
+
+- <code title="get /api/jobs/{jobId}/files">client.jobs.files.<a href="./src/resources/jobs/files.ts">list</a>(jobID) -> FileListResponse</code>
+
+## Logs
+
+Types:
+
+- <code><a href="./src/resources/jobs/logs.ts">LogListResponse</a></code>
+
+Methods:
+
+- <code title="get /api/jobs/{jobId}/logs">client.jobs.logs.<a href="./src/resources/jobs/logs.ts">list</a>(jobID, { ...params }) -> LogListResponse</code>
+
+## Transcoders
+
+Types:
+
+- <code><a href="./src/resources/jobs/transcoders.ts">TranscoderListResponse</a></code>
+
+Methods:
+
+- <code title="get /api/jobs/{jobId}/transcoders">client.jobs.transcoders.<a href="./src/resources/jobs/transcoders.ts">list</a>(jobID) -> TranscoderListResponse</code>
 
 # Notifications
 

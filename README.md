@@ -48,7 +48,7 @@ const client = new Chunkify({
   projectAccessToken: process.env['CHUNKIFY_TOKEN'], // This is the default and can be omitted
 });
 
-const [file]: [Chunkify.File] = await client.files.list();
+const [apiFile]: [Chunkify.APIFile] = await client.files.list();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -178,8 +178,8 @@ console.log(response.statusText); // access the underlying Response object
 
 const { data: page, response: raw } = await client.files.list().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-for await (const file of page) {
-  console.log(file.id);
+for await (const apiFile of page) {
+  console.log(apiFile.id);
 }
 ```
 

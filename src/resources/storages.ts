@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -92,21 +92,21 @@ export interface Storage {
 /**
  * Successful response
  */
-export interface StorageCreateResponse extends FilesAPI.ResponseOk {
+export interface StorageCreateResponse extends Shared.ResponseOk {
   data?: Storage;
 }
 
 /**
  * Successful response
  */
-export interface StorageRetrieveResponse extends FilesAPI.ResponseOk {
+export interface StorageRetrieveResponse extends Shared.ResponseOk {
   data?: Storage;
 }
 
 /**
  * Successful response
  */
-export interface StorageListResponse extends FilesAPI.ResponseOk {
+export interface StorageListResponse extends Shared.ResponseOk {
   data?: Array<Storage>;
 }
 

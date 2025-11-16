@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -22,8 +23,8 @@ export class Files extends APIResource {
   list(
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<FilesPaginatedResults, File> {
-    return this._client.getAPIList('/api/files', PaginatedResults<File>, { query, ...options });
+  ): PagePromise<APIFilesPaginatedResults, APIFile> {
+    return this._client.getAPIList('/api/files', PaginatedResults<APIFile>, { query, ...options });
   }
 
   /**
@@ -37,9 +38,9 @@ export class Files extends APIResource {
   }
 }
 
-export type FilesPaginatedResults = PaginatedResults<File>;
+export type APIFilesPaginatedResults = PaginatedResults<APIFile>;
 
-export interface File {
+export interface APIFile {
   /**
    * Unique identifier of the file
    */
@@ -124,23 +125,8 @@ export interface File {
 /**
  * Successful response
  */
-export interface ResponseOk {
-  /**
-   * Data contains the response object
-   */
-  data?: unknown;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status?: string;
-}
-
-/**
- * Successful response
- */
-export interface FileRetrieveResponse extends ResponseOk {
-  data?: File;
+export interface FileRetrieveResponse extends Shared.ResponseOk {
+  data?: APIFile;
 }
 
 export interface FileListParams extends PaginatedResultsParams {
@@ -328,10 +314,9 @@ export namespace FileListParams {
 
 export declare namespace Files {
   export {
-    type File as File,
-    type ResponseOk as ResponseOk,
+    type APIFile as APIFile,
     type FileRetrieveResponse as FileRetrieveResponse,
-    type FilesPaginatedResults as FilesPaginatedResults,
+    type APIFilesPaginatedResults as APIFilesPaginatedResults,
     type FileListParams as FileListParams,
   };
 }

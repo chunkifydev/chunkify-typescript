@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export * from './shared';
 export {
   Files,
-  type File,
-  type ResponseOk,
+  type APIFile,
   type FileRetrieveResponse,
   type FileListParams,
-  type FilesPaginatedResults,
+  type APIFilesPaginatedResults,
 } from './files';
 export {
   Jobs,
@@ -21,14 +21,10 @@ export {
   type WebmVp9,
   type JobCreateResponse,
   type JobRetrieveResponse,
-  type JobGetFilesResponse,
-  type JobGetLogsResponse,
-  type JobGetTranscodersResponse,
   type JobCreateParams,
   type JobListParams,
-  type JobGetLogsParams,
   type JobsPaginatedResults,
-} from './jobs';
+} from './jobs/jobs';
 export {
   Notifications,
   type Notification,
