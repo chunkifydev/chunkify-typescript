@@ -20,34 +20,12 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
-  File,
+  APIFile,
+  APIFilesPaginatedResults,
   FileListParams,
   FileRetrieveResponse,
   Files,
-  FilesPaginatedResults,
-  ResponseOk,
 } from './resources/files';
-import {
-  HlsAv1,
-  HlsH264,
-  HlsH265,
-  Job,
-  JobCreateParams,
-  JobCreateResponse,
-  JobGetFilesResponse,
-  JobGetLogsParams,
-  JobGetLogsResponse,
-  JobGetTranscodersResponse,
-  JobListParams,
-  JobRetrieveResponse,
-  Jobs,
-  JobsPaginatedResults,
-  Jpg,
-  MP4Av1,
-  MP4H264,
-  MP4H265,
-  WebmVp9,
-} from './resources/jobs';
 import {
   Notification,
   NotificationCreateParams,
@@ -103,6 +81,23 @@ import {
   WebhookUpdateParams,
   Webhooks,
 } from './resources/webhooks';
+import {
+  HlsAv1,
+  HlsH264,
+  HlsH265,
+  Job,
+  JobCreateParams,
+  JobCreateResponse,
+  JobListParams,
+  JobRetrieveResponse,
+  Jobs,
+  JobsPaginatedResults,
+  Jpg,
+  MP4Av1,
+  MP4H264,
+  MP4H265,
+  WebmVp9,
+} from './resources/jobs/jobs';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -870,10 +865,9 @@ export declare namespace Chunkify {
 
   export {
     Files as Files,
-    type File as File,
-    type ResponseOk as ResponseOk,
+    type APIFile as APIFile,
     type FileRetrieveResponse as FileRetrieveResponse,
-    type FilesPaginatedResults as FilesPaginatedResults,
+    type APIFilesPaginatedResults as APIFilesPaginatedResults,
     type FileListParams as FileListParams,
   };
 
@@ -890,13 +884,9 @@ export declare namespace Chunkify {
     type WebmVp9 as WebmVp9,
     type JobCreateResponse as JobCreateResponse,
     type JobRetrieveResponse as JobRetrieveResponse,
-    type JobGetFilesResponse as JobGetFilesResponse,
-    type JobGetLogsResponse as JobGetLogsResponse,
-    type JobGetTranscodersResponse as JobGetTranscodersResponse,
     type JobsPaginatedResults as JobsPaginatedResults,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
-    type JobGetLogsParams as JobGetLogsParams,
   };
 
   export {
@@ -966,4 +956,8 @@ export declare namespace Chunkify {
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
   };
+
+  export type ChunkifyError = API.ChunkifyError;
+  export type ResponseError = API.ResponseError;
+  export type ResponseOk = API.ResponseOk;
 }

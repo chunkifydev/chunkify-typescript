@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -86,21 +86,21 @@ export interface Webhook {
 /**
  * Successful response
  */
-export interface WebhookCreateResponse extends FilesAPI.ResponseOk {
+export interface WebhookCreateResponse extends Shared.ResponseOk {
   data?: Webhook;
 }
 
 /**
  * Successful response
  */
-export interface WebhookRetrieveResponse extends FilesAPI.ResponseOk {
+export interface WebhookRetrieveResponse extends Shared.ResponseOk {
   data?: Webhook;
 }
 
 /**
  * Successful response
  */
-export interface WebhookListResponse extends FilesAPI.ResponseOk {
+export interface WebhookListResponse extends Shared.ResponseOk {
   data?: Array<Webhook>;
 }
 

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
+import * as Shared from './shared';
 import * as WebhooksAPI from './webhooks';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
@@ -90,14 +90,14 @@ export interface Notification {
 /**
  * Successful response
  */
-export interface NotificationCreateResponse extends FilesAPI.ResponseOk {
+export interface NotificationCreateResponse extends Shared.ResponseOk {
   data?: Notification;
 }
 
 /**
  * Successful response
  */
-export interface NotificationRetrieveResponse extends FilesAPI.ResponseOk {
+export interface NotificationRetrieveResponse extends Shared.ResponseOk {
   data?: Notification;
 }
 

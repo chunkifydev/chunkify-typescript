@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -73,14 +73,14 @@ export interface Token {
 /**
  * Successful response
  */
-export interface TokenCreateResponse extends FilesAPI.ResponseOk {
+export interface TokenCreateResponse extends Shared.ResponseOk {
   data?: Token;
 }
 
 /**
  * Successful response
  */
-export interface TokenListResponse extends FilesAPI.ResponseOk {
+export interface TokenListResponse extends Shared.ResponseOk {
   data?: Array<Token>;
 }
 

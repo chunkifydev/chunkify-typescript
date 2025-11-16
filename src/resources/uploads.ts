@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -61,7 +61,7 @@ export interface Upload {
   /**
    * Error message of the upload
    */
-  error?: Upload.Error;
+  error?: Shared.ChunkifyError;
 
   /**
    * Timestamp when the upload will expire
@@ -94,39 +94,17 @@ export interface Upload {
   upload_url?: string;
 }
 
-export namespace Upload {
-  /**
-   * Error message of the upload
-   */
-  export interface Error {
-    /**
-     * Additional error details or output
-     */
-    detail?: string;
-
-    /**
-     * Main error message
-     */
-    message?: string;
-
-    /**
-     * Type of error (e.g., "ffmpeg", "network", "storage", etc.)
-     */
-    type?: string;
-  }
-}
-
 /**
  * Successful response
  */
-export interface UploadCreateResponse extends FilesAPI.ResponseOk {
+export interface UploadCreateResponse extends Shared.ResponseOk {
   data?: Upload;
 }
 
 /**
  * Successful response
  */
-export interface UploadRetrieveResponse extends FilesAPI.ResponseOk {
+export interface UploadRetrieveResponse extends Shared.ResponseOk {
   data?: Upload;
 }
 
