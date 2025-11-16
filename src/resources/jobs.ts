@@ -4,7 +4,7 @@ import { APIResource } from '../core/resource';
 import * as JobsAPI from './jobs';
 import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
-import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -30,8 +30,8 @@ export class Jobs extends APIResource {
   list(
     query: JobListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<JobsMyOffsetPage, Job> {
-    return this._client.getAPIList('/api/jobs', MyOffsetPage<Job>, { query, ...options });
+  ): PagePromise<JobsPaginatedResults, Job> {
+    return this._client.getAPIList('/api/jobs', PaginatedResults<Job>, { query, ...options });
   }
 
   /**
@@ -76,7 +76,7 @@ export class Jobs extends APIResource {
   }
 }
 
-export type JobsMyOffsetPage = MyOffsetPage<Job>;
+export type JobsPaginatedResults = PaginatedResults<Job>;
 
 /**
  * FFmpeg encoding parameters specific to AV1 encoding.
@@ -1012,7 +1012,7 @@ export namespace JobCreateParams {
   }
 }
 
-export interface JobListParams extends MyOffsetPageParams {
+export interface JobListParams extends PaginatedResultsParams {
   /**
    * Filter by job ID
    */
@@ -1091,7 +1091,7 @@ export declare namespace Jobs {
     type JobGetFilesResponse as JobGetFilesResponse,
     type JobGetLogsResponse as JobGetLogsResponse,
     type JobGetTranscodersResponse as JobGetTranscodersResponse,
-    type JobsMyOffsetPage as JobsMyOffsetPage,
+    type JobsPaginatedResults as JobsPaginatedResults,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
     type JobGetLogsParams as JobGetLogsParams,

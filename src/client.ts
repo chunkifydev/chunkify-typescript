@@ -15,13 +15,13 @@ import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { AbstractPage, type MyOffsetPageParams, MyOffsetPageResponse } from './core/pagination';
+import { AbstractPage, type PaginatedResultsParams, PaginatedResultsResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   APIFile,
-  APIFilesMyOffsetPage,
+  APIFilesPaginatedResults,
   FileListParams,
   FileRetrieveResponse,
   Files,
@@ -42,7 +42,7 @@ import {
   JobListParams,
   JobRetrieveResponse,
   Jobs,
-  JobsMyOffsetPage,
+  JobsPaginatedResults,
   VideoCommon,
   Vp9,
 } from './resources/jobs';
@@ -53,7 +53,7 @@ import {
   NotificationListParams,
   NotificationRetrieveResponse,
   Notifications,
-  NotificationsMyOffsetPage,
+  NotificationsPaginatedResults,
 } from './resources/notifications';
 import {
   Project,
@@ -72,7 +72,7 @@ import {
   SourceListParams,
   SourceRetrieveResponse,
   Sources,
-  SourcesMyOffsetPage,
+  SourcesPaginatedResults,
 } from './resources/sources';
 import {
   Storage,
@@ -90,7 +90,7 @@ import {
   UploadListParams,
   UploadRetrieveResponse,
   Uploads as UploadsAPIUploads,
-  UploadsMyOffsetPage,
+  UploadsPaginatedResults,
 } from './resources/uploads';
 import {
   Webhook,
@@ -860,15 +860,18 @@ Chunkify.Webhooks = Webhooks;
 export declare namespace Chunkify {
   export type RequestOptions = Opts.RequestOptions;
 
-  export import MyOffsetPage = Pagination.MyOffsetPage;
-  export { type MyOffsetPageParams as MyOffsetPageParams, type MyOffsetPageResponse as MyOffsetPageResponse };
+  export import PaginatedResults = Pagination.PaginatedResults;
+  export {
+    type PaginatedResultsParams as PaginatedResultsParams,
+    type PaginatedResultsResponse as PaginatedResultsResponse,
+  };
 
   export {
     Files as Files,
     type APIFile as APIFile,
     type ResponseOk as ResponseOk,
     type FileRetrieveResponse as FileRetrieveResponse,
-    type APIFilesMyOffsetPage as APIFilesMyOffsetPage,
+    type APIFilesPaginatedResults as APIFilesPaginatedResults,
     type FileListParams as FileListParams,
   };
 
@@ -886,7 +889,7 @@ export declare namespace Chunkify {
     type JobGetFilesResponse as JobGetFilesResponse,
     type JobGetLogsResponse as JobGetLogsResponse,
     type JobGetTranscodersResponse as JobGetTranscodersResponse,
-    type JobsMyOffsetPage as JobsMyOffsetPage,
+    type JobsPaginatedResults as JobsPaginatedResults,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
     type JobGetLogsParams as JobGetLogsParams,
@@ -897,7 +900,7 @@ export declare namespace Chunkify {
     type Notification as Notification,
     type NotificationCreateResponse as NotificationCreateResponse,
     type NotificationRetrieveResponse as NotificationRetrieveResponse,
-    type NotificationsMyOffsetPage as NotificationsMyOffsetPage,
+    type NotificationsPaginatedResults as NotificationsPaginatedResults,
     type NotificationCreateParams as NotificationCreateParams,
     type NotificationListParams as NotificationListParams,
   };
@@ -918,7 +921,7 @@ export declare namespace Chunkify {
     type Source as Source,
     type SourceCreateResponse as SourceCreateResponse,
     type SourceRetrieveResponse as SourceRetrieveResponse,
-    type SourcesMyOffsetPage as SourcesMyOffsetPage,
+    type SourcesPaginatedResults as SourcesPaginatedResults,
     type SourceCreateParams as SourceCreateParams,
     type SourceListParams as SourceListParams,
   };
@@ -945,7 +948,7 @@ export declare namespace Chunkify {
     type Upload as Upload,
     type UploadCreateResponse as UploadCreateResponse,
     type UploadRetrieveResponse as UploadRetrieveResponse,
-    type UploadsMyOffsetPage as UploadsMyOffsetPage,
+    type UploadsPaginatedResults as UploadsPaginatedResults,
     type UploadCreateParams as UploadCreateParams,
     type UploadListParams as UploadListParams,
   };

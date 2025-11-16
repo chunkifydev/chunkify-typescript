@@ -4,7 +4,7 @@ import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
 import * as WebhooksAPI from './webhooks';
 import { APIPromise } from '../core/api-promise';
-import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -30,8 +30,11 @@ export class Notifications extends APIResource {
   list(
     query: NotificationListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<NotificationsMyOffsetPage, Notification> {
-    return this._client.getAPIList('/api/notifications', MyOffsetPage<Notification>, { query, ...options });
+  ): PagePromise<NotificationsPaginatedResults, Notification> {
+    return this._client.getAPIList('/api/notifications', PaginatedResults<Notification>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -45,7 +48,7 @@ export class Notifications extends APIResource {
   }
 }
 
-export type NotificationsMyOffsetPage = MyOffsetPage<Notification>;
+export type NotificationsPaginatedResults = PaginatedResults<Notification>;
 
 export interface Notification {
   /**
@@ -122,7 +125,7 @@ export interface NotificationCreateParams {
   webhook_id: string;
 }
 
-export interface NotificationListParams extends MyOffsetPageParams {
+export interface NotificationListParams extends PaginatedResultsParams {
   created?: NotificationListParams.Created;
 
   /**
@@ -185,7 +188,7 @@ export declare namespace Notifications {
     type Notification as Notification,
     type NotificationCreateResponse as NotificationCreateResponse,
     type NotificationRetrieveResponse as NotificationRetrieveResponse,
-    type NotificationsMyOffsetPage as NotificationsMyOffsetPage,
+    type NotificationsPaginatedResults as NotificationsPaginatedResults,
     type NotificationCreateParams as NotificationCreateParams,
     type NotificationListParams as NotificationListParams,
   };

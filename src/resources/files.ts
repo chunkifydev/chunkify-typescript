@@ -2,7 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
-import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -22,8 +22,8 @@ export class Files extends APIResource {
   list(
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<APIFilesMyOffsetPage, APIFile> {
-    return this._client.getAPIList('/api/files', MyOffsetPage<APIFile>, { query, ...options });
+  ): PagePromise<APIFilesPaginatedResults, APIFile> {
+    return this._client.getAPIList('/api/files', PaginatedResults<APIFile>, { query, ...options });
   }
 
   /**
@@ -37,7 +37,7 @@ export class Files extends APIResource {
   }
 }
 
-export type APIFilesMyOffsetPage = MyOffsetPage<APIFile>;
+export type APIFilesPaginatedResults = PaginatedResults<APIFile>;
 
 export interface APIFile {
   /**
@@ -143,7 +143,7 @@ export interface FileRetrieveResponse extends ResponseOk {
   data?: APIFile;
 }
 
-export interface FileListParams extends MyOffsetPageParams {
+export interface FileListParams extends PaginatedResultsParams {
   /**
    * Filter by file ID
    */
@@ -331,7 +331,7 @@ export declare namespace Files {
     type APIFile as APIFile,
     type ResponseOk as ResponseOk,
     type FileRetrieveResponse as FileRetrieveResponse,
-    type APIFilesMyOffsetPage as APIFilesMyOffsetPage,
+    type APIFilesPaginatedResults as APIFilesPaginatedResults,
     type FileListParams as FileListParams,
   };
 }
