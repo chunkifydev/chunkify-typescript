@@ -2,14 +2,13 @@
 
 Types:
 
-- <code><a href="./src/resources/files.ts">APIFile</a></code>
-- <code><a href="./src/resources/files.ts">ResponseOk</a></code>
+- <code><a href="./src/resources/files.ts">File</a></code>
 - <code><a href="./src/resources/files.ts">FileRetrieveResponse</a></code>
 
 Methods:
 
 - <code title="get /api/files/{fileId}">client.files.<a href="./src/resources/files.ts">retrieve</a>(fileID) -> FileRetrieveResponse</code>
-- <code title="get /api/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> APIFilesPaginatedResults</code>
+- <code title="get /api/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FilesPaginatedResults</code>
 - <code title="delete /api/files/{fileId}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID) -> void</code>
 
 # Jobs
@@ -17,6 +16,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/jobs.ts">Job</a></code>
+- <code><a href="./src/resources/jobs.ts">MP4H264</a></code>
 - <code><a href="./src/resources/jobs.ts">JobCreateResponse</a></code>
 - <code><a href="./src/resources/jobs.ts">JobRetrieveResponse</a></code>
 - <code><a href="./src/resources/jobs.ts">JobGetFilesResponse</a></code>

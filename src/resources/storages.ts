@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -89,25 +88,31 @@ export interface Storage {
   slug?: string;
 }
 
-/**
- * Successful response
- */
-export interface StorageCreateResponse extends FilesAPI.ResponseOk {
+export interface StorageCreateResponse {
   data?: Storage;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status?: string;
 }
 
-/**
- * Successful response
- */
-export interface StorageRetrieveResponse extends FilesAPI.ResponseOk {
+export interface StorageRetrieveResponse {
   data?: Storage;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status?: string;
 }
 
-/**
- * Successful response
- */
-export interface StorageListResponse extends FilesAPI.ResponseOk {
-  data?: Array<Storage>;
+export interface StorageListResponse {
+  data?: unknown;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status?: string;
 }
 
 export interface StorageCreateParams {

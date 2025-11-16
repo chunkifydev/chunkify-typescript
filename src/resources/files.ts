@@ -22,8 +22,8 @@ export class Files extends APIResource {
   list(
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<APIFilesPaginatedResults, APIFile> {
-    return this._client.getAPIList('/api/files', PaginatedResults<APIFile>, { query, ...options });
+  ): PagePromise<FilesPaginatedResults, File> {
+    return this._client.getAPIList('/api/files', PaginatedResults<File>, { query, ...options });
   }
 
   /**
@@ -37,9 +37,9 @@ export class Files extends APIResource {
   }
 }
 
-export type APIFilesPaginatedResults = PaginatedResults<APIFile>;
+export type FilesPaginatedResults = PaginatedResults<File>;
 
-export interface APIFile {
+export interface File {
   /**
    * Unique identifier of the file
    */
@@ -121,26 +121,13 @@ export interface APIFile {
   width?: number;
 }
 
-/**
- * Successful response
- */
-export interface ResponseOk {
-  /**
-   * Data contains the response object
-   */
-  data?: unknown;
+export interface FileRetrieveResponse {
+  data?: File;
 
   /**
    * Status indicates the response status "success"
    */
   status?: string;
-}
-
-/**
- * Successful response
- */
-export interface FileRetrieveResponse extends ResponseOk {
-  data?: APIFile;
 }
 
 export interface FileListParams extends PaginatedResultsParams {
@@ -328,10 +315,9 @@ export namespace FileListParams {
 
 export declare namespace Files {
   export {
-    type APIFile as APIFile,
-    type ResponseOk as ResponseOk,
+    type File as File,
     type FileRetrieveResponse as FileRetrieveResponse,
-    type APIFilesPaginatedResults as APIFilesPaginatedResults,
+    type FilesPaginatedResults as FilesPaginatedResults,
     type FileListParams as FileListParams,
   };
 }

@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -70,18 +69,22 @@ export interface Token {
   scope?: string;
 }
 
-/**
- * Successful response
- */
-export interface TokenCreateResponse extends FilesAPI.ResponseOk {
+export interface TokenCreateResponse {
   data?: Token;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status?: string;
 }
 
-/**
- * Successful response
- */
-export interface TokenListResponse extends FilesAPI.ResponseOk {
-  data?: Array<Token>;
+export interface TokenListResponse {
+  data?: unknown;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status?: string;
 }
 
 export interface TokenCreateParams {

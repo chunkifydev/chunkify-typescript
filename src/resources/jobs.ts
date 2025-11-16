@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
+import * as JobsAPI from './jobs';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -222,183 +222,213 @@ export namespace Job {
 }
 
 /**
- * Successful response
+ * FFmpeg encoding parameters specific to MP4 with H.264 encoding.
  */
-export interface JobCreateResponse extends FilesAPI.ResponseOk {
+export interface MP4H264 {
+  /**
+   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+   * 32Kbps and 512Kbps.
+   */
+  audio_bitrate?: number;
+
+  /**
+   * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
+   * 50Mbps.
+   */
+  bufsize?: number;
+
+  /**
+   * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
+   * (stereo), 5 (5.1), 7 (7.1)
+   */
+  channels?: 1 | 2 | 5 | 7;
+
+  /**
+   * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+   * values mean better quality but larger file size. Range: 16 to 35. Recommended
+   * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
+   * quality.
+   */
+  crf?: number;
+
+  /**
+   * DisableAudio indicates whether to disable audio processing.
+   */
+  disable_audio?: boolean;
+
+  /**
+   * DisableVideo indicates whether to disable video processing.
+   */
+  disable_video?: boolean;
+
+  /**
+   * Duration specifies the duration to process in seconds. Must be a positive value.
+   */
+  duration?: number;
+
+  /**
+   * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+   */
+  framerate?: number;
+
+  /**
+   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+   */
+  gop?: number;
+
+  /**
+   * Height specifies the output video height in pixels. Must be between -2 and 7680.
+   * Use -2 for automatic calculation while maintaining aspect ratio.
+   */
+  height?: number;
+
+  /**
+   * Level specifies the H.264 profile level. Valid values: 10-13 (baseline), 20-22
+   * (main), 30-32 (high), 40-42 (high), 50-51 (high). Higher levels support higher
+   * resolutions and bitrates but require more processing power.
+   */
+  level?: 10 | 11 | 12 | 13 | 20 | 21 | 22 | 30 | 31 | 32 | 40 | 41 | 42 | 50 | 51;
+
+  /**
+   * Maxrate specifies the maximum video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  maxrate?: number;
+
+  /**
+   * Minrate specifies the minimum video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  minrate?: number;
+
+  movflags?: string;
+
+  /**
+   * PixFmt specifies the pixel format. Valid value: yuv420p
+   */
+  pixfmt?:
+    | 'yuv410p'
+    | 'yuv411p'
+    | 'yuv420p'
+    | 'yuv422p'
+    | 'yuv440p'
+    | 'yuv444p'
+    | 'yuvJ411p'
+    | 'yuvJ420p'
+    | 'yuvJ422p'
+    | 'yuvJ440p'
+    | 'yuvJ444p'
+    | 'yuv420p10le'
+    | 'yuv422p10le'
+    | 'yuv440p10le'
+    | 'yuv444p10le'
+    | 'yuv420p12le'
+    | 'yuv422p12le'
+    | 'yuv440p12le'
+    | 'yuv444p12le'
+    | 'yuv420p10be'
+    | 'yuv422p10be'
+    | 'yuv440p10be'
+    | 'yuv444p10be'
+    | 'yuv420p12be'
+    | 'yuv422p12be'
+    | 'yuv440p12be'
+    | 'yuv444p12be';
+
+  /**
+   * Preset specifies the encoding speed preset. Valid values (from fastest to
+   * slowest):
+   *
+   * - ultrafast: Fastest encoding, lowest quality
+   * - superfast: Very fast encoding, lower quality
+   * - veryfast: Fast encoding, moderate quality
+   * - faster: Faster encoding, good quality
+   * - fast: Fast encoding, better quality
+   * - medium: Balanced preset, best quality
+   */
+  preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
+
+  /**
+   * Profilev specifies the H.264 profile. Valid values:
+   *
+   * - baseline: Basic profile, good for mobile devices
+   * - main: Main profile, good for most applications
+   * - high: High profile, best quality but requires more processing
+   * - high10: High 10-bit profile, supports 10-bit color
+   * - high422: High 4:2:2 profile, supports 4:2:2 color sampling
+   * - high444: High 4:4:4 profile, supports 4:4:4 color sampling
+   */
+  profilev?: 'baseline' | 'main' | 'high' | 'high10' | 'high422' | 'high444';
+
+  /**
+   * Seek specifies the timestamp to start processing from (in seconds). Must be a
+   * positive value.
+   */
+  seek?: number;
+
+  /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
+   * Width specifies the output video width in pixels. Must be between -2 and 7680.
+   * Use -2 for automatic calculation while maintaining aspect ratio.
+   */
+  width?: number;
+
+  /**
+   * X264KeyInt specifies the maximum number of frames between keyframes for H.264
+   * encoding. Range: 1 to 300. Higher values can improve compression but may affect
+   * seeking.
+   */
+  x264_keyint?: number;
+}
+
+export interface JobCreateResponse {
   data?: Job;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status?: string;
 }
 
-/**
- * Successful response
- */
-export interface JobRetrieveResponse extends FilesAPI.ResponseOk {
+export interface JobRetrieveResponse {
   data?: Job;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status?: string;
 }
 
-/**
- * Successful response
- */
-export interface JobGetFilesResponse extends FilesAPI.ResponseOk {
-  data?: Array<FilesAPI.APIFile>;
+export interface JobGetFilesResponse {
+  data?: unknown;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status?: string;
 }
 
-/**
- * Successful response
- */
-export interface JobGetLogsResponse extends FilesAPI.ResponseOk {
-  data?: Array<JobGetLogsResponse.Data>;
+export interface JobGetLogsResponse {
+  data?: unknown;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status?: string;
 }
 
-export namespace JobGetLogsResponse {
-  export interface Data {
-    /**
-     * Additional structured data attached to the log
-     */
-    attributes?: unknown;
+export interface JobGetTranscodersResponse {
+  data?: unknown;
 
-    /**
-     * Optional ID of the job this log is associated with
-     */
-    job_id?: string;
-
-    /**
-     * Log level (e.g. "info", "error", "debug")
-     */
-    level?: string;
-
-    /**
-     * The log message content
-     */
-    msg?: string;
-
-    /**
-     * Name of the service that generated the log
-     */
-    service?: string;
-
-    /**
-     * Timestamp when the log was created
-     */
-    time?: string;
-  }
-}
-
-/**
- * Successful response
- */
-export interface JobGetTranscodersResponse extends FilesAPI.ResponseOk {
-  data?: Array<JobGetTranscodersResponse.Data>;
-}
-
-export namespace JobGetTranscodersResponse {
-  export interface Data {
-    /**
-     * Unique identifier of the transcoder
-     */
-    id?: string;
-
-    /**
-     * Billable time in seconds
-     */
-    billable_time?: number;
-
-    /**
-     * End time of the current chunk in seconds
-     */
-    chunk_end_time?: number;
-
-    /**
-     * Number of the chunk being processed
-     */
-    chunk_number?: number;
-
-    /**
-     * Start time of the current chunk in seconds
-     */
-    chunk_start_time?: number;
-
-    /**
-     * CPU time used for transcoding in seconds
-     */
-    cpu_time?: number;
-
-    /**
-     * Timestamp when the status was created
-     */
-    created_at?: string;
-
-    /**
-     * Error message if the transcoding failed
-     */
-    error?: Data.Error;
-
-    /**
-     * Current frames per second being processed
-     */
-    fps?: number;
-
-    /**
-     * Current frame number being processed
-     */
-    frame?: number;
-
-    /**
-     * Unique identifier of the job
-     */
-    job_id?: string;
-
-    /**
-     * Current output time in seconds
-     */
-    out_time?: number;
-
-    /**
-     * Progress percentage of the transcoding operation (0-100)
-     */
-    progress?: number;
-
-    /**
-     * Current processing speed multiplier
-     */
-    speed?: number;
-
-    /**
-     * Current status of the transcoder (starting, transcoding, finished, error)
-     */
-    status?: string;
-
-    /**
-     * Unique identifier of the transcoder instance (generated by the transcoder)
-     */
-    transcoder_instance_id?: string;
-
-    /**
-     * Timestamp when the status was last updated
-     */
-    updated_at?: string;
-  }
-
-  export namespace Data {
-    /**
-     * Error message if the transcoding failed
-     */
-    export interface Error {
-      /**
-       * Additional error details or output
-       */
-      detail?: string;
-
-      /**
-       * Main error message
-       */
-      message?: string;
-
-      /**
-       * Type of error (e.g., "ffmpeg", "network", "storage", etc.)
-       */
-      type?: string;
-    }
-  }
+  /**
+   * Status indicates the response status "success"
+   */
+  status?: string;
 }
 
 export interface JobCreateParams {
@@ -473,9 +503,9 @@ export namespace JobCreateParams {
     mp4_av1?: Format.MP4Av1;
 
     /**
-     * H264 configuration
+     * FFmpeg encoding parameters specific to MP4 with H.264 encoding.
      */
-    mp4_h264?: Format.MP4H264;
+    mp4_h264?: JobsAPI.MP4H264;
 
     /**
      * H265 configuration
@@ -1276,171 +1306,6 @@ export namespace JobCreateParams {
     }
 
     /**
-     * H264 configuration
-     */
-    export interface MP4H264 {
-      /**
-       * AudioBitrate specifies the audio bitrate in bits per second. Must be between
-       * 32Kbps and 512Kbps.
-       */
-      audio_bitrate?: number;
-
-      /**
-       * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
-       * 50Mbps.
-       */
-      bufsize?: number;
-
-      /**
-       * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
-       * (stereo), 5 (5.1), 7 (7.1)
-       */
-      channels?: 1 | 2 | 5 | 7;
-
-      /**
-       * Crf (Constant Rate Factor) controls the quality of the output video. Lower
-       * values mean better quality but larger file size. Range: 16 to 35. Recommended
-       * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
-       * quality.
-       */
-      crf?: number;
-
-      /**
-       * DisableAudio indicates whether to disable audio processing.
-       */
-      disable_audio?: boolean;
-
-      /**
-       * DisableVideo indicates whether to disable video processing.
-       */
-      disable_video?: boolean;
-
-      /**
-       * Duration specifies the duration to process in seconds. Must be a positive value.
-       */
-      duration?: number;
-
-      /**
-       * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
-       */
-      framerate?: number;
-
-      /**
-       * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
-       */
-      gop?: number;
-
-      /**
-       * Height specifies the output video height in pixels. Must be between -2 and 7680.
-       * Use -2 for automatic calculation while maintaining aspect ratio.
-       */
-      height?: number;
-
-      /**
-       * Level specifies the H.264 profile level. Valid values: 10-13 (baseline), 20-22
-       * (main), 30-32 (high), 40-42 (high), 50-51 (high). Higher levels support higher
-       * resolutions and bitrates but require more processing power.
-       */
-      level?: 10 | 11 | 12 | 13 | 20 | 21 | 22 | 30 | 31 | 32 | 40 | 41 | 42 | 50 | 51;
-
-      /**
-       * Maxrate specifies the maximum video bitrate in bits per second. Must be between
-       * 100Kbps and 50Mbps.
-       */
-      maxrate?: number;
-
-      /**
-       * Minrate specifies the minimum video bitrate in bits per second. Must be between
-       * 100Kbps and 50Mbps.
-       */
-      minrate?: number;
-
-      movflags?: string;
-
-      /**
-       * PixFmt specifies the pixel format. Valid value: yuv420p
-       */
-      pixfmt?:
-        | 'yuv410p'
-        | 'yuv411p'
-        | 'yuv420p'
-        | 'yuv422p'
-        | 'yuv440p'
-        | 'yuv444p'
-        | 'yuvJ411p'
-        | 'yuvJ420p'
-        | 'yuvJ422p'
-        | 'yuvJ440p'
-        | 'yuvJ444p'
-        | 'yuv420p10le'
-        | 'yuv422p10le'
-        | 'yuv440p10le'
-        | 'yuv444p10le'
-        | 'yuv420p12le'
-        | 'yuv422p12le'
-        | 'yuv440p12le'
-        | 'yuv444p12le'
-        | 'yuv420p10be'
-        | 'yuv422p10be'
-        | 'yuv440p10be'
-        | 'yuv444p10be'
-        | 'yuv420p12be'
-        | 'yuv422p12be'
-        | 'yuv440p12be'
-        | 'yuv444p12be';
-
-      /**
-       * Preset specifies the encoding speed preset. Valid values (from fastest to
-       * slowest):
-       *
-       * - ultrafast: Fastest encoding, lowest quality
-       * - superfast: Very fast encoding, lower quality
-       * - veryfast: Fast encoding, moderate quality
-       * - faster: Faster encoding, good quality
-       * - fast: Fast encoding, better quality
-       * - medium: Balanced preset, best quality
-       */
-      preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
-
-      /**
-       * Profilev specifies the H.264 profile. Valid values:
-       *
-       * - baseline: Basic profile, good for mobile devices
-       * - main: Main profile, good for most applications
-       * - high: High profile, best quality but requires more processing
-       * - high10: High 10-bit profile, supports 10-bit color
-       * - high422: High 4:2:2 profile, supports 4:2:2 color sampling
-       * - high444: High 4:4:4 profile, supports 4:4:4 color sampling
-       */
-      profilev?: 'baseline' | 'main' | 'high' | 'high10' | 'high422' | 'high444';
-
-      /**
-       * Seek specifies the timestamp to start processing from (in seconds). Must be a
-       * positive value.
-       */
-      seek?: number;
-
-      /**
-       * VideoBitrate specifies the video bitrate in bits per second. Must be between
-       * 100Kbps and 50Mbps.
-       */
-      video_bitrate?: number;
-
-      /**
-       * Width specifies the output video width in pixels. Must be between -2 and 7680.
-       * Use -2 for automatic calculation while maintaining aspect ratio.
-       */
-      width?: number;
-
-      /**
-       * X264KeyInt specifies the maximum number of frames between keyframes for H.264
-       * encoding. Range: 1 to 300. Higher values can improve compression but may affect
-       * seeking.
-       */
-      x264_keyint?: number;
-    }
-
-    /**
      * H265 configuration
      */
     export interface MP4H265 {
@@ -1852,6 +1717,7 @@ export interface JobGetLogsParams {
 export declare namespace Jobs {
   export {
     type Job as Job,
+    type MP4H264 as MP4H264,
     type JobCreateResponse as JobCreateResponse,
     type JobRetrieveResponse as JobRetrieveResponse,
     type JobGetFilesResponse as JobGetFilesResponse,
