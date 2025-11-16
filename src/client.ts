@@ -28,10 +28,6 @@ import {
   ResponseOk,
 } from './resources/files';
 import {
-  Av1,
-  H264,
-  H265,
-  Hls,
   Job,
   JobCreateParams,
   JobCreateResponse,
@@ -43,8 +39,6 @@ import {
   JobRetrieveResponse,
   Jobs,
   JobsPaginatedResults,
-  VideoCommon,
-  Vp9,
 } from './resources/jobs';
 import {
   Notification,
@@ -877,13 +871,7 @@ export declare namespace Chunkify {
 
   export {
     Jobs as Jobs,
-    type Av1 as Av1,
-    type H264 as H264,
-    type H265 as H265,
-    type Hls as Hls,
     type Job as Job,
-    type VideoCommon as VideoCommon,
-    type Vp9 as Vp9,
     type JobCreateResponse as JobCreateResponse,
     type JobRetrieveResponse as JobRetrieveResponse,
     type JobGetFilesResponse as JobGetFilesResponse,
