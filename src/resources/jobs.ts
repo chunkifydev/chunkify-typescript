@@ -787,9 +787,9 @@ export namespace JobCreateParams {
     mp4_h265?: JobsAPI.H265;
 
     /**
-     * FFmpeg encoding parameters specific to VP9 encoding.
+     * FFmpeg encoding parameters common to all video formats.
      */
-    webm_vp9?: Format.WebmVp9;
+    webm_vp9?: JobsAPI.VideoCommon;
   }
 
   export namespace Format {
@@ -838,147 +838,6 @@ export namespace JobCreateParams {
 
       sprite?: boolean;
 
-      width?: number;
-    }
-
-    /**
-     * FFmpeg encoding parameters specific to VP9 encoding.
-     */
-    export interface WebmVp9 {
-      /**
-       * AudioBitrate specifies the audio bitrate in bits per second. Must be between
-       * 32Kbps and 512Kbps.
-       */
-      audio_bitrate?: number;
-
-      /**
-       * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
-       * 50Mbps.
-       */
-      bufsize?: number;
-
-      /**
-       * Channels specifies the number of audio channels. Valid values: 1 (mono), 2
-       * (stereo), 5 (5.1), 7 (7.1)
-       */
-      channels?: 1 | 2 | 5 | 7;
-
-      /**
-       * CpuUsed specifies the CPU usage level for VP9 encoding. Range: 0 to 8. Lower
-       * values mean better quality but slower encoding, higher values mean faster
-       * encoding but lower quality. Recommended values: 0-2 for high quality, 2-4 for
-       * good quality, 4-6 for balanced, 6-8 for speed
-       */
-      cpu_used?: string;
-
-      /**
-       * Crf (Constant Rate Factor) controls the quality of the output video. Lower
-       * values mean better quality but larger file size. Range: 15 to 35. Recommended
-       * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
-       * quality.
-       */
-      crf?: number;
-
-      /**
-       * DisableAudio indicates whether to disable audio processing.
-       */
-      disable_audio?: boolean;
-
-      /**
-       * DisableVideo indicates whether to disable video processing.
-       */
-      disable_video?: boolean;
-
-      /**
-       * Duration specifies the duration to process in seconds. Must be a positive value.
-       */
-      duration?: number;
-
-      /**
-       * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
-       */
-      framerate?: number;
-
-      /**
-       * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
-       */
-      gop?: number;
-
-      /**
-       * Height specifies the output video height in pixels. Must be between -2 and 7680.
-       * Use -2 for automatic calculation while maintaining aspect ratio.
-       */
-      height?: number;
-
-      /**
-       * Maxrate specifies the maximum video bitrate in bits per second. Must be between
-       * 100Kbps and 50Mbps.
-       */
-      maxrate?: number;
-
-      /**
-       * Minrate specifies the minimum video bitrate in bits per second. Must be between
-       * 100Kbps and 50Mbps.
-       */
-      minrate?: number;
-
-      /**
-       * PixFmt specifies the pixel format. Valid value: yuv420p
-       */
-      pixfmt?:
-        | 'yuv410p'
-        | 'yuv411p'
-        | 'yuv420p'
-        | 'yuv422p'
-        | 'yuv440p'
-        | 'yuv444p'
-        | 'yuvJ411p'
-        | 'yuvJ420p'
-        | 'yuvJ422p'
-        | 'yuvJ440p'
-        | 'yuvJ444p'
-        | 'yuv420p10le'
-        | 'yuv422p10le'
-        | 'yuv440p10le'
-        | 'yuv444p10le'
-        | 'yuv420p12le'
-        | 'yuv422p12le'
-        | 'yuv440p12le'
-        | 'yuv444p12le'
-        | 'yuv420p10be'
-        | 'yuv422p10be'
-        | 'yuv440p10be'
-        | 'yuv444p10be'
-        | 'yuv420p12be'
-        | 'yuv422p12be'
-        | 'yuv440p12be'
-        | 'yuv444p12be';
-
-      /**
-       * Quality specifies the VP9 encoding quality preset. Valid values:
-       *
-       * - good: Balanced quality preset, good for most applications
-       * - best: Best quality preset, slower encoding
-       * - realtime: Fast encoding preset, suitable for live streaming
-       */
-      quality?: 'good' | 'best' | 'realtime';
-
-      /**
-       * Seek specifies the timestamp to start processing from (in seconds). Must be a
-       * positive value.
-       */
-      seek?: number;
-
-      /**
-       * VideoBitrate specifies the video bitrate in bits per second. Must be between
-       * 100Kbps and 50Mbps.
-       */
-      video_bitrate?: number;
-
-      /**
-       * Width specifies the output video width in pixels. Must be between -2 and 7680.
-       * Use -2 for automatic calculation while maintaining aspect ratio.
-       */
       width?: number;
     }
   }
