@@ -11,7 +11,6 @@ export {
 export {
   Jobs,
   type Av1,
-  type ChunkifyError,
   type H264,
   type H265,
   type Hls,

@@ -2,7 +2,6 @@
 
 import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
-import * as JobsAPI from './jobs';
 import { APIPromise } from '../core/api-promise';
 import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -62,7 +61,7 @@ export interface Upload {
   /**
    * Error message of the upload
    */
-  error?: JobsAPI.ChunkifyError;
+  error?: Upload.Error;
 
   /**
    * Timestamp when the upload will expire
@@ -93,6 +92,28 @@ export interface Upload {
    * Pre-signed URL where the file should be uploaded to
    */
   upload_url?: string;
+}
+
+export namespace Upload {
+  /**
+   * Error message of the upload
+   */
+  export interface Error {
+    /**
+     * Additional error details or output
+     */
+    detail?: string;
+
+    /**
+     * Main error message
+     */
+    message?: string;
+
+    /**
+     * Type of error (e.g., "ffmpeg", "network", "storage", etc.)
+     */
+    type?: string;
+  }
 }
 
 /**

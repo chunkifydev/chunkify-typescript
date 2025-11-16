@@ -29,7 +29,6 @@ import {
 } from './resources/files';
 import {
   Av1,
-  ChunkifyError,
   H264,
   H265,
   Hls,
@@ -876,7 +875,6 @@ export declare namespace Chunkify {
   export {
     Jobs as Jobs,
     type Av1 as Av1,
-    type ChunkifyError as ChunkifyError,
     type H264 as H264,
     type H265 as H265,
     type Hls as Hls,

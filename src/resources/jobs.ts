@@ -123,23 +123,6 @@ export interface Av1 extends VideoCommon {
   profilev?: 'main' | 'main10' | 'mainstillpicture';
 }
 
-export interface ChunkifyError {
-  /**
-   * Additional error details or output
-   */
-  detail?: string;
-
-  /**
-   * Main error message
-   */
-  message?: string;
-
-  /**
-   * Type of error (e.g., "ffmpeg", "network", "storage", etc.)
-   */
-  type?: string;
-}
-
 /**
  * FFmpeg encoding parameters specific to H.264/AVC encoding.
  */
@@ -321,7 +304,7 @@ export interface Job {
   /**
    * Error message for the job
    */
-  error?: ChunkifyError;
+  error?: Job.Error;
 
   /**
    * A template defines the transcoding parameters and settings for a job
@@ -376,6 +359,26 @@ export interface Job {
 }
 
 export namespace Job {
+  /**
+   * Error message for the job
+   */
+  export interface Error {
+    /**
+     * Additional error details or output
+     */
+    detail?: string;
+
+    /**
+     * Main error message
+     */
+    message?: string;
+
+    /**
+     * Type of error (e.g., "ffmpeg", "network", "storage", etc.)
+     */
+    type?: string;
+  }
+
   /**
    * A template defines the transcoding parameters and settings for a job
    */
@@ -681,7 +684,7 @@ export namespace JobGetTranscodersResponse {
     /**
      * Error message if the transcoding failed
      */
-    error?: JobsAPI.ChunkifyError;
+    error?: Data.Error;
 
     /**
      * Current frames per second being processed
@@ -727,6 +730,28 @@ export namespace JobGetTranscodersResponse {
      * Timestamp when the status was last updated
      */
     updated_at?: string;
+  }
+
+  export namespace Data {
+    /**
+     * Error message if the transcoding failed
+     */
+    export interface Error {
+      /**
+       * Additional error details or output
+       */
+      detail?: string;
+
+      /**
+       * Main error message
+       */
+      message?: string;
+
+      /**
+       * Type of error (e.g., "ffmpeg", "network", "storage", etc.)
+       */
+      type?: string;
+    }
   }
 }
 
@@ -977,7 +1002,6 @@ export interface JobGetLogsParams {
 export declare namespace Jobs {
   export {
     type Av1 as Av1,
-    type ChunkifyError as ChunkifyError,
     type H264 as H264,
     type H265 as H265,
     type Hls as Hls,
