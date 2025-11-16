@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { APIError } from './core/error';
 import type { RequestInit, RequestInfo, BodyInit } from './internal/builtin-types';
 import type { HTTPMethod, PromiseOrValue, MergedRequestInit, FinalizedRequestInit } from './internal/types';
 import { uuid4 } from './internal/utils/uuid';
@@ -28,8 +29,8 @@ import {
   ResponseOk,
 } from './resources/files';
 import {
+  APIError,
   Av1,
-  ChunkifyError,
   H264,
   H265,
   Hls,
@@ -875,8 +876,8 @@ export declare namespace Chunkify {
 
   export {
     Jobs as Jobs,
+    type APIError as APIError,
     type Av1 as Av1,
-    type ChunkifyError as ChunkifyError,
     type H264 as H264,
     type H265 as H265,
     type Hls as Hls,
