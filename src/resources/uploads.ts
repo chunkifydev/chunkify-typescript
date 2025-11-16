@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -115,22 +116,18 @@ export namespace Upload {
   }
 }
 
-export interface UploadCreateResponse {
+/**
+ * Successful response
+ */
+export interface UploadCreateResponse extends FilesAPI.ResponseOk {
   data?: Upload;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status?: string;
 }
 
-export interface UploadRetrieveResponse {
+/**
+ * Successful response
+ */
+export interface UploadRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Upload;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status?: string;
 }
 
 export interface UploadCreateParams {

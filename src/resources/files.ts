@@ -121,13 +121,26 @@ export interface File {
   width?: number;
 }
 
-export interface FileRetrieveResponse {
-  data?: File;
+/**
+ * Successful response
+ */
+export interface ResponseOk {
+  /**
+   * Data contains the response object
+   */
+  data?: unknown;
 
   /**
    * Status indicates the response status "success"
    */
   status?: string;
+}
+
+/**
+ * Successful response
+ */
+export interface FileRetrieveResponse extends ResponseOk {
+  data?: File;
 }
 
 export interface FileListParams extends PaginatedResultsParams {
@@ -316,6 +329,7 @@ export namespace FileListParams {
 export declare namespace Files {
   export {
     type File as File,
+    type ResponseOk as ResponseOk,
     type FileRetrieveResponse as FileRetrieveResponse,
     type FilesPaginatedResults as FilesPaginatedResults,
     type FileListParams as FileListParams,

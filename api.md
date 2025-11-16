@@ -3,6 +3,7 @@
 Types:
 
 - <code><a href="./src/resources/files.ts">File</a></code>
+- <code><a href="./src/resources/files.ts">ResponseOk</a></code>
 - <code><a href="./src/resources/files.ts">FileRetrieveResponse</a></code>
 
 Methods:
@@ -15,8 +16,15 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/jobs.ts">HlsAv1</a></code>
+- <code><a href="./src/resources/jobs.ts">HlsH264</a></code>
+- <code><a href="./src/resources/jobs.ts">HlsH265</a></code>
 - <code><a href="./src/resources/jobs.ts">Job</a></code>
+- <code><a href="./src/resources/jobs.ts">Jpg</a></code>
+- <code><a href="./src/resources/jobs.ts">MP4Av1</a></code>
 - <code><a href="./src/resources/jobs.ts">MP4H264</a></code>
+- <code><a href="./src/resources/jobs.ts">MP4H265</a></code>
+- <code><a href="./src/resources/jobs.ts">WebmVp9</a></code>
 - <code><a href="./src/resources/jobs.ts">JobCreateResponse</a></code>
 - <code><a href="./src/resources/jobs.ts">JobRetrieveResponse</a></code>
 - <code><a href="./src/resources/jobs.ts">JobGetFilesResponse</a></code>

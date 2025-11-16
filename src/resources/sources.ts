@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -121,22 +122,18 @@ export interface Source {
   width?: number;
 }
 
-export interface SourceCreateResponse {
+/**
+ * Successful response
+ */
+export interface SourceCreateResponse extends FilesAPI.ResponseOk {
   data?: Source;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status?: string;
 }
 
-export interface SourceRetrieveResponse {
+/**
+ * Successful response
+ */
+export interface SourceRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Source;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status?: string;
 }
 
 export interface SourceCreateParams {
