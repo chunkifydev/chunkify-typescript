@@ -2,15 +2,15 @@
 
 export {
   Files,
-  type APIFile,
-  type ResponseOk,
+  type File,
   type FileRetrieveResponse,
   type FileListParams,
-  type APIFilesPaginatedResults,
+  type FilesPaginatedResults,
 } from './files';
 export {
   Jobs,
   type Job,
+  type MP4H264,
   type JobCreateResponse,
   type JobRetrieveResponse,
   type JobGetFilesResponse,
