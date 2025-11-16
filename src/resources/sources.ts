@@ -125,14 +125,14 @@ export interface Source {
 /**
  * Successful response
  */
-export interface SourceCreateResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface SourceCreateResponse extends FilesAPI.ResponseOk {
   data?: Source;
 }
 
 /**
  * Successful response
  */
-export interface SourceRetrieveResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface SourceRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Source;
 }
 
