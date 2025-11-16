@@ -78,23 +78,6 @@ export class Jobs extends APIResource {
 
 export type JobsMyOffsetPage = MyOffsetPage<Job>;
 
-export interface APIError {
-  /**
-   * Additional error details or output
-   */
-  detail?: string;
-
-  /**
-   * Main error message
-   */
-  message?: string;
-
-  /**
-   * Type of error (e.g., "ffmpeg", "network", "storage", etc.)
-   */
-  type?: string;
-}
-
 /**
  * FFmpeg encoding parameters specific to AV1 encoding.
  */
@@ -138,6 +121,23 @@ export interface Av1 extends VideoCommon {
    * - mainstillpicture: Still picture profile, optimized for single images
    */
   profilev?: 'main' | 'main10' | 'mainstillpicture';
+}
+
+export interface ChunkifyError {
+  /**
+   * Additional error details or output
+   */
+  detail?: string;
+
+  /**
+   * Main error message
+   */
+  message?: string;
+
+  /**
+   * Type of error (e.g., "ffmpeg", "network", "storage", etc.)
+   */
+  type?: string;
 }
 
 /**
@@ -321,7 +321,7 @@ export interface Job {
   /**
    * Error message for the job
    */
-  error?: APIError;
+  error?: ChunkifyError;
 
   /**
    * A template defines the transcoding parameters and settings for a job
@@ -681,7 +681,7 @@ export namespace JobGetTranscodersResponse {
     /**
      * Error message if the transcoding failed
      */
-    error?: JobsAPI.APIError;
+    error?: JobsAPI.ChunkifyError;
 
     /**
      * Current frames per second being processed
@@ -976,8 +976,8 @@ export interface JobGetLogsParams {
 
 export declare namespace Jobs {
   export {
-    type APIError as APIError,
     type Av1 as Av1,
+    type ChunkifyError as ChunkifyError,
     type H264 as H264,
     type H265 as H265,
     type Hls as Hls,

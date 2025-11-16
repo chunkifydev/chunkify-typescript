@@ -62,7 +62,7 @@ export interface Upload {
   /**
    * Error message of the upload
    */
-  error?: JobsAPI.APIError;
+  error?: JobsAPI.ChunkifyError;
 
   /**
    * Timestamp when the upload will expire
