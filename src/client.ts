@@ -19,8 +19,18 @@ import { AbstractPage, type PaginatedResultsParams, PaginatedResultsResponse } f
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { File, FileListParams, FileRetrieveResponse, Files, FilesPaginatedResults } from './resources/files';
 import {
+  File,
+  FileListParams,
+  FileRetrieveResponse,
+  Files,
+  FilesPaginatedResults,
+  ResponseOk,
+} from './resources/files';
+import {
+  HlsAv1,
+  HlsH264,
+  HlsH265,
   Job,
   JobCreateParams,
   JobCreateResponse,
@@ -32,7 +42,11 @@ import {
   JobRetrieveResponse,
   Jobs,
   JobsPaginatedResults,
+  Jpg,
+  MP4Av1,
   MP4H264,
+  MP4H265,
+  WebmVp9,
 } from './resources/jobs';
 import {
   Notification,
@@ -857,6 +871,7 @@ export declare namespace Chunkify {
   export {
     Files as Files,
     type File as File,
+    type ResponseOk as ResponseOk,
     type FileRetrieveResponse as FileRetrieveResponse,
     type FilesPaginatedResults as FilesPaginatedResults,
     type FileListParams as FileListParams,
@@ -864,8 +879,15 @@ export declare namespace Chunkify {
 
   export {
     Jobs as Jobs,
+    type HlsAv1 as HlsAv1,
+    type HlsH264 as HlsH264,
+    type HlsH265 as HlsH265,
     type Job as Job,
+    type Jpg as Jpg,
+    type MP4Av1 as MP4Av1,
     type MP4H264 as MP4H264,
+    type MP4H265 as MP4H265,
+    type WebmVp9 as WebmVp9,
     type JobCreateResponse as JobCreateResponse,
     type JobRetrieveResponse as JobRetrieveResponse,
     type JobGetFilesResponse as JobGetFilesResponse,

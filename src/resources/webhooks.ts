@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -82,31 +83,25 @@ export interface Webhook {
   url?: string;
 }
 
-export interface WebhookCreateResponse {
+/**
+ * Successful response
+ */
+export interface WebhookCreateResponse extends FilesAPI.ResponseOk {
   data?: Webhook;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status?: string;
 }
 
-export interface WebhookRetrieveResponse {
+/**
+ * Successful response
+ */
+export interface WebhookRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Webhook;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status?: string;
 }
 
-export interface WebhookListResponse {
-  data?: unknown;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status?: string;
+/**
+ * Successful response
+ */
+export interface WebhookListResponse extends FilesAPI.ResponseOk {
+  data?: Array<Webhook>;
 }
 
 export interface WebhookCreateParams {
