@@ -92,21 +92,21 @@ export interface Storage {
 /**
  * Successful response
  */
-export interface StorageCreateResponse extends FilesAPI.ResponseOk {
+export interface StorageCreateResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Storage;
 }
 
 /**
  * Successful response
  */
-export interface StorageRetrieveResponse extends FilesAPI.ResponseOk {
+export interface StorageRetrieveResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Storage;
 }
 
 /**
  * Successful response
  */
-export interface StorageListResponse extends FilesAPI.ResponseOk {
+export interface StorageListResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Array<Storage>;
 }
 
@@ -115,8 +115,6 @@ export interface StorageCreateParams {
    * Provider specifies the storage provider.
    */
   provider: 'chunkify' | 'aws' | 'cloudflare';
-
-  'storage.StorageProvider'?: unknown;
 }
 
 export declare namespace Storages {

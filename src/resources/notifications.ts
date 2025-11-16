@@ -87,14 +87,14 @@ export interface Notification {
 /**
  * Successful response
  */
-export interface NotificationCreateResponse extends FilesAPI.ResponseOk {
+export interface NotificationCreateResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Notification;
 }
 
 /**
  * Successful response
  */
-export interface NotificationRetrieveResponse extends FilesAPI.ResponseOk {
+export interface NotificationRetrieveResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
   data?: Notification;
 }
 

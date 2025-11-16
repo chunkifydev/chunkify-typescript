@@ -128,7 +128,7 @@ export interface ResponseOk {
   /**
    * Data contains the response object
    */
-  data?: unknown;
+  data?: { [key: string]: unknown };
 
   /**
    * Status indicates the response status "success"
@@ -139,7 +139,7 @@ export interface ResponseOk {
 /**
  * Successful response
  */
-export interface FileRetrieveResponse extends ResponseOk {
+export interface FileRetrieveResponse extends Omit<ResponseOk, 'data'> {
   data?: APIFile;
 }
 
