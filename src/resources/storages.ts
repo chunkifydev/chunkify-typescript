@@ -92,21 +92,21 @@ export interface Storage {
 /**
  * Successful response
  */
-export interface StorageCreateResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface StorageCreateResponse extends FilesAPI.ResponseOk {
   data?: Storage;
 }
 
 /**
  * Successful response
  */
-export interface StorageRetrieveResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface StorageRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Storage;
 }
 
 /**
  * Successful response
  */
-export interface StorageListResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface StorageListResponse extends FilesAPI.ResponseOk {
   data?: Array<Storage>;
 }
 

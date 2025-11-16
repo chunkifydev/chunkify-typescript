@@ -385,7 +385,7 @@ export namespace Job {
      * specific to the format For example, for mp4/h264 format this includes parameters
      * like crf, preset, profile etc.
      */
-    config?: { [key: string]: unknown };
+    config?: unknown;
 
     /**
      * Name of the transcoding template.The format to use for transcoding. Valid
@@ -575,28 +575,28 @@ export interface Vp9 extends VideoCommon {
 /**
  * Successful response
  */
-export interface JobCreateResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface JobCreateResponse extends FilesAPI.ResponseOk {
   data?: Job;
 }
 
 /**
  * Successful response
  */
-export interface JobRetrieveResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface JobRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Job;
 }
 
 /**
  * Successful response
  */
-export interface JobGetFilesResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface JobGetFilesResponse extends FilesAPI.ResponseOk {
   data?: Array<FilesAPI.APIFile>;
 }
 
 /**
  * Successful response
  */
-export interface JobGetLogsResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface JobGetLogsResponse extends FilesAPI.ResponseOk {
   data?: Array<JobGetLogsResponse.Data>;
 }
 
@@ -605,7 +605,7 @@ export namespace JobGetLogsResponse {
     /**
      * Additional structured data attached to the log
      */
-    attributes?: { [key: string]: unknown };
+    attributes?: unknown;
 
     /**
      * Optional ID of the job this log is associated with
@@ -637,7 +637,7 @@ export namespace JobGetLogsResponse {
 /**
  * Successful response
  */
-export interface JobGetTranscodersResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface JobGetTranscodersResponse extends FilesAPI.ResponseOk {
   data?: Array<JobGetTranscodersResponse.Data>;
 }
 

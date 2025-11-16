@@ -86,21 +86,21 @@ export interface Webhook {
 /**
  * Successful response
  */
-export interface WebhookCreateResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface WebhookCreateResponse extends FilesAPI.ResponseOk {
   data?: Webhook;
 }
 
 /**
  * Successful response
  */
-export interface WebhookRetrieveResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface WebhookRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Webhook;
 }
 
 /**
  * Successful response
  */
-export interface WebhookListResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface WebhookListResponse extends FilesAPI.ResponseOk {
   data?: Array<Webhook>;
 }
 

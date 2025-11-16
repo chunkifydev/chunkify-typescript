@@ -98,14 +98,14 @@ export interface Upload {
 /**
  * Successful response
  */
-export interface UploadCreateResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface UploadCreateResponse extends FilesAPI.ResponseOk {
   data?: Upload;
 }
 
 /**
  * Successful response
  */
-export interface UploadRetrieveResponse extends Omit<FilesAPI.ResponseOk, 'data'> {
+export interface UploadRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Upload;
 }
 
