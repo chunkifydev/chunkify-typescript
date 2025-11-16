@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -26,8 +27,12 @@ export class Projects extends APIResource {
    * Update a project's name or storage settings. Only team owners can update
    * projects.
    */
-  update(projectID: string, body: ProjectUpdateParams, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.patch(path`/api/projects/${projectID}`, { body, ...options });
+  update(projectID: string, body: ProjectUpdateParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.patch(path`/api/projects/${projectID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -44,8 +49,11 @@ export class Projects extends APIResource {
    * Delete a project and revoke all associated access tokens. Only team owners can
    * delete projects.
    */
-  delete(projectID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/projects/${projectID}`, options);
+  delete(projectID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/projects/${projectID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -91,21 +99,11 @@ export interface ProjectRetrieveResponse extends FilesAPI.ResponseOk {
 }
 
 /**
- * No content response
- */
-export type ProjectUpdateResponse = unknown;
-
-/**
  * Successful response
  */
 export interface ProjectListResponse extends FilesAPI.ResponseOk {
   data?: Array<Project>;
 }
-
-/**
- * No content response
- */
-export type ProjectDeleteResponse = unknown;
 
 export interface ProjectCreateParams {
   /**
@@ -144,9 +142,7 @@ export declare namespace Projects {
     type Project as Project,
     type ProjectCreateResponse as ProjectCreateResponse,
     type ProjectRetrieveResponse as ProjectRetrieveResponse,
-    type ProjectUpdateResponse as ProjectUpdateResponse,
     type ProjectListResponse as ProjectListResponse,
-    type ProjectDeleteResponse as ProjectDeleteResponse,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectUpdateParams as ProjectUpdateParams,
     type ProjectListParams as ProjectListParams,

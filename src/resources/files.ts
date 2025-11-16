@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -28,8 +29,11 @@ export class Files extends APIResource {
   /**
    * Delete a file. It will fail if there are processing jobs using this file.
    */
-  delete(fileID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/files/${fileID}`, options);
+  delete(fileID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/files/${fileID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -138,11 +142,6 @@ export interface ResponseOk {
 export interface FileRetrieveResponse extends ResponseOk {
   data?: APIFile;
 }
-
-/**
- * No content response
- */
-export type FileDeleteResponse = unknown;
 
 export interface FileListParams extends MyOffsetPageParams {
   /**
@@ -332,7 +331,6 @@ export declare namespace Files {
     type APIFile as APIFile,
     type ResponseOk as ResponseOk,
     type FileRetrieveResponse as FileRetrieveResponse,
-    type FileDeleteResponse as FileDeleteResponse,
     type APIFilesMyOffsetPage as APIFilesMyOffsetPage,
     type FileListParams as FileListParams,
   };

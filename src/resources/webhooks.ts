@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -27,8 +28,12 @@ export class Webhooks extends APIResource {
    * Update the enabled status of a webhook. The webhook must belong to the current
    * project.
    */
-  update(webhookID: string, body: WebhookUpdateParams, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.patch(path`/api/webhooks/${webhookID}`, { body, ...options });
+  update(webhookID: string, body: WebhookUpdateParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.patch(path`/api/webhooks/${webhookID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -43,8 +48,11 @@ export class Webhooks extends APIResource {
    * Permanently delete a webhook configuration. The webhook must belong to the
    * current project. This action cannot be undone.
    */
-  delete(webhookID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/webhooks/${webhookID}`, options);
+  delete(webhookID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/webhooks/${webhookID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -90,21 +98,11 @@ export interface WebhookRetrieveResponse extends FilesAPI.ResponseOk {
 }
 
 /**
- * No content response
- */
-export type WebhookUpdateResponse = unknown;
-
-/**
  * Successful response
  */
 export interface WebhookListResponse extends FilesAPI.ResponseOk {
   data?: Array<Webhook>;
 }
-
-/**
- * No content response
- */
-export type WebhookDeleteResponse = unknown;
 
 export interface WebhookCreateParams {
   /**
@@ -141,9 +139,7 @@ export declare namespace Webhooks {
     type Webhook as Webhook,
     type WebhookCreateResponse as WebhookCreateResponse,
     type WebhookRetrieveResponse as WebhookRetrieveResponse,
-    type WebhookUpdateResponse as WebhookUpdateResponse,
     type WebhookListResponse as WebhookListResponse,
-    type WebhookDeleteResponse as WebhookDeleteResponse,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
   };

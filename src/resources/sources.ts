@@ -4,6 +4,7 @@ import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
 import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -39,8 +40,11 @@ export class Sources extends APIResource {
   /**
    * Delete a source. It will fail if there are processing jobs using this source.
    */
-  delete(sourceID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/sources/${sourceID}`, options);
+  delete(sourceID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/sources/${sourceID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -131,11 +135,6 @@ export interface SourceCreateResponse extends FilesAPI.ResponseOk {
 export interface SourceRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Source;
 }
-
-/**
- * No content response
- */
-export type SourceDeleteResponse = unknown;
 
 export interface SourceCreateParams {
   /**
@@ -319,7 +318,6 @@ export declare namespace Sources {
     type Source as Source,
     type SourceCreateResponse as SourceCreateResponse,
     type SourceRetrieveResponse as SourceRetrieveResponse,
-    type SourceDeleteResponse as SourceDeleteResponse,
     type SourcesMyOffsetPage as SourcesMyOffsetPage,
     type SourceCreateParams as SourceCreateParams,
     type SourceListParams as SourceListParams,

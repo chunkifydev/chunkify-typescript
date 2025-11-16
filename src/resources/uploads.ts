@@ -5,6 +5,7 @@ import * as FilesAPI from './files';
 import * as JobsAPI from './jobs';
 import { APIPromise } from '../core/api-promise';
 import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -37,8 +38,11 @@ export class Uploads extends APIResource {
   /**
    * Delete an upload.
    */
-  delete(uploadID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/uploads/${uploadID}`, options);
+  delete(uploadID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/uploads/${uploadID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -105,11 +109,6 @@ export interface UploadRetrieveResponse extends FilesAPI.ResponseOk {
   data?: Upload;
 }
 
-/**
- * No content response
- */
-export type UploadDeleteResponse = unknown;
-
 export interface UploadCreateParams {
   /**
    * Metadata allows for additional information to be attached to the upload, with a
@@ -171,7 +170,6 @@ export declare namespace Uploads {
     type Upload as Upload,
     type UploadCreateResponse as UploadCreateResponse,
     type UploadRetrieveResponse as UploadRetrieveResponse,
-    type UploadDeleteResponse as UploadDeleteResponse,
     type UploadsMyOffsetPage as UploadsMyOffsetPage,
     type UploadCreateParams as UploadCreateParams,
     type UploadListParams as UploadListParams,
