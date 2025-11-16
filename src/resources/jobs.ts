@@ -81,13 +81,7 @@ export type JobsMyOffsetPage = MyOffsetPage<Job>;
 /**
  * FFmpeg encoding parameters specific to AV1 encoding.
  */
-export interface Av1 extends VideoCommon {
-  /**
-   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
-   * 32Kbps and 512Kbps.
-   */
-  audio_bitrate?: number;
-
+export interface Av1 {
   /**
    * Crf (Constant Rate Factor) controls the quality of the output video. Lower
    * values mean better quality but larger file size. Range: 16 to 63. Recommended
@@ -127,24 +121,12 @@ export interface Av1 extends VideoCommon {
    * - mainstillpicture: Still picture profile, optimized for single images
    */
   profilev?: 'main' | 'main10' | 'mainstillpicture';
-
-  /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate?: number;
 }
 
 /**
  * FFmpeg encoding parameters specific to H.264/AVC encoding.
  */
-export interface H264 extends VideoCommon {
-  /**
-   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
-   * 32Kbps and 512Kbps.
-   */
-  audio_bitrate?: number;
-
+export interface H264 {
   /**
    * Crf (Constant Rate Factor) controls the quality of the output video. Lower
    * values mean better quality but larger file size. Range: 16 to 35. Recommended
@@ -188,12 +170,6 @@ export interface H264 extends VideoCommon {
   profilev?: 'baseline' | 'main' | 'high' | 'high10' | 'high422' | 'high444';
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate?: number;
-
-  /**
    * X264KeyInt specifies the maximum number of frames between keyframes for H.264
    * encoding. Range: 1 to 300. Higher values can improve compression but may affect
    * seeking.
@@ -206,13 +182,7 @@ export interface H264 extends VideoCommon {
  * FfmpegCommon with H.265-specific options for quality control and encoding
  * profiles.
  */
-export interface H265 extends VideoCommon {
-  /**
-   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
-   * 32Kbps and 512Kbps.
-   */
-  audio_bitrate?: number;
-
+export interface H265 {
   /**
    * Crf (Constant Rate Factor) controls the quality of the output video. Lower
    * values mean better quality but larger file size. Range: 16 to 35. Recommended
@@ -251,12 +221,6 @@ export interface H265 extends VideoCommon {
    * - mainstillpicture: Still picture profile, optimized for single images
    */
   profilev?: 'main' | 'main10' | 'mainstillpicture';
-
-  /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate?: number;
 
   /**
    * X265KeyInt specifies the maximum number of frames between keyframes for H.265
@@ -560,7 +524,7 @@ export interface VideoCommon {
 /**
  * FFmpeg encoding parameters specific to VP9 encoding.
  */
-export interface Vp9 extends VideoCommon {
+export interface Vp9 {
   /**
    * CpuUsed specifies the CPU usage level for VP9 encoding. Range: 0 to 8. Lower
    * values mean better quality but slower encoding, higher values mean faster
@@ -834,43 +798,77 @@ export namespace JobCreateParams {
     jpg?: Format.Jpg;
 
     /**
-     * FFmpeg encoding parameters specific to AV1 encoding.
+     * AV1 configuration
      */
-    mp4_av1?: JobsAPI.Av1;
+    mp4_av1?: Format.MP4Av1;
 
     /**
-     * FFmpeg encoding parameters specific to H.264/AVC encoding.
+     * H264 configuration
      */
-    mp4_h264?: JobsAPI.H264;
+    mp4_h264?: Format.MP4H264;
 
     /**
-     * FFmpeg encoding parameters specific to H.265/HEVC encoding. It extends
-     * FfmpegCommon with H.265-specific options for quality control and encoding
-     * profiles.
+     * H265 configuration
      */
-    mp4_h265?: JobsAPI.H265;
+    mp4_h265?: Format.MP4H265;
 
     /**
-     * FFmpeg encoding parameters specific to VP9 encoding.
+     * VP9 configuration
      */
-    webm_vp9?: JobsAPI.Vp9;
+    webm_vp9?: Format.WebmVp9;
   }
 
   export namespace Format {
     /**
      * HLS AV1 configuration
      */
-    export interface HlsAv1 extends JobsAPI.Hls, JobsAPI.Av1 {}
+    export interface HlsAv1 extends JobsAPI.Hls, JobsAPI.Av1, JobsAPI.VideoCommon {
+      /**
+       * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+       * 32Kbps and 512Kbps.
+       */
+      audio_bitrate?: number;
+
+      /**
+       * VideoBitrate specifies the video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      video_bitrate?: number;
+    }
 
     /**
      * HLS H264 configuration
      */
-    export interface HlsH264 extends JobsAPI.Hls, JobsAPI.H264 {}
+    export interface HlsH264 extends JobsAPI.Hls, JobsAPI.H264, JobsAPI.VideoCommon {
+      /**
+       * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+       * 32Kbps and 512Kbps.
+       */
+      audio_bitrate?: number;
+
+      /**
+       * VideoBitrate specifies the video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      video_bitrate?: number;
+    }
 
     /**
      * HLS H265 configuration
      */
-    export interface HlsH265 extends JobsAPI.Hls, JobsAPI.H265 {}
+    export interface HlsH265 extends JobsAPI.Hls, JobsAPI.H265, JobsAPI.VideoCommon {
+      /**
+       * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+       * 32Kbps and 512Kbps.
+       */
+      audio_bitrate?: number;
+
+      /**
+       * VideoBitrate specifies the video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      video_bitrate?: number;
+    }
 
     /**
      * FFmpeg encoding parameters specific to JPEG image extraction.
@@ -903,6 +901,74 @@ export namespace JobCreateParams {
       sprite?: boolean;
 
       width?: number;
+    }
+
+    /**
+     * AV1 configuration
+     */
+    export interface MP4Av1 extends JobsAPI.Av1, JobsAPI.VideoCommon {
+      /**
+       * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+       * 32Kbps and 512Kbps.
+       */
+      audio_bitrate?: number;
+
+      /**
+       * VideoBitrate specifies the video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      video_bitrate?: number;
+    }
+
+    /**
+     * H264 configuration
+     */
+    export interface MP4H264 extends JobsAPI.H264, JobsAPI.VideoCommon {
+      /**
+       * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+       * 32Kbps and 512Kbps.
+       */
+      audio_bitrate?: number;
+
+      /**
+       * VideoBitrate specifies the video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      video_bitrate?: number;
+    }
+
+    /**
+     * H265 configuration
+     */
+    export interface MP4H265 extends JobsAPI.H265, JobsAPI.VideoCommon {
+      /**
+       * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+       * 32Kbps and 512Kbps.
+       */
+      audio_bitrate?: number;
+
+      /**
+       * VideoBitrate specifies the video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      video_bitrate?: number;
+    }
+
+    /**
+     * VP9 configuration
+     */
+    export interface WebmVp9 extends JobsAPI.Vp9, JobsAPI.VideoCommon {
+      /**
+       * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+       * 32Kbps and 512Kbps.
+       */
+      audio_bitrate?: number;
+
+      /**
+       * VideoBitrate specifies the video bitrate in bits per second. Must be between
+       * 100Kbps and 50Mbps.
+       */
+      video_bitrate?: number;
     }
   }
 
