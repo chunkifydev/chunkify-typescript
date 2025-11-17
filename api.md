@@ -173,6 +173,8 @@ Types:
 - <code><a href="./src/resources/webhooks.ts">WebhookCreateResponse</a></code>
 - <code><a href="./src/resources/webhooks.ts">WebhookRetrieveResponse</a></code>
 - <code><a href="./src/resources/webhooks.ts">WebhookListResponse</a></code>
+- <code><a href="./src/resources/webhooks.ts">NewEventWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">UnwrapWebhookEvent</a></code>
 
 Methods:
 
@@ -181,3 +183,4 @@ Methods:
 - <code title="patch /api/webhooks/{webhookId}">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>(webhookID, { ...params }) -> void</code>
 - <code title="get /api/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>() -> WebhookListResponse</code>
 - <code title="delete /api/webhooks/{webhookId}">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>(webhookID) -> void</code>
+- <code>client.webhooks.<a href="./src/resources/webhooks.ts">unwrap</a>(body) -> void</code>
