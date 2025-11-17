@@ -975,6 +975,8 @@ export interface MP4Av1 {
 }
 
 export interface MP4H264 {
+  name: 'mp4_h264';
+
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
@@ -1052,8 +1054,6 @@ export interface MP4H264 {
   minrate?: number;
 
   movflags?: string;
-
-  name?: 'mp4_h264';
 
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
@@ -1139,6 +1139,8 @@ export interface MP4H264 {
 }
 
 export interface MP4H265 {
+  name: 'mp4_h265';
+
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
@@ -1216,8 +1218,6 @@ export interface MP4H265 {
   minrate?: number;
 
   movflags?: string;
-
-  name?: 'mp4_h265';
 
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
