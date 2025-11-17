@@ -10,7 +10,10 @@ const client = new Chunkify({
 describe('resource jobs', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.jobs.create({ format: {}, source_id: 'src_UioP9I876hjKlNBH78ILp0mo56t' });
+    const responsePromise = client.jobs.create({
+      format: { hls_av1: {} },
+      source_id: 'src_UioP9I876hjKlNBH78ILp0mo56t',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

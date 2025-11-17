@@ -1461,9 +1461,7 @@ export interface JobRetrieveResponse extends Shared.ResponseOk {
 
 export interface JobCreateParams {
   /**
-   * Required format configuration, one and only one valid format configuration must
-   * be provided. If you want to use a format without specifying any configuration,
-   * use an empty object in the corresponding field.
+   * Required format configuration...
    */
   format:
     | JobCreateParams.HlsAv1
@@ -1509,58 +1507,58 @@ export interface JobCreateParams {
 export namespace JobCreateParams {
   export interface HlsAv1 {
     /**
-     * HLS AV1 configuration
+     * FFmpeg encoding parameters specific to HLS with AV1 encoding.
      */
-    hls_av1?: JobsAPI.HlsAv1;
+    hls_av1: JobsAPI.HlsAv1;
   }
 
   export interface HlsH264 {
     /**
-     * HLS H264 configuration
+     * FFmpeg encoding parameters specific to HLS with H.264 encoding.
      */
-    hls_h264?: JobsAPI.HlsH264;
+    hls_h264: JobsAPI.HlsH264;
   }
 
   export interface HlsH265 {
     /**
-     * HLS H265 configuration
+     * FFmpeg encoding parameters specific to HLS with H.265 encoding.
      */
-    hls_h265?: JobsAPI.HlsH265;
+    hls_h265: JobsAPI.HlsH265;
   }
 
   export interface Jpg {
     /**
-     * JPEG configuration
+     * FFmpeg encoding parameters specific to JPEG image extraction.
      */
-    jpg?: JobsAPI.Jpg;
+    jpg: JobsAPI.Jpg;
   }
 
   export interface MP4Av1 {
     /**
-     * AV1 configuration
+     * FFmpeg encoding parameters specific to MP4 with AV1 encoding.
      */
-    mp4_av1?: JobsAPI.MP4Av1;
+    mp4_av1: JobsAPI.MP4Av1;
   }
 
   export interface MP4H264 {
     /**
-     * H264 configuration
+     * FFmpeg encoding parameters specific to MP4 with H.264 encoding.
      */
-    mp4_h264?: JobsAPI.MP4H264;
+    mp4_h264: JobsAPI.MP4H264;
   }
 
   export interface MP4H265 {
     /**
-     * H265 configuration
+     * FFmpeg encoding parameters specific to MP4 with H.265 encoding.
      */
-    mp4_h265?: JobsAPI.MP4H265;
+    mp4_h265: JobsAPI.MP4H265;
   }
 
   export interface WebmVp9 {
     /**
-     * VP9 configuration
+     * FFmpeg encoding parameters specific to WebM with VP9 encoding.
      */
-    webm_vp9?: JobsAPI.WebmVp9;
+    webm_vp9: JobsAPI.WebmVp9;
   }
 
   /**
