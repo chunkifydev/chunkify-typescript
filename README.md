@@ -30,7 +30,7 @@ const client = new Chunkify({
 });
 
 const job = await client.jobs.create({
-  format: { mp4_h264: { width: 1920, height: 1080, crf: 21 } },
+  format: { MP: { width: 1920, height: 1080, crf: 21 } },
   source_id: 'src_2G6MJiNz71bHQGNzGwKx5cJwPFS',
   transcoder: { quantity: 4, type: '8vCPU' },
 });

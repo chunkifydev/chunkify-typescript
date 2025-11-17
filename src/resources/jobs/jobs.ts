@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as JobsAPI from './jobs';
 import * as Shared from '../shared';
 import * as FilesAPI from './files';
 import { FileListResponse, Files } from './files';
@@ -1465,7 +1464,7 @@ export interface JobCreateParams {
    * be provided. If you want to use a format without specifying any configuration,
    * use an empty object in the corresponding field.
    */
-  format: JobCreateParams.Format;
+  format: HlsAv1 | HlsH264 | HlsH265 | Jpg | MP4Av1 | MP4H264 | MP4H265 | WebmVp9;
 
   /**
    * The ID of the source file to transcode
@@ -1499,53 +1498,6 @@ export interface JobCreateParams {
 }
 
 export namespace JobCreateParams {
-  /**
-   * Required format configuration, one and only one valid format configuration must
-   * be provided. If you want to use a format without specifying any configuration,
-   * use an empty object in the corresponding field.
-   */
-  export interface Format {
-    /**
-     * FFmpeg encoding parameters specific to HLS with AV1 encoding.
-     */
-    hls_av1?: JobsAPI.HlsAv1;
-
-    /**
-     * FFmpeg encoding parameters specific to HLS with H.264 encoding.
-     */
-    hls_h264?: JobsAPI.HlsH264;
-
-    /**
-     * FFmpeg encoding parameters specific to HLS with H.265 encoding.
-     */
-    hls_h265?: JobsAPI.HlsH265;
-
-    /**
-     * FFmpeg encoding parameters specific to JPEG image extraction.
-     */
-    jpg?: JobsAPI.Jpg;
-
-    /**
-     * FFmpeg encoding parameters specific to MP4 with AV1 encoding.
-     */
-    mp4_av1?: JobsAPI.MP4Av1;
-
-    /**
-     * FFmpeg encoding parameters specific to MP4 with H.264 encoding.
-     */
-    mp4_h264?: JobsAPI.MP4H264;
-
-    /**
-     * FFmpeg encoding parameters specific to MP4 with H.265 encoding.
-     */
-    mp4_h265?: JobsAPI.MP4H265;
-
-    /**
-     * FFmpeg encoding parameters specific to WebM with VP9 encoding.
-     */
-    webm_vp9?: JobsAPI.WebmVp9;
-  }
-
   /**
    * Optional storage configuration
    */
