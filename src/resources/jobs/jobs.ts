@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as JobsAPI from './jobs';
 import * as Shared from '../shared';
 import * as FilesAPI from './files';
 import { FileListResponse, Files } from './files';
@@ -1464,7 +1465,15 @@ export interface JobCreateParams {
    * be provided. If you want to use a format without specifying any configuration,
    * use an empty object in the corresponding field.
    */
-  format: HlsAv1 | HlsH264 | HlsH265 | Jpg | MP4Av1 | MP4H264 | MP4H265 | WebmVp9;
+  format:
+    | JobCreateParams.HlsAv1
+    | JobCreateParams.HlsH264
+    | JobCreateParams.HlsH265
+    | JobCreateParams.Jpg
+    | JobCreateParams.MP4Av1
+    | JobCreateParams.MP4H264
+    | JobCreateParams.MP4H265
+    | JobCreateParams.WebmVp9;
 
   /**
    * The ID of the source file to transcode
@@ -1498,6 +1507,62 @@ export interface JobCreateParams {
 }
 
 export namespace JobCreateParams {
+  export interface HlsAv1 {
+    /**
+     * HLS AV1 configuration
+     */
+    hls_av1?: JobsAPI.HlsAv1;
+  }
+
+  export interface HlsH264 {
+    /**
+     * HLS H264 configuration
+     */
+    hls_h264?: JobsAPI.HlsH264;
+  }
+
+  export interface HlsH265 {
+    /**
+     * HLS H265 configuration
+     */
+    hls_h265?: JobsAPI.HlsH265;
+  }
+
+  export interface Jpg {
+    /**
+     * JPEG configuration
+     */
+    jpg?: JobsAPI.Jpg;
+  }
+
+  export interface MP4Av1 {
+    /**
+     * AV1 configuration
+     */
+    mp4_av1?: JobsAPI.MP4Av1;
+  }
+
+  export interface MP4H264 {
+    /**
+     * H264 configuration
+     */
+    mp4_h264?: JobsAPI.MP4H264;
+  }
+
+  export interface MP4H265 {
+    /**
+     * H265 configuration
+     */
+    mp4_h265?: JobsAPI.MP4H265;
+  }
+
+  export interface WebmVp9 {
+    /**
+     * VP9 configuration
+     */
+    webm_vp9?: JobsAPI.WebmVp9;
+  }
+
   /**
    * Optional storage configuration
    */
