@@ -110,11 +110,133 @@ export interface StorageListResponse extends Shared.ResponseOk {
   data?: Array<Storage>;
 }
 
-export interface StorageCreateParams {
-  /**
-   * Provider specifies the storage provider.
-   */
-  provider: 'chunkify' | 'aws' | 'cloudflare';
+export type StorageCreateParams =
+  | StorageCreateParams.Variant0
+  | StorageCreateParams.Variant1
+  | StorageCreateParams.Variant2;
+
+export declare namespace StorageCreateParams {
+  export interface Variant0 {
+    /**
+     * AccessKeyId is the access key for the storage provider. Required if not using
+     * Chunkify storage.
+     */
+    access_key_id: string;
+
+    /**
+     * Bucket is the name of the storage bucket.
+     */
+    bucket: string;
+
+    /**
+     * Provider specifies the storage provider.
+     */
+    provider: 'aws';
+
+    /**
+     * Region specifies the region of the storage provider.
+     */
+    region:
+      | 'us-east-1'
+      | 'us-east-2'
+      | 'us-central-1'
+      | 'us-west-1'
+      | 'us-west-2'
+      | 'eu-west-1'
+      | 'eu-west-2'
+      | 'eu-west-3'
+      | 'eu-central-1'
+      | 'eu-north-1'
+      | 'ap-east-1'
+      | 'ap-east-2'
+      | 'ap-northeast-1'
+      | 'ap-northeast-2'
+      | 'ap-south-1'
+      | 'ap-southeast-1'
+      | 'ap-southeast-2';
+
+    /**
+     * SecretAccessKey is the secret key for the storage provider. Required if not
+     * using Chunkify storage.
+     */
+    secret_access_key: string;
+
+    /**
+     * Public indicates whether the storage is publicly accessible.
+     */
+    public?: boolean;
+  }
+
+  export interface Variant1 {
+    /**
+     * Provider specifies the storage provider.
+     */
+    provider: 'chunkify';
+
+    /**
+     * Region specifies the region of the storage provider.
+     */
+    region:
+      | 'us-east-1'
+      | 'us-east-2'
+      | 'us-central-1'
+      | 'us-west-1'
+      | 'us-west-2'
+      | 'eu-west-1'
+      | 'eu-west-2'
+      | 'eu-west-3'
+      | 'eu-central-1'
+      | 'eu-north-1'
+      | 'ap-east-1'
+      | 'ap-east-2'
+      | 'ap-northeast-1'
+      | 'ap-northeast-2'
+      | 'ap-south-1'
+      | 'ap-southeast-1'
+      | 'ap-southeast-2';
+  }
+
+  export interface Variant2 {
+    /**
+     * AccessKeyId is the access key for the storage provider.
+     */
+    access_key_id: string;
+
+    /**
+     * Bucket is the name of the storage bucket.
+     */
+    bucket: string;
+
+    /**
+     * Endpoint is the endpoint of the storage provider.
+     */
+    endpoint: string;
+
+    /**
+     * Location specifies the location of the storage provider.
+     */
+    location: 'US' | 'EU' | 'ASIA';
+
+    /**
+     * Provider specifies the storage provider.
+     */
+    provider: 'cloudflare';
+
+    /**
+     * Region must be set to 'auto'.
+     */
+    region: 'auto';
+
+    /**
+     * SecretAccessKey is the secret key for the storage provider.
+     */
+    secret_access_key: string;
+
+    /**
+     * Public indicates whether the storage is publicly accessible.
+     */
+    public?: boolean;
+  }
 }
 
 export declare namespace Storages {
