@@ -10,7 +10,13 @@ const client = new Chunkify({
 describe('resource storages', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.storages.create({ provider: 'aws' });
+    const responsePromise = client.storages.create({
+      access_key_id: '1234567890',
+      bucket: 'my-bucket',
+      provider: 'aws',
+      region: 'us-east-1',
+      secret_access_key: '1234567890',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,7 +28,14 @@ describe('resource storages', () => {
 
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.storages.create({ provider: 'aws' });
+    const response = await client.storages.create({
+      access_key_id: '1234567890',
+      bucket: 'my-bucket',
+      provider: 'aws',
+      region: 'us-east-1',
+      secret_access_key: '1234567890',
+      public: true,
+    });
   });
 
   // Prism tests are disabled
