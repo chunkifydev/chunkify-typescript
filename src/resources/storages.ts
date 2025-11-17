@@ -93,7 +93,7 @@ export interface Storage {
  * Successful response
  */
 export interface StorageCreateResponse extends Shared.ResponseOk {
-  data?: Storage;
+  data: Storage;
 }
 
 /**
@@ -111,12 +111,12 @@ export interface StorageListResponse extends Shared.ResponseOk {
 }
 
 export type StorageCreateParams =
-  | StorageCreateParams.Variant0
-  | StorageCreateParams.Variant1
-  | StorageCreateParams.Variant2;
+  | StorageCreateParams.StorageAwsCreateParams
+  | StorageCreateParams.StorageChunkifyCreateParams
+  | StorageCreateParams.StorageCloudflareCreateParams;
 
 export declare namespace StorageCreateParams {
-  export interface Variant0 {
+  export interface StorageAwsCreateParams {
     /**
      * AccessKeyId is the access key for the storage provider. Required if not using
      * Chunkify storage.
@@ -167,7 +167,7 @@ export declare namespace StorageCreateParams {
     public?: boolean;
   }
 
-  export interface Variant1 {
+  export interface StorageChunkifyCreateParams {
     /**
      * Provider specifies the storage provider.
      */
@@ -196,7 +196,7 @@ export declare namespace StorageCreateParams {
       | 'ap-southeast-2';
   }
 
-  export interface Variant2 {
+  export interface StorageCloudflareCreateParams {
     /**
      * AccessKeyId is the access key for the storage provider.
      */
