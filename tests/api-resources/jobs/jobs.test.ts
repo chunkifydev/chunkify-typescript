@@ -10,10 +10,7 @@ const client = new Chunkify({
 describe('resource jobs', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.jobs.create({
-      format: { audio_bitrate: 32000, name: 'hls_av1', video_bitrate: 100000 },
-      source_id: 'src_UioP9I876hjKlNBH78ILp0mo56t',
-    });
+    const responsePromise = client.jobs.create({ format: {}, source_id: 'src_UioP9I876hjKlNBH78ILp0mo56t' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -28,8 +25,6 @@ describe('resource jobs', () => {
     const response = await client.jobs.create({
       format: {
         audio_bitrate: 32000,
-        name: 'hls_av1',
-        video_bitrate: 100000,
         bufsize: 100000,
         channels: 1,
         crf: 35,
@@ -53,7 +48,9 @@ describe('resource jobs', () => {
         preset: '10',
         profilev: 'main10',
         seek: 1,
+        video_bitrate: 100000,
         width: -2,
+        name: 'mp4/h264',
       },
       source_id: 'src_UioP9I876hjKlNBH78ILp0mo56t',
       hls_manifest_id: 'hls_2v6EIgcNAycdS5g0IUm0TXBjvHV',
