@@ -668,27 +668,58 @@ export interface Job {
   /**
    * Unique identifier for the job
    */
-  id?: string;
+  id: string;
 
   /**
    * Billable time in seconds
    */
-  billable_time?: number;
+  billable_time: number;
 
   /**
    * Creation timestamp
    */
-  created_at?: string;
+  created_at: string;
+
+  /**
+   * A template defines the transcoding parameters and settings for a job
+   */
+  format: Job.Format;
+
+  /**
+   * Progress percentage of the job (0-100)
+   */
+  progress: number;
+
+  /**
+   * ID of the source video being transcoded
+   */
+  source_id: string;
+
+  /**
+   * Current status of the job (e.g., "queued", "ingesting","transcoding",
+   * "downloading", "merging", "uploading", "failed", "completed")
+   */
+  status: string;
+
+  /**
+   * Storage settings for where the job output will be saved
+   */
+  storage: Job.Storage;
+
+  /**
+   * The transcoder configuration for a job
+   */
+  transcoder: Job.Transcoder;
+
+  /**
+   * Last update timestamp
+   */
+  updated_at: string;
 
   /**
    * Error message for the job
    */
   error?: Shared.ChunkifyError;
-
-  /**
-   * A template defines the transcoding parameters and settings for a job
-   */
-  format?: Job.Format;
 
   /**
    * HLS manifest ID
@@ -701,40 +732,9 @@ export interface Job {
   metadata?: { [key: string]: string };
 
   /**
-   * Progress percentage of the job (0-100)
-   */
-  progress?: number;
-
-  /**
-   * ID of the source video being transcoded
-   */
-  source_id?: string;
-
-  /**
    * When the job started processing
    */
   started_at?: string;
-
-  /**
-   * Current status of the job (e.g., "queued", "ingesting","transcoding",
-   * "downloading", "merging", "uploading", "failed", "completed")
-   */
-  status?: string;
-
-  /**
-   * Storage settings for where the job output will be saved
-   */
-  storage?: Job.Storage;
-
-  /**
-   * The transcoder configuration for a job
-   */
-  transcoder?: Job.Transcoder;
-
-  /**
-   * Last update timestamp
-   */
-  updated_at?: string;
 }
 
 export namespace Job {
@@ -1449,14 +1449,14 @@ export interface WebmVp9 {
  * Successful response
  */
 export interface JobCreateResponse extends Shared.ResponseOk {
-  data?: Job;
+  data: Job;
 }
 
 /**
  * Successful response
  */
 export interface JobRetrieveResponse extends Shared.ResponseOk {
-  data?: Job;
+  data: Job;
 }
 
 export interface JobCreateParams {

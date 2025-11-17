@@ -19,7 +19,7 @@ export class Logs extends APIResource {
  * Successful response
  */
 export interface LogListResponse extends Shared.ResponseOk {
-  data?: Array<LogListResponse.Data>;
+  data: Array<LogListResponse.Data>;
 }
 
 export namespace LogListResponse {
@@ -27,32 +27,32 @@ export namespace LogListResponse {
     /**
      * Additional structured data attached to the log
      */
-    attributes?: unknown;
+    attributes: unknown;
+
+    /**
+     * Log level (e.g. "info", "error", "debug")
+     */
+    level: string;
+
+    /**
+     * The log message content
+     */
+    msg: string;
+
+    /**
+     * Name of the service that generated the log
+     */
+    service: string;
+
+    /**
+     * Timestamp when the log was created
+     */
+    time: string;
 
     /**
      * Optional ID of the job this log is associated with
      */
     job_id?: string;
-
-    /**
-     * Log level (e.g. "info", "error", "debug")
-     */
-    level?: string;
-
-    /**
-     * The log message content
-     */
-    msg?: string;
-
-    /**
-     * Name of the service that generated the log
-     */
-    service?: string;
-
-    /**
-     * Timestamp when the log was created
-     */
-    time?: string;
   }
 }
 

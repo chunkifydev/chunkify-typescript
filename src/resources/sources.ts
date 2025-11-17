@@ -54,72 +54,72 @@ export interface Source {
   /**
    * Unique identifier of the source
    */
-  id?: string;
+  id: string;
 
   /**
    * Audio bitrate in bits per second
    */
-  audio_bitrate?: number;
+  audio_bitrate: number;
 
   /**
    * Audio codec used (e.g. aac, mp3)
    */
-  audio_codec?: string;
+  audio_codec: string;
 
   /**
    * Timestamp when the source was created
    */
-  created_at?: string;
+  created_at: string;
 
   /**
    * Device used to record the video
    */
-  device?: string;
+  device: string;
 
   /**
    * Duration of the video in seconds
    */
-  duration?: number;
+  duration: number;
 
   /**
    * Height of the video in pixels
    */
-  height?: number;
+  height: number;
 
   /**
    * Additional metadata for the source
    */
-  metadata?: { [key: string]: string };
+  metadata: { [key: string]: string };
 
   /**
    * Size of the source file in bytes
    */
-  size?: number;
+  size: number;
 
   /**
    * URL where the source video can be accessed
    */
-  url?: string;
+  url: string;
 
   /**
    * Video bitrate in bits per second
    */
-  video_bitrate?: number;
+  video_bitrate: number;
 
   /**
    * Video codec used (e.g. h264, h265)
    */
-  video_codec?: string;
+  video_codec: string;
 
   /**
    * Video framerate in frames per second
    */
-  video_framerate?: number;
+  video_framerate: number;
 
   /**
    * Width of the video in pixels
    */
-  width?: number;
+  width: number;
 }
 
 /**
@@ -133,7 +133,7 @@ export interface SourceCreateResponse extends Shared.ResponseOk {
  * Successful response
  */
 export interface SourceRetrieveResponse extends Shared.ResponseOk {
-  data?: Source;
+  data: Source;
 }
 
 export interface SourceCreateParams {
