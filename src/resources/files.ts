@@ -44,89 +44,89 @@ export interface APIFile {
   /**
    * Unique identifier of the file
    */
-  id?: string;
+  id: string;
 
   /**
    * Audio bitrate in bits per second
    */
-  audio_bitrate?: number;
+  audio_bitrate: number;
 
   /**
    * Audio codec used (e.g. aac, mp3)
    */
-  audio_codec?: string;
+  audio_codec: string;
 
   /**
    * Timestamp when the file was created
    */
-  created_at?: string;
+  created_at: string;
 
   /**
    * Duration of the video in seconds
    */
-  duration?: number;
+  duration: number;
 
   /**
    * Height of the video in pixels
    */
-  height?: number;
+  height: number;
 
   /**
    * ID of the job that created this file
    */
-  job_id?: string;
+  job_id: string;
 
   /**
    * MIME type of the file
    */
-  mime_type?: string;
+  mime_type: string;
 
   /**
    * Path to the file in storage
    */
-  path?: string;
+  path: string;
 
   /**
    * Size of the file in bytes
    */
-  size?: number;
+  size: number;
 
   /**
    * StorageId identifier where the file is stored
    */
-  storage_id?: string;
+  storage_id: string;
 
   /**
    * Pre-signed URL to directly access the file (only included when available)
    */
-  url?: string;
+  url: string;
 
   /**
    * Video bitrate in bits per second
    */
-  video_bitrate?: number;
+  video_bitrate: number;
 
   /**
    * Video codec used (e.g. h264, h265)
    */
-  video_codec?: string;
+  video_codec: string;
 
   /**
    * Video framerate in frames per second
    */
-  video_framerate?: number;
+  video_framerate: number;
 
   /**
    * Width of the video in pixels
    */
-  width?: number;
+  width: number;
 }
 
 /**
  * Successful response
  */
 export interface FileRetrieveResponse extends Shared.ResponseOk {
-  data?: APIFile;
+  data: APIFile;
 }
 
 export interface FileListParams extends PaginatedResultsParams {

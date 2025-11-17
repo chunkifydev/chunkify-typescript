@@ -54,37 +54,37 @@ export interface Notification {
   /**
    * Unique identifier of the notification
    */
-  id?: string;
+  id: string;
 
   /**
    * Timestamp when the notification was created
    */
-  created_at?: string;
+  created_at: string;
 
   /**
    * Type of event that triggered this notification
    */
-  event?: string;
+  event: string;
 
   /**
    * ID of the object that triggered this notification
    */
-  object_id?: string;
+  object_id: string;
 
   /**
    * JSON payload that was sent to the webhook endpoint
    */
-  payload?: string;
+  payload: string;
 
   /**
    * HTTP status code received from the webhook endpoint
    */
-  response_status_code?: number;
+  response_status_code: number;
 
   /**
    * Webhook endpoint configuration that received this notification
    */
-  webhook?: WebhooksAPI.Webhook;
+  webhook: WebhooksAPI.Webhook;
 }
 
 /**
@@ -98,7 +98,7 @@ export interface NotificationCreateResponse extends Shared.ResponseOk {
  * Successful response
  */
 export interface NotificationRetrieveResponse extends Shared.ResponseOk {
-  data?: Notification;
+  data: Notification;
 }
 
 export interface NotificationCreateParams {

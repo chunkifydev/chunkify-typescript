@@ -19,7 +19,7 @@ export class Transcoders extends APIResource {
  * Successful response
  */
 export interface TranscoderListResponse extends Shared.ResponseOk {
-  data?: Array<TranscoderListResponse.Data>;
+  data: Array<TranscoderListResponse.Data>;
 }
 
 export namespace TranscoderListResponse {

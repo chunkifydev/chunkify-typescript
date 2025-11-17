@@ -42,32 +42,32 @@ export interface Token {
   /**
    * Unique identifier of the token
    */
-  id?: string;
+  id: string;
 
   /**
    * The actual token value (only returned on creation)
    */
-  token?: string;
+  token: string;
+
+  /**
+   * Name given to the token
+   */
+  name: string;
+
+  /**
+   * ID of the project this token belongs to
+   */
+  project_id: string;
+
+  /**
+   * Access scope of the token (e.g.project, team)
+   */
+  scope: string;
 
   /**
    * Timestamp when the token was created
    */
   created_at?: string;
-
-  /**
-   * Name given to the token
-   */
-  name?: string;
-
-  /**
-   * ID of the project this token belongs to
-   */
-  project_id?: string;
-
-  /**
-   * Access scope of the token (e.g.project, team)
-   */
-  scope?: string;
 }
 
 /**

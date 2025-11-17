@@ -51,47 +51,47 @@ export interface Upload {
   /**
    * Unique identifier of the upload
    */
-  id?: string;
+  id: string;
 
   /**
    * Timestamp when the upload was created
    */
-  created_at?: string;
+  created_at: string;
 
   /**
    * Error message of the upload
    */
-  error?: Shared.ChunkifyError;
+  error: Shared.ChunkifyError;
 
   /**
    * Timestamp when the upload will expire
    */
-  expires_at?: string;
+  expires_at: string;
+
+  /**
+   * SourceId is the id of the source that was created from the upload
+   */
+  source_id: string;
+
+  /**
+   * Current status of the upload (waiting, completed, failed, expired)
+   */
+  status: string;
+
+  /**
+   * Timestamp when the upload was updated
+   */
+  updated_at: string;
+
+  /**
+   * Pre-signed URL where the file should be uploaded to
+   */
+  upload_url: string;
 
   /**
    * Additional metadata for the upload
    */
   metadata?: { [key: string]: string };
-
-  /**
-   * SourceId is the id of the source that was created from the upload
-   */
-  source_id?: string;
-
-  /**
-   * Current status of the upload (waiting, completed, failed, expired)
-   */
-  status?: string;
-
-  /**
-   * Timestamp when the upload was updated
-   */
-  updated_at?: string;
-
-  /**
-   * Pre-signed URL where the file should be uploaded to
-   */
-  upload_url?: string;
 }
 
 /**
@@ -105,7 +105,7 @@ export interface UploadCreateResponse extends Shared.ResponseOk {
  * Successful response
  */
 export interface UploadRetrieveResponse extends Shared.ResponseOk {
-  data?: Upload;
+  data: Upload;
 }
 
 export interface UploadCreateParams {

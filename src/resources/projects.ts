@@ -61,27 +61,27 @@ export interface Project {
   /**
    * Id is the unique identifier for the project.
    */
-  id?: string;
+  id: string;
+
+  /**
+   * Name of the project
+   */
+  name: string;
+
+  /**
+   * Slug is the slug for the project.
+   */
+  slug: string;
+
+  /**
+   * StorageId identifier where project files are stored
+   */
+  storage_id: string;
 
   /**
    * Timestamp when the project was created
    */
   created_at?: string;
-
-  /**
-   * Name of the project
-   */
-  name?: string;
-
-  /**
-   * Slug is the slug for the project.
-   */
-  slug?: string;
-
-  /**
-   * StorageId identifier where project files are stored
-   */
-  storage_id?: string;
 }
 
 /**
@@ -95,14 +95,14 @@ export interface ProjectCreateResponse extends Shared.ResponseOk {
  * Successful response
  */
 export interface ProjectRetrieveResponse extends Shared.ResponseOk {
-  data?: Project;
+  data: Project;
 }
 
 /**
  * Successful response
  */
 export interface ProjectListResponse extends Shared.ResponseOk {
-  data?: Array<Project>;
+  data: Array<Project>;
 }
 
 export interface ProjectCreateParams {

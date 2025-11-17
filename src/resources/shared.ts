@@ -24,12 +24,12 @@ export interface ResponseError {
   /**
    * Error response details
    */
-  error?: ResponseError.Error;
+  error: ResponseError.Error;
 
   /**
    * Status indicates the response status "error"
    */
-  status?: string;
+  status: string;
 }
 
 export namespace ResponseError {
@@ -40,17 +40,17 @@ export namespace ResponseError {
     /**
      * Code is the HTTP status code
      */
-    code?: number;
+    code: number;
 
     /**
      * Message is a human-readable error description
      */
-    message?: string;
+    message: string;
 
     /**
      * Type indicates the error category
      */
-    type?: string;
+    type: string;
   }
 }
 
@@ -59,12 +59,7 @@ export namespace ResponseError {
  */
 export interface ResponseOk {
   /**
-   * Data contains the response object
-   */
-  data?: unknown;
-
-  /**
    * Status indicates the response status "success"
    */
-  status?: string;
+  status: string;
 }

@@ -60,27 +60,27 @@ export interface Webhook {
   /**
    * Unique identifier of the webhook
    */
-  id?: string;
+  id: string;
 
   /**
    * Whether the webhook is currently enabled
    */
-  enabled?: boolean;
+  enabled: boolean;
 
   /**
    * Array of event types this webhook subscribes to
    */
-  events?: Array<string>;
+  events: Array<string>;
 
   /**
    * ID of the project this webhook belongs to
    */
-  project_id?: string;
+  project_id: string;
 
   /**
    * URL where webhook events will be sent
    */
-  url?: string;
+  url: string;
 }
 
 /**
@@ -94,7 +94,7 @@ export interface WebhookCreateResponse extends Shared.ResponseOk {
  * Successful response
  */
 export interface WebhookRetrieveResponse extends Shared.ResponseOk {
-  data?: Webhook;
+  data: Webhook;
 }
 
 /**

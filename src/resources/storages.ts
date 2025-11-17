@@ -46,47 +46,47 @@ export interface Storage {
   /**
    * Unique identifier of the storage configuration
    */
-  id?: string;
+  id: string;
 
   /**
    * Name of the storage bucket
    */
-  bucket?: string;
+  bucket: string;
 
   /**
    * Created at timestamp
    */
-  created_at?: string;
+  created_at: string;
 
   /**
    * Endpoint of the storage provider
    */
-  endpoint?: string;
+  endpoint: string;
 
   /**
    * Continent location of the storage (eg. US, EU, ASIA)
    */
-  location?: string;
+  location: string;
 
   /**
    * Name of the storage provider (e.g. AWS, GCP)
    */
-  provider?: string;
+  provider: string;
 
   /**
    * Whether the storage bucket is publicly accessible
    */
-  public?: boolean;
+  public: boolean;
 
   /**
    * Geographic region where the storage is located
    */
-  region?: string;
+  region: string;
 
   /**
    * Unique identifier of the storage configuration
    */
-  slug?: string;
+  slug: string;
 }
 
 /**
@@ -100,7 +100,7 @@ export interface StorageCreateResponse extends Shared.ResponseOk {
  * Successful response
  */
 export interface StorageRetrieveResponse extends Shared.ResponseOk {
-  data?: Storage;
+  data: Storage;
 }
 
 /**
