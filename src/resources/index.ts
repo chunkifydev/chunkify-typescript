@@ -83,6 +83,8 @@ export {
   type WebhookCreateResponse,
   type WebhookRetrieveResponse,
   type WebhookListResponse,
+  type NewEventWebhookEvent,
+  type UnwrapWebhookEvent,
   type WebhookCreateParams,
   type WebhookUpdateParams,
 } from './webhooks';

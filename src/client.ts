@@ -73,6 +73,8 @@ import {
   UploadsPaginatedResults,
 } from './resources/uploads';
 import {
+  NewEventWebhookEvent,
+  UnwrapWebhookEvent,
   Webhook,
   WebhookCreateParams,
   WebhookCreateResponse,
@@ -121,6 +123,11 @@ export interface ClientOptions {
    * Defaults to process.env['CHUNKIFY_TEAM_TOKEN'].
    */
   teamAccessToken?: string | null | undefined;
+
+  /**
+   * Defaults to process.env['CHUNKIFY_WEBHOOK_SECRET'].
+   */
+  webhookSecret?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -197,6 +204,7 @@ export interface ClientOptions {
 export class Chunkify {
   projectAccessToken: string | null;
   teamAccessToken: string | null;
+  webhookSecret: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -215,6 +223,7 @@ export class Chunkify {
    *
    * @param {string | null | undefined} [opts.projectAccessToken=process.env['CHUNKIFY_TOKEN'] ?? null]
    * @param {string | null | undefined} [opts.teamAccessToken=process.env['CHUNKIFY_TEAM_TOKEN'] ?? null]
+   * @param {string | null | undefined} [opts.webhookSecret=process.env['CHUNKIFY_WEBHOOK_SECRET'] ?? null]
    * @param {string} [opts.baseURL=process.env['CHUNKIFY_BASE_URL'] ?? https://api.chunkify.dev/v1] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -227,11 +236,13 @@ export class Chunkify {
     baseURL = readEnv('CHUNKIFY_BASE_URL'),
     projectAccessToken = readEnv('CHUNKIFY_TOKEN') ?? null,
     teamAccessToken = readEnv('CHUNKIFY_TEAM_TOKEN') ?? null,
+    webhookSecret = readEnv('CHUNKIFY_WEBHOOK_SECRET') ?? null,
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
       projectAccessToken,
       teamAccessToken,
+      webhookSecret,
       ...opts,
       baseURL: baseURL || `https://api.chunkify.dev/v1`,
     };
@@ -255,6 +266,7 @@ export class Chunkify {
 
     this.projectAccessToken = projectAccessToken;
     this.teamAccessToken = teamAccessToken;
+    this.webhookSecret = webhookSecret;
   }
 
   /**
@@ -272,6 +284,7 @@ export class Chunkify {
       fetchOptions: this.fetchOptions,
       projectAccessToken: this.projectAccessToken,
       teamAccessToken: this.teamAccessToken,
+      webhookSecret: this.webhookSecret,
       ...options,
     });
     return client;
@@ -953,6 +966,8 @@ export declare namespace Chunkify {
     type WebhookCreateResponse as WebhookCreateResponse,
     type WebhookRetrieveResponse as WebhookRetrieveResponse,
     type WebhookListResponse as WebhookListResponse,
+    type NewEventWebhookEvent as NewEventWebhookEvent,
+    type UnwrapWebhookEvent as UnwrapWebhookEvent,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
   };
