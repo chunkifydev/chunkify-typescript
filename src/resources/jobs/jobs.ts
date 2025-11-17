@@ -73,9 +73,6 @@ export interface HlsAv1 {
    */
   audio_bitrate: number;
 
-  /**
-   * Name of the HLS AV1 configuration
-   */
   name: 'hls_av1';
 
   /**
@@ -269,9 +266,6 @@ export interface HlsH264 {
    */
   audio_bitrate: number;
 
-  /**
-   * Name of the HLS H264 configuration
-   */
   name: 'hls_h264';
 
   /**
@@ -474,9 +468,6 @@ export interface HlsH265 {
    */
   audio_bitrate: number;
 
-  /**
-   * Name of the HLS H265 configuration
-   */
   name: 'hls_h265';
 
   /**
@@ -804,9 +795,6 @@ export interface Jpg {
    */
   interval: number;
 
-  /**
-   * Name of the JPEG configuration
-   */
   name: 'jpg';
 
   chunk_duration?: number;
@@ -1229,9 +1217,6 @@ export interface MP4H265 {
 
   movflags?: string;
 
-  /**
-   * Name of the MP4 H265 configuration
-   */
   name?: 'mp4_h265';
 
   /**
