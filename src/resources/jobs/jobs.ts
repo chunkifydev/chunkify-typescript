@@ -68,21 +68,15 @@ export type JobsPaginatedResults = PaginatedResults<Job>;
 
 export interface HlsAv1 {
   /**
-   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
-   * 32Kbps and 512Kbps.
-   */
-  audio_bitrate: number;
-
-  /**
    * Name of the HLS AV1 configuration
    */
   name: 'hls_av1';
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
+   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+   * 32Kbps and 512Kbps.
    */
-  video_bitrate: number;
+  audio_bitrate?: number;
 
   /**
    * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
@@ -256,6 +250,12 @@ export interface HlsAv1 {
   seek?: number;
 
   /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
    * Width specifies the output video width in pixels. Must be between -2 and 7680.
    * Use -2 for automatic calculation while maintaining aspect ratio.
    */
@@ -264,21 +264,15 @@ export interface HlsAv1 {
 
 export interface HlsH264 {
   /**
-   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
-   * 32Kbps and 512Kbps.
-   */
-  audio_bitrate: number;
-
-  /**
    * Name of the HLS H264 configuration
    */
   name: 'hls_h264';
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
+   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+   * 32Kbps and 512Kbps.
    */
-  video_bitrate: number;
+  audio_bitrate?: number;
 
   /**
    * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
@@ -454,6 +448,12 @@ export interface HlsH264 {
   seek?: number;
 
   /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
    * Width specifies the output video width in pixels. Must be between -2 and 7680.
    * Use -2 for automatic calculation while maintaining aspect ratio.
    */
@@ -469,21 +469,15 @@ export interface HlsH264 {
 
 export interface HlsH265 {
   /**
-   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
-   * 32Kbps and 512Kbps.
-   */
-  audio_bitrate: number;
-
-  /**
    * Name of the HLS H265 configuration
    */
   name: 'hls_h265';
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
+   * AudioBitrate specifies the audio bitrate in bits per second. Must be between
+   * 32Kbps and 512Kbps.
    */
-  video_bitrate: number;
+  audio_bitrate?: number;
 
   /**
    * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
@@ -654,6 +648,12 @@ export interface HlsH265 {
    * positive value.
    */
   seek?: number;
+
+  /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
 
   /**
    * Width specifies the output video width in pixels. Must be between -2 and 7680.
