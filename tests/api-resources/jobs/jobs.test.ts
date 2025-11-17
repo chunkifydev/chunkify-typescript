@@ -11,7 +11,7 @@ describe('resource jobs', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.jobs.create({
-      format: { audio_bitrate: 32000, name: 'hls_av1', video_bitrate: 100000 },
+      format: { name: 'hls_av1' },
       source_id: 'src_UioP9I876hjKlNBH78ILp0mo56t',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -27,9 +27,8 @@ describe('resource jobs', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.jobs.create({
       format: {
-        audio_bitrate: 32000,
         name: 'hls_av1',
-        video_bitrate: 100000,
+        audio_bitrate: 32000,
         bufsize: 100000,
         channels: 1,
         crf: 35,
@@ -53,6 +52,7 @@ describe('resource jobs', () => {
         preset: '10',
         profilev: 'main10',
         seek: 1,
+        video_bitrate: 100000,
         width: -2,
       },
       source_id: 'src_UioP9I876hjKlNBH78ILp0mo56t',
