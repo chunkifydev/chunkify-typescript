@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as JobsAPI from './jobs';
 import * as Shared from '../shared';
 import * as FilesAPI from './files';
 import { FileListResponse, Files } from './files';
@@ -66,23 +67,15 @@ export class Jobs extends APIResource {
 
 export type JobsPaginatedResults = PaginatedResults<Job>;
 
+/**
+ * FFmpeg encoding parameters specific to HLS with AV1 encoding.
+ */
 export interface HlsAv1 {
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
    */
-  audio_bitrate: number;
-
-  /**
-   * Name of the HLS AV1 configuration
-   */
-  name: 'hls_av1';
-
-  /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate: number;
+  audio_bitrate?: number;
 
   /**
    * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
@@ -256,29 +249,27 @@ export interface HlsAv1 {
   seek?: number;
 
   /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
    * Width specifies the output video width in pixels. Must be between -2 and 7680.
    * Use -2 for automatic calculation while maintaining aspect ratio.
    */
   width?: number;
 }
 
+/**
+ * FFmpeg encoding parameters specific to HLS with H.264 encoding.
+ */
 export interface HlsH264 {
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
    */
-  audio_bitrate: number;
-
-  /**
-   * Name of the HLS H264 configuration
-   */
-  name: 'hls_h264';
-
-  /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate: number;
+  audio_bitrate?: number;
 
   /**
    * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
@@ -454,6 +445,12 @@ export interface HlsH264 {
   seek?: number;
 
   /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
    * Width specifies the output video width in pixels. Must be between -2 and 7680.
    * Use -2 for automatic calculation while maintaining aspect ratio.
    */
@@ -467,23 +464,15 @@ export interface HlsH264 {
   x264_keyint?: number;
 }
 
+/**
+ * FFmpeg encoding parameters specific to HLS with H.265 encoding.
+ */
 export interface HlsH265 {
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
    */
-  audio_bitrate: number;
-
-  /**
-   * Name of the HLS H265 configuration
-   */
-  name: 'hls_h265';
-
-  /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate: number;
+  audio_bitrate?: number;
 
   /**
    * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
@@ -656,6 +645,12 @@ export interface HlsH265 {
   seek?: number;
 
   /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
    * Width specifies the output video width in pixels. Must be between -2 and 7680.
    * Use -2 for automatic calculation while maintaining aspect ratio.
    */
@@ -803,11 +798,6 @@ export interface Jpg {
    * seconds.
    */
   interval: number;
-
-  /**
-   * Name of the JPEG configuration
-   */
-  name: 'jpg';
 
   chunk_duration?: number;
 
@@ -986,6 +976,9 @@ export interface MP4Av1 {
   width?: number;
 }
 
+/**
+ * FFmpeg encoding parameters specific to MP4 with H.264 encoding.
+ */
 export interface MP4H264 {
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
@@ -1064,8 +1057,6 @@ export interface MP4H264 {
   minrate?: number;
 
   movflags?: string;
-
-  name?: 'mp4_h264';
 
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
@@ -1150,6 +1141,9 @@ export interface MP4H264 {
   x264_keyint?: number;
 }
 
+/**
+ * FFmpeg encoding parameters specific to MP4 with H.265 encoding.
+ */
 export interface MP4H265 {
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
@@ -1228,11 +1222,6 @@ export interface MP4H265 {
   minrate?: number;
 
   movflags?: string;
-
-  /**
-   * Name of the MP4 H265 configuration
-   */
-  name?: 'mp4_h265';
 
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
@@ -1314,12 +1303,10 @@ export interface MP4H265 {
   x265_keyint?: number;
 }
 
+/**
+ * FFmpeg encoding parameters specific to WebM with VP9 encoding.
+ */
 export interface WebmVp9 {
-  /**
-   * Name of the WebM VP9 configuration
-   */
-  name: 'webm_vp9';
-
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
@@ -1477,7 +1464,15 @@ export interface JobCreateParams {
    * be provided. If you want to use a format without specifying any configuration,
    * use an empty object in the corresponding field.
    */
-  format: HlsAv1 | HlsH264 | HlsH265 | Jpg | MP4Av1 | MP4H264 | MP4H265 | WebmVp9;
+  format:
+    | JobCreateParams.JobsHlsAv1
+    | JobCreateParams.JobsHlsH264
+    | JobCreateParams.JobsHlsH265
+    | JobCreateParams.JobsJpg
+    | JobCreateParams.JobsMP4Av1
+    | JobCreateParams.JobsMP4H264
+    | JobCreateParams.JobsMP4H265
+    | JobCreateParams.JobsWebmVp9;
 
   /**
    * The ID of the source file to transcode
@@ -1511,6 +1506,86 @@ export interface JobCreateParams {
 }
 
 export namespace JobCreateParams {
+  /**
+   * FFmpeg encoding parameters specific to HLS with AV1 encoding.
+   */
+  export interface JobsHlsAv1 extends JobsAPI.HlsAv1 {
+    /**
+     * Name of the format
+     */
+    name?: string;
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to HLS with H.264 encoding.
+   */
+  export interface JobsHlsH264 extends JobsAPI.HlsH264 {
+    /**
+     * Name of the format
+     */
+    name?: string;
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to HLS with H.265 encoding.
+   */
+  export interface JobsHlsH265 extends JobsAPI.HlsH265 {
+    /**
+     * Name of the format
+     */
+    name?: string;
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to JPEG image extraction.
+   */
+  export interface JobsJpg extends JobsAPI.Jpg {
+    /**
+     * Name of the format
+     */
+    name?: string;
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to MP4 with AV1 encoding.
+   */
+  export interface JobsMP4Av1 extends Omit<JobsAPI.MP4Av1, 'name'> {
+    /**
+     * Name of the format
+     */
+    name?: string;
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to MP4 with H.264 encoding.
+   */
+  export interface JobsMP4H264 extends JobsAPI.MP4H264 {
+    /**
+     * Name of the format
+     */
+    name?: string;
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to MP4 with H.265 encoding.
+   */
+  export interface JobsMP4H265 extends JobsAPI.MP4H265 {
+    /**
+     * Name of the format
+     */
+    name?: string;
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to WebM with VP9 encoding.
+   */
+  export interface JobsWebmVp9 extends JobsAPI.WebmVp9 {
+    /**
+     * Name of the format
+     */
+    name?: string;
+  }
+
   /**
    * Optional storage configuration
    */
