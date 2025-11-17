@@ -832,9 +832,6 @@ export interface Jpg {
 }
 
 export interface MP4Av1 {
-  /**
-   * Name of the MP4 AV1 configuration
-   */
   name: 'mp4_av1';
 
   /**
@@ -1068,9 +1065,6 @@ export interface MP4H264 {
 
   movflags?: string;
 
-  /**
-   * Name of the MP4 H264 configuration
-   */
   name?: 'mp4_h264';
 
   /**
