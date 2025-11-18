@@ -12,16 +12,20 @@ export class Uploads extends APIResource {
   /**
    * Create a new upload with the specified name.
    */
-  create(body: UploadCreateParams, options?: RequestOptions): APIPromise<UploadCreateResponse> {
-    return this._client.post('/api/uploads', { body, ...options });
+  create(body: UploadCreateParams, options?: RequestOptions): APIPromise<Upload> {
+    return (
+      this._client.post('/api/uploads', { body, ...options }) as APIPromise<{ data: Upload }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve details of a specific upload by its ID, including metadata, status, and
    * associated source.
    */
-  retrieve(uploadID: string, options?: RequestOptions): APIPromise<UploadRetrieveResponse> {
-    return this._client.get(path`/api/uploads/${uploadID}`, options);
+  retrieve(uploadID: string, options?: RequestOptions): APIPromise<Upload> {
+    return (
+      this._client.get(path`/api/uploads/${uploadID}`, options) as APIPromise<{ data: Upload }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -94,30 +98,6 @@ export interface Upload {
   metadata?: { [key: string]: string };
 }
 
-export interface UploadCreateResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Upload;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
-export interface UploadRetrieveResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Upload;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
 export interface UploadCreateParams {
   /**
    * Metadata allows for additional information to be attached to the upload, with a
@@ -177,8 +157,6 @@ export namespace UploadListParams {
 export declare namespace Uploads {
   export {
     type Upload as Upload,
-    type UploadCreateResponse as UploadCreateResponse,
-    type UploadRetrieveResponse as UploadRetrieveResponse,
     type UploadsPaginatedResults as UploadsPaginatedResults,
     type UploadCreateParams as UploadCreateParams,
     type UploadListParams as UploadListParams,

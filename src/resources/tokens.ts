@@ -12,8 +12,10 @@ export class Tokens extends APIResource {
    * Create a new access token for either account-wide or project-specific access.
    * Project tokens require a valid project slug.
    */
-  create(body: TokenCreateParams, options?: RequestOptions): APIPromise<TokenCreateResponse> {
-    return this._client.post('/api/tokens', { body, ...options });
+  create(body: TokenCreateParams, options?: RequestOptions): APIPromise<Token> {
+    return (
+      this._client.post('/api/tokens', { body, ...options }) as APIPromise<{ data: Token }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -70,18 +72,6 @@ export interface Token {
   created_at?: string;
 }
 
-export interface TokenCreateResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Token;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
 /**
  * Successful response
  */
@@ -110,7 +100,6 @@ export interface TokenCreateParams {
 export declare namespace Tokens {
   export {
     type Token as Token,
-    type TokenCreateResponse as TokenCreateResponse,
     type TokenListResponse as TokenListResponse,
     type TokenCreateParams as TokenCreateParams,
   };

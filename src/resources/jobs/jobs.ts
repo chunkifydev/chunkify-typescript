@@ -22,15 +22,19 @@ export class Jobs extends APIResource {
   /**
    * Create a new video processing job with specified parameters
    */
-  create(body: JobCreateParams, options?: RequestOptions): APIPromise<JobCreateResponse> {
-    return this._client.post('/api/jobs', { body, ...options });
+  create(body: JobCreateParams, options?: RequestOptions): APIPromise<Job> {
+    return (this._client.post('/api/jobs', { body, ...options }) as APIPromise<{ data: Job }>)._thenUnwrap(
+      (obj) => obj.data,
+    );
   }
 
   /**
    * Retrieve details of a specific job
    */
-  retrieve(jobID: string, options?: RequestOptions): APIPromise<JobRetrieveResponse> {
-    return this._client.get(path`/api/jobs/${jobID}`, options);
+  retrieve(jobID: string, options?: RequestOptions): APIPromise<Job> {
+    return (this._client.get(path`/api/jobs/${jobID}`, options) as APIPromise<{ data: Job }>)._thenUnwrap(
+      (obj) => obj.data,
+    );
   }
 
   /**
@@ -1439,30 +1443,6 @@ export interface WebmVp9 {
   width?: number;
 }
 
-export interface JobCreateResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Job;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
-export interface JobRetrieveResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Job;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
 export interface JobCreateParams {
   /**
    * Required format configuration, one and only one valid format configuration must
@@ -1611,8 +1591,6 @@ export declare namespace Jobs {
     type MP4H264 as MP4H264,
     type MP4H265 as MP4H265,
     type WebmVp9 as WebmVp9,
-    type JobCreateResponse as JobCreateResponse,
-    type JobRetrieveResponse as JobRetrieveResponse,
     type JobsPaginatedResults as JobsPaginatedResults,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,

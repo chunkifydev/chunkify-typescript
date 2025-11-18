@@ -13,16 +13,20 @@ export class Sources extends APIResource {
    * metadata and generate a thumbnail. The source will be automatically deleted
    * after the data retention period.
    */
-  create(body: SourceCreateParams, options?: RequestOptions): APIPromise<SourceCreateResponse> {
-    return this._client.post('/api/sources', { body, ...options });
+  create(body: SourceCreateParams, options?: RequestOptions): APIPromise<Source> {
+    return (
+      this._client.post('/api/sources', { body, ...options }) as APIPromise<{ data: Source }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve details of a specific source by its ID, including metadata, media
    * properties, and associated jobs.
    */
-  retrieve(sourceID: string, options?: RequestOptions): APIPromise<SourceRetrieveResponse> {
-    return this._client.get(path`/api/sources/${sourceID}`, options);
+  retrieve(sourceID: string, options?: RequestOptions): APIPromise<Source> {
+    return (
+      this._client.get(path`/api/sources/${sourceID}`, options) as APIPromise<{ data: Source }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -119,30 +123,6 @@ export interface Source {
    * Width of the video in pixels
    */
   width: number;
-}
-
-export interface SourceCreateResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Source;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
-export interface SourceRetrieveResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Source;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
 }
 
 export interface SourceCreateParams {
@@ -325,8 +305,6 @@ export namespace SourceListParams {
 export declare namespace Sources {
   export {
     type Source as Source,
-    type SourceCreateResponse as SourceCreateResponse,
-    type SourceRetrieveResponse as SourceRetrieveResponse,
     type SourcesPaginatedResults as SourcesPaginatedResults,
     type SourceCreateParams as SourceCreateParams,
     type SourceListParams as SourceListParams,

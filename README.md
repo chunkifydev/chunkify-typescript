@@ -35,7 +35,7 @@ const job = await client.jobs.create({
   transcoder: { quantity: 4, type: '8vCPU' },
 });
 
-console.log(job.data);
+console.log(job.id);
 ```
 
 ### Request & Response types

@@ -16,16 +16,20 @@ export class Webhooks extends APIResource {
    * Create a new webhook for a project. The webhook will receive notifications for
    * specified events.
    */
-  create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<WebhookCreateResponse> {
-    return this._client.post('/api/webhooks', { body, ...options });
+  create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<Webhook> {
+    return (
+      this._client.post('/api/webhooks', { body, ...options }) as APIPromise<{ data: Webhook }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve details of a specific webhook configuration by its ID. The webhook must
    * belong to the current project.
    */
-  retrieve(webhookID: string, options?: RequestOptions): APIPromise<WebhookRetrieveResponse> {
-    return this._client.get(path`/api/webhooks/${webhookID}`, options);
+  retrieve(webhookID: string, options?: RequestOptions): APIPromise<Webhook> {
+    return (
+      this._client.get(path`/api/webhooks/${webhookID}`, options) as APIPromise<{ data: Webhook }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -89,30 +93,6 @@ export interface Webhook {
    * URL where webhook events will be sent
    */
   url: string;
-}
-
-export interface WebhookCreateResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Webhook;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
-export interface WebhookRetrieveResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Webhook;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
 }
 
 /**
@@ -307,8 +287,6 @@ export interface WebhookUpdateParams {
 export declare namespace Webhooks {
   export {
     type Webhook as Webhook,
-    type WebhookCreateResponse as WebhookCreateResponse,
-    type WebhookRetrieveResponse as WebhookRetrieveResponse,
     type WebhookListResponse as WebhookListResponse,
     type NewEventWebhookEvent as NewEventWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
