@@ -747,7 +747,7 @@ export namespace Job {
      * specific to the format For example, for mp4/h264 format this includes parameters
      * like crf, preset, profile etc.
      */
-    config?: unknown;
+    config?: { [key: string]: unknown };
 
     /**
      * Name of the transcoding template.The format to use for transcoding. Valid
