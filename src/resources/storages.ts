@@ -12,9 +12,10 @@ export class Storages extends APIResource {
    * Create a new storage configuration for cloud storage providers like AWS S3,
    * Cloudflare R2, etc. The storage credentials will be validated before saving.
    */
-  create(body: StorageCreateParams, options?: RequestOptions): APIPromise<Storage> {
+  create(params: StorageCreateParams, options?: RequestOptions): APIPromise<Storage> {
+    const { storage } = params;
     return (
-      this._client.post('/api/storages', { body, ...options }) as APIPromise<{ data: Storage }>
+      this._client.post('/api/storages', { body: storage, ...options }) as APIPromise<{ data: Storage }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -100,13 +101,18 @@ export interface StorageListResponse extends Shared.ResponseOk {
   data?: Array<Storage>;
 }
 
-export type StorageCreateParams =
-  | StorageCreateParams.StorageAwsCreateParams
-  | StorageCreateParams.StorageChunkifyCreateParams
-  | StorageCreateParams.StorageCloudflareCreateParams;
+export interface StorageCreateParams {
+  /**
+   * The parameters for creating a new storage configuration.
+   */
+  storage: StorageCreateParams.Aws | StorageCreateParams.Chunkify | StorageCreateParams.Cloudflare;
+}
 
-export declare namespace StorageCreateParams {
-  export interface StorageAwsCreateParams {
+export namespace StorageCreateParams {
+  /**
+   * Storage parameters for AWS S3 storage.
+   */
+  export interface Aws {
     /**
      * AccessKeyId is the access key for the storage provider. Required if not using
      * Chunkify storage.
@@ -157,7 +163,10 @@ export declare namespace StorageCreateParams {
     public?: boolean;
   }
 
-  export interface StorageChunkifyCreateParams {
+  /**
+   * Storage parameters for Chunkify ephemeral storage.
+   */
+  export interface Chunkify {
     /**
      * Provider specifies the storage provider.
      */
@@ -186,7 +195,10 @@ export declare namespace StorageCreateParams {
       | 'ap-southeast-2';
   }
 
-  export interface StorageCloudflareCreateParams {
+  /**
+   * Storage parameters for Cloudflare R2 storage.
+   */
+  export interface Cloudflare {
     /**
      * AccessKeyId is the access key for the storage provider.
      */

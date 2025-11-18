@@ -27,7 +27,7 @@ export namespace LogListResponse {
     /**
      * Additional structured data attached to the log
      */
-    attributes: unknown;
+    attributes: { [key: string]: unknown };
 
     /**
      * Log level (e.g. "info", "error", "debug")
