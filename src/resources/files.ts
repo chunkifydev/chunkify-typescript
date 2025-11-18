@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -13,8 +12,10 @@ export class Files extends APIResource {
    * Retrieve details of a specific file by its ID, including metadata, media
    * properties, and associated jobs.
    */
-  retrieve(fileID: string, options?: RequestOptions): APIPromise<FileRetrieveResponse> {
-    return this._client.get(path`/api/files/${fileID}`, options);
+  retrieve(fileID: string, options?: RequestOptions): APIPromise<APIFile> {
+    return (
+      this._client.get(path`/api/files/${fileID}`, options) as APIPromise<{ data: APIFile }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -120,13 +121,6 @@ export interface APIFile {
    * Width of the video in pixels
    */
   width: number;
-}
-
-/**
- * Successful response
- */
-export interface FileRetrieveResponse extends Shared.ResponseOk {
-  data: APIFile;
 }
 
 export interface FileListParams extends PaginatedResultsParams {
@@ -315,7 +309,6 @@ export namespace FileListParams {
 export declare namespace Files {
   export {
     type APIFile as APIFile,
-    type FileRetrieveResponse as FileRetrieveResponse,
     type APIFilesPaginatedResults as APIFilesPaginatedResults,
     type FileListParams as FileListParams,
   };
