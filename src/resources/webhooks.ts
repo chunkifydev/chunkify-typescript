@@ -91,18 +91,28 @@ export interface Webhook {
   url: string;
 }
 
-/**
- * Successful response
- */
-export interface WebhookCreateResponse extends Shared.ResponseOk {
-  data?: Webhook;
+export interface WebhookCreateResponse {
+  /**
+   * Data contains the response object
+   */
+  data: Webhook;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
-/**
- * Successful response
- */
-export interface WebhookRetrieveResponse extends Shared.ResponseOk {
+export interface WebhookRetrieveResponse {
+  /**
+   * Data contains the response object
+   */
   data: Webhook;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 /**

@@ -94,18 +94,28 @@ export interface Upload {
   metadata?: { [key: string]: string };
 }
 
-/**
- * Successful response
- */
-export interface UploadCreateResponse extends Shared.ResponseOk {
-  data?: Upload;
+export interface UploadCreateResponse {
+  /**
+   * Data contains the response object
+   */
+  data: Upload;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
-/**
- * Successful response
- */
-export interface UploadRetrieveResponse extends Shared.ResponseOk {
+export interface UploadRetrieveResponse {
+  /**
+   * Data contains the response object
+   */
   data: Upload;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 export interface UploadCreateParams {

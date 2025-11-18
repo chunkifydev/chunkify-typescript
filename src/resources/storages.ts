@@ -89,18 +89,28 @@ export interface Storage {
   slug: string;
 }
 
-/**
- * Successful response
- */
-export interface StorageCreateResponse extends Shared.ResponseOk {
+export interface StorageCreateResponse {
+  /**
+   * Data contains the response object
+   */
   data: Storage;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
-/**
- * Successful response
- */
-export interface StorageRetrieveResponse extends Shared.ResponseOk {
+export interface StorageRetrieveResponse {
+  /**
+   * Data contains the response object
+   */
   data: Storage;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 /**

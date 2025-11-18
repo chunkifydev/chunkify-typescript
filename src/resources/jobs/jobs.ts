@@ -1300,9 +1300,6 @@ export interface MP4H265 {
 }
 
 export interface WebmVp9 {
-  /**
-   * Name of the WebM VP9 configuration
-   */
   name: 'webm_vp9';
 
   /**
@@ -1442,18 +1439,28 @@ export interface WebmVp9 {
   width?: number;
 }
 
-/**
- * Successful response
- */
-export interface JobCreateResponse extends Shared.ResponseOk {
+export interface JobCreateResponse {
+  /**
+   * Data contains the response object
+   */
   data: Job;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
-/**
- * Successful response
- */
-export interface JobRetrieveResponse extends Shared.ResponseOk {
+export interface JobRetrieveResponse {
+  /**
+   * Data contains the response object
+   */
   data: Job;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 export interface JobCreateParams {
