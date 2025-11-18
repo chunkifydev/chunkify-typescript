@@ -1449,7 +1449,7 @@ export interface JobCreateParams {
    * be provided. If you want to use a format without specifying any configuration,
    * use an empty object in the corresponding field.
    */
-  format: HlsAv1 | HlsH264 | HlsH265 | Jpg | MP4Av1 | MP4H264 | MP4H265 | WebmVp9;
+  format: MP4Av1 | MP4H264 | MP4H265 | WebmVp9 | HlsAv1 | HlsH264 | HlsH265 | Jpg;
 
   /**
    * The ID of the source file to transcode
