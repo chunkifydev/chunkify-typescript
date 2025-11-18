@@ -1,13 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
-export {
-  Files,
-  type APIFile,
-  type FileRetrieveResponse,
-  type FileListParams,
-  type APIFilesPaginatedResults,
-} from './files';
+export { Files, type APIFile, type FileListParams, type APIFilesPaginatedResults } from './files';
 export {
   Jobs,
   type HlsAv1,
