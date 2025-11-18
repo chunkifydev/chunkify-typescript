@@ -12,15 +12,19 @@ export class Projects extends APIResource {
    * Create a new project with the specified name. The project will be created with
    * default Chunkify storage settings.
    */
-  create(body: ProjectCreateParams, options?: RequestOptions): APIPromise<ProjectCreateResponse> {
-    return this._client.post('/api/projects', { body, ...options });
+  create(body: ProjectCreateParams, options?: RequestOptions): APIPromise<Project> {
+    return (
+      this._client.post('/api/projects', { body, ...options }) as APIPromise<{ data: Project }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve details of a specific project by its slug
    */
-  retrieve(projectID: string, options?: RequestOptions): APIPromise<ProjectRetrieveResponse> {
-    return this._client.get(path`/api/projects/${projectID}`, options);
+  retrieve(projectID: string, options?: RequestOptions): APIPromise<Project> {
+    return (
+      this._client.get(path`/api/projects/${projectID}`, options) as APIPromise<{ data: Project }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -84,30 +88,6 @@ export interface Project {
   created_at?: string;
 }
 
-export interface ProjectCreateResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Project;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
-export interface ProjectRetrieveResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Project;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
 /**
  * Successful response
  */
@@ -150,8 +130,6 @@ export interface ProjectListParams {
 export declare namespace Projects {
   export {
     type Project as Project,
-    type ProjectCreateResponse as ProjectCreateResponse,
-    type ProjectRetrieveResponse as ProjectRetrieveResponse,
     type ProjectListResponse as ProjectListResponse,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectUpdateParams as ProjectUpdateParams,

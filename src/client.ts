@@ -23,46 +23,31 @@ import { APIFile, APIFilesPaginatedResults, FileListParams, Files } from './reso
 import {
   Notification,
   NotificationCreateParams,
-  NotificationCreateResponse,
   NotificationListParams,
-  NotificationRetrieveResponse,
   Notifications,
   NotificationsPaginatedResults,
 } from './resources/notifications';
 import {
   Project,
   ProjectCreateParams,
-  ProjectCreateResponse,
   ProjectListParams,
   ProjectListResponse,
-  ProjectRetrieveResponse,
   ProjectUpdateParams,
   Projects,
 } from './resources/projects';
 import {
   Source,
   SourceCreateParams,
-  SourceCreateResponse,
   SourceListParams,
-  SourceRetrieveResponse,
   Sources,
   SourcesPaginatedResults,
 } from './resources/sources';
-import {
-  Storage,
-  StorageCreateParams,
-  StorageCreateResponse,
-  StorageListResponse,
-  StorageRetrieveResponse,
-  Storages,
-} from './resources/storages';
-import { Token, TokenCreateParams, TokenCreateResponse, TokenListResponse, Tokens } from './resources/tokens';
+import { Storage, StorageCreateParams, StorageListResponse, Storages } from './resources/storages';
+import { Token, TokenCreateParams, TokenListResponse, Tokens } from './resources/tokens';
 import {
   Upload,
   UploadCreateParams,
-  UploadCreateResponse,
   UploadListParams,
-  UploadRetrieveResponse,
   Uploads as UploadsAPIUploads,
   UploadsPaginatedResults,
 } from './resources/uploads';
@@ -71,9 +56,7 @@ import {
   UnwrapWebhookEvent,
   Webhook,
   WebhookCreateParams,
-  WebhookCreateResponse,
   WebhookListResponse,
-  WebhookRetrieveResponse,
   WebhookUpdateParams,
   Webhooks,
 } from './resources/webhooks';
@@ -83,9 +66,7 @@ import {
   HlsH265,
   Job,
   JobCreateParams,
-  JobCreateResponse,
   JobListParams,
-  JobRetrieveResponse,
   Jobs,
   JobsPaginatedResults,
   Jpg,
@@ -888,8 +869,6 @@ export declare namespace Chunkify {
     type MP4H264 as MP4H264,
     type MP4H265 as MP4H265,
     type WebmVp9 as WebmVp9,
-    type JobCreateResponse as JobCreateResponse,
-    type JobRetrieveResponse as JobRetrieveResponse,
     type JobsPaginatedResults as JobsPaginatedResults,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
@@ -898,8 +877,6 @@ export declare namespace Chunkify {
   export {
     Notifications as Notifications,
     type Notification as Notification,
-    type NotificationCreateResponse as NotificationCreateResponse,
-    type NotificationRetrieveResponse as NotificationRetrieveResponse,
     type NotificationsPaginatedResults as NotificationsPaginatedResults,
     type NotificationCreateParams as NotificationCreateParams,
     type NotificationListParams as NotificationListParams,
@@ -908,8 +885,6 @@ export declare namespace Chunkify {
   export {
     Projects as Projects,
     type Project as Project,
-    type ProjectCreateResponse as ProjectCreateResponse,
-    type ProjectRetrieveResponse as ProjectRetrieveResponse,
     type ProjectListResponse as ProjectListResponse,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectUpdateParams as ProjectUpdateParams,
@@ -919,8 +894,6 @@ export declare namespace Chunkify {
   export {
     Sources as Sources,
     type Source as Source,
-    type SourceCreateResponse as SourceCreateResponse,
-    type SourceRetrieveResponse as SourceRetrieveResponse,
     type SourcesPaginatedResults as SourcesPaginatedResults,
     type SourceCreateParams as SourceCreateParams,
     type SourceListParams as SourceListParams,
@@ -929,8 +902,6 @@ export declare namespace Chunkify {
   export {
     Storages as Storages,
     type Storage as Storage,
-    type StorageCreateResponse as StorageCreateResponse,
-    type StorageRetrieveResponse as StorageRetrieveResponse,
     type StorageListResponse as StorageListResponse,
     type StorageCreateParams as StorageCreateParams,
   };
@@ -938,7 +909,6 @@ export declare namespace Chunkify {
   export {
     Tokens as Tokens,
     type Token as Token,
-    type TokenCreateResponse as TokenCreateResponse,
     type TokenListResponse as TokenListResponse,
     type TokenCreateParams as TokenCreateParams,
   };
@@ -946,8 +916,6 @@ export declare namespace Chunkify {
   export {
     UploadsAPIUploads as Uploads,
     type Upload as Upload,
-    type UploadCreateResponse as UploadCreateResponse,
-    type UploadRetrieveResponse as UploadRetrieveResponse,
     type UploadsPaginatedResults as UploadsPaginatedResults,
     type UploadCreateParams as UploadCreateParams,
     type UploadListParams as UploadListParams,
@@ -956,8 +924,6 @@ export declare namespace Chunkify {
   export {
     Webhooks as Webhooks,
     type Webhook as Webhook,
-    type WebhookCreateResponse as WebhookCreateResponse,
-    type WebhookRetrieveResponse as WebhookRetrieveResponse,
     type WebhookListResponse as WebhookListResponse,
     type NewEventWebhookEvent as NewEventWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,

@@ -13,8 +13,6 @@ export {
   type MP4H264,
   type MP4H265,
   type WebmVp9,
-  type JobCreateResponse,
-  type JobRetrieveResponse,
   type JobCreateParams,
   type JobListParams,
   type JobsPaginatedResults,
@@ -22,8 +20,6 @@ export {
 export {
   Notifications,
   type Notification,
-  type NotificationCreateResponse,
-  type NotificationRetrieveResponse,
   type NotificationCreateParams,
   type NotificationListParams,
   type NotificationsPaginatedResults,
@@ -31,8 +27,6 @@ export {
 export {
   Projects,
   type Project,
-  type ProjectCreateResponse,
-  type ProjectRetrieveResponse,
   type ProjectListResponse,
   type ProjectCreateParams,
   type ProjectUpdateParams,
@@ -41,32 +35,15 @@ export {
 export {
   Sources,
   type Source,
-  type SourceCreateResponse,
-  type SourceRetrieveResponse,
   type SourceCreateParams,
   type SourceListParams,
   type SourcesPaginatedResults,
 } from './sources';
-export {
-  Storages,
-  type Storage,
-  type StorageCreateResponse,
-  type StorageRetrieveResponse,
-  type StorageListResponse,
-  type StorageCreateParams,
-} from './storages';
-export {
-  Tokens,
-  type Token,
-  type TokenCreateResponse,
-  type TokenListResponse,
-  type TokenCreateParams,
-} from './tokens';
+export { Storages, type Storage, type StorageListResponse, type StorageCreateParams } from './storages';
+export { Tokens, type Token, type TokenListResponse, type TokenCreateParams } from './tokens';
 export {
   Uploads,
   type Upload,
-  type UploadCreateResponse,
-  type UploadRetrieveResponse,
   type UploadCreateParams,
   type UploadListParams,
   type UploadsPaginatedResults,
@@ -74,8 +51,6 @@ export {
 export {
   Webhooks,
   type Webhook,
-  type WebhookCreateResponse,
-  type WebhookRetrieveResponse,
   type WebhookListResponse,
   type NewEventWebhookEvent,
   type UnwrapWebhookEvent,

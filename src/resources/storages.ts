@@ -12,15 +12,19 @@ export class Storages extends APIResource {
    * Create a new storage configuration for cloud storage providers like AWS S3,
    * Cloudflare R2, etc. The storage credentials will be validated before saving.
    */
-  create(body: StorageCreateParams, options?: RequestOptions): APIPromise<StorageCreateResponse> {
-    return this._client.post('/api/storages', { body, ...options });
+  create(body: StorageCreateParams, options?: RequestOptions): APIPromise<Storage> {
+    return (
+      this._client.post('/api/storages', { body, ...options }) as APIPromise<{ data: Storage }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve details of a specific storage configuration by its id.
    */
-  retrieve(storageID: string, options?: RequestOptions): APIPromise<StorageRetrieveResponse> {
-    return this._client.get(path`/api/storages/${storageID}`, options);
+  retrieve(storageID: string, options?: RequestOptions): APIPromise<Storage> {
+    return (
+      this._client.get(path`/api/storages/${storageID}`, options) as APIPromise<{ data: Storage }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -87,30 +91,6 @@ export interface Storage {
    * Unique identifier of the storage configuration
    */
   slug: string;
-}
-
-export interface StorageCreateResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Storage;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
-export interface StorageRetrieveResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Storage;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
 }
 
 /**
@@ -252,8 +232,6 @@ export declare namespace StorageCreateParams {
 export declare namespace Storages {
   export {
     type Storage as Storage,
-    type StorageCreateResponse as StorageCreateResponse,
-    type StorageRetrieveResponse as StorageRetrieveResponse,
     type StorageListResponse as StorageListResponse,
     type StorageCreateParams as StorageCreateParams,
   };

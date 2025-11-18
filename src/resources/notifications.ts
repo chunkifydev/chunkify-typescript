@@ -12,15 +12,21 @@ export class Notifications extends APIResource {
   /**
    * Create a new notification for a job event
    */
-  create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<NotificationCreateResponse> {
-    return this._client.post('/api/notifications', { body, ...options });
+  create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<Notification> {
+    return (
+      this._client.post('/api/notifications', { body, ...options }) as APIPromise<{ data: Notification }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve details of a specific notification
    */
-  retrieve(notificationID: string, options?: RequestOptions): APIPromise<NotificationRetrieveResponse> {
-    return this._client.get(path`/api/notifications/${notificationID}`, options);
+  retrieve(notificationID: string, options?: RequestOptions): APIPromise<Notification> {
+    return (
+      this._client.get(path`/api/notifications/${notificationID}`, options) as APIPromise<{
+        data: Notification;
+      }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -84,30 +90,6 @@ export interface Notification {
    * Webhook endpoint configuration that received this notification
    */
   webhook: WebhooksAPI.Webhook;
-}
-
-export interface NotificationCreateResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Notification;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
-}
-
-export interface NotificationRetrieveResponse {
-  /**
-   * Data contains the response object
-   */
-  data: Notification;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
 }
 
 export interface NotificationCreateParams {
@@ -195,8 +177,6 @@ export namespace NotificationListParams {
 export declare namespace Notifications {
   export {
     type Notification as Notification,
-    type NotificationCreateResponse as NotificationCreateResponse,
-    type NotificationRetrieveResponse as NotificationRetrieveResponse,
     type NotificationsPaginatedResults as NotificationsPaginatedResults,
     type NotificationCreateParams as NotificationCreateParams,
     type NotificationListParams as NotificationListParams,

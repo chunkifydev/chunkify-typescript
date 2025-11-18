@@ -12,8 +12,6 @@ export {
   type MP4H264,
   type MP4H265,
   type WebmVp9,
-  type JobCreateResponse,
-  type JobRetrieveResponse,
   type JobCreateParams,
   type JobListParams,
   type JobsPaginatedResults,
