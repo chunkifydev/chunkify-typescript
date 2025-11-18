@@ -71,13 +71,13 @@ export class Jobs extends APIResource {
 export type JobsPaginatedResults = PaginatedResults<Job>;
 
 export interface HlsAv1 {
+  id: 'hls_av1';
+
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
    */
   audio_bitrate: number;
-
-  name: 'hls_av1';
 
   /**
    * VideoBitrate specifies the video bitrate in bits per second. Must be between
@@ -264,13 +264,13 @@ export interface HlsAv1 {
 }
 
 export interface HlsH264 {
+  id: 'hls_h264';
+
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
    */
   audio_bitrate: number;
-
-  name: 'hls_h264';
 
   /**
    * VideoBitrate specifies the video bitrate in bits per second. Must be between
@@ -466,13 +466,13 @@ export interface HlsH264 {
 }
 
 export interface HlsH265 {
+  id: 'hls_h265';
+
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
    */
   audio_bitrate: number;
-
-  name: 'hls_h265';
 
   /**
    * VideoBitrate specifies the video bitrate in bits per second. Must be between
@@ -792,14 +792,14 @@ export namespace Job {
  * FFmpeg encoding parameters specific to JPEG image extraction.
  */
 export interface Jpg {
+  id: 'jpg';
+
   /**
    * Time interval in seconds at which frames are extracted from the video (e.g.,
    * interval=10 extracts frames at 0s, 10s, 20s, etc.). Must be between 1 and 60
    * seconds.
    */
   interval: number;
-
-  name: 'jpg';
 
   chunk_duration?: number;
 
@@ -824,7 +824,7 @@ export interface Jpg {
 }
 
 export interface MP4Av1 {
-  name: 'mp4_av1';
+  id: 'mp4_av1';
 
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
@@ -979,7 +979,7 @@ export interface MP4Av1 {
 }
 
 export interface MP4H264 {
-  name: 'mp4_h264';
+  id: 'mp4_h264';
 
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
@@ -1143,7 +1143,7 @@ export interface MP4H264 {
 }
 
 export interface MP4H265 {
-  name: 'mp4_h265';
+  id: 'mp4_h265';
 
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
@@ -1304,7 +1304,7 @@ export interface MP4H265 {
 }
 
 export interface WebmVp9 {
-  name: 'webm_vp9';
+  id: 'webm_vp9';
 
   /**
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
