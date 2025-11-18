@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -122,18 +121,28 @@ export interface Source {
   width: number;
 }
 
-/**
- * Successful response
- */
-export interface SourceCreateResponse extends Shared.ResponseOk {
-  data?: Source;
+export interface SourceCreateResponse {
+  /**
+   * Data contains the response object
+   */
+  data: Source;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
-/**
- * Successful response
- */
-export interface SourceRetrieveResponse extends Shared.ResponseOk {
+export interface SourceRetrieveResponse {
+  /**
+   * Data contains the response object
+   */
   data: Source;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 export interface SourceCreateParams {

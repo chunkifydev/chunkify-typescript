@@ -84,18 +84,28 @@ export interface Project {
   created_at?: string;
 }
 
-/**
- * Successful response
- */
-export interface ProjectCreateResponse extends Shared.ResponseOk {
-  data?: Project;
+export interface ProjectCreateResponse {
+  /**
+   * Data contains the response object
+   */
+  data: Project;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
-/**
- * Successful response
- */
-export interface ProjectRetrieveResponse extends Shared.ResponseOk {
+export interface ProjectRetrieveResponse {
+  /**
+   * Data contains the response object
+   */
   data: Project;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 /**

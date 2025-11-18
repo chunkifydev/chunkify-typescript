@@ -70,11 +70,16 @@ export interface Token {
   created_at?: string;
 }
 
-/**
- * Successful response
- */
-export interface TokenCreateResponse extends Shared.ResponseOk {
-  data?: Token;
+export interface TokenCreateResponse {
+  /**
+   * Data contains the response object
+   */
+  data: Token;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 /**

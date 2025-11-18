@@ -34,6 +34,8 @@ const job = await client.jobs.create({
   source_id: 'src_2G6MJiNz71bHQGNzGwKx5cJwPFS',
   transcoder: { quantity: 4, type: '8vCPU' },
 });
+
+console.log(job.data);
 ```
 
 ### Request & Response types

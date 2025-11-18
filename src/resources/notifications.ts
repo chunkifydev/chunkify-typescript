@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as Shared from './shared';
 import * as WebhooksAPI from './webhooks';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
@@ -87,18 +86,28 @@ export interface Notification {
   webhook: WebhooksAPI.Webhook;
 }
 
-/**
- * Successful response
- */
-export interface NotificationCreateResponse extends Shared.ResponseOk {
-  data?: Notification;
+export interface NotificationCreateResponse {
+  /**
+   * Data contains the response object
+   */
+  data: Notification;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
-/**
- * Successful response
- */
-export interface NotificationRetrieveResponse extends Shared.ResponseOk {
+export interface NotificationRetrieveResponse {
+  /**
+   * Data contains the response object
+   */
   data: Notification;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 export interface NotificationCreateParams {
