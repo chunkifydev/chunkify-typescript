@@ -705,8 +705,7 @@ export interface Job {
   source_id: string;
 
   /**
-   * Current status of the job (e.g., "queued", "ingesting","transcoding",
-   * "downloading", "merging", "uploading", "failed", "completed")
+   * Current status of the job
    */
   status:
     | 'queued'
@@ -720,7 +719,8 @@ export interface Job {
     | 'cancelled'
     | 'merged'
     | 'downloaded'
-    | 'transcoded';
+    | 'transcoded'
+    | 'waiting';
 
   /**
    * Storage settings for where the job output will be saved
@@ -764,9 +764,7 @@ export namespace Job {
    */
   export interface MP4Av1 extends Omit<JobsAPI.MP4Av1, 'id'> {
     /**
-     * Name of the transcoding template. The format to use for transcoding. Valid
-     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
-     * jpg
+     * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
   }
@@ -776,9 +774,7 @@ export namespace Job {
    */
   export interface MP4H264 extends Omit<JobsAPI.MP4H264, 'id'> {
     /**
-     * Name of the transcoding template. The format to use for transcoding. Valid
-     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
-     * jpg
+     * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
   }
@@ -788,9 +784,7 @@ export namespace Job {
    */
   export interface MP4H265 extends Omit<JobsAPI.MP4H265, 'id'> {
     /**
-     * Name of the transcoding template. The format to use for transcoding. Valid
-     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
-     * jpg
+     * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
   }
@@ -800,9 +794,7 @@ export namespace Job {
    */
   export interface WebmVp9 extends Omit<JobsAPI.WebmVp9, 'id'> {
     /**
-     * Name of the transcoding template. The format to use for transcoding. Valid
-     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
-     * jpg
+     * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
   }
@@ -812,9 +804,7 @@ export namespace Job {
    */
   export interface HlsAv1 extends Omit<JobsAPI.HlsAv1, 'id'> {
     /**
-     * Name of the transcoding template. The format to use for transcoding. Valid
-     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
-     * jpg
+     * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
   }
@@ -824,9 +814,7 @@ export namespace Job {
    */
   export interface HlsH264 extends Omit<JobsAPI.HlsH264, 'id'> {
     /**
-     * Name of the transcoding template. The format to use for transcoding. Valid
-     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
-     * jpg
+     * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
   }
@@ -836,9 +824,7 @@ export namespace Job {
    */
   export interface HlsH265 extends Omit<JobsAPI.HlsH265, 'id'> {
     /**
-     * Name of the transcoding template. The format to use for transcoding. Valid
-     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
-     * jpg
+     * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
   }
@@ -848,9 +834,7 @@ export namespace Job {
    */
   export interface Jpg extends Omit<JobsAPI.Jpg, 'id'> {
     /**
-     * Name of the transcoding template. The format to use for transcoding. Valid
-     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
-     * jpg
+     * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
   }
@@ -1613,8 +1597,7 @@ export namespace JobCreateParams {
    */
   export interface Transcoder {
     /**
-     * Quantity specifies the number of transcoder instances to use (1-50). Required if
-     * Type is set.
+     * Quantity specifies the number of transcoder instances. Required if Type is set.
      */
     quantity?: number;
 

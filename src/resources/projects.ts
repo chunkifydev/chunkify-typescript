@@ -67,6 +67,11 @@ export interface Project {
   id: string;
 
   /**
+   * Timestamp when the project was created
+   */
+  created_at: string;
+
+  /**
    * Name of the project
    */
   name: string;
@@ -80,11 +85,6 @@ export interface Project {
    * StorageId identifier where project files are stored
    */
   storage_id: string;
-
-  /**
-   * Timestamp when the project was created
-   */
-  created_at?: string;
 }
 
 export interface ProjectListResponse {
@@ -103,20 +103,16 @@ export interface ProjectCreateParams {
   name: string;
 }
 
-export type ProjectUpdateParams = ProjectUpdateParams.Variant0 | ProjectUpdateParams.Variant1;
+export interface ProjectUpdateParams {
+  /**
+   * Name is the name of the project. Required when storage_id is not provided.
+   */
+  name?: string;
 
-export declare namespace ProjectUpdateParams {
-  export interface Variant0 {
-    name: string;
-
-    storage_id?: string;
-  }
-
-  export interface Variant1 {
-    storage_id: string;
-
-    name?: string;
-  }
+  /**
+   * StorageId is the storage id of the project. Required when name is not provided.
+   */
+  storage_id?: string;
 }
 
 export interface ProjectListParams {

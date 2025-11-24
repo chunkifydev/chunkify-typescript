@@ -81,7 +81,9 @@ export interface Webhook {
   /**
    * Array of event types this webhook subscribes to
    */
-  events: Array<string>;
+  events: Array<
+    'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
+  >;
 
   /**
    * ID of the project this webhook belongs to

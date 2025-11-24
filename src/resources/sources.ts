@@ -65,7 +65,7 @@ export interface Source {
   audio_bitrate: number;
 
   /**
-   * Audio codec used (e.g. aac, mp3)
+   * Audio codec used
    */
   audio_codec: string;
 
@@ -110,7 +110,7 @@ export interface Source {
   video_bitrate: number;
 
   /**
-   * Video codec used (e.g. h264, h265)
+   * Video codec used
    */
   video_codec: string;
 

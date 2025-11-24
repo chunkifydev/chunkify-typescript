@@ -66,9 +66,9 @@ export interface Token {
   project_id: string;
 
   /**
-   * Access scope of the token (e.g.project, team)
+   * Access scope of the token
    */
-  scope: string;
+  scope: 'project' | 'team';
 }
 
 export interface TokenListResponse {
@@ -85,7 +85,7 @@ export interface TokenCreateParams {
    * Scope specifies the scope of the token, which must be either "team" or
    * "project".
    */
-  scope: 'team' | 'project';
+  scope: 'project' | 'team';
 
   /**
    * Name is the name of the token, which can be up to 64 characters long.
