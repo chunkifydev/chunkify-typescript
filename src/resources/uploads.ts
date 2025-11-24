@@ -68,7 +68,7 @@ export interface Upload {
   expires_at: string;
 
   /**
-   * Current status of the upload (waiting, completed, failed, expired)
+   * Current status of the upload
    */
   status: 'waiting' | 'completed' | 'failed' | 'expired';
 
