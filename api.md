@@ -3,7 +3,6 @@
 Types:
 
 - <code><a href="./src/resources/shared.ts">ChunkifyError</a></code>
-- <code><a href="./src/resources/shared.ts">ResponseError</a></code>
 
 # Files
 
