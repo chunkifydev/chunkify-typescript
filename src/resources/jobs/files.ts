@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import * as FilesAPI from '../files';
-import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -17,10 +16,15 @@ export class Files extends APIResource {
 }
 
 /**
- * Successful response
+ * Response containing a list of files for a job
  */
-export interface FileListResponse extends Shared.ResponseOk {
-  data?: Array<FilesAPI.APIFile>;
+export interface FileListResponse {
+  data: Array<FilesAPI.APIFile>;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: 'success';
 }
 
 export declare namespace Files {

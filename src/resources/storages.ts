@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -64,11 +63,6 @@ export interface Storage {
   created_at: string;
 
   /**
-   * Endpoint of the storage provider
-   */
-  endpoint: string;
-
-  /**
    * Continent location of the storage (eg. US, EU, ASIA)
    */
   location: string;
@@ -92,13 +86,20 @@ export interface Storage {
    * Unique identifier of the storage configuration
    */
   slug: string;
+
+  /**
+   * Endpoint of the storage provider
+   */
+  endpoint?: string;
 }
 
-/**
- * Successful response
- */
-export interface StorageListResponse extends Shared.ResponseOk {
-  data?: Array<Storage>;
+export interface StorageListResponse {
+  data: Array<Storage>;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 export interface StorageCreateParams {

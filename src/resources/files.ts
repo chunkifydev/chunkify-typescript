@@ -182,7 +182,7 @@ export namespace FileListParams {
     /**
      * Sort by creation date (asc/desc)
      */
-    sort?: string;
+    sort?: 'asc' | 'desc';
   }
 
   export interface Duration {

@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -52,6 +51,11 @@ export interface Token {
   token: string;
 
   /**
+   * Timestamp when the token was created
+   */
+  created_at: string;
+
+  /**
    * Name given to the token
    */
   name: string;
@@ -65,18 +69,15 @@ export interface Token {
    * Access scope of the token (e.g.project, team)
    */
   scope: string;
-
-  /**
-   * Timestamp when the token was created
-   */
-  created_at?: string;
 }
 
-/**
- * Successful response
- */
-export interface TokenListResponse extends Shared.ResponseOk {
-  data?: Array<Token>;
+export interface TokenListResponse {
+  data: Array<Token>;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 export interface TokenCreateParams {

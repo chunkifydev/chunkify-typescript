@@ -51,12 +51,12 @@ describe('resource uploads', () => {
       client.uploads.list(
         {
           id: 'id',
-          created: { gte: 'gte', lte: 'lte', sort: 'sort' },
-          limit: 0,
-          metadata: 'metadata',
+          created: { gte: 'gte', lte: 'lte', sort: 'asc' },
+          limit: 1,
+          metadata: [['J!Q0Ok0bzJb7:pro']],
           offset: 0,
           source_id: 'source_id',
-          status: 'status',
+          status: 'waiting',
         },
         { path: '/_stainless_unknown_path' },
       ),

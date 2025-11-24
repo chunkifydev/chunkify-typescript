@@ -4,17 +4,28 @@ export interface ChunkifyError {
   /**
    * Additional error details or output
    */
-  detail?: string;
+  detail: string;
 
   /**
    * Main error message
    */
-  message?: string;
+  message: string;
 
   /**
    * Type of error (e.g., "ffmpeg", "network", "storage", etc.)
    */
-  type?: string;
+  type:
+    | 'setup'
+    | 'ffmpeg'
+    | 'source'
+    | 'upload'
+    | 'download'
+    | 'ingest'
+    | 'job'
+    | 'unexpected'
+    | 'permission'
+    | 'timeout'
+    | 'cancelled';
 }
 
 /**
@@ -29,7 +40,7 @@ export interface ResponseError {
   /**
    * Status indicates the response status "error"
    */
-  status: string;
+  status: 'error';
 }
 
 export namespace ResponseError {
@@ -50,16 +61,14 @@ export namespace ResponseError {
     /**
      * Type indicates the error category
      */
-    type: string;
+    type:
+      | 'ValidationError'
+      | 'AuthenticationError'
+      | 'NotFoundError'
+      | 'UnexpectedError'
+      | 'UnexpectedHandledError'
+      | 'ForbiddenError'
+      | 'ApiNotFoundError'
+      | 'TooManyRequestsError';
   }
-}
-
-/**
- * Successful response
- */
-export interface ResponseOk {
-  /**
-   * Status indicates the response status "success"
-   */
-  status: string;
 }
