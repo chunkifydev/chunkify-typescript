@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as JobsAPI from './jobs';
 import * as Shared from '../shared';
 import * as FilesAPI from './files';
 import { FileListResponse, Files } from './files';
@@ -77,13 +78,7 @@ export interface HlsAv1 {
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
    */
-  audio_bitrate: number;
-
-  /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate: number;
+  audio_bitrate?: number;
 
   /**
    * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
@@ -257,6 +252,12 @@ export interface HlsAv1 {
   seek?: number;
 
   /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
    * Width specifies the output video width in pixels. Must be between -2 and 7680.
    * Use -2 for automatic calculation while maintaining aspect ratio.
    */
@@ -270,13 +271,7 @@ export interface HlsH264 {
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
    */
-  audio_bitrate: number;
-
-  /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate: number;
+  audio_bitrate?: number;
 
   /**
    * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
@@ -452,6 +447,12 @@ export interface HlsH264 {
   seek?: number;
 
   /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
    * Width specifies the output video width in pixels. Must be between -2 and 7680.
    * Use -2 for automatic calculation while maintaining aspect ratio.
    */
@@ -472,13 +473,7 @@ export interface HlsH265 {
    * AudioBitrate specifies the audio bitrate in bits per second. Must be between
    * 32Kbps and 512Kbps.
    */
-  audio_bitrate: number;
-
-  /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
-   */
-  video_bitrate: number;
+  audio_bitrate?: number;
 
   /**
    * Bufsize specifies the video buffer size in bits. Must be between 100Kbps and
@@ -651,6 +646,12 @@ export interface HlsH265 {
   seek?: number;
 
   /**
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between
+   * 100Kbps and 50Mbps.
+   */
+  video_bitrate?: number;
+
+  /**
    * Width specifies the output video width in pixels. Must be between -2 and 7680.
    * Use -2 for automatic calculation while maintaining aspect ratio.
    */
@@ -683,7 +684,15 @@ export interface Job {
   /**
    * A template defines the transcoding parameters and settings for a job
    */
-  format: Job.Format;
+  format:
+    | Job.MP4Av1
+    | Job.MP4H264
+    | Job.MP4H265
+    | Job.WebmVp9
+    | Job.HlsAv1
+    | Job.HlsH264
+    | Job.HlsH265
+    | Job.Jpg;
 
   /**
    * Progress percentage of the job (0-100)
@@ -699,7 +708,19 @@ export interface Job {
    * Current status of the job (e.g., "queued", "ingesting","transcoding",
    * "downloading", "merging", "uploading", "failed", "completed")
    */
-  status: string;
+  status:
+    | 'queued'
+    | 'ingesting'
+    | 'transcoding'
+    | 'downloading'
+    | 'merging'
+    | 'uploading'
+    | 'failed'
+    | 'completed'
+    | 'cancelled'
+    | 'merged'
+    | 'downloaded'
+    | 'transcoded';
 
   /**
    * Storage settings for where the job output will be saved
@@ -739,22 +760,99 @@ export interface Job {
 
 export namespace Job {
   /**
-   * A template defines the transcoding parameters and settings for a job
+   * FFmpeg encoding parameters specific to MP4 with AV1 encoding.
    */
-  export interface Format {
+  export interface MP4Av1 extends Omit<JobsAPI.MP4Av1, 'id'> {
     /**
-     * Configuration parameters for the template. A map of configuration values
-     * specific to the format For example, for mp4/h264 format this includes parameters
-     * like crf, preset, profile etc.
-     */
-    config?: { [key: string]: unknown };
-
-    /**
-     * Name of the transcoding template.The format to use for transcoding. Valid
-     * formats are: mp4/h264, mp4/h265, mp4/av1, webm/vp9, hls/h264, hls/h265, hls/av1,
+     * Name of the transcoding template. The format to use for transcoding. Valid
+     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
      * jpg
      */
-    name?: string;
+    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to MP4 with H.264 encoding.
+   */
+  export interface MP4H264 extends Omit<JobsAPI.MP4H264, 'id'> {
+    /**
+     * Name of the transcoding template. The format to use for transcoding. Valid
+     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
+     * jpg
+     */
+    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to MP4 with H.265 encoding.
+   */
+  export interface MP4H265 extends Omit<JobsAPI.MP4H265, 'id'> {
+    /**
+     * Name of the transcoding template. The format to use for transcoding. Valid
+     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
+     * jpg
+     */
+    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to WebM with VP9 encoding.
+   */
+  export interface WebmVp9 extends Omit<JobsAPI.WebmVp9, 'id'> {
+    /**
+     * Name of the transcoding template. The format to use for transcoding. Valid
+     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
+     * jpg
+     */
+    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to HLS with AV1 encoding.
+   */
+  export interface HlsAv1 extends Omit<JobsAPI.HlsAv1, 'id'> {
+    /**
+     * Name of the transcoding template. The format to use for transcoding. Valid
+     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
+     * jpg
+     */
+    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to HLS with H.264 encoding.
+   */
+  export interface HlsH264 extends Omit<JobsAPI.HlsH264, 'id'> {
+    /**
+     * Name of the transcoding template. The format to use for transcoding. Valid
+     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
+     * jpg
+     */
+    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to HLS with H.265 encoding.
+   */
+  export interface HlsH265 extends Omit<JobsAPI.HlsH265, 'id'> {
+    /**
+     * Name of the transcoding template. The format to use for transcoding. Valid
+     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
+     * jpg
+     */
+    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+  }
+
+  /**
+   * FFmpeg encoding parameters specific to JPEG image extraction.
+   */
+  export interface Jpg extends Omit<JobsAPI.Jpg, 'id'> {
+    /**
+     * Name of the transcoding template. The format to use for transcoding. Valid
+     * formats are: mp4_h264, mp4_h265, mp4_av1, webm_vp9, hls_h264, hls_h265, hls_av1,
+     * jpg
+     */
+    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
   }
 
   /**
@@ -777,14 +875,19 @@ export namespace Job {
    */
   export interface Transcoder {
     /**
+     * Whether the transcoder configuration is automatically set by Chunkify
+     */
+    auto: boolean;
+
+    /**
      * Number of instances allocated
      */
-    quantity?: number;
+    quantity: number;
 
     /**
      * Type of transcoder instance
      */
-    type?: string;
+    type: '4vCPU' | '8vCPU' | '16vCPU';
   }
 }
 
@@ -1330,7 +1433,7 @@ export interface WebmVp9 {
    * encoding but lower quality. Recommended values: 0-2 for high quality, 2-4 for
    * good quality, 4-6 for balanced, 6-8 for speed
    */
-  cpu_used?: string;
+  cpu_used?: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8';
 
   /**
    * Crf (Constant Rate Factor) controls the quality of the output video. Lower
@@ -1532,9 +1635,9 @@ export interface JobListParams extends PaginatedResultsParams {
   created?: JobListParams.Created;
 
   /**
-   * Filter by format name
+   * Filter by format id
    */
-  format_name?: string;
+  format_id?: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
 
   /**
    * Filter by hls manifest ID
@@ -1544,7 +1647,7 @@ export interface JobListParams extends PaginatedResultsParams {
   /**
    * Filter by metadata (format: key:value,key2:value2)
    */
-  metadata?: string;
+  metadata?: Array<Array<string>>;
 
   /**
    * Filter by source ID
@@ -1554,7 +1657,7 @@ export interface JobListParams extends PaginatedResultsParams {
   /**
    * Filter by job status
    */
-  status?: string;
+  status?: 'completed' | 'processing' | 'failed' | 'cancelled' | 'queued';
 }
 
 export namespace JobListParams {
@@ -1572,7 +1675,7 @@ export namespace JobListParams {
     /**
      * Sort by creation date (asc/desc)
      */
-    sort?: string;
+    sort?: 'asc' | 'desc';
   }
 }
 

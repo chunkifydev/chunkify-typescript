@@ -69,7 +69,13 @@ export interface Notification {
   /**
    * Type of event that triggered this notification
    */
-  event: string;
+  event:
+    | 'job.completed'
+    | 'job.failed'
+    | 'job.cancelled'
+    | 'upload.completed'
+    | 'upload.failed'
+    | 'upload.expired';
 
   /**
    * ID of the object that triggered this notification
@@ -82,20 +88,19 @@ export interface Notification {
   payload: string;
 
   /**
-   * HTTP status code received from the webhook endpoint
-   */
-  response_status_code: number;
-
-  /**
    * Webhook endpoint configuration that received this notification
    */
   webhook: WebhooksAPI.Webhook;
+
+  /**
+   * HTTP status code received from the webhook endpoint
+   */
+  response_status_code?: number;
 }
 
 export interface NotificationCreateParams {
   /**
-   * Event specifies the type of event that triggered the notification. Currently
-   * only supports "job.completed" event type.
+   * Event specifies the type of event that triggered the notification.
    */
   event:
     | 'job.completed'
@@ -123,7 +128,9 @@ export interface NotificationListParams extends PaginatedResultsParams {
    * Filter by events (e.g. job.completed, job.failed, upload.completed,
    * upload.failed, upload.expired)
    */
-  events?: Array<string>;
+  events?: Array<
+    'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
+  >;
 
   /**
    * Filter by object ID
@@ -153,7 +160,7 @@ export namespace NotificationListParams {
     /**
      * Sort by creation date (asc/desc)
      */
-    sort?: string;
+    sort?: 'asc' | 'desc';
   }
 
   export interface ResponseStatusCode {

@@ -933,5 +933,4 @@ export declare namespace Chunkify {
 
   export type ChunkifyError = API.ChunkifyError;
   export type ResponseError = API.ResponseError;
-  export type ResponseOk = API.ResponseOk;
 }

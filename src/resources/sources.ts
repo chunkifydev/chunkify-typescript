@@ -154,7 +154,7 @@ export interface SourceListParams extends PaginatedResultsParams {
   /**
    * Filter by device (apple/android)
    */
-  device?: string;
+  device?: 'apple' | 'android' | 'unknown';
 
   duration?: SourceListParams.Duration;
 
@@ -163,7 +163,7 @@ export interface SourceListParams extends PaginatedResultsParams {
   /**
    * Filter by metadata (format: key:value,key:value)
    */
-  metadata?: string;
+  metadata?: Array<Array<string>>;
 
   size?: SourceListParams.Size;
 
@@ -190,7 +190,7 @@ export namespace SourceListParams {
     /**
      * Sort by creation date (asc/desc)
      */
-    sort?: string;
+    sort?: 'asc' | 'desc';
   }
 
   export interface Duration {

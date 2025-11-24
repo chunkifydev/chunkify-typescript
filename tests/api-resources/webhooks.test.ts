@@ -25,7 +25,7 @@ describe('resource webhooks', () => {
     const response = await client.webhooks.create({
       url: 'https://example.com/webhook',
       enabled: true,
-      events: ['["job.completed"]'],
+      events: ['job.completed'],
     });
   });
 

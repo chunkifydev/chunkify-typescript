@@ -63,24 +63,14 @@ export interface Upload {
   created_at: string;
 
   /**
-   * Error message of the upload
-   */
-  error: Shared.ChunkifyError;
-
-  /**
    * Timestamp when the upload will expire
    */
   expires_at: string;
 
   /**
-   * SourceId is the id of the source that was created from the upload
-   */
-  source_id: string;
-
-  /**
    * Current status of the upload (waiting, completed, failed, expired)
    */
-  status: string;
+  status: 'waiting' | 'completed' | 'failed' | 'expired';
 
   /**
    * Timestamp when the upload was updated
@@ -93,9 +83,19 @@ export interface Upload {
   upload_url: string;
 
   /**
+   * Error message of the upload
+   */
+  error?: Shared.ChunkifyError;
+
+  /**
    * Additional metadata for the upload
    */
   metadata?: { [key: string]: string };
+
+  /**
+   * SourceId is the id of the source that was created from the upload
+   */
+  source_id?: string;
 }
 
 export interface UploadCreateParams {
@@ -122,7 +122,7 @@ export interface UploadListParams extends PaginatedResultsParams {
   /**
    * Filter by metadata (format: key:value,key:value)
    */
-  metadata?: string;
+  metadata?: Array<Array<string>>;
 
   /**
    * Filter by source ID
@@ -132,7 +132,7 @@ export interface UploadListParams extends PaginatedResultsParams {
   /**
    * Filter by status (pending, completed, error)
    */
-  status?: string;
+  status?: 'waiting' | 'completed' | 'failed' | 'expired';
 }
 
 export namespace UploadListParams {
@@ -150,7 +150,7 @@ export namespace UploadListParams {
     /**
      * Sort by creation date (asc/desc)
      */
-    sort?: string;
+    sort?: 'asc' | 'desc';
   }
 }
 

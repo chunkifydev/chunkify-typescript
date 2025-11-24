@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -16,10 +15,15 @@ export class Logs extends APIResource {
 }
 
 /**
- * Successful response
+ * Response containing a list of logs for a job
  */
-export interface LogListResponse extends Shared.ResponseOk {
+export interface LogListResponse {
   data: Array<LogListResponse.Data>;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 export namespace LogListResponse {
@@ -32,7 +36,7 @@ export namespace LogListResponse {
     /**
      * Log level (e.g. "info", "error", "debug")
      */
-    level: string;
+    level: 'info' | 'error' | 'debug';
 
     /**
      * The log message content
@@ -42,7 +46,7 @@ export namespace LogListResponse {
     /**
      * Name of the service that generated the log
      */
-    service: string;
+    service: 'transcoder' | 'manager';
 
     /**
      * Timestamp when the log was created

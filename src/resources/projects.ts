@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -88,11 +87,13 @@ export interface Project {
   created_at?: string;
 }
 
-/**
- * Successful response
- */
-export interface ProjectListResponse extends Shared.ResponseOk {
+export interface ProjectListResponse {
   data: Array<Project>;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
 export interface ProjectCreateParams {
@@ -102,17 +103,20 @@ export interface ProjectCreateParams {
   name: string;
 }
 
-export interface ProjectUpdateParams {
-  /**
-   * Name is the new name for the project, which must be between 4 and 32 characters.
-   */
-  name?: string;
+export type ProjectUpdateParams = ProjectUpdateParams.Variant0 | ProjectUpdateParams.Variant1;
 
-  /**
-   * StorageId specifies the storage configuration for the project, which must be
-   * between 4 and 64 characters.
-   */
-  storage_id?: string;
+export declare namespace ProjectUpdateParams {
+  export interface Variant0 {
+    name: string;
+
+    storage_id?: string;
+  }
+
+  export interface Variant1 {
+    storage_id: string;
+
+    name?: string;
+  }
 }
 
 export interface ProjectListParams {
