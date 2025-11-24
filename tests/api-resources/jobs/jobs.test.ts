@@ -53,7 +53,7 @@ describe('resource jobs', () => {
       hls_manifest_id: 'hls_2v6EIgcNAycdS5g0IUm0TXBjvHV',
       metadata: { key: 'value', key2: 'value2' },
       storage: { id: 'aws-my-storage', path: '/path/to/video.mp4' },
-      transcoder: { quantity: 2, type: '8vCPU' },
+      transcoder: { quantity: 2, type: '4vCPU' },
     });
   });
 
@@ -88,11 +88,11 @@ describe('resource jobs', () => {
       client.jobs.list(
         {
           id: 'id',
-          created: { gte: '2102-57-32', lte: '2102-57-32', sort: 'asc' },
+          created: { gte: '2025-01-01', lte: '2025-01-01', sort: 'asc' },
           format_id: 'mp4_h264',
           hls_manifest_id: 'hls_manifest_id',
           limit: 1,
-          metadata: [['J!Q0Ok0bzJb7:pro']],
+          metadata: [['key1:value1']],
           offset: 0,
           source_id: 'source_id',
           status: 'completed',

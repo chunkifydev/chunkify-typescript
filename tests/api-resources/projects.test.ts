@@ -38,8 +38,8 @@ describe('resource projects', () => {
   });
 
   // Prism tests are disabled
-  test.skip('update: only required params', async () => {
-    const responsePromise = client.projects.update('projectId', { name: 'xxxx' });
+  test.skip('update', async () => {
+    const responsePromise = client.projects.update('projectId', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -47,11 +47,6 @@ describe('resource projects', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('update: required and optional params', async () => {
-    const response = await client.projects.update('projectId', { name: 'xxxx', storage_id: 'xxxx' });
   });
 
   // Prism tests are disabled

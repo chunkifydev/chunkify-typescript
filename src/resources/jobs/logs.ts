@@ -34,7 +34,7 @@ export namespace LogListResponse {
     attributes: { [key: string]: unknown };
 
     /**
-     * Log level (e.g. "info", "error", "debug")
+     * Log level
      */
     level: 'info' | 'error' | 'debug';
 

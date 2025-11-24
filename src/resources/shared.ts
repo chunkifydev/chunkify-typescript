@@ -12,7 +12,7 @@ export interface ChunkifyError {
   message: string;
 
   /**
-   * Type of error (e.g., "ffmpeg", "network", "storage", etc.)
+   * Type of error
    */
   type:
     | 'setup'
