@@ -5,6 +5,7 @@ import * as FilesAPI from './files';
 import * as SourcesAPI from './sources';
 import * as UploadsAPI from './uploads';
 import * as JobsAPI from './jobs/jobs';
+import { Webhook as Webhook_ } from 'standardwebhooks';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -62,7 +63,16 @@ export class Webhooks extends APIResource {
     });
   }
 
-  unwrap(body: string): UnwrapWebhookEvent {
+  unwrap(
+    body: string,
+    { headers, key }: { headers: Record<string, string>; key?: string },
+  ): UnwrapWebhookEvent {
+    if (headers !== undefined) {
+      const keyStr: string | null = key === undefined ? this._client.webhookKey : key;
+      if (keyStr === null) throw new Error('Webhook key must not be null in order to unwrap');
+      const wh = new Webhook_(keyStr);
+      wh.verify(body, headers);
+    }
     return JSON.parse(body) as UnwrapWebhookEvent;
   }
 }
