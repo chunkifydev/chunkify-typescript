@@ -15,110 +15,66 @@ import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { AbstractPage, type MyOffsetPageParams, MyOffsetPageResponse } from './core/pagination';
+import { AbstractPage, type PaginatedResultsParams, PaginatedResultsResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  APIFile,
-  APIFilesMyOffsetPage,
-  FileDeleteResponse,
-  FileListParams,
-  FileRetrieveResponse,
-  Files,
-  ResponseOk,
-} from './resources/files';
-import {
-  Av1,
-  ChunkifyError,
-  H264,
-  H265,
-  Hls,
-  Job,
-  JobCancelResponse,
-  JobCreateParams,
-  JobCreateResponse,
-  JobDeleteResponse,
-  JobGetFilesResponse,
-  JobGetLogsParams,
-  JobGetLogsResponse,
-  JobGetTranscodersResponse,
-  JobListParams,
-  JobRetrieveResponse,
-  Jobs,
-  JobsMyOffsetPage,
-  VideoCommon,
-} from './resources/jobs';
+import { APIFile, APIFilesPaginatedResults, FileListParams, Files } from './resources/files';
 import {
   Notification,
   NotificationCreateParams,
-  NotificationCreateResponse,
-  NotificationDeleteResponse,
   NotificationListParams,
-  NotificationRetrieveResponse,
   Notifications,
-  NotificationsMyOffsetPage,
+  NotificationsPaginatedResults,
 } from './resources/notifications';
 import {
   Project,
   ProjectCreateParams,
-  ProjectCreateResponse,
-  ProjectDeleteResponse,
   ProjectListParams,
   ProjectListResponse,
-  ProjectRetrieveResponse,
   ProjectUpdateParams,
-  ProjectUpdateResponse,
   Projects,
 } from './resources/projects';
 import {
   Source,
   SourceCreateParams,
-  SourceCreateResponse,
-  SourceDeleteResponse,
   SourceListParams,
-  SourceRetrieveResponse,
   Sources,
-  SourcesMyOffsetPage,
+  SourcesPaginatedResults,
 } from './resources/sources';
-import {
-  Storage,
-  StorageCreateParams,
-  StorageCreateResponse,
-  StorageDeleteResponse,
-  StorageListResponse,
-  StorageRetrieveResponse,
-  Storages,
-} from './resources/storages';
-import {
-  Token,
-  TokenCreateParams,
-  TokenCreateResponse,
-  TokenListResponse,
-  TokenRevokeResponse,
-  Tokens,
-} from './resources/tokens';
+import { Storage, StorageCreateParams, StorageListResponse, Storages } from './resources/storages';
+import { Token, TokenCreateParams, TokenListResponse, Tokens } from './resources/tokens';
 import {
   Upload,
   UploadCreateParams,
-  UploadCreateResponse,
-  UploadDeleteResponse,
   UploadListParams,
-  UploadRetrieveResponse,
   Uploads as UploadsAPIUploads,
-  UploadsMyOffsetPage,
+  UploadsPaginatedResults,
 } from './resources/uploads';
 import {
+  NewEventWebhookEvent,
+  UnwrapWebhookEvent,
   Webhook,
   WebhookCreateParams,
-  WebhookCreateResponse,
-  WebhookDeleteResponse,
   WebhookListResponse,
-  WebhookRetrieveResponse,
   WebhookUpdateParams,
-  WebhookUpdateResponse,
   Webhooks,
 } from './resources/webhooks';
+import {
+  HlsAv1,
+  HlsH264,
+  HlsH265,
+  Job,
+  JobCreateParams,
+  JobListParams,
+  Jobs,
+  JobsPaginatedResults,
+  Jpg,
+  MP4Av1,
+  MP4H264,
+  MP4H265,
+  WebmVp9,
+} from './resources/jobs/jobs';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -142,6 +98,11 @@ export interface ClientOptions {
    * Defaults to process.env['CHUNKIFY_TEAM_TOKEN'].
    */
   teamAccessToken?: string | null | undefined;
+
+  /**
+   * Defaults to process.env['CHUNKIFY_WEBHOOK_SECRET'].
+   */
+  webhookKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -218,6 +179,7 @@ export interface ClientOptions {
 export class Chunkify {
   projectAccessToken: string | null;
   teamAccessToken: string | null;
+  webhookKey: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -236,6 +198,7 @@ export class Chunkify {
    *
    * @param {string | null | undefined} [opts.projectAccessToken=process.env['CHUNKIFY_TOKEN'] ?? null]
    * @param {string | null | undefined} [opts.teamAccessToken=process.env['CHUNKIFY_TEAM_TOKEN'] ?? null]
+   * @param {string | null | undefined} [opts.webhookKey=process.env['CHUNKIFY_WEBHOOK_SECRET'] ?? null]
    * @param {string} [opts.baseURL=process.env['CHUNKIFY_BASE_URL'] ?? https://api.chunkify.dev/v1] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -248,11 +211,13 @@ export class Chunkify {
     baseURL = readEnv('CHUNKIFY_BASE_URL'),
     projectAccessToken = readEnv('CHUNKIFY_TOKEN') ?? null,
     teamAccessToken = readEnv('CHUNKIFY_TEAM_TOKEN') ?? null,
+    webhookKey = readEnv('CHUNKIFY_WEBHOOK_SECRET') ?? null,
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
       projectAccessToken,
       teamAccessToken,
+      webhookKey,
       ...opts,
       baseURL: baseURL || `https://api.chunkify.dev/v1`,
     };
@@ -276,6 +241,7 @@ export class Chunkify {
 
     this.projectAccessToken = projectAccessToken;
     this.teamAccessToken = teamAccessToken;
+    this.webhookKey = webhookKey;
   }
 
   /**
@@ -293,6 +259,7 @@ export class Chunkify {
       fetchOptions: this.fetchOptions,
       projectAccessToken: this.projectAccessToken,
       teamAccessToken: this.teamAccessToken,
+      webhookKey: this.webhookKey,
       ...options,
     });
     return client;
@@ -878,48 +845,39 @@ Chunkify.Webhooks = Webhooks;
 export declare namespace Chunkify {
   export type RequestOptions = Opts.RequestOptions;
 
-  export import MyOffsetPage = Pagination.MyOffsetPage;
-  export { type MyOffsetPageParams as MyOffsetPageParams, type MyOffsetPageResponse as MyOffsetPageResponse };
+  export import PaginatedResults = Pagination.PaginatedResults;
+  export {
+    type PaginatedResultsParams as PaginatedResultsParams,
+    type PaginatedResultsResponse as PaginatedResultsResponse,
+  };
 
   export {
     Files as Files,
     type APIFile as APIFile,
-    type ResponseOk as ResponseOk,
-    type FileRetrieveResponse as FileRetrieveResponse,
-    type FileDeleteResponse as FileDeleteResponse,
-    type APIFilesMyOffsetPage as APIFilesMyOffsetPage,
+    type APIFilesPaginatedResults as APIFilesPaginatedResults,
     type FileListParams as FileListParams,
   };
 
   export {
     Jobs as Jobs,
-    type Av1 as Av1,
-    type ChunkifyError as ChunkifyError,
-    type H264 as H264,
-    type H265 as H265,
-    type Hls as Hls,
+    type HlsAv1 as HlsAv1,
+    type HlsH264 as HlsH264,
+    type HlsH265 as HlsH265,
     type Job as Job,
-    type VideoCommon as VideoCommon,
-    type JobCreateResponse as JobCreateResponse,
-    type JobRetrieveResponse as JobRetrieveResponse,
-    type JobDeleteResponse as JobDeleteResponse,
-    type JobCancelResponse as JobCancelResponse,
-    type JobGetFilesResponse as JobGetFilesResponse,
-    type JobGetLogsResponse as JobGetLogsResponse,
-    type JobGetTranscodersResponse as JobGetTranscodersResponse,
-    type JobsMyOffsetPage as JobsMyOffsetPage,
+    type Jpg as Jpg,
+    type MP4Av1 as MP4Av1,
+    type MP4H264 as MP4H264,
+    type MP4H265 as MP4H265,
+    type WebmVp9 as WebmVp9,
+    type JobsPaginatedResults as JobsPaginatedResults,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
-    type JobGetLogsParams as JobGetLogsParams,
   };
 
   export {
     Notifications as Notifications,
     type Notification as Notification,
-    type NotificationCreateResponse as NotificationCreateResponse,
-    type NotificationRetrieveResponse as NotificationRetrieveResponse,
-    type NotificationDeleteResponse as NotificationDeleteResponse,
-    type NotificationsMyOffsetPage as NotificationsMyOffsetPage,
+    type NotificationsPaginatedResults as NotificationsPaginatedResults,
     type NotificationCreateParams as NotificationCreateParams,
     type NotificationListParams as NotificationListParams,
   };
@@ -927,11 +885,7 @@ export declare namespace Chunkify {
   export {
     Projects as Projects,
     type Project as Project,
-    type ProjectCreateResponse as ProjectCreateResponse,
-    type ProjectRetrieveResponse as ProjectRetrieveResponse,
-    type ProjectUpdateResponse as ProjectUpdateResponse,
     type ProjectListResponse as ProjectListResponse,
-    type ProjectDeleteResponse as ProjectDeleteResponse,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectUpdateParams as ProjectUpdateParams,
     type ProjectListParams as ProjectListParams,
@@ -940,10 +894,7 @@ export declare namespace Chunkify {
   export {
     Sources as Sources,
     type Source as Source,
-    type SourceCreateResponse as SourceCreateResponse,
-    type SourceRetrieveResponse as SourceRetrieveResponse,
-    type SourceDeleteResponse as SourceDeleteResponse,
-    type SourcesMyOffsetPage as SourcesMyOffsetPage,
+    type SourcesPaginatedResults as SourcesPaginatedResults,
     type SourceCreateParams as SourceCreateParams,
     type SourceListParams as SourceListParams,
   };
@@ -951,29 +902,21 @@ export declare namespace Chunkify {
   export {
     Storages as Storages,
     type Storage as Storage,
-    type StorageCreateResponse as StorageCreateResponse,
-    type StorageRetrieveResponse as StorageRetrieveResponse,
     type StorageListResponse as StorageListResponse,
-    type StorageDeleteResponse as StorageDeleteResponse,
     type StorageCreateParams as StorageCreateParams,
   };
 
   export {
     Tokens as Tokens,
     type Token as Token,
-    type TokenCreateResponse as TokenCreateResponse,
     type TokenListResponse as TokenListResponse,
-    type TokenRevokeResponse as TokenRevokeResponse,
     type TokenCreateParams as TokenCreateParams,
   };
 
   export {
     UploadsAPIUploads as Uploads,
     type Upload as Upload,
-    type UploadCreateResponse as UploadCreateResponse,
-    type UploadRetrieveResponse as UploadRetrieveResponse,
-    type UploadDeleteResponse as UploadDeleteResponse,
-    type UploadsMyOffsetPage as UploadsMyOffsetPage,
+    type UploadsPaginatedResults as UploadsPaginatedResults,
     type UploadCreateParams as UploadCreateParams,
     type UploadListParams as UploadListParams,
   };
@@ -981,12 +924,12 @@ export declare namespace Chunkify {
   export {
     Webhooks as Webhooks,
     type Webhook as Webhook,
-    type WebhookCreateResponse as WebhookCreateResponse,
-    type WebhookRetrieveResponse as WebhookRetrieveResponse,
-    type WebhookUpdateResponse as WebhookUpdateResponse,
     type WebhookListResponse as WebhookListResponse,
-    type WebhookDeleteResponse as WebhookDeleteResponse,
+    type NewEventWebhookEvent as NewEventWebhookEvent,
+    type UnwrapWebhookEvent as UnwrapWebhookEvent,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
   };
+
+  export type ChunkifyError = API.ChunkifyError;
 }

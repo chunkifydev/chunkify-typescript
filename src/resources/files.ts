@@ -2,7 +2,8 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
-import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -11,8 +12,10 @@ export class Files extends APIResource {
    * Retrieve details of a specific file by its ID, including metadata, media
    * properties, and associated jobs.
    */
-  retrieve(fileID: string, options?: RequestOptions): APIPromise<FileRetrieveResponse> {
-    return this._client.get(path`/api/files/${fileID}`, options);
+  retrieve(fileID: string, options?: RequestOptions): APIPromise<APIFile> {
+    return (
+      this._client.get(path`/api/files/${fileID}`, options) as APIPromise<{ data: APIFile }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -21,130 +24,106 @@ export class Files extends APIResource {
   list(
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<APIFilesMyOffsetPage, APIFile> {
-    return this._client.getAPIList('/api/files', MyOffsetPage<APIFile>, { query, ...options });
+  ): PagePromise<APIFilesPaginatedResults, APIFile> {
+    return this._client.getAPIList('/api/files', PaginatedResults<APIFile>, { query, ...options });
   }
 
   /**
    * Delete a file. It will fail if there are processing jobs using this file.
    */
-  delete(fileID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/files/${fileID}`, options);
+  delete(fileID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/files/${fileID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
-export type APIFilesMyOffsetPage = MyOffsetPage<APIFile>;
+export type APIFilesPaginatedResults = PaginatedResults<APIFile>;
 
 export interface APIFile {
   /**
    * Unique identifier of the file
    */
-  id?: string;
+  id: string;
 
   /**
    * Audio bitrate in bits per second
    */
-  audio_bitrate?: number;
+  audio_bitrate: number;
 
   /**
-   * Audio codec used (e.g. aac, mp3)
+   * Audio codec used
    */
-  audio_codec?: string;
+  audio_codec: string;
 
   /**
    * Timestamp when the file was created
    */
-  created_at?: string;
+  created_at: string;
 
   /**
    * Duration of the video in seconds
    */
-  duration?: number;
+  duration: number;
 
   /**
    * Height of the video in pixels
    */
-  height?: number;
+  height: number;
 
   /**
    * ID of the job that created this file
    */
-  job_id?: string;
+  job_id: string;
 
   /**
    * MIME type of the file
    */
-  mime_type?: string;
+  mime_type: string;
 
   /**
    * Path to the file in storage
    */
-  path?: string;
+  path: string;
 
   /**
    * Size of the file in bytes
    */
-  size?: number;
+  size: number;
 
   /**
    * StorageId identifier where the file is stored
    */
-  storage_id?: string;
+  storage_id: string;
 
   /**
    * Pre-signed URL to directly access the file (only included when available)
    */
-  url?: string;
+  url: string;
 
   /**
    * Video bitrate in bits per second
    */
-  video_bitrate?: number;
+  video_bitrate: number;
 
   /**
-   * Video codec used (e.g. h264, h265)
+   * Video codec used
    */
-  video_codec?: string;
+  video_codec: string;
 
   /**
    * Video framerate in frames per second
    */
-  video_framerate?: number;
+  video_framerate: number;
 
   /**
    * Width of the video in pixels
    */
-  width?: number;
+  width: number;
 }
 
-/**
- * Successful response
- */
-export interface ResponseOk {
-  /**
-   * Data contains the response object
-   */
-  data?: unknown;
-
-  /**
-   * Status indicates the response status "success"
-   */
-  status?: string;
-}
-
-/**
- * Successful response
- */
-export interface FileRetrieveResponse extends ResponseOk {
-  data?: APIFile;
-}
-
-/**
- * No content response
- */
-export type FileDeleteResponse = unknown;
-
-export interface FileListParams extends MyOffsetPageParams {
+export interface FileListParams extends PaginatedResultsParams {
   /**
    * Filter by file ID
    */
@@ -203,7 +182,7 @@ export namespace FileListParams {
     /**
      * Sort by creation date (asc/desc)
      */
-    sort?: string;
+    sort?: 'asc' | 'desc';
   }
 
   export interface Duration {
@@ -330,10 +309,7 @@ export namespace FileListParams {
 export declare namespace Files {
   export {
     type APIFile as APIFile,
-    type ResponseOk as ResponseOk,
-    type FileRetrieveResponse as FileRetrieveResponse,
-    type FileDeleteResponse as FileDeleteResponse,
-    type APIFilesMyOffsetPage as APIFilesMyOffsetPage,
+    type APIFilesPaginatedResults as APIFilesPaginatedResults,
     type FileListParams as FileListParams,
   };
 }

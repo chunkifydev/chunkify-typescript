@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -11,8 +11,10 @@ export class Tokens extends APIResource {
    * Create a new access token for either account-wide or project-specific access.
    * Project tokens require a valid project slug.
    */
-  create(body: TokenCreateParams, options?: RequestOptions): APIPromise<TokenCreateResponse> {
-    return this._client.post('/api/tokens', { body, ...options });
+  create(body: TokenCreateParams, options?: RequestOptions): APIPromise<Token> {
+    return (
+      this._client.post('/api/tokens', { body, ...options }) as APIPromise<{ data: Token }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -29,8 +31,11 @@ export class Tokens extends APIResource {
    * Revoke an access token by its ID. This action is irreversible and will
    * immediately invalidate the token.
    */
-  revoke(tokenID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/tokens/${tokenID}`, options);
+  revoke(tokenID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/tokens/${tokenID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -38,59 +43,49 @@ export interface Token {
   /**
    * Unique identifier of the token
    */
-  id?: string;
+  id: string;
 
   /**
    * The actual token value (only returned on creation)
    */
-  token?: string;
+  token: string;
 
   /**
    * Timestamp when the token was created
    */
-  created_at?: string;
+  created_at: string;
 
   /**
    * Name given to the token
    */
-  name?: string;
+  name: string;
 
   /**
    * ID of the project this token belongs to
    */
-  project_id?: string;
+  project_id: string;
 
   /**
-   * Access scope of the token (e.g.project, team)
+   * Access scope of the token
    */
-  scope?: string;
+  scope: 'project' | 'team';
 }
 
-/**
- * Successful response
- */
-export interface TokenCreateResponse extends FilesAPI.ResponseOk {
-  data?: Token;
-}
+export interface TokenListResponse {
+  data: Array<Token>;
 
-/**
- * Successful response
- */
-export interface TokenListResponse extends FilesAPI.ResponseOk {
-  data?: Array<Token>;
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
-
-/**
- * No content response
- */
-export type TokenRevokeResponse = unknown;
 
 export interface TokenCreateParams {
   /**
    * Scope specifies the scope of the token, which must be either "team" or
    * "project".
    */
-  scope: 'team' | 'project';
+  scope: 'project' | 'team';
 
   /**
    * Name is the name of the token, which can be up to 64 characters long.
@@ -106,9 +101,7 @@ export interface TokenCreateParams {
 export declare namespace Tokens {
   export {
     type Token as Token,
-    type TokenCreateResponse as TokenCreateResponse,
     type TokenListResponse as TokenListResponse,
-    type TokenRevokeResponse as TokenRevokeResponse,
     type TokenCreateParams as TokenCreateParams,
   };
 }

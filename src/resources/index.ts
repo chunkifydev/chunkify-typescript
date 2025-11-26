@@ -1,53 +1,33 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export {
-  Files,
-  type APIFile,
-  type ResponseOk,
-  type FileRetrieveResponse,
-  type FileDeleteResponse,
-  type FileListParams,
-  type APIFilesMyOffsetPage,
-} from './files';
+export * from './shared';
+export { Files, type APIFile, type FileListParams, type APIFilesPaginatedResults } from './files';
 export {
   Jobs,
-  type Av1,
-  type ChunkifyError,
-  type H264,
-  type H265,
-  type Hls,
+  type HlsAv1,
+  type HlsH264,
+  type HlsH265,
   type Job,
-  type VideoCommon,
-  type JobCreateResponse,
-  type JobRetrieveResponse,
-  type JobDeleteResponse,
-  type JobCancelResponse,
-  type JobGetFilesResponse,
-  type JobGetLogsResponse,
-  type JobGetTranscodersResponse,
+  type Jpg,
+  type MP4Av1,
+  type MP4H264,
+  type MP4H265,
+  type WebmVp9,
   type JobCreateParams,
   type JobListParams,
-  type JobGetLogsParams,
-  type JobsMyOffsetPage,
-} from './jobs';
+  type JobsPaginatedResults,
+} from './jobs/jobs';
 export {
   Notifications,
   type Notification,
-  type NotificationCreateResponse,
-  type NotificationRetrieveResponse,
-  type NotificationDeleteResponse,
   type NotificationCreateParams,
   type NotificationListParams,
-  type NotificationsMyOffsetPage,
+  type NotificationsPaginatedResults,
 } from './notifications';
 export {
   Projects,
   type Project,
-  type ProjectCreateResponse,
-  type ProjectRetrieveResponse,
-  type ProjectUpdateResponse,
   type ProjectListResponse,
-  type ProjectDeleteResponse,
   type ProjectCreateParams,
   type ProjectUpdateParams,
   type ProjectListParams,
@@ -55,48 +35,25 @@ export {
 export {
   Sources,
   type Source,
-  type SourceCreateResponse,
-  type SourceRetrieveResponse,
-  type SourceDeleteResponse,
   type SourceCreateParams,
   type SourceListParams,
-  type SourcesMyOffsetPage,
+  type SourcesPaginatedResults,
 } from './sources';
-export {
-  Storages,
-  type Storage,
-  type StorageCreateResponse,
-  type StorageRetrieveResponse,
-  type StorageListResponse,
-  type StorageDeleteResponse,
-  type StorageCreateParams,
-} from './storages';
-export {
-  Tokens,
-  type Token,
-  type TokenCreateResponse,
-  type TokenListResponse,
-  type TokenRevokeResponse,
-  type TokenCreateParams,
-} from './tokens';
+export { Storages, type Storage, type StorageListResponse, type StorageCreateParams } from './storages';
+export { Tokens, type Token, type TokenListResponse, type TokenCreateParams } from './tokens';
 export {
   Uploads,
   type Upload,
-  type UploadCreateResponse,
-  type UploadRetrieveResponse,
-  type UploadDeleteResponse,
   type UploadCreateParams,
   type UploadListParams,
-  type UploadsMyOffsetPage,
+  type UploadsPaginatedResults,
 } from './uploads';
 export {
   Webhooks,
   type Webhook,
-  type WebhookCreateResponse,
-  type WebhookRetrieveResponse,
-  type WebhookUpdateResponse,
   type WebhookListResponse,
-  type WebhookDeleteResponse,
+  type NewEventWebhookEvent,
+  type UnwrapWebhookEvent,
   type WebhookCreateParams,
   type WebhookUpdateParams,
 } from './webhooks';

@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
 import * as WebhooksAPI from './webhooks';
 import { APIPromise } from '../core/api-promise';
-import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -12,15 +12,21 @@ export class Notifications extends APIResource {
   /**
    * Create a new notification for a job event
    */
-  create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<NotificationCreateResponse> {
-    return this._client.post('/api/notifications', { body, ...options });
+  create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<Notification> {
+    return (
+      this._client.post('/api/notifications', { body, ...options }) as APIPromise<{ data: Notification }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve details of a specific notification
    */
-  retrieve(notificationID: string, options?: RequestOptions): APIPromise<NotificationRetrieveResponse> {
-    return this._client.get(path`/api/notifications/${notificationID}`, options);
+  retrieve(notificationID: string, options?: RequestOptions): APIPromise<Notification> {
+    return (
+      this._client.get(path`/api/notifications/${notificationID}`, options) as APIPromise<{
+        data: Notification;
+      }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -29,80 +35,72 @@ export class Notifications extends APIResource {
   list(
     query: NotificationListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<NotificationsMyOffsetPage, Notification> {
-    return this._client.getAPIList('/api/notifications', MyOffsetPage<Notification>, { query, ...options });
+  ): PagePromise<NotificationsPaginatedResults, Notification> {
+    return this._client.getAPIList('/api/notifications', PaginatedResults<Notification>, {
+      query,
+      ...options,
+    });
   }
 
   /**
    * Delete a notification.
    */
-  delete(notificationID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/notifications/${notificationID}`, options);
+  delete(notificationID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/notifications/${notificationID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
-export type NotificationsMyOffsetPage = MyOffsetPage<Notification>;
+export type NotificationsPaginatedResults = PaginatedResults<Notification>;
 
 export interface Notification {
   /**
    * Unique identifier of the notification
    */
-  id?: string;
+  id: string;
 
   /**
    * Timestamp when the notification was created
    */
-  created_at?: string;
+  created_at: string;
 
   /**
    * Type of event that triggered this notification
    */
-  event?: string;
+  event:
+    | 'job.completed'
+    | 'job.failed'
+    | 'job.cancelled'
+    | 'upload.completed'
+    | 'upload.failed'
+    | 'upload.expired';
 
   /**
    * ID of the object that triggered this notification
    */
-  object_id?: string;
+  object_id: string;
 
   /**
    * JSON payload that was sent to the webhook endpoint
    */
-  payload?: string;
+  payload: string;
+
+  /**
+   * Webhook endpoint configuration that received this notification
+   */
+  webhook: WebhooksAPI.Webhook;
 
   /**
    * HTTP status code received from the webhook endpoint
    */
   response_status_code?: number;
-
-  /**
-   * Webhook endpoint configuration that received this notification
-   */
-  webhook?: WebhooksAPI.Webhook;
 }
-
-/**
- * Successful response
- */
-export interface NotificationCreateResponse extends FilesAPI.ResponseOk {
-  data?: Notification;
-}
-
-/**
- * Successful response
- */
-export interface NotificationRetrieveResponse extends FilesAPI.ResponseOk {
-  data?: Notification;
-}
-
-/**
- * No content response
- */
-export type NotificationDeleteResponse = unknown;
 
 export interface NotificationCreateParams {
   /**
-   * Event specifies the type of event that triggered the notification. Currently
-   * only supports "job.completed" event type.
+   * Event specifies the type of event that triggered the notification.
    */
   event:
     | 'job.completed'
@@ -123,14 +121,16 @@ export interface NotificationCreateParams {
   webhook_id: string;
 }
 
-export interface NotificationListParams extends MyOffsetPageParams {
+export interface NotificationListParams extends PaginatedResultsParams {
   created?: NotificationListParams.Created;
 
   /**
    * Filter by events (e.g. job.completed, job.failed, upload.completed,
    * upload.failed, upload.expired)
    */
-  events?: Array<string>;
+  events?: Array<
+    'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
+  >;
 
   /**
    * Filter by object ID
@@ -160,7 +160,7 @@ export namespace NotificationListParams {
     /**
      * Sort by creation date (asc/desc)
      */
-    sort?: string;
+    sort?: 'asc' | 'desc';
   }
 
   export interface ResponseStatusCode {
@@ -184,10 +184,7 @@ export namespace NotificationListParams {
 export declare namespace Notifications {
   export {
     type Notification as Notification,
-    type NotificationCreateResponse as NotificationCreateResponse,
-    type NotificationRetrieveResponse as NotificationRetrieveResponse,
-    type NotificationDeleteResponse as NotificationDeleteResponse,
-    type NotificationsMyOffsetPage as NotificationsMyOffsetPage,
+    type NotificationsPaginatedResults as NotificationsPaginatedResults,
     type NotificationCreateParams as NotificationCreateParams,
     type NotificationListParams as NotificationListParams,
   };

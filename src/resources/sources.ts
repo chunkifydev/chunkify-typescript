@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
-import { MyOffsetPage, type MyOffsetPageParams, PagePromise } from '../core/pagination';
+import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -13,16 +13,20 @@ export class Sources extends APIResource {
    * metadata and generate a thumbnail. The source will be automatically deleted
    * after the data retention period.
    */
-  create(body: SourceCreateParams, options?: RequestOptions): APIPromise<SourceCreateResponse> {
-    return this._client.post('/api/sources', { body, ...options });
+  create(body: SourceCreateParams, options?: RequestOptions): APIPromise<Source> {
+    return (
+      this._client.post('/api/sources', { body, ...options }) as APIPromise<{ data: Source }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve details of a specific source by its ID, including metadata, media
    * properties, and associated jobs.
    */
-  retrieve(sourceID: string, options?: RequestOptions): APIPromise<SourceRetrieveResponse> {
-    return this._client.get(path`/api/sources/${sourceID}`, options);
+  retrieve(sourceID: string, options?: RequestOptions): APIPromise<Source> {
+    return (
+      this._client.get(path`/api/sources/${sourceID}`, options) as APIPromise<{ data: Source }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -32,110 +36,94 @@ export class Sources extends APIResource {
   list(
     query: SourceListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<SourcesMyOffsetPage, Source> {
-    return this._client.getAPIList('/api/sources', MyOffsetPage<Source>, { query, ...options });
+  ): PagePromise<SourcesPaginatedResults, Source> {
+    return this._client.getAPIList('/api/sources', PaginatedResults<Source>, { query, ...options });
   }
 
   /**
    * Delete a source. It will fail if there are processing jobs using this source.
    */
-  delete(sourceID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/sources/${sourceID}`, options);
+  delete(sourceID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/sources/${sourceID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
-export type SourcesMyOffsetPage = MyOffsetPage<Source>;
+export type SourcesPaginatedResults = PaginatedResults<Source>;
 
 export interface Source {
   /**
    * Unique identifier of the source
    */
-  id?: string;
+  id: string;
 
   /**
    * Audio bitrate in bits per second
    */
-  audio_bitrate?: number;
+  audio_bitrate: number;
 
   /**
-   * Audio codec used (e.g. aac, mp3)
+   * Audio codec used
    */
-  audio_codec?: string;
+  audio_codec: string;
 
   /**
    * Timestamp when the source was created
    */
-  created_at?: string;
+  created_at: string;
 
   /**
    * Device used to record the video
    */
-  device?: string;
+  device: string;
 
   /**
    * Duration of the video in seconds
    */
-  duration?: number;
+  duration: number;
 
   /**
    * Height of the video in pixels
    */
-  height?: number;
+  height: number;
 
   /**
    * Additional metadata for the source
    */
-  metadata?: { [key: string]: string };
+  metadata: { [key: string]: string };
 
   /**
    * Size of the source file in bytes
    */
-  size?: number;
+  size: number;
 
   /**
    * URL where the source video can be accessed
    */
-  url?: string;
+  url: string;
 
   /**
    * Video bitrate in bits per second
    */
-  video_bitrate?: number;
+  video_bitrate: number;
 
   /**
-   * Video codec used (e.g. h264, h265)
+   * Video codec used
    */
-  video_codec?: string;
+  video_codec: string;
 
   /**
    * Video framerate in frames per second
    */
-  video_framerate?: number;
+  video_framerate: number;
 
   /**
    * Width of the video in pixels
    */
-  width?: number;
+  width: number;
 }
-
-/**
- * Successful response
- */
-export interface SourceCreateResponse extends FilesAPI.ResponseOk {
-  data?: Source;
-}
-
-/**
- * Successful response
- */
-export interface SourceRetrieveResponse extends FilesAPI.ResponseOk {
-  data?: Source;
-}
-
-/**
- * No content response
- */
-export type SourceDeleteResponse = unknown;
 
 export interface SourceCreateParams {
   /**
@@ -150,7 +138,7 @@ export interface SourceCreateParams {
   metadata?: { [key: string]: string };
 }
 
-export interface SourceListParams extends MyOffsetPageParams {
+export interface SourceListParams extends PaginatedResultsParams {
   /**
    * Filter by source ID
    */
@@ -166,7 +154,7 @@ export interface SourceListParams extends MyOffsetPageParams {
   /**
    * Filter by device (apple/android)
    */
-  device?: string;
+  device?: 'apple' | 'android' | 'unknown';
 
   duration?: SourceListParams.Duration;
 
@@ -175,7 +163,7 @@ export interface SourceListParams extends MyOffsetPageParams {
   /**
    * Filter by metadata (format: key:value,key:value)
    */
-  metadata?: string;
+  metadata?: Array<Array<string>>;
 
   size?: SourceListParams.Size;
 
@@ -202,7 +190,7 @@ export namespace SourceListParams {
     /**
      * Sort by creation date (asc/desc)
      */
-    sort?: string;
+    sort?: 'asc' | 'desc';
   }
 
   export interface Duration {
@@ -317,10 +305,7 @@ export namespace SourceListParams {
 export declare namespace Sources {
   export {
     type Source as Source,
-    type SourceCreateResponse as SourceCreateResponse,
-    type SourceRetrieveResponse as SourceRetrieveResponse,
-    type SourceDeleteResponse as SourceDeleteResponse,
-    type SourcesMyOffsetPage as SourcesMyOffsetPage,
+    type SourcesPaginatedResults as SourcesPaginatedResults,
     type SourceCreateParams as SourceCreateParams,
     type SourceListParams as SourceListParams,
   };

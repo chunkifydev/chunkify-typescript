@@ -2,7 +2,12 @@
 
 import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
+import * as SourcesAPI from './sources';
+import * as UploadsAPI from './uploads';
+import * as JobsAPI from './jobs/jobs';
+import { Webhook as Webhook_ } from 'standardwebhooks';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -11,24 +16,32 @@ export class Webhooks extends APIResource {
    * Create a new webhook for a project. The webhook will receive notifications for
    * specified events.
    */
-  create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<WebhookCreateResponse> {
-    return this._client.post('/api/webhooks', { body, ...options });
+  create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<Webhook> {
+    return (
+      this._client.post('/api/webhooks', { body, ...options }) as APIPromise<{ data: Webhook }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve details of a specific webhook configuration by its ID. The webhook must
    * belong to the current project.
    */
-  retrieve(webhookID: string, options?: RequestOptions): APIPromise<WebhookRetrieveResponse> {
-    return this._client.get(path`/api/webhooks/${webhookID}`, options);
+  retrieve(webhookID: string, options?: RequestOptions): APIPromise<Webhook> {
+    return (
+      this._client.get(path`/api/webhooks/${webhookID}`, options) as APIPromise<{ data: Webhook }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Update the enabled status of a webhook. The webhook must belong to the current
    * project.
    */
-  update(webhookID: string, body: WebhookUpdateParams, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.patch(path`/api/webhooks/${webhookID}`, { body, ...options });
+  update(webhookID: string, body: WebhookUpdateParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.patch(path`/api/webhooks/${webhookID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -43,8 +56,24 @@ export class Webhooks extends APIResource {
    * Permanently delete a webhook configuration. The webhook must belong to the
    * current project. This action cannot be undone.
    */
-  delete(webhookID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/api/webhooks/${webhookID}`, options);
+  delete(webhookID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/webhooks/${webhookID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  unwrap(
+    body: string,
+    { headers, key }: { headers: Record<string, string>; key?: string },
+  ): UnwrapWebhookEvent {
+    if (headers !== undefined) {
+      const keyStr: string | null = key === undefined ? this._client.webhookKey : key;
+      if (keyStr === null) throw new Error('Webhook key must not be null in order to unwrap');
+      const wh = new Webhook_(keyStr);
+      wh.verify(body, headers);
+    }
+    return JSON.parse(body) as UnwrapWebhookEvent;
   }
 }
 
@@ -52,59 +81,177 @@ export interface Webhook {
   /**
    * Unique identifier of the webhook
    */
-  id?: string;
+  id: string;
 
   /**
    * Whether the webhook is currently enabled
    */
-  enabled?: boolean;
+  enabled: boolean;
 
   /**
    * Array of event types this webhook subscribes to
    */
-  events?: Array<string>;
+  events: Array<
+    'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
+  >;
 
   /**
    * ID of the project this webhook belongs to
    */
-  project_id?: string;
+  project_id: string;
 
   /**
    * URL where webhook events will be sent
    */
-  url?: string;
+  url: string;
 }
 
-/**
- * Successful response
- */
-export interface WebhookCreateResponse extends FilesAPI.ResponseOk {
-  data?: Webhook;
+export interface WebhookListResponse {
+  data: Array<Webhook>;
+
+  /**
+   * Status indicates the response status "success"
+   */
+  status: string;
 }
 
-/**
- * Successful response
- */
-export interface WebhookRetrieveResponse extends FilesAPI.ResponseOk {
-  data?: Webhook;
+export interface NewEventWebhookEvent {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Event-specific payload data
+   */
+  data:
+    | NewEventWebhookEvent.NotificationPayloadJobCompleted
+    | NewEventWebhookEvent.NotificationPayloadJobFailed
+    | NewEventWebhookEvent.NotificationPayloadUploadCompleted
+    | NewEventWebhookEvent.NotificationPayloadUploadFailed;
+
+  /**
+   * Timestamp when the notification was sent
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event:
+    | 'job.completed'
+    | 'job.failed'
+    | 'job.cancelled'
+    | 'upload.completed'
+    | 'upload.failed'
+    | 'upload.expired';
 }
 
-/**
- * No content response
- */
-export type WebhookUpdateResponse = unknown;
+export namespace NewEventWebhookEvent {
+  /**
+   * Payload data structure for job.completed events
+   */
+  export interface NotificationPayloadJobCompleted {
+    /**
+     * List of files generated by the job
+     */
+    files: Array<FilesAPI.APIFile>;
 
-/**
- * Successful response
- */
-export interface WebhookListResponse extends FilesAPI.ResponseOk {
-  data?: Array<Webhook>;
+    job: JobsAPI.Job;
+  }
+
+  /**
+   * Payload data structure for job.failed and job.cancelled events
+   */
+  export interface NotificationPayloadJobFailed {
+    job: JobsAPI.Job;
+  }
+
+  /**
+   * Payload data structure for upload.completed events
+   */
+  export interface NotificationPayloadUploadCompleted {
+    source: SourcesAPI.Source;
+
+    upload: UploadsAPI.Upload;
+  }
+
+  /**
+   * Payload data structure for upload.failed and upload.expired events
+   */
+  export interface NotificationPayloadUploadFailed {
+    upload: UploadsAPI.Upload;
+  }
 }
 
-/**
- * No content response
- */
-export type WebhookDeleteResponse = unknown;
+export interface UnwrapWebhookEvent {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Event-specific payload data
+   */
+  data:
+    | UnwrapWebhookEvent.NotificationPayloadJobCompleted
+    | UnwrapWebhookEvent.NotificationPayloadJobFailed
+    | UnwrapWebhookEvent.NotificationPayloadUploadCompleted
+    | UnwrapWebhookEvent.NotificationPayloadUploadFailed;
+
+  /**
+   * Timestamp when the notification was sent
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event:
+    | 'job.completed'
+    | 'job.failed'
+    | 'job.cancelled'
+    | 'upload.completed'
+    | 'upload.failed'
+    | 'upload.expired';
+}
+
+export namespace UnwrapWebhookEvent {
+  /**
+   * Payload data structure for job.completed events
+   */
+  export interface NotificationPayloadJobCompleted {
+    /**
+     * List of files generated by the job
+     */
+    files: Array<FilesAPI.APIFile>;
+
+    job: JobsAPI.Job;
+  }
+
+  /**
+   * Payload data structure for job.failed and job.cancelled events
+   */
+  export interface NotificationPayloadJobFailed {
+    job: JobsAPI.Job;
+  }
+
+  /**
+   * Payload data structure for upload.completed events
+   */
+  export interface NotificationPayloadUploadCompleted {
+    source: SourcesAPI.Source;
+
+    upload: UploadsAPI.Upload;
+  }
+
+  /**
+   * Payload data structure for upload.failed and upload.expired events
+   */
+  export interface NotificationPayloadUploadFailed {
+    upload: UploadsAPI.Upload;
+  }
+}
 
 export interface WebhookCreateParams {
   /**
@@ -121,7 +268,9 @@ export interface WebhookCreateParams {
   /**
    * Events specifies the types of events that will trigger the webhook.
    */
-  events?: Array<string>;
+  events?: Array<
+    'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
+  >;
 }
 
 export interface WebhookUpdateParams {
@@ -133,17 +282,17 @@ export interface WebhookUpdateParams {
   /**
    * Events specifies the types of events that will trigger the webhook.
    */
-  events?: Array<string>;
+  events?: Array<
+    'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
+  >;
 }
 
 export declare namespace Webhooks {
   export {
     type Webhook as Webhook,
-    type WebhookCreateResponse as WebhookCreateResponse,
-    type WebhookRetrieveResponse as WebhookRetrieveResponse,
-    type WebhookUpdateResponse as WebhookUpdateResponse,
     type WebhookListResponse as WebhookListResponse,
-    type WebhookDeleteResponse as WebhookDeleteResponse,
+    type NewEventWebhookEvent as NewEventWebhookEvent,
+    type UnwrapWebhookEvent as UnwrapWebhookEvent,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
   };

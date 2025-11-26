@@ -107,7 +107,7 @@ export class PagePromise<
   }
 }
 
-export interface MyOffsetPageResponse<Item> {
+export interface PaginatedResultsResponse<Item> {
   data: Array<Item>;
 
   total: number;
@@ -115,7 +115,7 @@ export interface MyOffsetPageResponse<Item> {
   offset: number;
 }
 
-export interface MyOffsetPageParams {
+export interface PaginatedResultsParams {
   /**
    * The number of elements to skip.
    */
@@ -127,7 +127,7 @@ export interface MyOffsetPageParams {
   limit?: number;
 }
 
-export class MyOffsetPage<Item> extends AbstractPage<Item> implements MyOffsetPageResponse<Item> {
+export class PaginatedResults<Item> extends AbstractPage<Item> implements PaginatedResultsResponse<Item> {
   data: Array<Item>;
 
   total: number;
@@ -137,7 +137,7 @@ export class MyOffsetPage<Item> extends AbstractPage<Item> implements MyOffsetPa
   constructor(
     client: Chunkify,
     response: Response,
-    body: MyOffsetPageResponse<Item>,
+    body: PaginatedResultsResponse<Item>,
     options: FinalRequestOptions,
   ) {
     super(client, response, body, options);

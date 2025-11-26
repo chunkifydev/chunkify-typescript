@@ -11,7 +11,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:stainless-sdks/chunkify-typescript.git
+npm install git+ssh://git@github.com:chunkifydev/chunkify-typescript.git
 ```
 
 > [!NOTE]
@@ -30,10 +30,12 @@ const client = new Chunkify({
 });
 
 const job = await client.jobs.create({
-  format: { mp4_h264: { width: 1920, height: 1080, crf: 21 } },
+  format: { id: 'mp4_h264', width: 1920, height: 1080, crf: 21 },
   source_id: 'src_2G6MJiNz71bHQGNzGwKx5cJwPFS',
   transcoder: { quantity: 4, type: '8vCPU' },
 });
+
+console.log(job.id);
 ```
 
 ### Request & Response types
@@ -370,7 +372,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/chunkify-typescript/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/chunkifydev/chunkify-typescript/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 
