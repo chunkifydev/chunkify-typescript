@@ -846,12 +846,12 @@ export namespace Job {
     /**
      * ID of the storage
      */
-    id?: string;
+    id: string;
 
     /**
      * Path where the output will be stored
      */
-    path?: string;
+    path: string;
   }
 
   /**

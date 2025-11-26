@@ -46,51 +46,144 @@ export class Storages extends APIResource {
   }
 }
 
-export interface Storage {
-  /**
-   * Unique identifier of the storage configuration
-   */
-  id: string;
+export type Storage = Storage.Chunkify | Storage.Cloudflare | Storage.Aws;
 
-  /**
-   * Name of the storage bucket
-   */
-  bucket: string;
+export namespace Storage {
+  export interface Chunkify {
+    /**
+     * Unique identifier of the storage configuration
+     */
+    id: string;
 
-  /**
-   * Created at timestamp
-   */
-  created_at: string;
+    /**
+     * Created at timestamp
+     */
+    created_at: string;
 
-  /**
-   * Continent location of the storage
-   */
-  location: 'US' | 'EU' | 'Asia';
+    /**
+     * Provider specifies the storage provider.
+     */
+    provider: 'chunkify';
 
-  /**
-   * Name of the storage provider
-   */
-  provider: 'aws' | 'chunkify' | 'cloudflare';
+    /**
+     * Region specifies the region of the storage provider.
+     */
+    region:
+      | 'us-east-1'
+      | 'us-east-2'
+      | 'us-west-1'
+      | 'us-west-2'
+      | 'eu-west-1'
+      | 'eu-west-2'
+      | 'ap-northeast-1'
+      | 'ap-southeast-1';
 
-  /**
-   * Whether the storage bucket is publicly accessible
-   */
-  public: boolean;
+    /**
+     * Unique identifier of the storage configuration
+     */
+    slug: string;
+  }
 
-  /**
-   * Geographic region where the storage is located
-   */
-  region: string;
+  export interface Cloudflare {
+    /**
+     * Unique identifier of the storage configuration
+     */
+    id: string;
 
-  /**
-   * Unique identifier of the storage configuration
-   */
-  slug: string;
+    /**
+     * Bucket is the name of the storage bucket.
+     */
+    bucket: string;
 
-  /**
-   * Endpoint of the storage provider
-   */
-  endpoint?: string;
+    /**
+     * Created at timestamp
+     */
+    created_at: string;
+
+    /**
+     * Endpoint is the endpoint of the storage provider.
+     */
+    endpoint: string;
+
+    /**
+     * Location specifies the location of the storage provider.
+     */
+    location: 'US' | 'EU' | 'ASIA';
+
+    /**
+     * Provider specifies the storage provider.
+     */
+    provider: 'cloudflare';
+
+    /**
+     * Public indicates whether the storage is publicly accessible.
+     */
+    public: boolean;
+
+    /**
+     * Region specifies the region of the storage provider.
+     */
+    region: 'auto';
+
+    /**
+     * Unique identifier of the storage configuration
+     */
+    slug: string;
+  }
+
+  export interface Aws {
+    /**
+     * Unique identifier of the storage configuration
+     */
+    id: string;
+
+    /**
+     * Bucket is the name of the storage bucket.
+     */
+    bucket: string;
+
+    /**
+     * Created at timestamp
+     */
+    created_at: string;
+
+    /**
+     * Provider specifies the storage provider.
+     */
+    provider: 'aws';
+
+    /**
+     * Public indicates whether the storage is publicly accessible.
+     */
+    public: boolean;
+
+    /**
+     * Region specifies the region of the storage provider.
+     */
+    region:
+      | 'us-east-1'
+      | 'us-east-2'
+      | 'us-central-1'
+      | 'us-west-1'
+      | 'us-west-2'
+      | 'eu-west-1'
+      | 'eu-west-2'
+      | 'eu-west-3'
+      | 'eu-central-1'
+      | 'eu-north-1'
+      | 'ap-east-1'
+      | 'ap-east-2'
+      | 'ap-northeast-1'
+      | 'ap-northeast-2'
+      | 'ap-south-1'
+      | 'ap-southeast-1'
+      | 'ap-southeast-2';
+
+    /**
+     * Unique identifier of the storage configuration
+     */
+    slug: string;
+  }
 }
 
 export interface StorageListResponse {
