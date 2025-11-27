@@ -53,7 +53,7 @@ describe('resource uploads', () => {
           id: 'id',
           created: { gte: 0, lte: 0, sort: 'asc' },
           limit: 1,
-          metadata: [['J!Q0Ok0bzJb7:pro']],
+          metadata: [['key1:value1']],
           offset: 0,
           source_id: 'source_id',
           status: 'waiting',

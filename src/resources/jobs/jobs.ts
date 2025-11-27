@@ -1628,7 +1628,7 @@ export interface JobListParams extends PaginatedResultsParams {
   hls_manifest_id?: string;
 
   /**
-   * Filter by metadata (format: key:value,key2:value2)
+   * Filter by metadata
    */
   metadata?: Array<Array<string>>;
 

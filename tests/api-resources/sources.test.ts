@@ -65,7 +65,7 @@ describe('resource sources', () => {
           duration: { eq: 0, gt: 0, gte: 0, lt: 0, lte: 0 },
           height: { eq: 0, gt: 0, gte: 0, lt: 0, lte: 0 },
           limit: 1,
-          metadata: [['J!Q0Ok0bzJb7:pro']],
+          metadata: [['key1:value1']],
           offset: 0,
           size: { eq: 0, gt: 0, gte: 0, lt: 0, lte: 0 },
           video_codec: 'video_codec',

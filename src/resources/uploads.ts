@@ -120,7 +120,7 @@ export interface UploadListParams extends PaginatedResultsParams {
   created?: UploadListParams.Created;
 
   /**
-   * Filter by metadata (format: key:value,key:value)
+   * Filter by metadata
    */
   metadata?: Array<Array<string>>;
 
