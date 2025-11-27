@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0 (2025-11-27)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.1.0...v0.2.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** update all created.* query string to epoch unix time format
+
+### Features
+
+* **api:** update all created.* query string to epoch unix time format ([d39effe](https://github.com/chunkifydev/chunkify-typescript/commit/d39effece52e916f6525472475edcf458b4b30bf))
+
 ## 0.1.0 (2025-11-26)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.0.1...v0.1.0)
