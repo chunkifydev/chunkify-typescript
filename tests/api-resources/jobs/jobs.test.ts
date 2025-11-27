@@ -88,7 +88,7 @@ describe('resource jobs', () => {
       client.jobs.list(
         {
           id: 'id',
-          created: { gte: '2025-01-01', lte: '2025-01-01', sort: 'asc' },
+          created: { gte: 0, lte: 0, sort: 'asc' },
           format_id: 'mp4_h264',
           hls_manifest_id: 'hls_manifest_id',
           limit: 1,

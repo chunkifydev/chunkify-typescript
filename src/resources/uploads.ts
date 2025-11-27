@@ -138,14 +138,14 @@ export interface UploadListParams extends PaginatedResultsParams {
 export namespace UploadListParams {
   export interface Created {
     /**
-     * Filter by creation date greater than or equal (RFC3339)
+     * Filter by creation date greater than or equal (UNIX epoch time)
      */
-    gte?: string;
+    gte?: number;
 
     /**
-     * Filter by creation date less than or equal (RFC3339)
+     * Filter by creation date less than or equal (UNIX epoch time)
      */
-    lte?: string;
+    lte?: number;
 
     /**
      * Sort by creation date (asc/desc)
