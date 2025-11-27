@@ -40,7 +40,7 @@ describe('resource files', () => {
         {
           id: 'id',
           audio_codec: 'audio_codec',
-          created: { gte: 'gte', lte: 'lte', sort: 'asc' },
+          created: { gte: 0, lte: 0, sort: 'asc' },
           duration: { eq: 0, gt: 0, gte: 0, lt: 0, lte: 0 },
           height: { eq: 0, gt: 0, gte: 0, lt: 0, lte: 0 },
           job_id: 'job_id',

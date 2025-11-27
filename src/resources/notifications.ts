@@ -125,8 +125,7 @@ export interface NotificationListParams extends PaginatedResultsParams {
   created?: NotificationListParams.Created;
 
   /**
-   * Filter by events (e.g. job.completed, job.failed, upload.completed,
-   * upload.failed, upload.expired)
+   * Filter by events
    */
   events?: Array<
     'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
@@ -148,14 +147,14 @@ export interface NotificationListParams extends PaginatedResultsParams {
 export namespace NotificationListParams {
   export interface Created {
     /**
-     * Filter by creation date greater than or equal (RFC3339)
+     * Filter by creation date greater than or equal (UNIX epoch time)
      */
-    gte?: string;
+    gte?: number;
 
     /**
-     * Filter by creation date less than or equal (RFC3339)
+     * Filter by creation date less than or equal (UNIX epoch time)
      */
-    lte?: string;
+    lte?: number;
 
     /**
      * Sort by creation date (asc/desc)

@@ -1648,12 +1648,12 @@ export namespace JobListParams {
     /**
      * Filter by creation date greater than or equal
      */
-    gte?: string;
+    gte?: number;
 
     /**
      * Filter by creation date less than or equal
      */
-    lte?: string;
+    lte?: number;
 
     /**
      * Sort by creation date (asc/desc)
