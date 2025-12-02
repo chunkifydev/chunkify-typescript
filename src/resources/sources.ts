@@ -161,7 +161,7 @@ export interface SourceListParams extends PaginatedResultsParams {
   height?: SourceListParams.Height;
 
   /**
-   * Filter by metadata (format: key:value,key:value)
+   * Filter by metadata
    */
   metadata?: Array<Array<string>>;
 

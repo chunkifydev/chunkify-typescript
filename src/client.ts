@@ -184,7 +184,7 @@ export class Chunkify {
   baseURL: string;
   maxRetries: number;
   timeout: number;
-  logger: Logger | undefined;
+  logger: Logger;
   logLevel: LogLevel | undefined;
   fetchOptions: MergedRequestInit | undefined;
 
@@ -315,7 +315,7 @@ export class Chunkify {
   }
 
   protected stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+    return qs.stringify(query, { arrayFormat: 'repeat' });
   }
 
   private getUserAgent(): string {
