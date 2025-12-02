@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.0 (2025-12-02)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** manual updates ([6c4c91f](https://github.com/chunkifydev/chunkify-typescript/commit/6c4c91f17c59a0b971c654ed4d84bc768127c9e9))
+* **api:** manual updates ([c86cada](https://github.com/chunkifydev/chunkify-typescript/commit/c86cada0c370c565015cfe56c6179c1551bbfb73))
+
+
+### Chores
+
+* **client:** fix logger property type ([af86757](https://github.com/chunkifydev/chunkify-typescript/commit/af8675770471f50b4844ffff5645fee4a6ae5268))
+
 ## 0.2.0 (2025-11-27)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.1.0...v0.2.0)
