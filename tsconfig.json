@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "chunkify/*": ["./src/*"],
-      "chunkify": ["./src/index.ts"]
+      "@chunkify/chunkify/*": ["./src/*"],
+      "@chunkify/chunkify": ["./src/index.ts"]
     },
     "noEmit": true,
 

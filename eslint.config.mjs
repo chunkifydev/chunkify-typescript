@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^chunkify(/.*)?',
+              regex: '^@chunkify/chunkify(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

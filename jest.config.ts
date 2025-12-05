@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^chunkify$': '<rootDir>/src/index.ts',
-    '^chunkify/(.*)$': '<rootDir>/src/$1',
+    '^@chunkify/chunkify$': '<rootDir>/src/index.ts',
+    '^@chunkify/chunkify/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

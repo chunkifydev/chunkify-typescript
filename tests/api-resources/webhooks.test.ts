@@ -2,7 +2,7 @@
 
 import { Webhook } from 'standardwebhooks';
 
-import Chunkify from 'chunkify';
+import Chunkify from '@chunkify/chunkify';
 
 const client = new Chunkify({
   projectAccessToken: 'My Project Access Token',

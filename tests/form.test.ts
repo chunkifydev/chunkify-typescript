@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'chunkify/internal/uploads';
-import { toFile } from 'chunkify/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@chunkify/chunkify/internal/uploads';
+import { toFile } from '@chunkify/chunkify/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
