@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0 (2025-12-05)
+
+Full Changelog: [v0.3.1...v0.5.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.3.1...v0.5.0)
+
+### Chores
+
+* update SDK settings ([842774f](https://github.com/chunkifydev/chunkify-typescript/commit/842774f2fe374674611acd5d035a236e164b38c9))
+
 ## 0.3.1 (2025-12-03)
 
 Full Changelog: [v0.3.0...v0.3.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.3.0...v0.3.1)
