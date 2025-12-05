@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 (2025-12-03)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.3.0...v0.3.1)
+
+### Chores
+
+* **internal:** upgrade eslint ([11bb37c](https://github.com/chunkifydev/chunkify-typescript/commit/11bb37cba56b2e0a442bb973d601c00014019a4e))
+
 ## 0.3.0 (2025-12-02)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.2.0...v0.3.0)
