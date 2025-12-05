@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Chunkify } from 'chunkify';
+import { Chunkify } from '@chunkify/chunkify';
 
 const { stringifyQuery } = Chunkify.prototype as any;
 

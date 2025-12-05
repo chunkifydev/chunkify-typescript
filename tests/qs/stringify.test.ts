@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
-import { stringify } from 'chunkify/internal/qs';
-import { encode } from 'chunkify/internal/qs/utils';
-import { StringifyOptions } from 'chunkify/internal/qs/types';
+import { stringify } from '@chunkify/chunkify/internal/qs';
+import { encode } from '@chunkify/chunkify/internal/qs/utils';
+import { StringifyOptions } from '@chunkify/chunkify/internal/qs/types';
 import { empty_test_cases } from './empty-keys-cases';
 import assert from 'assert';
 

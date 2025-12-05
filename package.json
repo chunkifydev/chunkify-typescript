@@ -1,5 +1,5 @@
 {
-  "name": "chunkify",
+  "name": "@chunkify/chunkify",
   "version": "0.3.1",
   "description": "The official TypeScript library for the Chunkify API",
   "author": "Chunkify <support@chunkify.dev>",
