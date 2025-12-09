@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.1 (2025-12-09)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.5.0...v0.5.1)
+
+### Chores
+
+* **internal:** escape package name in pnpm workspace file ([f84e89e](https://github.com/chunkifydev/chunkify-typescript/commit/f84e89ef2e9dd3c00c0251aa0b91735c1c284d92))
+
 ## 0.5.0 (2025-12-05)
 
 Full Changelog: [v0.3.1...v0.5.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.3.1...v0.5.0)
