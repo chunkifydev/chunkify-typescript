@@ -23,7 +23,7 @@ export interface LogListResponse {
   /**
    * Status indicates the response status "success"
    */
-  status: string;
+  status: 'success';
 }
 
 export namespace LogListResponse {

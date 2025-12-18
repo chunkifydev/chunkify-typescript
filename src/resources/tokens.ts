@@ -18,10 +18,10 @@ export class Tokens extends APIResource {
   }
 
   /**
-   * Retrieve a list of all API tokens for your account, including both
-   * account-scoped and project-scoped tokens. For each token, the response includes
-   * its name, scope, creation date, and usage statistics. The token values are not
-   * included in the response for security reasons.
+   * Retrieve a list of all API tokens for your account, including both team-scoped
+   * and project-scoped tokens. For each token, the response includes its name,
+   * scope, creation date, and usage statistics. The token values are not included in
+   * the response for security reasons.
    */
   list(options?: RequestOptions): APIPromise<TokenListResponse> {
     return this._client.get('/api/tokens', options);
@@ -71,13 +71,20 @@ export interface Token {
   scope: 'project' | 'team';
 }
 
+/**
+ * Response containing the list of all tokens for a team. Including project and
+ * team tokens.
+ */
 export interface TokenListResponse {
+  /**
+   * Data contains the token items
+   */
   data: Array<Token>;
 
   /**
    * Status indicates the response status "success"
    */
-  status: string;
+  status: 'success';
 }
 
 export interface TokenCreateParams {

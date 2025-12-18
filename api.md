@@ -93,7 +93,7 @@ Methods:
 - <code title="post /api/projects">client.projects.<a href="./src/resources/projects.ts">create</a>({ ...params }) -> Project</code>
 - <code title="get /api/projects/{projectId}">client.projects.<a href="./src/resources/projects.ts">retrieve</a>(projectID) -> Project</code>
 - <code title="patch /api/projects/{projectId}">client.projects.<a href="./src/resources/projects.ts">update</a>(projectID, { ...params }) -> void</code>
-- <code title="get /api/projects">client.projects.<a href="./src/resources/projects.ts">list</a>({ ...params }) -> ProjectListResponse</code>
+- <code title="get /api/projects">client.projects.<a href="./src/resources/projects.ts">list</a>() -> ProjectListResponse</code>
 - <code title="delete /api/projects/{projectId}">client.projects.<a href="./src/resources/projects.ts">delete</a>(projectID) -> void</code>
 
 # Sources
