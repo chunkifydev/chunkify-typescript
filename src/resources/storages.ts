@@ -186,13 +186,19 @@ export namespace Storage {
   }
 }
 
+/**
+ * Response containing the list of storages configurations for a project
+ */
 export interface StorageListResponse {
+  /**
+   * Data contains the storage items
+   */
   data: Array<Storage>;
 
   /**
    * Status indicates the response status "success"
    */
-  status: string;
+  status: 'success';
 }
 
 export interface StorageCreateParams {

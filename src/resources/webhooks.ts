@@ -106,13 +106,19 @@ export interface Webhook {
   url: string;
 }
 
+/**
+ * Response containing the list of all webhooks for a project
+ */
 export interface WebhookListResponse {
+  /**
+   * Data contains the webhook items
+   */
   data: Array<Webhook>;
 
   /**
    * Status indicates the response status "success"
    */
-  status: string;
+  status: 'success';
 }
 
 export interface NewEventWebhookEvent {

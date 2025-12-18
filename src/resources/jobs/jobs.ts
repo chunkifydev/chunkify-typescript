@@ -1551,7 +1551,7 @@ export interface JobCreateParams {
   hls_manifest_id?: string;
 
   /**
-   * Optional metadata to attach to the job (max 1024 bytes)
+   * Optional metadata to attach to the job, the maximum size allowed is 2048 bytes
    */
   metadata?: { [key: string]: string };
 
