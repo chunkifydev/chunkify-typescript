@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 (2025-12-18)
+
+Full Changelog: [v0.5.1...v0.6.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.5.1...v0.6.0)
+
+### Features
+
+* **api:** manual updates ([6c8dff9](https://github.com/chunkifydev/chunkify-typescript/commit/6c8dff9d53c30a0a5fd4dc36219d97e378f1bf79))
+
 ## 0.5.1 (2025-12-09)
 
 Full Changelog: [v0.5.0...v0.5.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.5.0...v0.5.1)

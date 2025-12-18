@@ -101,7 +101,7 @@ export interface Upload {
 export interface UploadCreateParams {
   /**
    * Metadata allows for additional information to be attached to the upload, with a
-   * maximum size of 1024 bytes.
+   * maximum size of 2048 bytes.
    */
   metadata?: { [key: string]: string };
 

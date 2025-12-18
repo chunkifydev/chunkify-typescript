@@ -39,13 +39,10 @@ export class Projects extends APIResource {
   }
 
   /**
-   * Retrieve a list of all projects with optional filtering and pagination
+   * Retrieve a list of all projects for a team
    */
-  list(
-    query: ProjectListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ProjectListResponse> {
-    return this._client.get('/api/projects', { query, ...options });
+  list(options?: RequestOptions): APIPromise<ProjectListResponse> {
+    return this._client.get('/api/projects', options);
   }
 
   /**
@@ -87,13 +84,19 @@ export interface Project {
   storage_id: string;
 }
 
+/**
+ * Response containing the list of projects for a team
+ */
 export interface ProjectListResponse {
+  /**
+   * Data contains the project items
+   */
   data: Array<Project>;
 
   /**
    * Status indicates the response status "success"
    */
-  status: string;
+  status: 'success';
 }
 
 export interface ProjectCreateParams {
@@ -115,24 +118,11 @@ export interface ProjectUpdateParams {
   storage_id?: string;
 }
 
-export interface ProjectListParams {
-  /**
-   * Pagination limit (max 100)
-   */
-  limit?: number;
-
-  /**
-   * Pagination offset
-   */
-  offset?: number;
-}
-
 export declare namespace Projects {
   export {
     type Project as Project,
     type ProjectListResponse as ProjectListResponse,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectUpdateParams as ProjectUpdateParams,
-    type ProjectListParams as ProjectListParams,
   };
 }

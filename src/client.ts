@@ -30,7 +30,6 @@ import {
 import {
   Project,
   ProjectCreateParams,
-  ProjectListParams,
   ProjectListResponse,
   ProjectUpdateParams,
   Projects,
@@ -888,7 +887,6 @@ export declare namespace Chunkify {
     type ProjectListResponse as ProjectListResponse,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectUpdateParams as ProjectUpdateParams,
-    type ProjectListParams as ProjectListParams,
   };
 
   export {
