@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.1 (2026-01-06)
+
+Full Changelog: [v0.6.0...v0.6.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.0...v0.6.1)
+
+### Chores
+
+* **internal:** codegen related update ([8441273](https://github.com/chunkifydev/chunkify-typescript/commit/844127300d42dae3f26f817037bfa3f1adabefa7))
+
 ## 0.6.0 (2025-12-18)
 
 Full Changelog: [v0.5.1...v0.6.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.5.1...v0.6.0)
