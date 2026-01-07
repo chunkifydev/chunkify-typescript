@@ -63,12 +63,20 @@ describe('resource notifications', () => {
     await expect(
       client.notifications.list(
         {
-          created: { gte: 0, lte: 0, sort: 'asc' },
+          created: {
+            gte: 0,
+            lte: 0,
+            sort: 'asc',
+          },
           events: ['job.completed'],
           limit: 1,
           object_id: 'object_id',
           offset: 0,
-          response_status_code: { eq: 100, gte: 100, lte: 100 },
+          response_status_code: {
+            eq: 100,
+            gte: 100,
+            lte: 100,
+          },
           webhook_id: 'webhook_id',
         },
         { path: '/_stainless_unknown_path' },
