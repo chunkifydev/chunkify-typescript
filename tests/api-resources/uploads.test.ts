@@ -51,7 +51,11 @@ describe('resource uploads', () => {
       client.uploads.list(
         {
           id: 'id',
-          created: { gte: 0, lte: 0, sort: 'asc' },
+          created: {
+            gte: 0,
+            lte: 0,
+            sort: 'asc',
+          },
           limit: 1,
           metadata: [['key1:value1']],
           offset: 0,
