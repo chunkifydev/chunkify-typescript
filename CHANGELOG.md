@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.2 (2026-01-09)
+
+Full Changelog: [v0.6.1...v0.6.2](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.1...v0.6.2)
+
+### Chores
+
+* break long lines in snippets into multiline ([4e577cf](https://github.com/chunkifydev/chunkify-typescript/commit/4e577cfe230072bed48fe135a8780869df4af79b))
+
 ## 0.6.1 (2026-01-06)
 
 Full Changelog: [v0.6.0...v0.6.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.0...v0.6.1)
