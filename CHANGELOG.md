@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.3 (2026-01-14)
+
+Full Changelog: [v0.6.2...v0.6.3](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.2...v0.6.3)
+
+### Chores
+
+* **sdk/config:** change model api_file to job-file ([a790fec](https://github.com/chunkifydev/chunkify-typescript/commit/a790fec70cc0cc0de23104c1c1017cd35df01c4b))
+
 ## 0.6.2 (2026-01-09)
 
 Full Changelog: [v0.6.1...v0.6.2](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.1...v0.6.2)

@@ -12,9 +12,9 @@ export class Files extends APIResource {
    * Retrieve details of a specific file by its ID, including metadata, media
    * properties, and associated jobs.
    */
-  retrieve(fileID: string, options?: RequestOptions): APIPromise<APIFile> {
+  retrieve(fileID: string, options?: RequestOptions): APIPromise<JobFile> {
     return (
-      this._client.get(path`/api/files/${fileID}`, options) as APIPromise<{ data: APIFile }>
+      this._client.get(path`/api/files/${fileID}`, options) as APIPromise<{ data: JobFile }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -24,8 +24,8 @@ export class Files extends APIResource {
   list(
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<APIFilesPaginatedResults, APIFile> {
-    return this._client.getAPIList('/api/files', PaginatedResults<APIFile>, { query, ...options });
+  ): PagePromise<JobFilesPaginatedResults, JobFile> {
+    return this._client.getAPIList('/api/files', PaginatedResults<JobFile>, { query, ...options });
   }
 
   /**
@@ -39,9 +39,9 @@ export class Files extends APIResource {
   }
 }
 
-export type APIFilesPaginatedResults = PaginatedResults<APIFile>;
+export type JobFilesPaginatedResults = PaginatedResults<JobFile>;
 
-export interface APIFile {
+export interface JobFile {
   /**
    * Unique identifier of the file
    */
@@ -308,8 +308,8 @@ export namespace FileListParams {
 
 export declare namespace Files {
   export {
-    type APIFile as APIFile,
-    type APIFilesPaginatedResults as APIFilesPaginatedResults,
+    type JobFile as JobFile,
+    type JobFilesPaginatedResults as JobFilesPaginatedResults,
     type FileListParams as FileListParams,
   };
 }
