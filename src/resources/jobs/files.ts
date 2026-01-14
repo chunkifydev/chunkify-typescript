@@ -19,7 +19,7 @@ export class Files extends APIResource {
  * Response containing a list of files for a job
  */
 export interface FileListResponse {
-  data: Array<FilesAPI.APIFile>;
+  data: Array<FilesAPI.JobFile>;
 
   /**
    * Status indicates the response status "success"
