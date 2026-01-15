@@ -1,6 +1,6 @@
 {
   "name": "@chunkify/chunkify",
-  "version": "0.6.3",
+  "version": "0.7.0",
   "description": "The official TypeScript library for the Chunkify API",
   "author": "Chunkify <support@chunkify.dev>",
   "types": "dist/index.d.ts",
