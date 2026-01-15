@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0 (2026-01-15)
+
+Full Changelog: [v0.6.3...v0.7.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.3...v0.7.0)
+
+### Features
+
+* **config:** added per endpoint security settings ([db4e61f](https://github.com/chunkifydev/chunkify-typescript/commit/db4e61f923cb41edc49a5f3e0d4b3587f8341d98))
+
 ## 0.6.3 (2026-01-14)
 
 Full Changelog: [v0.6.2...v0.6.3](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.2...v0.6.3)
