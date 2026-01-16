@@ -15,13 +15,16 @@ export class Transcoders extends APIResource {
   }
 }
 
+/**
+ * Response containing a list of transcoders for a job
+ */
 export interface TranscoderListResponse {
   data: Array<TranscoderListResponse.Data>;
 
   /**
    * Status indicates the response status "success"
    */
-  status: string;
+  status: 'success';
 }
 
 export namespace TranscoderListResponse {
