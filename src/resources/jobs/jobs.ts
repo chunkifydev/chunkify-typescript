@@ -24,18 +24,25 @@ export class Jobs extends APIResource {
    * Create a new video processing job with specified parameters
    */
   create(body: JobCreateParams, options?: RequestOptions): APIPromise<Job> {
-    return (this._client.post('/api/jobs', { body, ...options }) as APIPromise<{ data: Job }>)._thenUnwrap(
-      (obj) => obj.data,
-    );
+    return (
+      this._client.post('/api/jobs', {
+        body,
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Job }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve details of a specific job
    */
   retrieve(jobID: string, options?: RequestOptions): APIPromise<Job> {
-    return (this._client.get(path`/api/jobs/${jobID}`, options) as APIPromise<{ data: Job }>)._thenUnwrap(
-      (obj) => obj.data,
-    );
+    return (
+      this._client.get(path`/api/jobs/${jobID}`, {
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Job }>
+    )._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -45,7 +52,11 @@ export class Jobs extends APIResource {
     query: JobListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<JobsPaginatedResults, Job> {
-    return this._client.getAPIList('/api/jobs', PaginatedResults<Job>, { query, ...options });
+    return this._client.getAPIList('/api/jobs', PaginatedResults<Job>, {
+      query,
+      ...options,
+      __security: { projectAccessTokenAuth: true },
+    });
   }
 
   /**
@@ -55,6 +66,7 @@ export class Jobs extends APIResource {
     return this._client.delete(path`/api/jobs/${jobID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { projectAccessTokenAuth: true },
     });
   }
 
@@ -65,6 +77,7 @@ export class Jobs extends APIResource {
     return this._client.post(path`/api/jobs/${jobID}/cancel`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { projectAccessTokenAuth: true },
     });
   }
 }
