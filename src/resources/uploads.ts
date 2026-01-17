@@ -14,7 +14,11 @@ export class Uploads extends APIResource {
    */
   create(body: UploadCreateParams, options?: RequestOptions): APIPromise<Upload> {
     return (
-      this._client.post('/api/uploads', { body, ...options }) as APIPromise<{ data: Upload }>
+      this._client.post('/api/uploads', {
+        body,
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Upload }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -24,7 +28,10 @@ export class Uploads extends APIResource {
    */
   retrieve(uploadID: string, options?: RequestOptions): APIPromise<Upload> {
     return (
-      this._client.get(path`/api/uploads/${uploadID}`, options) as APIPromise<{ data: Upload }>
+      this._client.get(path`/api/uploads/${uploadID}`, {
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Upload }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -35,7 +42,11 @@ export class Uploads extends APIResource {
     query: UploadListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<UploadsPaginatedResults, Upload> {
-    return this._client.getAPIList('/api/uploads', PaginatedResults<Upload>, { query, ...options });
+    return this._client.getAPIList('/api/uploads', PaginatedResults<Upload>, {
+      query,
+      ...options,
+      __security: { projectAccessTokenAuth: true },
+    });
   }
 
   /**
@@ -45,6 +56,7 @@ export class Uploads extends APIResource {
     return this._client.delete(path`/api/uploads/${uploadID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { projectAccessTokenAuth: true },
     });
   }
 }

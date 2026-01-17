@@ -13,7 +13,11 @@ export class Projects extends APIResource {
    */
   create(body: ProjectCreateParams, options?: RequestOptions): APIPromise<Project> {
     return (
-      this._client.post('/api/projects', { body, ...options }) as APIPromise<{ data: Project }>
+      this._client.post('/api/projects', {
+        body,
+        ...options,
+        __security: { teamAccessTokenAuth: true },
+      }) as APIPromise<{ data: Project }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -22,7 +26,10 @@ export class Projects extends APIResource {
    */
   retrieve(projectID: string, options?: RequestOptions): APIPromise<Project> {
     return (
-      this._client.get(path`/api/projects/${projectID}`, options) as APIPromise<{ data: Project }>
+      this._client.get(path`/api/projects/${projectID}`, {
+        ...options,
+        __security: { teamAccessTokenAuth: true },
+      }) as APIPromise<{ data: Project }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -35,6 +42,7 @@ export class Projects extends APIResource {
       body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { teamAccessTokenAuth: true },
     });
   }
 
@@ -42,7 +50,7 @@ export class Projects extends APIResource {
    * Retrieve a list of all projects for a team
    */
   list(options?: RequestOptions): APIPromise<ProjectListResponse> {
-    return this._client.get('/api/projects', options);
+    return this._client.get('/api/projects', { ...options, __security: { teamAccessTokenAuth: true } });
   }
 
   /**
@@ -53,6 +61,7 @@ export class Projects extends APIResource {
     return this._client.delete(path`/api/projects/${projectID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { teamAccessTokenAuth: true },
     });
   }
 }
