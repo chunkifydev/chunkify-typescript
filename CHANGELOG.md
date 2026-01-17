@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.8.0 (2026-01-17)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** api update ([9cb2678](https://github.com/chunkifydev/chunkify-typescript/commit/9cb2678237a55b370c6b11dde94633dcd6d1ff71))
+
+
+### Chores
+
+* **internal:** codegen related update ([41a84aa](https://github.com/chunkifydev/chunkify-typescript/commit/41a84aa621614b2b11a26de5f1a60921cf5b1d17))
+* **internal:** update `actions/checkout` version ([2e9a5d0](https://github.com/chunkifydev/chunkify-typescript/commit/2e9a5d0c9eb5d0d87cbab1ff155b608899611491))
+* **internal:** update lock file ([95274b5](https://github.com/chunkifydev/chunkify-typescript/commit/95274b5c2a345411277e763013d36aa43bd5e6c3))
+* **internal:** upgrade babel, qs, js-yaml ([1d289e5](https://github.com/chunkifydev/chunkify-typescript/commit/1d289e537a14a005e175feb2bcb4f7af34d1078a))
+* **internal:** upgrade brace-expansion and @babel/helpers ([32e263f](https://github.com/chunkifydev/chunkify-typescript/commit/32e263feb916a20c6b3c7276a1ec08a1e6ad5ff4))
+
 ## 0.7.0 (2026-01-15)
 
 Full Changelog: [v0.6.3...v0.7.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.3...v0.7.0)
