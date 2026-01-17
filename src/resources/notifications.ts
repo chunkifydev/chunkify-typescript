@@ -14,7 +14,11 @@ export class Notifications extends APIResource {
    */
   create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<Notification> {
     return (
-      this._client.post('/api/notifications', { body, ...options }) as APIPromise<{ data: Notification }>
+      this._client.post('/api/notifications', {
+        body,
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Notification }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -23,9 +27,10 @@ export class Notifications extends APIResource {
    */
   retrieve(notificationID: string, options?: RequestOptions): APIPromise<Notification> {
     return (
-      this._client.get(path`/api/notifications/${notificationID}`, options) as APIPromise<{
-        data: Notification;
-      }>
+      this._client.get(path`/api/notifications/${notificationID}`, {
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Notification }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -39,6 +44,7 @@ export class Notifications extends APIResource {
     return this._client.getAPIList('/api/notifications', PaginatedResults<Notification>, {
       query,
       ...options,
+      __security: { projectAccessTokenAuth: true },
     });
   }
 
@@ -49,6 +55,7 @@ export class Notifications extends APIResource {
     return this._client.delete(path`/api/notifications/${notificationID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { projectAccessTokenAuth: true },
     });
   }
 }

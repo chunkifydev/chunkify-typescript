@@ -18,7 +18,11 @@ export class Webhooks extends APIResource {
    */
   create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<Webhook> {
     return (
-      this._client.post('/api/webhooks', { body, ...options }) as APIPromise<{ data: Webhook }>
+      this._client.post('/api/webhooks', {
+        body,
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Webhook }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -28,7 +32,10 @@ export class Webhooks extends APIResource {
    */
   retrieve(webhookID: string, options?: RequestOptions): APIPromise<Webhook> {
     return (
-      this._client.get(path`/api/webhooks/${webhookID}`, options) as APIPromise<{ data: Webhook }>
+      this._client.get(path`/api/webhooks/${webhookID}`, {
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Webhook }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -41,6 +48,7 @@ export class Webhooks extends APIResource {
       body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { projectAccessTokenAuth: true },
     });
   }
 
@@ -49,7 +57,7 @@ export class Webhooks extends APIResource {
    * includes its URL, enabled status, and subscribed events.
    */
   list(options?: RequestOptions): APIPromise<WebhookListResponse> {
-    return this._client.get('/api/webhooks', options);
+    return this._client.get('/api/webhooks', { ...options, __security: { projectAccessTokenAuth: true } });
   }
 
   /**
@@ -60,6 +68,7 @@ export class Webhooks extends APIResource {
     return this._client.delete(path`/api/webhooks/${webhookID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { projectAccessTokenAuth: true },
     });
   }
 

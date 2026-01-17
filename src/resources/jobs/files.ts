@@ -11,7 +11,10 @@ export class Files extends APIResource {
    * Retrieve all files associated with a specific job
    */
   list(jobID: string, options?: RequestOptions): APIPromise<FileListResponse> {
-    return this._client.get(path`/api/jobs/${jobID}/files`, options);
+    return this._client.get(path`/api/jobs/${jobID}/files`, {
+      ...options,
+      __security: { projectAccessTokenAuth: true },
+    });
   }
 }
 

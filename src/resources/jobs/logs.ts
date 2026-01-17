@@ -10,7 +10,11 @@ export class Logs extends APIResource {
    * Retrieve logs for a specific job, either from the transcoder or manager service
    */
   list(jobID: string, query: LogListParams, options?: RequestOptions): APIPromise<LogListResponse> {
-    return this._client.get(path`/api/jobs/${jobID}/logs`, { query, ...options });
+    return this._client.get(path`/api/jobs/${jobID}/logs`, {
+      query,
+      ...options,
+      __security: { projectAccessTokenAuth: true },
+    });
   }
 }
 

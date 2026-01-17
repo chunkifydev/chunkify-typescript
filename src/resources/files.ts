@@ -14,7 +14,10 @@ export class Files extends APIResource {
    */
   retrieve(fileID: string, options?: RequestOptions): APIPromise<JobFile> {
     return (
-      this._client.get(path`/api/files/${fileID}`, options) as APIPromise<{ data: JobFile }>
+      this._client.get(path`/api/files/${fileID}`, {
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: JobFile }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -25,7 +28,11 @@ export class Files extends APIResource {
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<JobFilesPaginatedResults, JobFile> {
-    return this._client.getAPIList('/api/files', PaginatedResults<JobFile>, { query, ...options });
+    return this._client.getAPIList('/api/files', PaginatedResults<JobFile>, {
+      query,
+      ...options,
+      __security: { projectAccessTokenAuth: true },
+    });
   }
 
   /**
@@ -35,6 +42,7 @@ export class Files extends APIResource {
     return this._client.delete(path`/api/files/${fileID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { projectAccessTokenAuth: true },
     });
   }
 }

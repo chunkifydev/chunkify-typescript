@@ -295,8 +295,14 @@ export class Chunkify {
     );
   }
 
-  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    return buildHeaders([await this.projectAccessTokenAuth(opts), await this.teamAccessTokenAuth(opts)]);
+  protected async authHeaders(
+    opts: FinalRequestOptions,
+    schemes: { projectAccessTokenAuth?: boolean; teamAccessTokenAuth?: boolean },
+  ): Promise<NullableHeaders | undefined> {
+    return buildHeaders([
+      schemes.projectAccessTokenAuth ? await this.projectAccessTokenAuth(opts) : null,
+      schemes.teamAccessTokenAuth ? await this.teamAccessTokenAuth(opts) : null,
+    ]);
   }
 
   protected async projectAccessTokenAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
@@ -753,7 +759,10 @@ export class Chunkify {
         ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
         ...getPlatformHeaders(),
       },
-      await this.authHeaders(options),
+      await this.authHeaders(
+        options,
+        options.__security ?? { projectAccessTokenAuth: true, teamAccessTokenAuth: true },
+      ),
       this._options.defaultHeaders,
       bodyHeaders,
       options.headers,

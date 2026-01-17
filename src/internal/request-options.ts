@@ -75,6 +75,8 @@ export type RequestOptions = {
    */
   defaultBaseURL?: string | undefined;
 
+  __security?: { projectAccessTokenAuth?: boolean; teamAccessTokenAuth?: boolean };
+
   __binaryResponse?: boolean | undefined;
 };
 

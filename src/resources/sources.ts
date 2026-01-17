@@ -15,7 +15,11 @@ export class Sources extends APIResource {
    */
   create(body: SourceCreateParams, options?: RequestOptions): APIPromise<Source> {
     return (
-      this._client.post('/api/sources', { body, ...options }) as APIPromise<{ data: Source }>
+      this._client.post('/api/sources', {
+        body,
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Source }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -25,7 +29,10 @@ export class Sources extends APIResource {
    */
   retrieve(sourceID: string, options?: RequestOptions): APIPromise<Source> {
     return (
-      this._client.get(path`/api/sources/${sourceID}`, options) as APIPromise<{ data: Source }>
+      this._client.get(path`/api/sources/${sourceID}`, {
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Source }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -37,7 +44,11 @@ export class Sources extends APIResource {
     query: SourceListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<SourcesPaginatedResults, Source> {
-    return this._client.getAPIList('/api/sources', PaginatedResults<Source>, { query, ...options });
+    return this._client.getAPIList('/api/sources', PaginatedResults<Source>, {
+      query,
+      ...options,
+      __security: { projectAccessTokenAuth: true },
+    });
   }
 
   /**
@@ -47,6 +58,7 @@ export class Sources extends APIResource {
     return this._client.delete(path`/api/sources/${sourceID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { projectAccessTokenAuth: true },
     });
   }
 }

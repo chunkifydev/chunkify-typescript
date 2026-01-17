@@ -13,7 +13,11 @@ export class Tokens extends APIResource {
    */
   create(body: TokenCreateParams, options?: RequestOptions): APIPromise<Token> {
     return (
-      this._client.post('/api/tokens', { body, ...options }) as APIPromise<{ data: Token }>
+      this._client.post('/api/tokens', {
+        body,
+        ...options,
+        __security: { teamAccessTokenAuth: true },
+      }) as APIPromise<{ data: Token }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -24,7 +28,7 @@ export class Tokens extends APIResource {
    * the response for security reasons.
    */
   list(options?: RequestOptions): APIPromise<TokenListResponse> {
-    return this._client.get('/api/tokens', options);
+    return this._client.get('/api/tokens', { ...options, __security: { teamAccessTokenAuth: true } });
   }
 
   /**
@@ -35,6 +39,7 @@ export class Tokens extends APIResource {
     return this._client.delete(path`/api/tokens/${tokenID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { teamAccessTokenAuth: true },
     });
   }
 }

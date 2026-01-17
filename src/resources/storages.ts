@@ -14,7 +14,11 @@ export class Storages extends APIResource {
   create(params: StorageCreateParams, options?: RequestOptions): APIPromise<Storage> {
     const { storage } = params;
     return (
-      this._client.post('/api/storages', { body: storage, ...options }) as APIPromise<{ data: Storage }>
+      this._client.post('/api/storages', {
+        body: storage,
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Storage }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -23,7 +27,10 @@ export class Storages extends APIResource {
    */
   retrieve(storageID: string, options?: RequestOptions): APIPromise<Storage> {
     return (
-      this._client.get(path`/api/storages/${storageID}`, options) as APIPromise<{ data: Storage }>
+      this._client.get(path`/api/storages/${storageID}`, {
+        ...options,
+        __security: { projectAccessTokenAuth: true },
+      }) as APIPromise<{ data: Storage }>
     )._thenUnwrap((obj) => obj.data);
   }
 
@@ -31,7 +38,7 @@ export class Storages extends APIResource {
    * Retrieve a list of all storage configurations for the current project.
    */
   list(options?: RequestOptions): APIPromise<StorageListResponse> {
-    return this._client.get('/api/storages', options);
+    return this._client.get('/api/storages', { ...options, __security: { projectAccessTokenAuth: true } });
   }
 
   /**
@@ -42,6 +49,7 @@ export class Storages extends APIResource {
     return this._client.delete(path`/api/storages/${storageID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { projectAccessTokenAuth: true },
     });
   }
 }
