@@ -11,17 +11,23 @@ export class Transcoders extends APIResource {
    * Retrieve all the transcoders statuses for a specific job
    */
   list(jobID: string, options?: RequestOptions): APIPromise<TranscoderListResponse> {
-    return this._client.get(path`/api/jobs/${jobID}/transcoders`, options);
+    return this._client.get(path`/api/jobs/${jobID}/transcoders`, {
+      ...options,
+      __security: { projectAccessTokenAuth: true },
+    });
   }
 }
 
+/**
+ * Response containing a list of transcoders for a job
+ */
 export interface TranscoderListResponse {
   data: Array<TranscoderListResponse.Data>;
 
   /**
    * Status indicates the response status "success"
    */
-  status: string;
+  status: 'success';
 }
 
 export namespace TranscoderListResponse {
