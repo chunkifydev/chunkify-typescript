@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1 (2026-01-24)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.0...v0.8.1)
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([b825e0d](https://github.com/chunkifydev/chunkify-typescript/commit/b825e0d76aa9ee657fd16e0adfd126677de89b25))
+
 ## 0.8.0 (2026-01-17)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.7.0...v0.8.0)
