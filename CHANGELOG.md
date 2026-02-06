@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.8.2 (2026-02-06)
+
+Full Changelog: [v0.8.1...v0.8.2](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.1...v0.8.2)
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([13f434a](https://github.com/chunkifydev/chunkify-typescript/commit/13f434acc7add9b3f91a73890a10227ef55fd34d))
+* **client:** avoid removing abort listener too early ([b274e77](https://github.com/chunkifydev/chunkify-typescript/commit/b274e7782e6bf342b2af1680881e4818eee2c2ad))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([9196d5b](https://github.com/chunkifydev/chunkify-typescript/commit/9196d5b980caaba618d719302293718ec92eaace))
+* **client:** restructure abort controller binding ([628b843](https://github.com/chunkifydev/chunkify-typescript/commit/628b843f2e1947b6058db61c427121436a13bb23))
+* **internal:** fix pagination internals not accepting option promises ([8c84dad](https://github.com/chunkifydev/chunkify-typescript/commit/8c84dada44d7819e9bd8731f89c197b39431f129))
+* **internal:** upgrade pnpm ([e3b0bc9](https://github.com/chunkifydev/chunkify-typescript/commit/e3b0bc9d04e707a9f0063a61157682694e30d4fa))
+
 ## 0.8.1 (2026-01-24)
 
 Full Changelog: [v0.8.0...v0.8.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.0...v0.8.1)
