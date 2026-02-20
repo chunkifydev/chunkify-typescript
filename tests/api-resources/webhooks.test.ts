@@ -11,7 +11,7 @@ const client = new Chunkify({
 });
 
 describe('resource webhooks', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.webhooks.create({ url: 'https://example.com/webhook' });
     const rawResponse = await responsePromise.asResponse();
@@ -23,7 +23,7 @@ describe('resource webhooks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.webhooks.create({
       url: 'https://example.com/webhook',
@@ -32,7 +32,7 @@ describe('resource webhooks', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.webhooks.retrieve('webhookId');
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource webhooks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.webhooks.update('webhookId', {});
     const rawResponse = await responsePromise.asResponse();
@@ -56,7 +56,7 @@ describe('resource webhooks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.webhooks.list();
     const rawResponse = await responsePromise.asResponse();
@@ -68,7 +68,7 @@ describe('resource webhooks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.webhooks.delete('webhookId');
     const rawResponse = await responsePromise.asResponse();

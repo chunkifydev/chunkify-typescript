@@ -9,7 +9,7 @@ const client = new Chunkify({
 });
 
 describe('resource tokens', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.tokens.create({ scope: 'project' });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource tokens', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.tokens.create({
       scope: 'project',
@@ -30,7 +30,7 @@ describe('resource tokens', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.tokens.list();
     const rawResponse = await responsePromise.asResponse();
@@ -42,7 +42,7 @@ describe('resource tokens', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('revoke', async () => {
     const responsePromise = client.tokens.revoke('tokenId');
     const rawResponse = await responsePromise.asResponse();

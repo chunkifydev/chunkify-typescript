@@ -9,7 +9,7 @@ const client = new Chunkify({
 });
 
 describe('resource transcoders', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.jobs.transcoders.list('jobId');
     const rawResponse = await responsePromise.asResponse();
