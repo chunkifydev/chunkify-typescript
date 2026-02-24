@@ -60,7 +60,7 @@ $ yarn link @chunkify/chunkify
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global @chunkify/chunkify
+$ pnpm link --global @chunkify/chunkify
 ```
 
 ## Running tests
