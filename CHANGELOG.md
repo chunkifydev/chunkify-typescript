@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.8.3 (2026-02-24)
+
+Full Changelog: [v0.8.2...v0.8.3](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.2...v0.8.3)
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([0c7bfef](https://github.com/chunkifydev/chunkify-typescript/commit/0c7bfefea61ef1da3bf91ac0a165ffce3ffb183a))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([02c460b](https://github.com/chunkifydev/chunkify-typescript/commit/02c460ba850c0dfadfd25b9e915f8e774a3be155))
+* **internal:** avoid type checking errors with ts-reset ([2ed6376](https://github.com/chunkifydev/chunkify-typescript/commit/2ed63762e175e6a83153a97d3de578d0ba0429e7))
+* **internal:** remove mock server code ([65f562e](https://github.com/chunkifydev/chunkify-typescript/commit/65f562ec61c90fed513552355c973b6513a5103c))
+* **internal:** upgrade pnpm version ([3698f92](https://github.com/chunkifydev/chunkify-typescript/commit/3698f9267fbc0807e73846637aae70244c96ed4a))
+* update mock server docs ([32a8057](https://github.com/chunkifydev/chunkify-typescript/commit/32a8057658942bc9b09a7f61de81a5d506eae7d2))
+
 ## 0.8.2 (2026-02-06)
 
 Full Changelog: [v0.8.1...v0.8.2](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.1...v0.8.2)
