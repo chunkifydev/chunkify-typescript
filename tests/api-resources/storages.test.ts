@@ -9,7 +9,7 @@ const client = new Chunkify({
 });
 
 describe('resource storages', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.storages.create({
       storage: {
@@ -29,7 +29,7 @@ describe('resource storages', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.storages.create({
       storage: {
@@ -43,7 +43,7 @@ describe('resource storages', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.storages.retrieve('storageId');
     const rawResponse = await responsePromise.asResponse();
@@ -55,7 +55,7 @@ describe('resource storages', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.storages.list();
     const rawResponse = await responsePromise.asResponse();
@@ -67,7 +67,7 @@ describe('resource storages', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.storages.delete('storageId');
     const rawResponse = await responsePromise.asResponse();

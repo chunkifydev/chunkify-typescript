@@ -9,7 +9,7 @@ const client = new Chunkify({
 });
 
 describe('resource files', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.jobs.files.list('jobId');
     const rawResponse = await responsePromise.asResponse();
