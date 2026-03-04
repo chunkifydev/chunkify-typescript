@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.4 (2026-03-03)
+
+Full Changelog: [v0.8.3...v0.8.4](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.3...v0.8.4)
+
+### Chores
+
+* **internal:** move stringifyQuery implementation to internal function ([ccda4fb](https://github.com/chunkifydev/chunkify-typescript/commit/ccda4fbabbf20399d01caf6bf6c7185b7abbaf15))
+* **tests:** update webhook tests ([6f83f30](https://github.com/chunkifydev/chunkify-typescript/commit/6f83f3079f437f41f0a1e012134866c845c63ac9))
+
 ## 0.8.3 (2026-02-24)
 
 Full Changelog: [v0.8.2...v0.8.3](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.2...v0.8.3)
