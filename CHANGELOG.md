@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.8.5 (2026-03-07)
+
+Full Changelog: [v0.8.4...v0.8.5](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.4...v0.8.5)
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([ffc9738](https://github.com/chunkifydev/chunkify-typescript/commit/ffc973886ae8544e183d7e3b090f8ea53a2b25c5))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([95bedf2](https://github.com/chunkifydev/chunkify-typescript/commit/95bedf29509f1a1fa4a8a201eb63192ea4ea3ae1))
+* **internal:** codegen related update ([ed87b92](https://github.com/chunkifydev/chunkify-typescript/commit/ed87b925a93aaa73f29e0f931144772933b5dc86))
+
 ## 0.8.4 (2026-03-03)
 
 Full Changelog: [v0.8.3...v0.8.4](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.3...v0.8.4)
