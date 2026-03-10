@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.6 (2026-03-10)
+
+Full Changelog: [v0.8.5...v0.8.6](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.5...v0.8.6)
+
+### Chores
+
+* **internal:** update dependencies to address dependabot vulnerabilities ([fea3881](https://github.com/chunkifydev/chunkify-typescript/commit/fea388162bcf9de120cdff021c853d44457cfc58))
+
 ## 0.8.5 (2026-03-07)
 
 Full Changelog: [v0.8.4...v0.8.5](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.4...v0.8.5)
