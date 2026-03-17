@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.7 (2026-03-17)
+
+Full Changelog: [v0.8.6...v0.8.7](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.6...v0.8.7)
+
+### Chores
+
+* **internal:** tweak CI branches ([bf5e2de](https://github.com/chunkifydev/chunkify-typescript/commit/bf5e2decfc3ccad832722d88336d3dd102622af4))
+
 ## 0.8.6 (2026-03-10)
 
 Full Changelog: [v0.8.5...v0.8.6](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.5...v0.8.6)
