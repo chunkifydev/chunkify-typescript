@@ -9,6 +9,13 @@ import { path } from '../../internal/utils/path';
 export class Transcoders extends APIResource {
   /**
    * Retrieve all the transcoders statuses for a specific job
+   *
+   * @example
+   * ```ts
+   * const transcoders = await client.jobs.transcoders.list(
+   *   'jobId',
+   * );
+   * ```
    */
   list(jobID: string, options?: RequestOptions): APIPromise<TranscoderListResponse> {
     return this._client.get(path`/api/jobs/${jobID}/transcoders`, {

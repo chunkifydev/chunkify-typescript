@@ -15,6 +15,13 @@ export class Webhooks extends APIResource {
   /**
    * Create a new webhook for a project. The webhook will receive notifications for
    * specified events.
+   *
+   * @example
+   * ```ts
+   * const webhook = await client.webhooks.create({
+   *   url: 'https://example.com/webhook',
+   * });
+   * ```
    */
   create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<Webhook> {
     return (
@@ -29,6 +36,11 @@ export class Webhooks extends APIResource {
   /**
    * Retrieve details of a specific webhook configuration by its ID. The webhook must
    * belong to the current project.
+   *
+   * @example
+   * ```ts
+   * const webhook = await client.webhooks.retrieve('webhookId');
+   * ```
    */
   retrieve(webhookID: string, options?: RequestOptions): APIPromise<Webhook> {
     return (
@@ -42,6 +54,11 @@ export class Webhooks extends APIResource {
   /**
    * Update the enabled status of a webhook. The webhook must belong to the current
    * project.
+   *
+   * @example
+   * ```ts
+   * await client.webhooks.update('webhookId');
+   * ```
    */
   update(webhookID: string, body: WebhookUpdateParams, options?: RequestOptions): APIPromise<void> {
     return this._client.patch(path`/api/webhooks/${webhookID}`, {
@@ -55,6 +72,11 @@ export class Webhooks extends APIResource {
   /**
    * Retrieve a list of all webhooks configured for the current project. Each webhook
    * includes its URL, enabled status, and subscribed events.
+   *
+   * @example
+   * ```ts
+   * const webhooks = await client.webhooks.list();
+   * ```
    */
   list(options?: RequestOptions): APIPromise<WebhookListResponse> {
     return this._client.get('/api/webhooks', { ...options, __security: { projectAccessTokenAuth: true } });
@@ -63,6 +85,11 @@ export class Webhooks extends APIResource {
   /**
    * Permanently delete a webhook configuration. The webhook must belong to the
    * current project. This action cannot be undone.
+   *
+   * @example
+   * ```ts
+   * await client.webhooks.delete('webhookId');
+   * ```
    */
   delete(webhookID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/webhooks/${webhookID}`, {

@@ -9,6 +9,11 @@ import { path } from '../../internal/utils/path';
 export class Files extends APIResource {
   /**
    * Retrieve all files associated with a specific job
+   *
+   * @example
+   * ```ts
+   * const files = await client.jobs.files.list('jobId');
+   * ```
    */
   list(jobID: string, options?: RequestOptions): APIPromise<FileListResponse> {
     return this._client.get(path`/api/jobs/${jobID}/files`, {

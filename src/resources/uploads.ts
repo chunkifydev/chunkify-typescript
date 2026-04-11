@@ -11,6 +11,11 @@ import { path } from '../internal/utils/path';
 export class Uploads extends APIResource {
   /**
    * Create a new upload with the specified name.
+   *
+   * @example
+   * ```ts
+   * const upload = await client.uploads.create();
+   * ```
    */
   create(body: UploadCreateParams, options?: RequestOptions): APIPromise<Upload> {
     return (
@@ -25,6 +30,11 @@ export class Uploads extends APIResource {
   /**
    * Retrieve details of a specific upload by its ID, including metadata, status, and
    * associated source.
+   *
+   * @example
+   * ```ts
+   * const upload = await client.uploads.retrieve('uploadId');
+   * ```
    */
   retrieve(uploadID: string, options?: RequestOptions): APIPromise<Upload> {
     return (
@@ -37,6 +47,14 @@ export class Uploads extends APIResource {
 
   /**
    * Retrieve a list of all uploads with optional filtering and pagination.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const upload of client.uploads.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: UploadListParams | null | undefined = {},
@@ -51,6 +69,11 @@ export class Uploads extends APIResource {
 
   /**
    * Delete an upload.
+   *
+   * @example
+   * ```ts
+   * await client.uploads.delete('uploadId');
+   * ```
    */
   delete(uploadID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/uploads/${uploadID}`, {

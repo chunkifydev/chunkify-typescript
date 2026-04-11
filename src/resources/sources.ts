@@ -12,6 +12,13 @@ export class Sources extends APIResource {
    * Create a new source from a media URL. The source will be analyzed to extract
    * metadata and generate a thumbnail. The source will be automatically deleted
    * after the data retention period.
+   *
+   * @example
+   * ```ts
+   * const source = await client.sources.create({
+   *   url: 'https://example.com/video.mp4',
+   * });
+   * ```
    */
   create(body: SourceCreateParams, options?: RequestOptions): APIPromise<Source> {
     return (
@@ -26,6 +33,11 @@ export class Sources extends APIResource {
   /**
    * Retrieve details of a specific source by its ID, including metadata, media
    * properties, and associated jobs.
+   *
+   * @example
+   * ```ts
+   * const source = await client.sources.retrieve('sourceId');
+   * ```
    */
   retrieve(sourceID: string, options?: RequestOptions): APIPromise<Source> {
     return (
@@ -39,6 +51,14 @@ export class Sources extends APIResource {
   /**
    * Retrieve a list of all sources with optional filtering and pagination. Supports
    * filtering by various media properties like duration, dimensions, codecs, etc.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const source of client.sources.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: SourceListParams | null | undefined = {},
@@ -53,6 +73,11 @@ export class Sources extends APIResource {
 
   /**
    * Delete a source. It will fail if there are processing jobs using this source.
+   *
+   * @example
+   * ```ts
+   * await client.sources.delete('sourceId');
+   * ```
    */
   delete(sourceID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/sources/${sourceID}`, {
