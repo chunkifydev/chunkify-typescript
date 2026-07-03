@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.9.0 (2026-07-03)
+
+Full Changelog: [v0.8.6...v0.9.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.6...v0.9.0)
+
+### Features
+
+* support setting headers via env ([1747e98](https://github.com/chunkifydev/chunkify-typescript/commit/1747e9873f5b3efff601e01f344e8b88cb34e27c))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([755d984](https://github.com/chunkifydev/chunkify-typescript/commit/755d984cf7518a4182556e2af391a832f92a748d))
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([518831b](https://github.com/chunkifydev/chunkify-typescript/commit/518831bc675d298475b378e1f68970ee3706407b))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([12371e9](https://github.com/chunkifydev/chunkify-typescript/commit/12371e97e9fea4f500d86f07014b94111a96bae3))
+* **format:** run eslint and prettier separately ([8ea173a](https://github.com/chunkifydev/chunkify-typescript/commit/8ea173a8c16c762d55b308f4fc7a224c3eb27fae))
+* **internal:** codegen related update ([64e155b](https://github.com/chunkifydev/chunkify-typescript/commit/64e155b7a1654e6d7903fef724b281249f827421))
+* **internal:** codegen related update ([43ea252](https://github.com/chunkifydev/chunkify-typescript/commit/43ea252784c65fc1f99229404735653838434abf))
+* **internal:** more robust bootstrap script ([3f324af](https://github.com/chunkifydev/chunkify-typescript/commit/3f324af5c89f151be67ae51d3e9582fba15296e9))
+* **internal:** tweak CI branches ([bf5e2de](https://github.com/chunkifydev/chunkify-typescript/commit/bf5e2decfc3ccad832722d88336d3dd102622af4))
+* **internal:** update gitignore ([56a483b](https://github.com/chunkifydev/chunkify-typescript/commit/56a483bebe35cee5924c5f3e970d4188f3ca31ef))
+* redact api-key headers in debug logs ([cdceb9b](https://github.com/chunkifydev/chunkify-typescript/commit/cdceb9bbd477ad3e8691fc06ecc0e36056cccd39))
+* **tests:** remove redundant File import ([4e8b3ca](https://github.com/chunkifydev/chunkify-typescript/commit/4e8b3ca0d59a46bfb8546ee43260e8eca69caa97))
+
+
+### Documentation
+
+* update examples ([13b133a](https://github.com/chunkifydev/chunkify-typescript/commit/13b133ab780483299c7bc9272755595dea699483))
+
 ## 0.8.6 (2026-03-10)
 
 Full Changelog: [v0.8.5...v0.8.6](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.5...v0.8.6)
