@@ -22,6 +22,14 @@ export class Jobs extends APIResource {
 
   /**
    * Create a new video processing job with specified parameters
+   *
+   * @example
+   * ```ts
+   * const job = await client.jobs.create({
+   *   format: { id: 'mp4_av1' },
+   *   source_id: 'src_UioP9I876hjKlNBH78ILp0mo56t',
+   * });
+   * ```
    */
   create(body: JobCreateParams, options?: RequestOptions): APIPromise<Job> {
     return (
@@ -35,6 +43,11 @@ export class Jobs extends APIResource {
 
   /**
    * Retrieve details of a specific job
+   *
+   * @example
+   * ```ts
+   * const job = await client.jobs.retrieve('jobId');
+   * ```
    */
   retrieve(jobID: string, options?: RequestOptions): APIPromise<Job> {
     return (
@@ -47,6 +60,14 @@ export class Jobs extends APIResource {
 
   /**
    * Retrieve a list of jobs with optional filtering and pagination
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const job of client.jobs.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: JobListParams | null | undefined = {},
@@ -61,6 +82,11 @@ export class Jobs extends APIResource {
 
   /**
    * Delete a job.
+   *
+   * @example
+   * ```ts
+   * await client.jobs.delete('jobId');
+   * ```
    */
   delete(jobID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/jobs/${jobID}`, {
@@ -72,6 +98,11 @@ export class Jobs extends APIResource {
 
   /**
    * Cancel a job.
+   *
+   * @example
+   * ```ts
+   * await client.jobs.cancel('jobId');
+   * ```
    */
   cancel(jobID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.post(path`/api/jobs/${jobID}/cancel`, {

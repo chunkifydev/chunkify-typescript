@@ -10,6 +10,13 @@ export class Tokens extends APIResource {
   /**
    * Create a new access token for either account-wide or project-specific access.
    * Project tokens require a valid project slug.
+   *
+   * @example
+   * ```ts
+   * const token = await client.tokens.create({
+   *   scope: 'project',
+   * });
+   * ```
    */
   create(body: TokenCreateParams, options?: RequestOptions): APIPromise<Token> {
     return (
@@ -26,6 +33,11 @@ export class Tokens extends APIResource {
    * and project-scoped tokens. For each token, the response includes its name,
    * scope, creation date, and usage statistics. The token values are not included in
    * the response for security reasons.
+   *
+   * @example
+   * ```ts
+   * const tokens = await client.tokens.list();
+   * ```
    */
   list(options?: RequestOptions): APIPromise<TokenListResponse> {
     return this._client.get('/api/tokens', { ...options, __security: { teamAccessTokenAuth: true } });
@@ -34,6 +46,11 @@ export class Tokens extends APIResource {
   /**
    * Revoke an access token by its ID. This action is irreversible and will
    * immediately invalidate the token.
+   *
+   * @example
+   * ```ts
+   * await client.tokens.revoke('tokenId');
+   * ```
    */
   revoke(tokenID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/tokens/${tokenID}`, {

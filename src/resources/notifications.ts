@@ -11,6 +11,15 @@ import { path } from '../internal/utils/path';
 export class Notifications extends APIResource {
   /**
    * Create a new notification for a job event
+   *
+   * @example
+   * ```ts
+   * const notification = await client.notifications.create({
+   *   event: 'job.completed',
+   *   object_id: 'job_A1cce6120E56e7Tu9ioP09Nhjk9',
+   *   webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
+   * });
+   * ```
    */
   create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<Notification> {
     return (
@@ -24,6 +33,13 @@ export class Notifications extends APIResource {
 
   /**
    * Retrieve details of a specific notification
+   *
+   * @example
+   * ```ts
+   * const notification = await client.notifications.retrieve(
+   *   'notificationId',
+   * );
+   * ```
    */
   retrieve(notificationID: string, options?: RequestOptions): APIPromise<Notification> {
     return (
@@ -36,6 +52,14 @@ export class Notifications extends APIResource {
 
   /**
    * Retrieve a list of notifications with optional filtering and pagination
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const notification of client.notifications.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: NotificationListParams | null | undefined = {},
@@ -50,6 +74,11 @@ export class Notifications extends APIResource {
 
   /**
    * Delete a notification.
+   *
+   * @example
+   * ```ts
+   * await client.notifications.delete('notificationId');
+   * ```
    */
   delete(notificationID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/notifications/${notificationID}`, {

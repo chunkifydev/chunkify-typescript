@@ -8,6 +8,13 @@ import { path } from '../../internal/utils/path';
 export class Logs extends APIResource {
   /**
    * Retrieve logs for a specific job, either from the transcoder or manager service
+   *
+   * @example
+   * ```ts
+   * const logs = await client.jobs.logs.list('jobId', {
+   *   service: 'transcoder',
+   * });
+   * ```
    */
   list(jobID: string, query: LogListParams, options?: RequestOptions): APIPromise<LogListResponse> {
     return this._client.get(path`/api/jobs/${jobID}/logs`, {

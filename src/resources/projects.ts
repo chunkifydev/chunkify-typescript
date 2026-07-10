@@ -10,6 +10,13 @@ export class Projects extends APIResource {
   /**
    * Create a new project with the specified name. The project will be created with
    * default Chunkify storage settings.
+   *
+   * @example
+   * ```ts
+   * const project = await client.projects.create({
+   *   name: 'My Project',
+   * });
+   * ```
    */
   create(body: ProjectCreateParams, options?: RequestOptions): APIPromise<Project> {
     return (
@@ -23,6 +30,11 @@ export class Projects extends APIResource {
 
   /**
    * Retrieve details of a specific project by its slug
+   *
+   * @example
+   * ```ts
+   * const project = await client.projects.retrieve('projectId');
+   * ```
    */
   retrieve(projectID: string, options?: RequestOptions): APIPromise<Project> {
     return (
@@ -36,6 +48,11 @@ export class Projects extends APIResource {
   /**
    * Update a project's name or storage settings. Only team owners can update
    * projects.
+   *
+   * @example
+   * ```ts
+   * await client.projects.update('projectId');
+   * ```
    */
   update(projectID: string, body: ProjectUpdateParams, options?: RequestOptions): APIPromise<void> {
     return this._client.patch(path`/api/projects/${projectID}`, {
@@ -48,6 +65,11 @@ export class Projects extends APIResource {
 
   /**
    * Retrieve a list of all projects for a team
+   *
+   * @example
+   * ```ts
+   * const projects = await client.projects.list();
+   * ```
    */
   list(options?: RequestOptions): APIPromise<ProjectListResponse> {
     return this._client.get('/api/projects', { ...options, __security: { teamAccessTokenAuth: true } });
@@ -56,6 +78,11 @@ export class Projects extends APIResource {
   /**
    * Delete a project and revoke all associated access tokens. Only team owners can
    * delete projects.
+   *
+   * @example
+   * ```ts
+   * await client.projects.delete('projectId');
+   * ```
    */
   delete(projectID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/projects/${projectID}`, {

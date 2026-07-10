@@ -1,7 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from '@chunkify/chunkify/internal/to-file';
 import { toFile } from '@chunkify/chunkify/core/uploads';
-import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';
