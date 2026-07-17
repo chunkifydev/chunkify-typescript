@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.1 (2026-07-11)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.9.0...v0.9.1)
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([82b00b0](https://github.com/chunkifydev/chunkify-typescript/commit/82b00b01d3c0e0eebe976f715538433fedb70225))
+
 ## 0.9.0 (2026-07-03)
 
 Full Changelog: [v0.8.6...v0.9.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.6...v0.9.0)
