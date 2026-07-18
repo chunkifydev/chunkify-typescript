@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.0 (2026-07-18)
+
+Full Changelog: [v0.9.1...v0.10.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.9.1...v0.10.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([e1af499](https://github.com/chunkifydev/chunkify-typescript/commit/e1af4995e2ab56b973d991946d17d7c6ba129f99))
+
 ## 0.9.1 (2026-07-11)
 
 Full Changelog: [v0.9.0...v0.9.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.9.0...v0.9.1)
