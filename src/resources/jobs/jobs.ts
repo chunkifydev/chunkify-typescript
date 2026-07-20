@@ -729,7 +729,14 @@ export interface Job {
    * A template defines the transcoding parameters and settings for a job
    */
   format:
-    Job.MP4Av1 | Job.MP4H264 | Job.MP4H265 | Job.WebmVp9 | Job.HlsAv1 | Job.HlsH264 | Job.HlsH265 | Job.Jpg;
+    | Job.MP4Av1
+    | Job.MP4H264
+    | Job.MP4H265
+    | Job.WebmVp9
+    | Job.HlsAv1
+    | Job.HlsH264
+    | Job.HlsH265
+    | Job.Jpg;
 
   /**
    * Progress percentage of the job (0-100)
