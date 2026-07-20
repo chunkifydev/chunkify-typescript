@@ -1,0 +1,288 @@
+# Changelog
+
+## 0.10.0 (2026-07-18)
+
+Full Changelog: [v0.9.1...v0.10.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.9.1...v0.10.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([e1af499](https://github.com/chunkifydev/chunkify-typescript/commit/e1af4995e2ab56b973d991946d17d7c6ba129f99))
+
+## 0.9.1 (2026-07-11)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.9.0...v0.9.1)
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([82b00b0](https://github.com/chunkifydev/chunkify-typescript/commit/82b00b01d3c0e0eebe976f715538433fedb70225))
+
+## 0.9.0 (2026-07-03)
+
+Full Changelog: [v0.8.6...v0.9.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.6...v0.9.0)
+
+### Features
+
+* support setting headers via env ([1747e98](https://github.com/chunkifydev/chunkify-typescript/commit/1747e9873f5b3efff601e01f344e8b88cb34e27c))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([755d984](https://github.com/chunkifydev/chunkify-typescript/commit/755d984cf7518a4182556e2af391a832f92a748d))
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([518831b](https://github.com/chunkifydev/chunkify-typescript/commit/518831bc675d298475b378e1f68970ee3706407b))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([12371e9](https://github.com/chunkifydev/chunkify-typescript/commit/12371e97e9fea4f500d86f07014b94111a96bae3))
+* **format:** run eslint and prettier separately ([8ea173a](https://github.com/chunkifydev/chunkify-typescript/commit/8ea173a8c16c762d55b308f4fc7a224c3eb27fae))
+* **internal:** codegen related update ([64e155b](https://github.com/chunkifydev/chunkify-typescript/commit/64e155b7a1654e6d7903fef724b281249f827421))
+* **internal:** codegen related update ([43ea252](https://github.com/chunkifydev/chunkify-typescript/commit/43ea252784c65fc1f99229404735653838434abf))
+* **internal:** more robust bootstrap script ([3f324af](https://github.com/chunkifydev/chunkify-typescript/commit/3f324af5c89f151be67ae51d3e9582fba15296e9))
+* **internal:** tweak CI branches ([bf5e2de](https://github.com/chunkifydev/chunkify-typescript/commit/bf5e2decfc3ccad832722d88336d3dd102622af4))
+* **internal:** update gitignore ([56a483b](https://github.com/chunkifydev/chunkify-typescript/commit/56a483bebe35cee5924c5f3e970d4188f3ca31ef))
+* redact api-key headers in debug logs ([cdceb9b](https://github.com/chunkifydev/chunkify-typescript/commit/cdceb9bbd477ad3e8691fc06ecc0e36056cccd39))
+* **tests:** remove redundant File import ([4e8b3ca](https://github.com/chunkifydev/chunkify-typescript/commit/4e8b3ca0d59a46bfb8546ee43260e8eca69caa97))
+
+
+### Documentation
+
+* update examples ([13b133a](https://github.com/chunkifydev/chunkify-typescript/commit/13b133ab780483299c7bc9272755595dea699483))
+
+## 0.8.6 (2026-03-10)
+
+Full Changelog: [v0.8.5...v0.8.6](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.5...v0.8.6)
+
+### Chores
+
+* **internal:** update dependencies to address dependabot vulnerabilities ([fea3881](https://github.com/chunkifydev/chunkify-typescript/commit/fea388162bcf9de120cdff021c853d44457cfc58))
+
+## 0.8.5 (2026-03-07)
+
+Full Changelog: [v0.8.4...v0.8.5](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.4...v0.8.5)
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([ffc9738](https://github.com/chunkifydev/chunkify-typescript/commit/ffc973886ae8544e183d7e3b090f8ea53a2b25c5))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([95bedf2](https://github.com/chunkifydev/chunkify-typescript/commit/95bedf29509f1a1fa4a8a201eb63192ea4ea3ae1))
+* **internal:** codegen related update ([ed87b92](https://github.com/chunkifydev/chunkify-typescript/commit/ed87b925a93aaa73f29e0f931144772933b5dc86))
+
+## 0.8.4 (2026-03-03)
+
+Full Changelog: [v0.8.3...v0.8.4](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.3...v0.8.4)
+
+### Chores
+
+* **internal:** move stringifyQuery implementation to internal function ([ccda4fb](https://github.com/chunkifydev/chunkify-typescript/commit/ccda4fbabbf20399d01caf6bf6c7185b7abbaf15))
+* **tests:** update webhook tests ([6f83f30](https://github.com/chunkifydev/chunkify-typescript/commit/6f83f3079f437f41f0a1e012134866c845c63ac9))
+
+## 0.8.3 (2026-02-24)
+
+Full Changelog: [v0.8.2...v0.8.3](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.2...v0.8.3)
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([0c7bfef](https://github.com/chunkifydev/chunkify-typescript/commit/0c7bfefea61ef1da3bf91ac0a165ffce3ffb183a))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([02c460b](https://github.com/chunkifydev/chunkify-typescript/commit/02c460ba850c0dfadfd25b9e915f8e774a3be155))
+* **internal:** avoid type checking errors with ts-reset ([2ed6376](https://github.com/chunkifydev/chunkify-typescript/commit/2ed63762e175e6a83153a97d3de578d0ba0429e7))
+* **internal:** remove mock server code ([65f562e](https://github.com/chunkifydev/chunkify-typescript/commit/65f562ec61c90fed513552355c973b6513a5103c))
+* **internal:** upgrade pnpm version ([3698f92](https://github.com/chunkifydev/chunkify-typescript/commit/3698f9267fbc0807e73846637aae70244c96ed4a))
+* update mock server docs ([32a8057](https://github.com/chunkifydev/chunkify-typescript/commit/32a8057658942bc9b09a7f61de81a5d506eae7d2))
+
+## 0.8.2 (2026-02-06)
+
+Full Changelog: [v0.8.1...v0.8.2](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.1...v0.8.2)
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([13f434a](https://github.com/chunkifydev/chunkify-typescript/commit/13f434acc7add9b3f91a73890a10227ef55fd34d))
+* **client:** avoid removing abort listener too early ([b274e77](https://github.com/chunkifydev/chunkify-typescript/commit/b274e7782e6bf342b2af1680881e4818eee2c2ad))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([9196d5b](https://github.com/chunkifydev/chunkify-typescript/commit/9196d5b980caaba618d719302293718ec92eaace))
+* **client:** restructure abort controller binding ([628b843](https://github.com/chunkifydev/chunkify-typescript/commit/628b843f2e1947b6058db61c427121436a13bb23))
+* **internal:** fix pagination internals not accepting option promises ([8c84dad](https://github.com/chunkifydev/chunkify-typescript/commit/8c84dada44d7819e9bd8731f89c197b39431f129))
+* **internal:** upgrade pnpm ([e3b0bc9](https://github.com/chunkifydev/chunkify-typescript/commit/e3b0bc9d04e707a9f0063a61157682694e30d4fa))
+
+## 0.8.1 (2026-01-24)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.8.0...v0.8.1)
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([b825e0d](https://github.com/chunkifydev/chunkify-typescript/commit/b825e0d76aa9ee657fd16e0adfd126677de89b25))
+
+## 0.8.0 (2026-01-17)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** api update ([9cb2678](https://github.com/chunkifydev/chunkify-typescript/commit/9cb2678237a55b370c6b11dde94633dcd6d1ff71))
+
+
+### Chores
+
+* **internal:** codegen related update ([41a84aa](https://github.com/chunkifydev/chunkify-typescript/commit/41a84aa621614b2b11a26de5f1a60921cf5b1d17))
+* **internal:** update `actions/checkout` version ([2e9a5d0](https://github.com/chunkifydev/chunkify-typescript/commit/2e9a5d0c9eb5d0d87cbab1ff155b608899611491))
+* **internal:** update lock file ([95274b5](https://github.com/chunkifydev/chunkify-typescript/commit/95274b5c2a345411277e763013d36aa43bd5e6c3))
+* **internal:** upgrade babel, qs, js-yaml ([1d289e5](https://github.com/chunkifydev/chunkify-typescript/commit/1d289e537a14a005e175feb2bcb4f7af34d1078a))
+* **internal:** upgrade brace-expansion and @babel/helpers ([32e263f](https://github.com/chunkifydev/chunkify-typescript/commit/32e263feb916a20c6b3c7276a1ec08a1e6ad5ff4))
+
+## 0.7.0 (2026-01-15)
+
+Full Changelog: [v0.6.3...v0.7.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.3...v0.7.0)
+
+### Features
+
+* **config:** added per endpoint security settings ([db4e61f](https://github.com/chunkifydev/chunkify-typescript/commit/db4e61f923cb41edc49a5f3e0d4b3587f8341d98))
+
+## 0.6.3 (2026-01-14)
+
+Full Changelog: [v0.6.2...v0.6.3](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.2...v0.6.3)
+
+### Chores
+
+* **sdk/config:** change model api_file to job-file ([a790fec](https://github.com/chunkifydev/chunkify-typescript/commit/a790fec70cc0cc0de23104c1c1017cd35df01c4b))
+
+## 0.6.2 (2026-01-09)
+
+Full Changelog: [v0.6.1...v0.6.2](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.1...v0.6.2)
+
+### Chores
+
+* break long lines in snippets into multiline ([4e577cf](https://github.com/chunkifydev/chunkify-typescript/commit/4e577cfe230072bed48fe135a8780869df4af79b))
+
+## 0.6.1 (2026-01-06)
+
+Full Changelog: [v0.6.0...v0.6.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.6.0...v0.6.1)
+
+### Chores
+
+* **internal:** codegen related update ([8441273](https://github.com/chunkifydev/chunkify-typescript/commit/844127300d42dae3f26f817037bfa3f1adabefa7))
+
+## 0.6.0 (2025-12-18)
+
+Full Changelog: [v0.5.1...v0.6.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.5.1...v0.6.0)
+
+### Features
+
+* **api:** manual updates ([6c8dff9](https://github.com/chunkifydev/chunkify-typescript/commit/6c8dff9d53c30a0a5fd4dc36219d97e378f1bf79))
+
+## 0.5.1 (2025-12-09)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.5.0...v0.5.1)
+
+### Chores
+
+* **internal:** escape package name in pnpm workspace file ([f84e89e](https://github.com/chunkifydev/chunkify-typescript/commit/f84e89ef2e9dd3c00c0251aa0b91735c1c284d92))
+
+## 0.5.0 (2025-12-05)
+
+Full Changelog: [v0.3.1...v0.5.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.3.1...v0.5.0)
+
+### Chores
+
+* update SDK settings ([842774f](https://github.com/chunkifydev/chunkify-typescript/commit/842774f2fe374674611acd5d035a236e164b38c9))
+
+## 0.3.1 (2025-12-03)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.3.0...v0.3.1)
+
+### Chores
+
+* **internal:** upgrade eslint ([11bb37c](https://github.com/chunkifydev/chunkify-typescript/commit/11bb37cba56b2e0a442bb973d601c00014019a4e))
+
+## 0.3.0 (2025-12-02)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** manual updates ([6c4c91f](https://github.com/chunkifydev/chunkify-typescript/commit/6c4c91f17c59a0b971c654ed4d84bc768127c9e9))
+* **api:** manual updates ([c86cada](https://github.com/chunkifydev/chunkify-typescript/commit/c86cada0c370c565015cfe56c6179c1551bbfb73))
+
+
+### Chores
+
+* **client:** fix logger property type ([af86757](https://github.com/chunkifydev/chunkify-typescript/commit/af8675770471f50b4844ffff5645fee4a6ae5268))
+
+## 0.2.0 (2025-11-27)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.1.0...v0.2.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** update all created.* query string to epoch unix time format
+
+### Features
+
+* **api:** update all created.* query string to epoch unix time format ([d39effe](https://github.com/chunkifydev/chunkify-typescript/commit/d39effece52e916f6525472475edcf458b4b30bf))
+
+## 0.1.0 (2025-11-26)
+
+Full Changelog: [v0.0.1...v0.1.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.0.1...v0.1.0)
+
+### Features
+
+* **api:** manual updates ([fabe55f](https://github.com/chunkifydev/chunkify-typescript/commit/fabe55ff6ebc3f013ce699095455ee73f9e417d3))
+* **api:** manual updates ([e9c94f4](https://github.com/chunkifydev/chunkify-typescript/commit/e9c94f4460d5067cfc066f452e44d6db69c6e295))
+* **api:** manual updates ([69cb4ea](https://github.com/chunkifydev/chunkify-typescript/commit/69cb4eaa11073aa25aa0eb38f27fdaadc37d240e))
+* **api:** manual updates ([24c1032](https://github.com/chunkifydev/chunkify-typescript/commit/24c103266c8fa3cd1bfd479076ffeb878f889fd9))
+* **api:** manual updates ([a855ebe](https://github.com/chunkifydev/chunkify-typescript/commit/a855ebe03aa838883480d0071400160665299e74))
+* **api:** manual updates ([1739a1a](https://github.com/chunkifydev/chunkify-typescript/commit/1739a1a62333a58784424fb25fe916d6cf8562c8))
+* **api:** manual updates ([bece33d](https://github.com/chunkifydev/chunkify-typescript/commit/bece33d55d416f72ed8c8fb9fc099798cdf07d4b))
+* **api:** manual updates ([9074ae1](https://github.com/chunkifydev/chunkify-typescript/commit/9074ae1ab0dd3d2616b216073a024f946c7db3da))
+* **api:** manual updates ([6516d33](https://github.com/chunkifydev/chunkify-typescript/commit/6516d33ace06cd5b248ede6f5fa9deecec9ac358))
+* **api:** manual updates ([46d05b7](https://github.com/chunkifydev/chunkify-typescript/commit/46d05b79a11296d556589e70ce0f75128f2c4682))
+* **api:** manual updates ([c32ead3](https://github.com/chunkifydev/chunkify-typescript/commit/c32ead371ba95ada25bf6576a8027752810811d8))
+* **api:** manual updates ([d70cd80](https://github.com/chunkifydev/chunkify-typescript/commit/d70cd80f7307d768aaea07321792807f6285273f))
+* **api:** manual updates ([2490ac4](https://github.com/chunkifydev/chunkify-typescript/commit/2490ac477e8ae8a3d5b077a2fc52f4cfe1810a81))
+* **api:** manual updates ([37af9d9](https://github.com/chunkifydev/chunkify-typescript/commit/37af9d91c0574859e969b9f28648df06c863d4a4))
+* **api:** manual updates ([d5841a4](https://github.com/chunkifydev/chunkify-typescript/commit/d5841a4287dafb6b4896057dc283809e24197102))
+* **api:** manual updates ([36ce0ad](https://github.com/chunkifydev/chunkify-typescript/commit/36ce0ad1452eaf40748676dfa3cfd3d3599d8d03))
+* **api:** manual updates ([44bc4eb](https://github.com/chunkifydev/chunkify-typescript/commit/44bc4eb90d10e734e1f4a57d5b74222603362932))
+* **api:** manual updates ([5512e00](https://github.com/chunkifydev/chunkify-typescript/commit/5512e00a9702c88d3bf3c5e9d4693137d8692461))
+* **api:** manual updates ([acf959e](https://github.com/chunkifydev/chunkify-typescript/commit/acf959e3f7ae2a27a6df685a5af1c645971b7a07))
+* **api:** manual updates ([f9666d0](https://github.com/chunkifydev/chunkify-typescript/commit/f9666d028fdd20309214d4127b390312b7154f50))
+* **api:** manual updates ([4b2caac](https://github.com/chunkifydev/chunkify-typescript/commit/4b2caac1b04fd00ce8350320a8faa2f28aab617c))
+* **api:** manual updates ([16b9cfc](https://github.com/chunkifydev/chunkify-typescript/commit/16b9cfc7ada7d7e6a635f8ded3c171baa649d153))
+* **api:** manual updates ([954f780](https://github.com/chunkifydev/chunkify-typescript/commit/954f7809fecd11ce1b6eeb903a1bc3ac5ea33e0c))
+* **api:** manual updates ([b1bae8c](https://github.com/chunkifydev/chunkify-typescript/commit/b1bae8c0316502d68e329e83e7a8cabe2d66582f))
+* **api:** manual updates ([236ff06](https://github.com/chunkifydev/chunkify-typescript/commit/236ff06b99928de4ddc6cb73a5fbe488eabf50f1))
+* **api:** manual updates ([46c9e10](https://github.com/chunkifydev/chunkify-typescript/commit/46c9e10ead9e7cb8be809a931339798f3fc3337f))
+* **api:** manual updates ([107dba0](https://github.com/chunkifydev/chunkify-typescript/commit/107dba08e1543641667d40736f54e2fdd952906a))
+* **api:** manual updates ([1904aaa](https://github.com/chunkifydev/chunkify-typescript/commit/1904aaac48f9c26c74bc1a6fd11075e43e8829ee))
+* **api:** manual updates ([85e29e7](https://github.com/chunkifydev/chunkify-typescript/commit/85e29e7b5308309cffd9d4131251a60314f7bc50))
+* **api:** manual updates ([4eec633](https://github.com/chunkifydev/chunkify-typescript/commit/4eec633a65c3b56f85d9a84451e22631c05f444a))
+* **api:** manual updates ([749d067](https://github.com/chunkifydev/chunkify-typescript/commit/749d067844ebac7eccb3bc58c98ef46a22832fda))
+* **api:** manual updates ([1bdd999](https://github.com/chunkifydev/chunkify-typescript/commit/1bdd99964aa0b51c161e77caebaf0183f210bf8c))
+* **api:** manual updates ([f121b26](https://github.com/chunkifydev/chunkify-typescript/commit/f121b261acffb0cb0a6a582196dd1596f7b4863a))
+* **api:** manual updates ([cb08163](https://github.com/chunkifydev/chunkify-typescript/commit/cb08163cce79a96bc3dc5dcccd96f05b6ec1cdd9))
+* **api:** manual updates ([271af68](https://github.com/chunkifydev/chunkify-typescript/commit/271af68886f23951d5eb9cfc633fc7771fc2b211))
+* **api:** manual updates ([e7b43ec](https://github.com/chunkifydev/chunkify-typescript/commit/e7b43ec2ac72fe0d5c351202829f2aa3077f62a2))
+* **api:** manual updates ([508b76c](https://github.com/chunkifydev/chunkify-typescript/commit/508b76cdb7176c2945152922fbeeddf723df1e1e))
+* **api:** manual updates ([62e820f](https://github.com/chunkifydev/chunkify-typescript/commit/62e820f88cac0775c415b7c366bd1ec84dfac375))
+* **api:** manual updates ([31fdda2](https://github.com/chunkifydev/chunkify-typescript/commit/31fdda2913a38601735fb451ff23d5a47db013dc))
+* **api:** manual updates ([87dab8e](https://github.com/chunkifydev/chunkify-typescript/commit/87dab8e18a13878fa2e39e26a7c2c02d9719c66e))
+* **api:** manual updates ([859d5d8](https://github.com/chunkifydev/chunkify-typescript/commit/859d5d8dca26d782ce33ad66871f2ec0a579fda9))
+* **api:** manual updates ([8fef647](https://github.com/chunkifydev/chunkify-typescript/commit/8fef6478e7f179811003259b52bb96423786a841))
+* **api:** manual updates ([168b93a](https://github.com/chunkifydev/chunkify-typescript/commit/168b93a74a4fd06c3699c33f6a55dfa7b0d4301e))
+* **api:** manual updates ([0cbd849](https://github.com/chunkifydev/chunkify-typescript/commit/0cbd849145f501beb8fb41e8d83a73bc26cf6311))
+* **api:** manual updates ([a97d7d0](https://github.com/chunkifydev/chunkify-typescript/commit/a97d7d0c5a729118e077fc1d1b4cd06678cd3619))
+* **api:** manual updates ([48df03f](https://github.com/chunkifydev/chunkify-typescript/commit/48df03f1c204882bef47a00d6f78a059ac71556e))
+
+
+### Chores
+
+* configure new SDK language ([fd3be7c](https://github.com/chunkifydev/chunkify-typescript/commit/fd3be7c03d909cd392d1efff9f7b7075294857f4))
+* update SDK settings ([ff95fc2](https://github.com/chunkifydev/chunkify-typescript/commit/ff95fc2af33a10bb7af3362759bee837d6440dc0))
