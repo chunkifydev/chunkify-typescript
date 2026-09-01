@@ -43,6 +43,7 @@ describe('resource jobs', () => {
         maxrate: 100000,
         minrate: 100000,
         movflags: 'movflags',
+        per_title: true,
         pixfmt: 'yuv410p',
         preset: '10',
         profilev: 'main10',
