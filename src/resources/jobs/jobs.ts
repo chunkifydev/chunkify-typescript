@@ -235,6 +235,14 @@ export interface HlsAv1 {
   movflags?: string;
 
   /**
+   * Enables per-title optimization. Disabled by default. Set it to true to let
+   * Chunkify select rate control automatically. When enabled, explicit rate-control
+   * fields cannot be provided. For HLS outputs, either audio_bitrate or
+   * video_bitrate is required when per-title optimization is disabled or omitted.
+   */
+  per_title?: boolean;
+
+  /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
   pixfmt?:
@@ -426,6 +434,14 @@ export interface HlsH264 {
   minrate?: number;
 
   movflags?: string;
+
+  /**
+   * Enables per-title optimization. Disabled by default. Set it to true to let
+   * Chunkify select rate control automatically. When enabled, explicit rate-control
+   * fields cannot be provided. For HLS outputs, either audio_bitrate or
+   * video_bitrate is required when per-title optimization is disabled or omitted.
+   */
+  per_title?: boolean;
 
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
@@ -630,6 +646,14 @@ export interface HlsH265 {
   movflags?: string;
 
   /**
+   * Enables per-title optimization. Disabled by default. Set it to true to let
+   * Chunkify select rate control automatically. When enabled, explicit rate-control
+   * fields cannot be provided. For HLS outputs, either audio_bitrate or
+   * video_bitrate is required when per-title optimization is disabled or omitted.
+   */
+  per_title?: boolean;
+
+  /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
   pixfmt?:
@@ -811,6 +835,11 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+
+    /**
+     * Whether per-title optimization was enabled for this job.
+     */
+    per_title: boolean;
   }
 
   /**
@@ -821,6 +850,11 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+
+    /**
+     * Whether per-title optimization was enabled for this job.
+     */
+    per_title: boolean;
   }
 
   /**
@@ -831,6 +865,11 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+
+    /**
+     * Whether per-title optimization was enabled for this job.
+     */
+    per_title: boolean;
   }
 
   /**
@@ -841,36 +880,59 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+
+    /**
+     * Whether per-title optimization was enabled for this job.
+     */
+    per_title: boolean;
   }
 
   /**
-   * FFmpeg encoding parameters specific to HLS with AV1 encoding.
+   * FFmpeg encoding parameters specific to HLS with AV1 encoding. When per-title
+   * optimization is disabled, either audio_bitrate or video_bitrate is required.
    */
   export interface HlsAv1 extends Omit<JobsAPI.HlsAv1, 'id'> {
     /**
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+
+    /**
+     * Whether per-title optimization was enabled for this job.
+     */
+    per_title: boolean;
   }
 
   /**
-   * FFmpeg encoding parameters specific to HLS with H.264 encoding.
+   * FFmpeg encoding parameters specific to HLS with H.264 encoding. When per-title
+   * optimization is disabled, either audio_bitrate or video_bitrate is required.
    */
   export interface HlsH264 extends Omit<JobsAPI.HlsH264, 'id'> {
     /**
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+
+    /**
+     * Whether per-title optimization was enabled for this job.
+     */
+    per_title: boolean;
   }
 
   /**
-   * FFmpeg encoding parameters specific to HLS with H.265 encoding.
+   * FFmpeg encoding parameters specific to HLS with H.265 encoding. When per-title
+   * optimization is disabled, either audio_bitrate or video_bitrate is required.
    */
   export interface HlsH265 extends Omit<JobsAPI.HlsH265, 'id'> {
     /**
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+
+    /**
+     * Whether per-title optimization was enabled for this job.
+     */
+    per_title: boolean;
   }
 
   /**
@@ -881,6 +943,11 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+
+    /**
+     * Whether per-title optimization was enabled for this job.
+     */
+    per_title: boolean;
   }
 
   /**
@@ -1036,6 +1103,14 @@ export interface MP4Av1 {
   movflags?: string;
 
   /**
+   * Enables per-title optimization. Disabled by default. Set it to true to let
+   * Chunkify select rate control automatically. When enabled, explicit rate-control
+   * fields cannot be provided. For HLS outputs, either audio_bitrate or
+   * video_bitrate is required when per-title optimization is disabled or omitted.
+   */
+  per_title?: boolean;
+
+  /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
   pixfmt?:
@@ -1189,6 +1264,14 @@ export interface MP4H264 {
   minrate?: number;
 
   movflags?: string;
+
+  /**
+   * Enables per-title optimization. Disabled by default. Set it to true to let
+   * Chunkify select rate control automatically. When enabled, explicit rate-control
+   * fields cannot be provided. For HLS outputs, either audio_bitrate or
+   * video_bitrate is required when per-title optimization is disabled or omitted.
+   */
+  per_title?: boolean;
 
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
@@ -1355,6 +1438,14 @@ export interface MP4H265 {
   movflags?: string;
 
   /**
+   * Enables per-title optimization. Disabled by default. Set it to true to let
+   * Chunkify select rate control automatically. When enabled, explicit rate-control
+   * fields cannot be provided. For HLS outputs, either audio_bitrate or
+   * video_bitrate is required when per-title optimization is disabled or omitted.
+   */
+  per_title?: boolean;
+
+  /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
   pixfmt?:
@@ -1513,6 +1604,14 @@ export interface WebmVp9 {
    * 100Kbps and 50Mbps.
    */
   minrate?: number;
+
+  /**
+   * Enables per-title optimization. Disabled by default. Set it to true to let
+   * Chunkify select rate control automatically. When enabled, explicit rate-control
+   * fields cannot be provided. For HLS outputs, either audio_bitrate or
+   * video_bitrate is required when per-title optimization is disabled or omitted.
+   */
+  per_title?: boolean;
 
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
