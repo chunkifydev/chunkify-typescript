@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.11.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.10.0...v0.11.0) (2026-09-01)
+
+
+### Features
+
+* initial stlc build ([5df7e15](https://github.com/chunkifydev/chunkify-typescript/commit/5df7e1516c9fe20672095af42a3118120c5c1d7b))
+* **openapi:** per title support ([334a76e](https://github.com/chunkifydev/chunkify-typescript/commit/334a76e45cad76c267ae62d3d18015f48ae2ffb8))
+
+
+### Chores
+
+* add release automation ([95a0c31](https://github.com/chunkifydev/chunkify-typescript/commit/95a0c311413c35f1a0cf049ac70184c90ffcef04))
+* add release automation ([a805ab3](https://github.com/chunkifydev/chunkify-typescript/commit/a805ab33e15ac82469dd56c07188739de4b4cb51))
+
 ## 0.10.0 (2026-07-18)
 
 Full Changelog: [v0.9.1...v0.10.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.9.1...v0.10.0)
