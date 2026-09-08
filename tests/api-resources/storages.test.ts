@@ -38,6 +38,8 @@ describe('resource storages', () => {
         provider: 'aws',
         region: 'us-east-1',
         secret_access_key: '1234567890',
+        base_prefix: 'chunkify/',
+        cdn_base_url: 'https://media.example.com',
         public: true,
       },
     });
@@ -46,6 +48,18 @@ describe('resource storages', () => {
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.storages.retrieve('storageId');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('update', async () => {
+    const responsePromise = client.storages.update('storageId', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
