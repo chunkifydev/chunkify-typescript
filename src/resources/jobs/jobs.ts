@@ -21,7 +21,10 @@ export class Jobs extends APIResource {
   transcoders: TranscodersAPI.Transcoders = new TranscodersAPI.Transcoders(this._client);
 
   /**
-   * Create a new video processing job with specified parameters
+   * Create a new video processing job with specified parameters. The job is created
+   * with pending status and waits for scheduler admission before processing. Pending
+   * jobs are admitted oldest first across all projects in the team as vCPU capacity
+   * becomes available.
    *
    * @example
    * ```ts
@@ -773,9 +776,11 @@ export interface Job {
   source_id: string;
 
   /**
-   * Current status of the job
+   * Current status of the job. New jobs start as pending while waiting for scheduler
+   * admission, then become queued when admitted for processing.
    */
   status:
+    | 'pending'
     | 'queued'
     | 'ingesting'
     | 'transcoding'
@@ -1725,9 +1730,11 @@ export namespace JobCreateParams {
     id?: string;
 
     /**
-     * Storage Path specifies a custom storage path where processed files will be
-     * stored. Must be a valid file path with max length of 1024 characters. Optional
-     * if Storage Id is provided.
+     * Storage Path specifies an object path relative to the selected storage
+     * connection's base_prefix. Do not include the base_prefix. Leading slashes are
+     * accepted for compatibility and removed before the path is stored. The
+     * base_prefix and normalized path may contain at most 1024 bytes combined.
+     * Optional if Storage Id is provided.
      */
     path?: string;
   }
@@ -1783,7 +1790,7 @@ export interface JobListParams extends PaginatedResultsParams {
   /**
    * Filter by job status
    */
-  status?: 'completed' | 'processing' | 'failed' | 'cancelled' | 'queued';
+  status?: 'completed' | 'processing' | 'failed' | 'cancelled' | 'queued' | 'pending';
 }
 
 export namespace JobListParams {
