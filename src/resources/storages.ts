@@ -10,6 +10,19 @@ export class Storages extends APIResource {
   /**
    * Create a new storage configuration for cloud storage providers like AWS S3,
    * Cloudflare R2, etc. The storage credentials will be validated before saving.
+   *
+   * @example
+   * ```ts
+   * const storage = await client.storages.create({
+   *   storage: {
+   *     access_key_id: '1234567890',
+   *     bucket: 'my-bucket',
+   *     provider: 'aws',
+   *     region: 'us-east-1',
+   *     secret_access_key: '1234567890',
+   *   },
+   * });
+   * ```
    */
   create(params: StorageCreateParams, options?: RequestOptions): APIPromise<Storage> {
     const { storage } = params;
@@ -24,6 +37,11 @@ export class Storages extends APIResource {
 
   /**
    * Retrieve details of a specific storage configuration by its id.
+   *
+   * @example
+   * ```ts
+   * const storage = await client.storages.retrieve('storageId');
+   * ```
    */
   retrieve(storageID: string, options?: RequestOptions): APIPromise<Storage> {
     return (
@@ -35,7 +53,30 @@ export class Storages extends APIResource {
   }
 
   /**
+   * Update customer-owned storage settings. Prefix changes apply to final outputs
+   * that have not been uploaded yet. Existing files keep their stored object keys.
+   *
+   * @example
+   * ```ts
+   * await client.storages.update('storageId');
+   * ```
+   */
+  update(storageID: string, body: StorageUpdateParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.patch(path`/api/storages/${storageID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: { projectAccessTokenAuth: true },
+    });
+  }
+
+  /**
    * Retrieve a list of all storage configurations for the current project.
+   *
+   * @example
+   * ```ts
+   * const storages = await client.storages.list();
+   * ```
    */
   list(options?: RequestOptions): APIPromise<StorageListResponse> {
     return this._client.get('/api/storages', { ...options, __security: { projectAccessTokenAuth: true } });
@@ -44,6 +85,11 @@ export class Storages extends APIResource {
   /**
    * Delete a storage configuration. The storage must not be currently attached to
    * the project.
+   *
+   * @example
+   * ```ts
+   * await client.storages.delete('storageId');
+   * ```
    */
   delete(storageID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/storages/${storageID}`, {
@@ -99,6 +145,12 @@ export namespace Storage {
     id: string;
 
     /**
+     * Canonical object-key prefix prepended to every final job output in this
+     * customer-owned storage. An empty string means the bucket root.
+     */
+    base_prefix: string;
+
+    /**
      * Bucket is the name of the storage bucket.
      */
     bucket: string;
@@ -137,6 +189,12 @@ export namespace Storage {
      * Unique identifier of the storage configuration
      */
     slug: string;
+
+    /**
+     * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+     * for objects in this storage.
+     */
+    cdn_base_url?: string | null;
   }
 
   export interface Aws {
@@ -144,6 +202,12 @@ export namespace Storage {
      * Unique identifier of the storage configuration
      */
     id: string;
+
+    /**
+     * Canonical object-key prefix prepended to every final job output in this
+     * customer-owned storage. An empty string means the bucket root.
+     */
+    base_prefix: string;
 
     /**
      * Bucket is the name of the storage bucket.
@@ -191,6 +255,12 @@ export namespace Storage {
      * Unique identifier of the storage configuration
      */
     slug: string;
+
+    /**
+     * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+     * for objects in this storage.
+     */
+    cdn_base_url?: string | null;
   }
 }
 
@@ -266,6 +336,19 @@ export namespace StorageCreateParams {
     secret_access_key: string;
 
     /**
+     * Object-key prefix for final job outputs. The API normalizes it without a leading
+     * slash and with one trailing slash. Omit it or send an empty string to use the
+     * bucket root.
+     */
+    base_prefix?: string;
+
+    /**
+     * Optional customer-managed HTTPS delivery origin. It must not contain
+     * credentials, a path, query string, or fragment.
+     */
+    cdn_base_url?: string | null;
+
+    /**
      * Public indicates whether the storage is publicly accessible.
      */
     public?: boolean;
@@ -292,6 +375,12 @@ export namespace StorageCreateParams {
       | 'eu-west-2'
       | 'ap-northeast-1'
       | 'ap-southeast-1';
+
+    /**
+     * Unsupported for Chunkify-managed temporary storage. Requests that provide this
+     * field are rejected.
+     */
+    cdn_base_url?: string | null;
   }
 
   /**
@@ -334,10 +423,36 @@ export namespace StorageCreateParams {
     secret_access_key: string;
 
     /**
+     * Object-key prefix for final job outputs. The API normalizes it without a leading
+     * slash and with one trailing slash. Omit it or send an empty string to use the
+     * bucket root.
+     */
+    base_prefix?: string;
+
+    /**
+     * Optional customer-managed HTTPS delivery origin. It must not contain
+     * credentials, a path, query string, or fragment.
+     */
+    cdn_base_url?: string | null;
+
+    /**
      * Public indicates whether the storage is publicly accessible.
      */
     public?: boolean;
   }
+}
+
+export interface StorageUpdateParams {
+  /**
+   * Object-key prefix for future final job outputs. Existing files keep their stored
+   * object keys. Send an empty string to use the bucket root.
+   */
+  base_prefix?: string;
+
+  /**
+   * Customer-managed HTTPS delivery origin, or null to remove the current value.
+   */
+  cdn_base_url?: string | null;
 }
 
 export declare namespace Storages {
@@ -345,5 +460,6 @@ export declare namespace Storages {
     type Storage as Storage,
     type StorageListResponse as StorageListResponse,
     type StorageCreateParams as StorageCreateParams,
+    type StorageUpdateParams as StorageUpdateParams,
   };
 }
