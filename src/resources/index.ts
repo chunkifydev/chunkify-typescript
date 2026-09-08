@@ -38,7 +38,13 @@ export {
   type SourceListParams,
   type SourcesPaginatedResults,
 } from './sources';
-export { Storages, type Storage, type StorageListResponse, type StorageCreateParams } from './storages';
+export {
+  Storages,
+  type Storage,
+  type StorageListResponse,
+  type StorageCreateParams,
+  type StorageUpdateParams,
+} from './storages';
 export { Tokens, type Token, type TokenListResponse, type TokenCreateParams } from './tokens';
 export {
   Uploads,

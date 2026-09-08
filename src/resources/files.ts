@@ -129,6 +129,12 @@ export interface JobFile {
    * Width of the video in pixels
    */
   width: number;
+
+  /**
+   * Stable, unsigned CDN delivery URL derived from the file's current storage
+   * configuration. Omitted when no CDN base URL is configured.
+   */
+  cdn_url?: string | null;
 }
 
 export interface FileListParams extends PaginatedResultsParams {
