@@ -99,6 +99,12 @@ export namespace Storage {
     id: string;
 
     /**
+     * Canonical object-key prefix prepended to every final job output in this
+     * customer-owned storage. An empty string means the bucket root.
+     */
+    base_prefix: string;
+
+    /**
      * Bucket is the name of the storage bucket.
      */
     bucket: string;
@@ -137,6 +143,12 @@ export namespace Storage {
      * Unique identifier of the storage configuration
      */
     slug: string;
+
+    /**
+     * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+     * for objects in this storage.
+     */
+    cdn_base_url?: string | null;
   }
 
   export interface Aws {
@@ -144,6 +156,12 @@ export namespace Storage {
      * Unique identifier of the storage configuration
      */
     id: string;
+
+    /**
+     * Canonical object-key prefix prepended to every final job output in this
+     * customer-owned storage. An empty string means the bucket root.
+     */
+    base_prefix: string;
 
     /**
      * Bucket is the name of the storage bucket.
@@ -191,6 +209,12 @@ export namespace Storage {
      * Unique identifier of the storage configuration
      */
     slug: string;
+
+    /**
+     * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+     * for objects in this storage.
+     */
+    cdn_base_url?: string | null;
   }
 }
 
@@ -266,6 +290,19 @@ export namespace StorageCreateParams {
     secret_access_key: string;
 
     /**
+     * Object-key prefix for final job outputs. The API normalizes it without a leading
+     * slash and with one trailing slash. Omit it or send an empty string to use the
+     * bucket root.
+     */
+    base_prefix?: string;
+
+    /**
+     * Optional customer-managed HTTPS delivery origin. It must not contain
+     * credentials, a path, query string, or fragment.
+     */
+    cdn_base_url?: string | null;
+
+    /**
      * Public indicates whether the storage is publicly accessible.
      */
     public?: boolean;
@@ -292,6 +329,12 @@ export namespace StorageCreateParams {
       | 'eu-west-2'
       | 'ap-northeast-1'
       | 'ap-southeast-1';
+
+    /**
+     * Unsupported for Chunkify-managed temporary storage. Requests that provide this
+     * field are rejected.
+     */
+    cdn_base_url?: string | null;
   }
 
   /**
@@ -332,6 +375,19 @@ export namespace StorageCreateParams {
      * SecretAccessKey is the secret key for the storage provider.
      */
     secret_access_key: string;
+
+    /**
+     * Object-key prefix for final job outputs. The API normalizes it without a leading
+     * slash and with one trailing slash. Omit it or send an empty string to use the
+     * bucket root.
+     */
+    base_prefix?: string;
+
+    /**
+     * Optional customer-managed HTTPS delivery origin. It must not contain
+     * credentials, a path, query string, or fragment.
+     */
+    cdn_base_url?: string | null;
 
     /**
      * Public indicates whether the storage is publicly accessible.
