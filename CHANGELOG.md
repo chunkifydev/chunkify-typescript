@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.11.0...v0.11.1) (2026-09-08)
+
+
+### Styles
+
+* fix publish workflow formatting ([9c3130d](https://github.com/chunkifydev/chunkify-typescript/commit/9c3130d53dd03d7b83797f370caa8c17e0f2c091))
+
 ## [0.11.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.10.0...v0.11.0) (2026-09-01)
 
 
