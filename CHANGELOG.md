@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.2](https://github.com/chunkifydev/chunkify-typescript/compare/v0.11.1...v0.11.2) (2026-09-08)
+
+
+### Bug Fixes
+
+* add missing endpoint to stainless.yml ([c41ea4d](https://github.com/chunkifydev/chunkify-typescript/commit/c41ea4db574db1f3e7fa16494c53bbc50b748618))
+
 ## [0.11.1](https://github.com/chunkifydev/chunkify-typescript/compare/v0.11.0...v0.11.1) (2026-09-08)
 
 
