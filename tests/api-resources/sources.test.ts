@@ -10,8 +10,8 @@ const client = new Chunkify({
 
 describe('resource sources', () => {
   // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.sources.create({ url: 'https://example.com/video.mp4' });
+  test.skip('create', async () => {
+    const responsePromise = client.sources.create({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -19,14 +19,6 @@ describe('resource sources', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.sources.create({
-      url: 'https://example.com/video.mp4',
-      metadata: { key: 'value', key2: 'value2' },
-    });
   });
 
   // Mock server tests are disabled
