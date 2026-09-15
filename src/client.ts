@@ -294,23 +294,7 @@ export class Chunkify {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    if (this.projectAccessToken && values.get('authorization')) {
-      return;
-    }
-    if (nulls.has('authorization')) {
-      return;
-    }
-
-    if (this.teamAccessToken && values.get('authorization')) {
-      return;
-    }
-    if (nulls.has('authorization')) {
-      return;
-    }
-
-    throw new Error(
-      'Could not resolve authentication method. Expected either projectAccessToken or teamAccessToken to be set. Or for one of the "Authorization" or "Authorization" headers to be explicitly omitted',
-    );
+    return;
   }
 
   protected async authHeaders(
