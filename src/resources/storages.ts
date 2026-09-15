@@ -100,7 +100,10 @@ export class Storages extends APIResource {
   }
 }
 
-export type Storage = Storage.Chunkify | Storage.Cloudflare | Storage.Aws;
+/**
+ * A customer-owned storage connection using the standard S3 API.
+ */
+export type Storage = Storage.Chunkify | Storage.Cloudflare | Storage.Aws | Storage.S3Compatible;
 
 export namespace Storage {
   export interface Chunkify {
@@ -262,6 +265,77 @@ export namespace Storage {
      */
     cdn_base_url?: string | null;
   }
+
+  /**
+   * A customer-owned storage connection using the standard S3 API.
+   */
+  export interface S3Compatible {
+    /**
+     * Unique identifier of the storage configuration
+     */
+    id: string;
+
+    /**
+     * Addressing style detected during connection validation and used for later S3
+     * operations.
+     */
+    addressing_style: 'virtual' | 'path';
+
+    /**
+     * Canonical object-key prefix prepended to every final job output in this
+     * customer-owned storage. An empty string means the bucket root.
+     */
+    base_prefix: string;
+
+    /**
+     * Bucket is the name of the storage bucket.
+     */
+    bucket: string;
+
+    /**
+     * Created at timestamp
+     */
+    created_at: string;
+
+    /**
+     * Public HTTPS origin for the S3-compatible service. Credentials, paths, queries,
+     * fragments, and non-public destinations are rejected.
+     */
+    endpoint: string;
+
+    /**
+     * Chunkify workload location. This is independent from the provider signing
+     * region.
+     */
+    location: 'US' | 'EU' | 'ASIA';
+
+    /**
+     * Stable provider identifier for generic S3-compatible storage.
+     */
+    provider: 's3_compatible';
+
+    /**
+     * Public indicates whether the storage is publicly accessible.
+     */
+    public: boolean;
+
+    /**
+     * Provider region used for S3 request signing. This is independent from the
+     * Chunkify workload location.
+     */
+    region: string;
+
+    /**
+     * Unique identifier of the storage configuration
+     */
+    slug: string;
+
+    /**
+     * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+     * for objects in this storage.
+     */
+    cdn_base_url?: string | null;
+  }
 }
 
 /**
@@ -283,7 +357,11 @@ export interface StorageCreateParams {
   /**
    * The parameters for creating a new storage configuration.
    */
-  storage: StorageCreateParams.Aws | StorageCreateParams.Chunkify | StorageCreateParams.Cloudflare;
+  storage:
+    | StorageCreateParams.Aws
+    | StorageCreateParams.Chunkify
+    | StorageCreateParams.Cloudflare
+    | StorageCreateParams.S3Compatible;
 }
 
 export namespace StorageCreateParams {
@@ -437,6 +515,68 @@ export namespace StorageCreateParams {
 
     /**
      * Public indicates whether the storage is publicly accessible.
+     */
+    public?: boolean;
+  }
+
+  /**
+   * Storage parameters for a public S3-compatible service such as MinIO, Wasabi, or
+   * Backblaze B2.
+   */
+  export interface S3Compatible {
+    /**
+     * Access key for the storage provider.
+     */
+    access_key_id: string;
+
+    /**
+     * Bucket is the name of the storage bucket.
+     */
+    bucket: string;
+
+    /**
+     * Public HTTPS origin for the S3-compatible service. Credentials, paths, queries,
+     * fragments, and non-public destinations are rejected.
+     */
+    endpoint: string;
+
+    /**
+     * Chunkify workload location. It controls where Chunkify processes the workload
+     * and is independent from the provider region.
+     */
+    location: 'US' | 'EU' | 'ASIA';
+
+    /**
+     * Stable provider identifier for generic S3-compatible storage.
+     */
+    provider: 's3_compatible';
+
+    /**
+     * Explicit provider region used for S3 request signing. Vendor-specific
+     * identifiers are accepted.
+     */
+    region: string;
+
+    /**
+     * Secret key for the storage provider.
+     */
+    secret_access_key: string;
+
+    /**
+     * Object-key prefix for final job outputs. The API normalizes it without a leading
+     * slash and with one trailing slash. Omit it or send an empty string to use the
+     * bucket root.
+     */
+    base_prefix?: string;
+
+    /**
+     * Optional customer-managed HTTPS delivery origin. It must not contain
+     * credentials, a path, query string, or fragment.
+     */
+    cdn_base_url?: string | null;
+
+    /**
+     * Whether the bucket is publicly readable.
      */
     public?: boolean;
   }

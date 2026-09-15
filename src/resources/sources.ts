@@ -15,9 +15,7 @@ export class Sources extends APIResource {
    *
    * @example
    * ```ts
-   * const source = await client.sources.create({
-   *   url: 'https://example.com/video.mp4',
-   * });
+   * const source = await client.sources.create();
    * ```
    */
   create(body: SourceCreateParams, options?: RequestOptions): APIPromise<Source> {
@@ -137,11 +135,6 @@ export interface Source {
   size: number;
 
   /**
-   * URL where the source video can be accessed
-   */
-  url: string;
-
-  /**
    * Video bitrate in bits per second
    */
   video_bitrate: number;
@@ -160,19 +153,60 @@ export interface Source {
    * Width of the video in pixels
    */
   width: number;
+
+  /**
+   * Exact object key in the configured bucket, 1 to 1024 UTF-8 bytes. The output
+   * base_prefix is not added.
+   */
+  path?: string;
+
+  /**
+   * Connected Storage belonging to this Project.
+   */
+  storage_id?: string;
+
+  /**
+   * URL where the source video can be accessed
+   */
+  url?: string;
 }
 
 export interface SourceCreateParams {
-  /**
-   * Url is the URL of the source, which must be a valid HTTP URL.
-   */
-  url: string;
-
   /**
    * Metadata allows for additional information to be attached to the source, with a
    * maximum size of 2048 bytes.
    */
   metadata?: { [key: string]: string };
+
+  /**
+   * Storage input configuration. Provide this or url, never both.
+   */
+  storage?: SourceCreateParams.Storage;
+
+  /**
+   * Url is the URL of the source, which must be a valid HTTP URL.
+   */
+  url?: string;
+}
+
+export namespace SourceCreateParams {
+  /**
+   * Storage input configuration. Provide this or url, never both.
+   */
+  export interface Storage {
+    /**
+     * Exact object key in the configured bucket, 1 to 1024 UTF-8 bytes. The output
+     * base_prefix is not added.
+     */
+    path: string;
+
+    /**
+     * Connected external storage belonging to this project. If omitted, uses the
+     * project default storage, which must be external. The resolved storage ID is
+     * saved on the source.
+     */
+    id?: string;
+  }
 }
 
 export interface SourceListParams extends PaginatedResultsParams {
