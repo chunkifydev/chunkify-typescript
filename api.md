@@ -120,6 +120,7 @@ Methods:
 
 - <code title="post /api/storages">client.storages.<a href="./src/resources/storages.ts">create</a>({ ...params }) -> Storage</code>
 - <code title="get /api/storages/{storageId}">client.storages.<a href="./src/resources/storages.ts">retrieve</a>(storageID) -> Storage</code>
+- <code title="patch /api/storages/{storageId}">client.storages.<a href="./src/resources/storages.ts">update</a>(storageID, { ...params }) -> void</code>
 - <code title="get /api/storages">client.storages.<a href="./src/resources/storages.ts">list</a>() -> StorageListResponse</code>
 - <code title="delete /api/storages/{storageId}">client.storages.<a href="./src/resources/storages.ts">delete</a>(storageID) -> void</code>
 

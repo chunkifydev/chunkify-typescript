@@ -41,7 +41,13 @@ import {
   Sources,
   SourcesPaginatedResults,
 } from './resources/sources';
-import { Storage, StorageCreateParams, StorageListResponse, Storages } from './resources/storages';
+import {
+  Storage,
+  StorageCreateParams,
+  StorageListResponse,
+  StorageUpdateParams,
+  Storages,
+} from './resources/storages';
 import { Token, TokenCreateParams, TokenListResponse, Tokens } from './resources/tokens';
 import {
   Upload,
@@ -952,6 +958,7 @@ export declare namespace Chunkify {
     type Storage as Storage,
     type StorageListResponse as StorageListResponse,
     type StorageCreateParams as StorageCreateParams,
+    type StorageUpdateParams as StorageUpdateParams,
   };
 
   export {

@@ -113,9 +113,11 @@ export interface Upload {
   updated_at: string;
 
   /**
-   * Pre-signed URL where the file should be uploaded to
+   * Short-lived completion capability, returned only on creation. POST after a
+   * successful PUT before expires_at. Requires no API key. Repeated valid calls are
+   * idempotent.
    */
-  upload_url: string;
+  completion_url?: string;
 
   /**
    * Error message of the upload
@@ -131,6 +133,18 @@ export interface Upload {
    * SourceId is the id of the source that was created from the upload
    */
   source_id?: string;
+
+  /**
+   * Resolved Storage selected when the Upload was created. Absent for historical
+   * uploads.
+   */
+  storage_id?: string;
+
+  /**
+   * Presigned PUT URL, returned only when creating an Upload session. Call
+   * completion_url after the PUT succeeds.
+   */
+  upload_url?: string;
 }
 
 export interface UploadCreateParams {
@@ -141,9 +155,37 @@ export interface UploadCreateParams {
   metadata?: { [key: string]: string };
 
   /**
-   * The upload URL will be valid for the given timeout in seconds
+   * Optional Storage override. Omit id to use the Project default.
+   * Customer-connected Storage requires path; Chunkify Storage generates its own
+   * path.
+   */
+  storage?: UploadCreateParams.Storage;
+
+  /**
+   * Both the file PUT and completion POST must finish within this timeout in seconds
    */
   validity_timeout?: number;
+}
+
+export namespace UploadCreateParams {
+  /**
+   * Optional Storage override. Omit id to use the Project default.
+   * Customer-connected Storage requires path; Chunkify Storage generates its own
+   * path.
+   */
+  export interface Storage {
+    /**
+     * Storage belonging to this Project. Omit to use the Project default.
+     */
+    id?: string;
+
+    /**
+     * Exact object key including filename, required for customer Storage and forbidden
+     * for Chunkify Storage. The output base_prefix is not added. Existing keys may be
+     * overwritten.
+     */
+    path?: string;
+  }
 }
 
 export interface UploadListParams extends PaginatedResultsParams {
