@@ -149,6 +149,7 @@ Methods:
 - <code title="get /api/uploads/{uploadId}">client.uploads.<a href="./src/resources/uploads.ts">retrieve</a>(uploadID) -> Upload</code>
 - <code title="get /api/uploads">client.uploads.<a href="./src/resources/uploads.ts">list</a>({ ...params }) -> UploadsPaginatedResults</code>
 - <code title="delete /api/uploads/{uploadId}">client.uploads.<a href="./src/resources/uploads.ts">delete</a>(uploadID) -> void</code>
+- <code title="post /api/uploads/completion/{token}">client.uploads.<a href="./src/resources/uploads.ts">complete</a>(token) -> void</code>
 
 # Webhooks
 
