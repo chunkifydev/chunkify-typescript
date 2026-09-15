@@ -82,6 +82,27 @@ export class Uploads extends APIResource {
       __security: { projectAccessTokenAuth: true },
     });
   }
+
+  /**
+   * After a successful PUT, POST the returned completion_url before expires_at. The
+   * token authorizes only this Upload; no API key, cookies, or request body is
+   * required. Verifies the stored object and commits one Source relationship. Valid
+   * retries return 204 without duplicate side effects. Retry network errors, 429,
+   * and 5xx responses with bounded backoff; never repeat the PUT just to retry
+   * completion.
+   *
+   * @example
+   * ```ts
+   * await client.uploads.complete('token');
+   * ```
+   */
+  complete(token: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/api/uploads/completion/${token}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      __security: {},
+    });
+  }
 }
 
 export type UploadsPaginatedResults = PaginatedResults<Upload>;
