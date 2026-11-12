@@ -1,6 +1,17 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
+export {
+  Assets,
+  type Asset,
+  type AssetStatus,
+  type AssetCreateParams,
+  type AssetUpdateParams,
+  type AssetListParams,
+  type AssetDeleteParams,
+  type AssetsPaginatedResults,
+} from './assets/assets';
+export { Events, type Event, type EventListParams, type EventsPaginatedResults } from './events';
 export { Files, type JobFile, type FileListParams, type JobFilesPaginatedResults } from './files';
 export {
   Jobs,
@@ -18,6 +29,15 @@ export {
   type JobsPaginatedResults,
 } from './jobs/jobs';
 export {
+  Metrics,
+  type MetricsAssets,
+  type MetricsStorage,
+  type MetricsUsage,
+  type MetricAssetsParams,
+  type MetricStorageParams,
+  type MetricUsageParams,
+} from './metrics';
+export {
   Notifications,
   type Notification,
   type NotificationCreateParams,
@@ -30,7 +50,7 @@ export {
   type ProjectListResponse,
   type ProjectCreateParams,
   type ProjectUpdateParams,
-} from './projects';
+} from './projects/projects';
 export {
   Sources,
   type Source,
@@ -45,12 +65,29 @@ export {
   type StorageCreateParams,
   type StorageUpdateParams,
 } from './storages';
+export {
+  Thumbnails,
+  type Thumbnail,
+  type ThumbnailCreateParams,
+  type ThumbnailListParams,
+  type ThumbnailDeleteParams,
+  type ThumbnailsPaginatedResults,
+} from './thumbnails';
 export { Tokens, type Token, type TokenListResponse, type TokenCreateParams } from './tokens';
+export {
+  Transcodings,
+  type Transcoding,
+  type TranscodingCreateParams,
+  type TranscodingListParams,
+  type TranscodingDeleteParams,
+  type TranscodingsPaginatedResults,
+} from './transcodings';
 export {
   Uploads,
   type Upload,
   type UploadCreateParams,
   type UploadListParams,
+  type UploadCompleteParams,
   type UploadsPaginatedResults,
 } from './uploads';
 export {
@@ -62,3 +99,11 @@ export {
   type WebhookCreateParams,
   type WebhookUpdateParams,
 } from './webhooks';
+export {
+  Workflows,
+  type Workflow,
+  type WorkflowCreateParams,
+  type WorkflowUpdateParams,
+  type WorkflowListParams,
+  type WorkflowsPaginatedResults,
+} from './workflows/workflows';

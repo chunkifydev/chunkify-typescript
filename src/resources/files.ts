@@ -10,11 +10,15 @@ import { path } from '../internal/utils/path';
 export class Files extends APIResource {
   /**
    * Retrieve details of a specific file by its ID, including metadata, media
-   * properties, and associated jobs.
+   * properties, and associated jobs. Deprecated: Files are a legacy resource.
+   * Transcodings and Thumbnails include their output files, and List Asset outputs
+   * returns an Asset's outputs.
+   *
+   * @deprecated
    */
   retrieve(fileID: string, options?: RequestOptions): APIPromise<JobFile> {
     return (
-      this._client.get(path`/api/files/${fileID}`, {
+      this._client.get(path`/files/${fileID}`, {
         ...options,
         __security: { projectAccessTokenAuth: true },
       }) as APIPromise<{ data: JobFile }>
@@ -22,13 +26,17 @@ export class Files extends APIResource {
   }
 
   /**
-   * Retrieve a list of files with optional filtering and pagination
+   * Retrieve a list of files with optional filtering and pagination. Deprecated:
+   * Files are a legacy resource. Transcodings and Thumbnails include their output
+   * files, and List Asset outputs returns an Asset's outputs.
+   *
+   * @deprecated
    */
   list(
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<JobFilesPaginatedResults, JobFile> {
-    return this._client.getAPIList('/api/files', PaginatedResults<JobFile>, {
+    return this._client.getAPIList('/files', PaginatedResults<JobFile>, {
       query,
       ...options,
       __security: { projectAccessTokenAuth: true },
@@ -37,9 +45,13 @@ export class Files extends APIResource {
 
   /**
    * Delete a file. It will fail if there are processing jobs using this file.
+   * Deprecated: Files are a legacy resource. Transcodings and Thumbnails include
+   * their output files, and List Asset outputs returns an Asset's outputs.
+   *
+   * @deprecated
    */
   delete(fileID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/files/${fileID}`, {
+    return this._client.delete(path`/files/${fileID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
       __security: { projectAccessTokenAuth: true },
@@ -96,7 +108,7 @@ export interface JobFile {
   path: string;
 
   /**
-   * Size of the file in bytes
+   * Size of the object at this File's path in bytes
    */
   size: number;
 
@@ -135,6 +147,13 @@ export interface JobFile {
    * configuration. Omitted when no CDN base URL is configured.
    */
   cdn_url?: string | null;
+
+  /**
+   * PackageSize specifies the media playlist and every media object it references in
+   * bytes. Present only for HLS video media playlists; it excludes the shared master
+   * playlist.
+   */
+  package_size?: number;
 }
 
 export interface FileListParams extends PaginatedResultsParams {

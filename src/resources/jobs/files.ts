@@ -8,15 +8,14 @@ import { path } from '../../internal/utils/path';
 
 export class Files extends APIResource {
   /**
-   * Retrieve all files associated with a specific job
+   * Retrieve all files associated with a specific job. Deprecated: Job files are a
+   * legacy resource. Transcodings and Thumbnails include their output files, and
+   * List Asset outputs returns an Asset's outputs.
    *
-   * @example
-   * ```ts
-   * const files = await client.jobs.files.list('jobId');
-   * ```
+   * @deprecated
    */
   list(jobID: string, options?: RequestOptions): APIPromise<FileListResponse> {
-    return this._client.get(path`/api/jobs/${jobID}/files`, {
+    return this._client.get(path`/jobs/${jobID}/files`, {
       ...options,
       __security: { projectAccessTokenAuth: true },
     });

@@ -10,20 +10,21 @@ import { path } from '../internal/utils/path';
 
 export class Notifications extends APIResource {
   /**
-   * Create a new notification for a job event
+   * Send an event notification to a webhook endpoint. Recorded events replay their
+   * original payload.
    *
    * @example
    * ```ts
    * const notification = await client.notifications.create({
-   *   event: 'job.completed',
-   *   object_id: 'job_A1cce6120E56e7Tu9ioP09Nhjk9',
+   *   event: 'asset.playback_ready',
+   *   object_id: 'ast_A1cce6120E56e7Tu9ioP09Nhjk9',
    *   webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
    * });
    * ```
    */
   create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<Notification> {
     return (
-      this._client.post('/api/notifications', {
+      this._client.post('/notifications', {
         body,
         ...options,
         __security: { projectAccessTokenAuth: true },
@@ -43,7 +44,7 @@ export class Notifications extends APIResource {
    */
   retrieve(notificationID: string, options?: RequestOptions): APIPromise<Notification> {
     return (
-      this._client.get(path`/api/notifications/${notificationID}`, {
+      this._client.get(path`/notifications/${notificationID}`, {
         ...options,
         __security: { projectAccessTokenAuth: true },
       }) as APIPromise<{ data: Notification }>
@@ -65,7 +66,7 @@ export class Notifications extends APIResource {
     query: NotificationListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<NotificationsPaginatedResults, Notification> {
-    return this._client.getAPIList('/api/notifications', PaginatedResults<Notification>, {
+    return this._client.getAPIList('/notifications', PaginatedResults<Notification>, {
       query,
       ...options,
       __security: { projectAccessTokenAuth: true },
@@ -81,7 +82,7 @@ export class Notifications extends APIResource {
    * ```
    */
   delete(notificationID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/notifications/${notificationID}`, {
+    return this._client.delete(path`/notifications/${notificationID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
       __security: { projectAccessTokenAuth: true },
@@ -106,12 +107,41 @@ export interface Notification {
    * Type of event that triggered this notification
    */
   event:
+    | 'job.created'
     | 'job.completed'
     | 'job.failed'
     | 'job.cancelled'
+    | 'source.created'
+    | 'source.deleted'
+    | 'upload.created'
     | 'upload.completed'
     | 'upload.failed'
-    | 'upload.expired';
+    | 'upload.expired'
+    | 'asset.created'
+    | 'asset.ready'
+    | 'asset.playback_ready'
+    | 'asset.failed'
+    | 'asset.expired'
+    | 'asset.deleted'
+    | 'asset.output.created'
+    | 'asset.output.ready'
+    | 'asset.output.failed'
+    | 'asset.output.deleted'
+    | 'workflow_run.created'
+    | 'workflow_run.completed'
+    | 'workflow_run.failed'
+    | 'workflow_run.cancelled'
+    | 'transcoding.created'
+    | 'transcoding.ready'
+    | 'transcoding.failed'
+    | 'transcoding.cancelled'
+    | 'transcoding.expired'
+    | 'transcoding.deleted'
+    | 'thumbnail.created'
+    | 'thumbnail.ready'
+    | 'thumbnail.failed'
+    | 'thumbnail.expired'
+    | 'thumbnail.deleted';
 
   /**
    * ID of the object that triggered this notification
@@ -129,6 +159,11 @@ export interface Notification {
   webhook: WebhooksAPI.Webhook;
 
   /**
+   * Originating event ID, when recorded by the event log.
+   */
+  event_id?: string;
+
+  /**
    * HTTP status code received from the webhook endpoint
    */
   response_status_code?: number;
@@ -139,15 +174,47 @@ export interface NotificationCreateParams {
    * Event specifies the type of event that triggered the notification.
    */
   event:
+    | 'job.created'
     | 'job.completed'
     | 'job.failed'
     | 'job.cancelled'
+    | 'source.created'
+    | 'source.deleted'
+    | 'upload.created'
     | 'upload.completed'
     | 'upload.failed'
-    | 'upload.expired';
+    | 'upload.expired'
+    | 'asset.created'
+    | 'asset.ready'
+    | 'asset.playback_ready'
+    | 'asset.failed'
+    | 'asset.expired'
+    | 'asset.deleted'
+    | 'asset.output.created'
+    | 'asset.output.ready'
+    | 'asset.output.failed'
+    | 'asset.output.deleted'
+    | 'workflow_run.created'
+    | 'workflow_run.completed'
+    | 'workflow_run.failed'
+    | 'workflow_run.cancelled'
+    | 'transcoding.created'
+    | 'transcoding.ready'
+    | 'transcoding.failed'
+    | 'transcoding.cancelled'
+    | 'transcoding.expired'
+    | 'transcoding.deleted'
+    | 'thumbnail.created'
+    | 'thumbnail.ready'
+    | 'thumbnail.failed'
+    | 'thumbnail.expired'
+    | 'thumbnail.deleted';
 
   /**
-   * ObjectId specifies the object that triggered this notification.
+   * ID of the resource that triggered the event. Use the caption, static rendition,
+   * or thumbnail ID for their Asset child events. Replaying asset events,
+   * job.created, or source.created requires a retained snapshot. Resource deletion
+   * does not prevent replay.
    */
   object_id: string;
 
@@ -161,10 +228,49 @@ export interface NotificationListParams extends PaginatedResultsParams {
   created?: NotificationListParams.Created;
 
   /**
+   * Filter deliveries by their originating event ID.
+   */
+  event_id?: string;
+
+  /**
    * Filter by events
    */
   events?: Array<
-    'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
+    | 'job.created'
+    | 'job.completed'
+    | 'job.failed'
+    | 'job.cancelled'
+    | 'source.created'
+    | 'source.deleted'
+    | 'upload.created'
+    | 'upload.completed'
+    | 'upload.failed'
+    | 'upload.expired'
+    | 'asset.created'
+    | 'asset.ready'
+    | 'asset.playback_ready'
+    | 'asset.failed'
+    | 'asset.expired'
+    | 'asset.deleted'
+    | 'asset.output.created'
+    | 'asset.output.ready'
+    | 'asset.output.failed'
+    | 'asset.output.deleted'
+    | 'workflow_run.created'
+    | 'workflow_run.completed'
+    | 'workflow_run.failed'
+    | 'workflow_run.cancelled'
+    | 'transcoding.created'
+    | 'transcoding.ready'
+    | 'transcoding.failed'
+    | 'transcoding.cancelled'
+    | 'transcoding.expired'
+    | 'transcoding.deleted'
+    | 'thumbnail.created'
+    | 'thumbnail.ready'
+    | 'thumbnail.failed'
+    | 'thumbnail.expired'
+    | 'thumbnail.deleted'
   >;
 
   /**

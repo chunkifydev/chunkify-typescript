@@ -81,8 +81,10 @@ describe('resource uploads', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('complete', async () => {
-    const responsePromise = client.uploads.complete('token');
+  test.skip('complete: only required params', async () => {
+    const responsePromise = client.uploads.complete('token', {
+      parts: [{ etag: '"abc123"', part_number: 1 }],
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -90,5 +92,12 @@ describe('resource uploads', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('complete: required and optional params', async () => {
+    const response = await client.uploads.complete('token', {
+      parts: [{ etag: '"abc123"', part_number: 1 }],
+    });
   });
 });

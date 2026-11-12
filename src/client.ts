@@ -19,7 +19,17 @@ import { AbstractPage, type PaginatedResultsParams, PaginatedResultsResponse } f
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import { Event, EventListParams, Events, EventsPaginatedResults } from './resources/events';
 import { FileListParams, Files, JobFile, JobFilesPaginatedResults } from './resources/files';
+import {
+  MetricAssetsParams,
+  MetricStorageParams,
+  MetricUsageParams,
+  Metrics,
+  MetricsAssets,
+  MetricsStorage,
+  MetricsUsage,
+} from './resources/metrics';
 import {
   Notification,
   NotificationCreateParams,
@@ -27,13 +37,6 @@ import {
   Notifications,
   NotificationsPaginatedResults,
 } from './resources/notifications';
-import {
-  Project,
-  ProjectCreateParams,
-  ProjectListResponse,
-  ProjectUpdateParams,
-  Projects,
-} from './resources/projects';
 import {
   Source,
   SourceCreateParams,
@@ -48,9 +51,26 @@ import {
   StorageUpdateParams,
   Storages,
 } from './resources/storages';
+import {
+  Thumbnail,
+  ThumbnailCreateParams,
+  ThumbnailDeleteParams,
+  ThumbnailListParams,
+  Thumbnails,
+  ThumbnailsPaginatedResults,
+} from './resources/thumbnails';
 import { Token, TokenCreateParams, TokenListResponse, Tokens } from './resources/tokens';
 import {
+  Transcoding,
+  TranscodingCreateParams,
+  TranscodingDeleteParams,
+  TranscodingListParams,
+  Transcodings,
+  TranscodingsPaginatedResults,
+} from './resources/transcodings';
+import {
   Upload,
+  UploadCompleteParams,
   UploadCreateParams,
   UploadListParams,
   Uploads as UploadsAPIUploads,
@@ -66,6 +86,16 @@ import {
   Webhooks,
 } from './resources/webhooks';
 import {
+  Asset,
+  AssetCreateParams,
+  AssetDeleteParams,
+  AssetListParams,
+  AssetStatus,
+  AssetUpdateParams,
+  Assets,
+  AssetsPaginatedResults,
+} from './resources/assets/assets';
+import {
   HlsAv1,
   HlsH264,
   HlsH265,
@@ -80,6 +110,21 @@ import {
   MP4H265,
   WebmVp9,
 } from './resources/jobs/jobs';
+import {
+  Project,
+  ProjectCreateParams,
+  ProjectListResponse,
+  ProjectUpdateParams,
+  Projects,
+} from './resources/projects/projects';
+import {
+  Workflow,
+  WorkflowCreateParams,
+  WorkflowListParams,
+  WorkflowUpdateParams,
+  Workflows,
+  WorkflowsPaginatedResults,
+} from './resources/workflows/workflows';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -294,23 +339,7 @@ export class Chunkify {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    if (this.projectAccessToken && values.get('authorization')) {
-      return;
-    }
-    if (nulls.has('authorization')) {
-      return;
-    }
-
-    if (this.teamAccessToken && values.get('authorization')) {
-      return;
-    }
-    if (nulls.has('authorization')) {
-      return;
-    }
-
-    throw new Error(
-      'Could not resolve authentication method. Expected either projectAccessToken or teamAccessToken to be set. Or for one of the "Authorization" or "Authorization" headers to be explicitly omitted',
-    );
+    return;
   }
 
   protected async authHeaders(
@@ -876,26 +905,41 @@ export class Chunkify {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Automatic video-on-demand Assets and independent H.264 MP4 static renditions.
+   */
+  assets: API.Assets = new API.Assets(this);
+  events: API.Events = new API.Events(this);
   files: API.Files = new API.Files(this);
   jobs: API.Jobs = new API.Jobs(this);
+  metrics: API.Metrics = new API.Metrics(this);
   notifications: API.Notifications = new API.Notifications(this);
   projects: API.Projects = new API.Projects(this);
   sources: API.Sources = new API.Sources(this);
   storages: API.Storages = new API.Storages(this);
+  thumbnails: API.Thumbnails = new API.Thumbnails(this);
   tokens: API.Tokens = new API.Tokens(this);
+  transcodings: API.Transcodings = new API.Transcodings(this);
   uploads: API.Uploads = new API.Uploads(this);
   webhooks: API.Webhooks = new API.Webhooks(this);
+  workflows: API.Workflows = new API.Workflows(this);
 }
 
+Chunkify.Assets = Assets;
+Chunkify.Events = Events;
 Chunkify.Files = Files;
 Chunkify.Jobs = Jobs;
+Chunkify.Metrics = Metrics;
 Chunkify.Notifications = Notifications;
 Chunkify.Projects = Projects;
 Chunkify.Sources = Sources;
 Chunkify.Storages = Storages;
+Chunkify.Thumbnails = Thumbnails;
 Chunkify.Tokens = Tokens;
+Chunkify.Transcodings = Transcodings;
 Chunkify.Uploads = UploadsAPIUploads;
 Chunkify.Webhooks = Webhooks;
+Chunkify.Workflows = Workflows;
 
 export declare namespace Chunkify {
   export type RequestOptions = Opts.RequestOptions;
@@ -904,6 +948,24 @@ export declare namespace Chunkify {
   export {
     type PaginatedResultsParams as PaginatedResultsParams,
     type PaginatedResultsResponse as PaginatedResultsResponse,
+  };
+
+  export {
+    Assets as Assets,
+    type Asset as Asset,
+    type AssetStatus as AssetStatus,
+    type AssetsPaginatedResults as AssetsPaginatedResults,
+    type AssetCreateParams as AssetCreateParams,
+    type AssetUpdateParams as AssetUpdateParams,
+    type AssetListParams as AssetListParams,
+    type AssetDeleteParams as AssetDeleteParams,
+  };
+
+  export {
+    Events as Events,
+    type Event as Event,
+    type EventsPaginatedResults as EventsPaginatedResults,
+    type EventListParams as EventListParams,
   };
 
   export {
@@ -927,6 +989,16 @@ export declare namespace Chunkify {
     type JobsPaginatedResults as JobsPaginatedResults,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
+  };
+
+  export {
+    Metrics as Metrics,
+    type MetricsAssets as MetricsAssets,
+    type MetricsStorage as MetricsStorage,
+    type MetricsUsage as MetricsUsage,
+    type MetricAssetsParams as MetricAssetsParams,
+    type MetricStorageParams as MetricStorageParams,
+    type MetricUsageParams as MetricUsageParams,
   };
 
   export {
@@ -962,10 +1034,28 @@ export declare namespace Chunkify {
   };
 
   export {
+    Thumbnails as Thumbnails,
+    type Thumbnail as Thumbnail,
+    type ThumbnailsPaginatedResults as ThumbnailsPaginatedResults,
+    type ThumbnailCreateParams as ThumbnailCreateParams,
+    type ThumbnailListParams as ThumbnailListParams,
+    type ThumbnailDeleteParams as ThumbnailDeleteParams,
+  };
+
+  export {
     Tokens as Tokens,
     type Token as Token,
     type TokenListResponse as TokenListResponse,
     type TokenCreateParams as TokenCreateParams,
+  };
+
+  export {
+    Transcodings as Transcodings,
+    type Transcoding as Transcoding,
+    type TranscodingsPaginatedResults as TranscodingsPaginatedResults,
+    type TranscodingCreateParams as TranscodingCreateParams,
+    type TranscodingListParams as TranscodingListParams,
+    type TranscodingDeleteParams as TranscodingDeleteParams,
   };
 
   export {
@@ -974,6 +1064,7 @@ export declare namespace Chunkify {
     type UploadsPaginatedResults as UploadsPaginatedResults,
     type UploadCreateParams as UploadCreateParams,
     type UploadListParams as UploadListParams,
+    type UploadCompleteParams as UploadCompleteParams,
   };
 
   export {
@@ -984,6 +1075,15 @@ export declare namespace Chunkify {
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
+  };
+
+  export {
+    Workflows as Workflows,
+    type Workflow as Workflow,
+    type WorkflowsPaginatedResults as WorkflowsPaginatedResults,
+    type WorkflowCreateParams as WorkflowCreateParams,
+    type WorkflowUpdateParams as WorkflowUpdateParams,
+    type WorkflowListParams as WorkflowListParams,
   };
 
   export type ChunkifyError = API.ChunkifyError;

@@ -24,19 +24,14 @@ export class Jobs extends APIResource {
    * Create a new video processing job with specified parameters. The job is created
    * with pending status and waits for scheduler admission before processing. Pending
    * jobs are admitted oldest first across all projects in the team as vCPU capacity
-   * becomes available.
+   * becomes available. Deprecated: Jobs are a legacy resource. Use Assets,
+   * Transcodings or Thumbnails instead.
    *
-   * @example
-   * ```ts
-   * const job = await client.jobs.create({
-   *   format: { id: 'mp4_av1' },
-   *   source_id: 'src_UioP9I876hjKlNBH78ILp0mo56t',
-   * });
-   * ```
+   * @deprecated
    */
   create(body: JobCreateParams, options?: RequestOptions): APIPromise<Job> {
     return (
-      this._client.post('/api/jobs', {
+      this._client.post('/jobs', {
         body,
         ...options,
         __security: { projectAccessTokenAuth: true },
@@ -45,16 +40,14 @@ export class Jobs extends APIResource {
   }
 
   /**
-   * Retrieve details of a specific job
+   * Retrieve details of a specific job. Deprecated: Jobs are a legacy resource. Use
+   * Assets, Transcodings or Thumbnails instead.
    *
-   * @example
-   * ```ts
-   * const job = await client.jobs.retrieve('jobId');
-   * ```
+   * @deprecated
    */
   retrieve(jobID: string, options?: RequestOptions): APIPromise<Job> {
     return (
-      this._client.get(path`/api/jobs/${jobID}`, {
+      this._client.get(path`/jobs/${jobID}`, {
         ...options,
         __security: { projectAccessTokenAuth: true },
       }) as APIPromise<{ data: Job }>
@@ -62,21 +55,16 @@ export class Jobs extends APIResource {
   }
 
   /**
-   * Retrieve a list of jobs with optional filtering and pagination
+   * Retrieve a list of jobs with optional filtering and pagination. Deprecated: Jobs
+   * are a legacy resource. Use Assets, Transcodings or Thumbnails instead.
    *
-   * @example
-   * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const job of client.jobs.list()) {
-   *   // ...
-   * }
-   * ```
+   * @deprecated
    */
   list(
     query: JobListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<JobsPaginatedResults, Job> {
-    return this._client.getAPIList('/api/jobs', PaginatedResults<Job>, {
+    return this._client.getAPIList('/jobs', PaginatedResults<Job>, {
       query,
       ...options,
       __security: { projectAccessTokenAuth: true },
@@ -84,15 +72,13 @@ export class Jobs extends APIResource {
   }
 
   /**
-   * Delete a job.
+   * Delete a job. Deprecated: Jobs are a legacy resource. Use Assets, Transcodings
+   * or Thumbnails instead.
    *
-   * @example
-   * ```ts
-   * await client.jobs.delete('jobId');
-   * ```
+   * @deprecated
    */
   delete(jobID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/jobs/${jobID}`, {
+    return this._client.delete(path`/jobs/${jobID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
       __security: { projectAccessTokenAuth: true },
@@ -100,15 +86,13 @@ export class Jobs extends APIResource {
   }
 
   /**
-   * Cancel a job.
+   * Cancel a job. Deprecated: Jobs are a legacy resource. Use Assets, Transcodings
+   * or Thumbnails instead.
    *
-   * @example
-   * ```ts
-   * await client.jobs.cancel('jobId');
-   * ```
+   * @deprecated
    */
   cancel(jobID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/api/jobs/${jobID}/cancel`, {
+    return this._client.post(path`/jobs/${jobID}/cancel`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
       __security: { projectAccessTokenAuth: true },
@@ -163,12 +147,14 @@ export interface HlsAv1 {
   duration?: number;
 
   /**
-   * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+   * Framerate specifies the output video frame rate. Must be greater than zero and
+   * at most 240 fps.
    */
   framerate?: number;
 
   /**
-   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 960
+   * frames.
    */
   gop?: number;
 
@@ -208,6 +194,12 @@ export interface HlsAv1 {
    * - fmp4: Fragmented MP4 segments, better efficiency
    */
   hls_segment_type?: 'mpegts' | 'fmp4';
+
+  /**
+   * HlsSingleFile specifies whether to store HLS segments in one file using byte
+   * ranges. Defaults to true. Set to false to create separate segment files.
+   */
+  hls_single_file?: boolean;
 
   /**
    * HlsTime specifies the duration of each HLS segment in seconds. Range: 1 to 10.
@@ -307,8 +299,8 @@ export interface HlsAv1 {
   seek?: number;
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between 1
+   * bps and 100 Mbps.
    */
   video_bitrate?: number;
 
@@ -364,12 +356,14 @@ export interface HlsH264 {
   duration?: number;
 
   /**
-   * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+   * Framerate specifies the output video frame rate. Must be greater than zero and
+   * at most 240 fps.
    */
   framerate?: number;
 
   /**
-   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 960
+   * frames.
    */
   gop?: number;
 
@@ -409,6 +403,12 @@ export interface HlsH264 {
    * - fmp4: Fragmented MP4 segments, better efficiency
    */
   hls_segment_type?: 'mpegts' | 'fmp4';
+
+  /**
+   * HlsSingleFile specifies whether to store HLS segments in one file using byte
+   * ranges. Defaults to true. Set to false to create separate segment files.
+   */
+  hls_single_file?: boolean;
 
   /**
    * HlsTime specifies the duration of each HLS segment in seconds. Range: 1 to 10.
@@ -510,8 +510,8 @@ export interface HlsH264 {
   seek?: number;
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between 1
+   * bps and 100 Mbps.
    */
   video_bitrate?: number;
 
@@ -523,7 +523,7 @@ export interface HlsH264 {
 
   /**
    * X264KeyInt specifies the maximum number of frames between keyframes for H.264
-   * encoding. Range: 1 to 300. Higher values can improve compression but may affect
+   * encoding. Range: 1 to 960. Higher values can improve compression but may affect
    * seeking.
    */
   x264_keyint?: number;
@@ -574,12 +574,14 @@ export interface HlsH265 {
   duration?: number;
 
   /**
-   * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+   * Framerate specifies the output video frame rate. Must be greater than zero and
+   * at most 240 fps.
    */
   framerate?: number;
 
   /**
-   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 960
+   * frames.
    */
   gop?: number;
 
@@ -619,6 +621,12 @@ export interface HlsH265 {
    * - fmp4: Fragmented MP4 segments, better efficiency
    */
   hls_segment_type?: 'mpegts' | 'fmp4';
+
+  /**
+   * HlsSingleFile specifies whether to store HLS segments in one file using byte
+   * ranges. Defaults to true. Set to false to create separate segment files.
+   */
+  hls_single_file?: boolean;
 
   /**
    * HlsTime specifies the duration of each HLS segment in seconds. Range: 1 to 10.
@@ -717,8 +725,8 @@ export interface HlsH265 {
   seek?: number;
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between 1
+   * bps and 100 Mbps.
    */
   video_bitrate?: number;
 
@@ -753,7 +761,7 @@ export interface Job {
   created_at: string;
 
   /**
-   * A template defines the transcoding parameters and settings for a job
+   * The format parameters and settings for a job
    */
   format:
     | Job.MP4Av1
@@ -771,13 +779,12 @@ export interface Job {
   progress: number;
 
   /**
-   * ID of the source video being transcoded
+   * ID of the source media being processed
    */
   source_id: string;
 
   /**
-   * Current status of the job. New jobs start as pending while waiting for scheduler
-   * admission, then become queued when admitted for processing.
+   * Current status of the job.
    */
   status:
     | 'pending'
@@ -799,11 +806,6 @@ export interface Job {
    * Storage settings for where the job output will be saved
    */
   storage: Job.Storage;
-
-  /**
-   * The transcoder configuration for a job
-   */
-  transcoder: Job.Transcoder;
 
   /**
    * Last update timestamp
@@ -829,6 +831,11 @@ export interface Job {
    * When the job started processing
    */
   started_at?: string;
+
+  /**
+   * The transcoder configuration for a job
+   */
+  transcoder?: Job.Transcoder;
 }
 
 export namespace Job {
@@ -840,11 +847,6 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
-
-    /**
-     * Whether per-title optimization was enabled for this job.
-     */
-    per_title: boolean;
   }
 
   /**
@@ -855,11 +857,6 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
-
-    /**
-     * Whether per-title optimization was enabled for this job.
-     */
-    per_title: boolean;
   }
 
   /**
@@ -870,11 +867,6 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
-
-    /**
-     * Whether per-title optimization was enabled for this job.
-     */
-    per_title: boolean;
   }
 
   /**
@@ -885,11 +877,6 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
-
-    /**
-     * Whether per-title optimization was enabled for this job.
-     */
-    per_title: boolean;
   }
 
   /**
@@ -901,11 +888,6 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
-
-    /**
-     * Whether per-title optimization was enabled for this job.
-     */
-    per_title: boolean;
   }
 
   /**
@@ -917,11 +899,6 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
-
-    /**
-     * Whether per-title optimization was enabled for this job.
-     */
-    per_title: boolean;
   }
 
   /**
@@ -933,11 +910,6 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
-
-    /**
-     * Whether per-title optimization was enabled for this job.
-     */
-    per_title: boolean;
   }
 
   /**
@@ -948,11 +920,6 @@ export namespace Job {
      * The format ID
      */
     id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
-
-    /**
-     * Whether per-title optimization was enabled for this job.
-     */
-    per_title: boolean;
   }
 
   /**
@@ -999,7 +966,7 @@ export interface Jpg {
 
   /**
    * Time interval in seconds at which frames are extracted from the video (e.g.,
-   * interval=10 extracts frames at 0s, 10s, 20s, etc.). Must be between 1 and 60
+   * interval=10 extracts frames at 0s, 10s, 20s, etc.). Must be between 1 and 3600
    * seconds.
    */
   interval: number;
@@ -1071,12 +1038,14 @@ export interface MP4Av1 {
   duration?: number;
 
   /**
-   * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+   * Framerate specifies the output video frame rate. Must be greater than zero and
+   * at most 240 fps.
    */
   framerate?: number;
 
   /**
-   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 960
+   * frames.
    */
   gop?: number;
 
@@ -1177,8 +1146,8 @@ export interface MP4Av1 {
   seek?: number;
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between 1
+   * bps and 100 Mbps.
    */
   video_bitrate?: number;
 
@@ -1234,12 +1203,14 @@ export interface MP4H264 {
   duration?: number;
 
   /**
-   * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+   * Framerate specifies the output video frame rate. Must be greater than zero and
+   * at most 240 fps.
    */
   framerate?: number;
 
   /**
-   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 960
+   * frames.
    */
   gop?: number;
 
@@ -1342,8 +1313,8 @@ export interface MP4H264 {
   seek?: number;
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between 1
+   * bps and 100 Mbps.
    */
   video_bitrate?: number;
 
@@ -1355,7 +1326,7 @@ export interface MP4H264 {
 
   /**
    * X264KeyInt specifies the maximum number of frames between keyframes for H.264
-   * encoding. Range: 1 to 300. Higher values can improve compression but may affect
+   * encoding. Range: 1 to 960. Higher values can improve compression but may affect
    * seeking.
    */
   x264_keyint?: number;
@@ -1406,12 +1377,14 @@ export interface MP4H265 {
   duration?: number;
 
   /**
-   * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+   * Framerate specifies the output video frame rate. Must be greater than zero and
+   * at most 240 fps.
    */
   framerate?: number;
 
   /**
-   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 960
+   * frames.
    */
   gop?: number;
 
@@ -1511,8 +1484,8 @@ export interface MP4H265 {
   seek?: number;
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between 1
+   * bps and 100 Mbps.
    */
   video_bitrate?: number;
 
@@ -1583,12 +1556,14 @@ export interface WebmVp9 {
   duration?: number;
 
   /**
-   * Framerate specifies the output video frame rate. Must be between 15 and 120 fps.
+   * Framerate specifies the output video frame rate. Must be greater than zero and
+   * at most 240 fps.
    */
   framerate?: number;
 
   /**
-   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 300.
+   * Gop specifies the Group of Pictures (GOP) size. Must be between 1 and 960
+   * frames.
    */
   gop?: number;
 
@@ -1666,8 +1641,8 @@ export interface WebmVp9 {
   seek?: number;
 
   /**
-   * VideoBitrate specifies the video bitrate in bits per second. Must be between
-   * 100Kbps and 50Mbps.
+   * VideoBitrate specifies the video bitrate in bits per second. Must be between 1
+   * bps and 100 Mbps.
    */
   video_bitrate?: number;
 

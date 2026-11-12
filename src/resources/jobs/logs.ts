@@ -7,17 +7,14 @@ import { path } from '../../internal/utils/path';
 
 export class Logs extends APIResource {
   /**
-   * Retrieve logs for a specific job, either from the transcoder or manager service
+   * Retrieve logs for a specific job, either from the transcoder or manager service.
+   * Deprecated: Jobs are a legacy resource. Use Assets, Transcodings or Thumbnails
+   * instead.
    *
-   * @example
-   * ```ts
-   * const logs = await client.jobs.logs.list('jobId', {
-   *   service: 'transcoder',
-   * });
-   * ```
+   * @deprecated
    */
   list(jobID: string, query: LogListParams, options?: RequestOptions): APIPromise<LogListResponse> {
-    return this._client.get(path`/api/jobs/${jobID}/logs`, {
+    return this._client.get(path`/jobs/${jobID}/logs`, {
       query,
       ...options,
       __security: { projectAccessTokenAuth: true },

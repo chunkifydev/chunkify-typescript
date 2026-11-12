@@ -12,8 +12,8 @@ describe('resource notifications', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.notifications.create({
-      event: 'job.completed',
-      object_id: 'job_A1cce6120E56e7Tu9ioP09Nhjk9',
+      event: 'asset.playback_ready',
+      object_id: 'ast_A1cce6120E56e7Tu9ioP09Nhjk9',
       webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -28,8 +28,8 @@ describe('resource notifications', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.notifications.create({
-      event: 'job.completed',
-      object_id: 'job_A1cce6120E56e7Tu9ioP09Nhjk9',
+      event: 'asset.playback_ready',
+      object_id: 'ast_A1cce6120E56e7Tu9ioP09Nhjk9',
       webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
     });
   });
@@ -69,7 +69,8 @@ describe('resource notifications', () => {
             lte: 0,
             sort: 'asc',
           },
-          events: ['job.completed'],
+          event_id: 'event_id',
+          events: ['asset.playback_ready'],
           limit: 1,
           object_id: 'object_id',
           offset: 0,
