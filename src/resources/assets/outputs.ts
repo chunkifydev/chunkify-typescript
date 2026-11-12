@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as ThumbnailsAPI from '../thumbnails';
+import * as AssetsAPI from './assets';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
@@ -22,19 +23,16 @@ export class Outputs extends APIResource {
    * const assetOutput = await client.assets.outputs.create(
    *   'assetId',
    *   {
-   *     output: {
-   *       params: { resolution: '1080p' },
-   *       type: 'static_rendition',
-   *     },
+   *     params: {},
+   *     type: 'static_rendition',
    *   },
    * );
    * ```
    */
-  create(assetID: string, params: OutputCreateParams, options?: RequestOptions): APIPromise<AssetOutput> {
-    const { output } = params;
+  create(assetID: string, body: OutputCreateParams, options?: RequestOptions): APIPromise<AssetOutput> {
     return (
       this._client.post(path`/assets/${assetID}/outputs`, {
-        body: output,
+        body,
         ...options,
         __security: { projectAccessTokenAuth: true },
       }) as APIPromise<{ data: AssetOutput }>
@@ -622,22 +620,13 @@ export namespace AssetOutput {
   }
 }
 
-export interface OutputCreateParams {
-  /**
-   * Create one output for an Asset. Type selects its required, strictly validated
-   * parameters.
-   */
-  output:
-    | OutputCreateParams.AssetCaptionOutputCreateParams
-    | OutputCreateParams.AssetStaticRenditionOutputCreateParams
-    | OutputCreateParams.AssetThumbnailOutputCreateParams
-    | OutputCreateParams.AssetTranscriptOutputCreateParams;
-}
+export type OutputCreateParams =
+  | OutputCreateParams.AssetCaptionOutputCreateParams
+  | OutputCreateParams.AssetStaticRenditionOutputCreateParams
+  | OutputCreateParams.AssetThumbnailOutputCreateParams
+  | OutputCreateParams.AssetTranscriptOutputCreateParams;
 
-export namespace OutputCreateParams {
-  /**
-   * Create an Asset-owned caption output.
-   */
+export declare namespace OutputCreateParams {
   export interface AssetCaptionOutputCreateParams {
     /**
      * Params specifies the settings for this output type.
@@ -686,14 +675,11 @@ export namespace OutputCreateParams {
     }
   }
 
-  /**
-   * Create an Asset-owned static rendition output.
-   */
   export interface AssetStaticRenditionOutputCreateParams {
     /**
      * Params specifies the settings for this output type.
      */
-    params: AssetStaticRenditionOutputCreateParams.Params;
+    params: AssetsAPI.AssetStaticRenditionCreateParams;
 
     /**
      * Type specifies the output kind to create.
@@ -701,23 +687,6 @@ export namespace OutputCreateParams {
     type: 'static_rendition';
   }
 
-  export namespace AssetStaticRenditionOutputCreateParams {
-    /**
-     * Params specifies the settings for this output type.
-     */
-    export interface Params {
-      /**
-       * H.264 MP4 resolution. highest selects the largest supported output without
-       * upscaling. Hobby supports up to 1080p; other plans support up to 2160p.
-       * Independent of the streaming resolution limits.
-       */
-      resolution: 'highest' | '240p' | '360p' | '480p' | '540p' | '720p' | '1080p' | '1440p' | '2160p';
-    }
-  }
-
-  /**
-   * Create an Asset-owned thumbnail output.
-   */
   export interface AssetThumbnailOutputCreateParams {
     /**
      * Params specifies the settings for this output type.
@@ -798,10 +767,6 @@ export namespace OutputCreateParams {
     }
   }
 
-  /**
-   * Create or reuse the original-language transcript for an Asset. Caption
-   * generation shares this transcript and its speech-recognition charge.
-   */
   export interface AssetTranscriptOutputCreateParams {
     /**
      * Parameters for an original-language transcript. Pass an empty object; the spoken

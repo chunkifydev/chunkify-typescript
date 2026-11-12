@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../../core/resource';
-import { APIPromise } from '../../../core/api-promise';
-import { RequestOptions } from '../../../internal/request-options';
-import { path } from '../../../internal/utils/path';
+import { APIResource } from '../../../../core/resource';
+import { APIPromise } from '../../../../core/api-promise';
+import { RequestOptions } from '../../../../internal/request-options';
+import { path } from '../../../../internal/utils/path';
 
 export class Keys extends APIResource {
   /**
@@ -14,19 +14,20 @@ export class Keys extends APIResource {
    * @example
    * ```ts
    * const key =
-   *   await client.projects.analyticsConnections.keys.create(
+   *   await client.projects.analytics.connections.keys.create(
+   *     'projectId',
    *     'connectionId',
-   *     { projectId: 'projectId', purpose: 'player' },
+   *     { purpose: 'player' },
    *   );
    * ```
    */
   create(
+    projectID: string,
     connectionID: string,
-    params: KeyCreateParams,
+    body: KeyCreateParams,
     options?: RequestOptions,
   ): APIPromise<KeyCreateResponse> {
-    const { projectId, ...body } = params;
-    return this._client.post(path`/projects/${projectId}/analytics/connections/${connectionID}/keys`, {
+    return this._client.post(path`/projects/${projectID}/analytics/connections/${connectionID}/keys`, {
       body,
       ...options,
       __security: { teamAccessTokenAuth: true },
@@ -41,15 +42,14 @@ export class Keys extends APIResource {
    * @example
    * ```ts
    * const keys =
-   *   await client.projects.analyticsConnections.keys.list(
+   *   await client.projects.analytics.connections.keys.list(
+   *     'projectId',
    *     'connectionId',
-   *     { projectId: 'projectId' },
    *   );
    * ```
    */
-  list(connectionID: string, params: KeyListParams, options?: RequestOptions): APIPromise<KeyListResponse> {
-    const { projectId } = params;
-    return this._client.get(path`/projects/${projectId}/analytics/connections/${connectionID}/keys`, {
+  list(projectID: string, connectionID: string, options?: RequestOptions): APIPromise<KeyListResponse> {
+    return this._client.get(path`/projects/${projectID}/analytics/connections/${connectionID}/keys`, {
       ...options,
       __security: { teamAccessTokenAuth: true },
     });
@@ -63,19 +63,21 @@ export class Keys extends APIResource {
    * @example
    * ```ts
    * const response =
-   *   await client.projects.analyticsConnections.keys.rotate(
+   *   await client.projects.analytics.connections.keys.rotate(
+   *     'projectId',
+   *     'connectionId',
    *     'keyId',
-   *     {
-   *       projectId: 'projectId',
-   *       connectionId: 'connectionId',
-   *     },
    *   );
    * ```
    */
-  rotate(keyID: string, params: KeyRotateParams, options?: RequestOptions): APIPromise<KeyRotateResponse> {
-    const { projectId, connectionId } = params;
+  rotate(
+    projectID: string,
+    connectionID: string,
+    keyID: string,
+    options?: RequestOptions,
+  ): APIPromise<KeyRotateResponse> {
     return this._client.post(
-      path`/projects/${projectId}/analytics/connections/${connectionId}/keys/${keyID}/rotate`,
+      path`/projects/${projectID}/analytics/connections/${connectionID}/keys/${keyID}/rotate`,
       { ...options, __security: { teamAccessTokenAuth: true } },
     );
   }
@@ -144,35 +146,10 @@ export interface KeyRotateResponse {
 
 export interface KeyCreateParams {
   /**
-   * Path param: The owning Chunkify project ID.
-   */
-  projectId: string;
-
-  /**
-   * Body param: Purpose distinguishes player ingestion, read-only API access and a
-   * separate read-only MCP credential. Read and MCP keys have the same collector
-   * permissions.
+   * Purpose distinguishes player ingestion, read-only API access and a separate
+   * read-only MCP credential. Read and MCP keys have the same collector permissions.
    */
   purpose: 'player' | 'read' | 'mcp';
-}
-
-export interface KeyListParams {
-  /**
-   * The owning Chunkify project ID.
-   */
-  projectId: string;
-}
-
-export interface KeyRotateParams {
-  /**
-   * The owning Chunkify project ID.
-   */
-  projectId: string;
-
-  /**
-   * The saved analytics connection ID.
-   */
-  connectionId: string;
 }
 
 export declare namespace Keys {
@@ -182,7 +159,5 @@ export declare namespace Keys {
     type KeyListResponse as KeyListResponse,
     type KeyRotateResponse as KeyRotateResponse,
     type KeyCreateParams as KeyCreateParams,
-    type KeyListParams as KeyListParams,
-    type KeyRotateParams as KeyRotateParams,
   };
 }
