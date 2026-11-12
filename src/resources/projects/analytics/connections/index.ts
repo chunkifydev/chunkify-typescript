@@ -6,7 +6,9 @@ export {
   type ConnectionCreateResponse,
   type ConnectionListResponse,
   type ConnectionCreateParams,
+  type ConnectionRetrieveParams,
   type ConnectionUpdateParams,
+  type ConnectionDeleteParams,
 } from './connections';
 export {
   Keys,
@@ -15,4 +17,6 @@ export {
   type KeyListResponse,
   type KeyRotateResponse,
   type KeyCreateParams,
+  type KeyListParams,
+  type KeyRotateParams,
 } from './keys';

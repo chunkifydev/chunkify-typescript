@@ -54,7 +54,7 @@ import {
 import {
   Thumbnail,
   ThumbnailCreateParams,
-  ThumbnailCreateStorage,
+  ThumbnailCreateStorageParams,
   ThumbnailDeleteParams,
   ThumbnailListParams,
   Thumbnails,
@@ -1055,7 +1055,7 @@ export declare namespace Chunkify {
   export {
     Thumbnails as Thumbnails,
     type Thumbnail as Thumbnail,
-    type ThumbnailCreateStorage as ThumbnailCreateStorage,
+    type ThumbnailCreateStorageParams as ThumbnailCreateStorageParams,
     type ThumbnailsPaginatedResults as ThumbnailsPaginatedResults,
     type ThumbnailCreateParams as ThumbnailCreateParams,
     type ThumbnailListParams as ThumbnailListParams,
