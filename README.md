@@ -26,18 +26,12 @@ const client = new Chunkify({
   projectAccessToken: process.env['CHUNKIFY_TOKEN'], // This is the default and can be omitted
 });
 
-const job = await client.jobs.create({
-  format: {
-    id: 'mp4_h264',
-    width: 1920,
-    height: 1080,
-    crf: 21,
-  },
+const asset = await client.assets.create({
   source_id: 'src_2G6MJiNz71bHQGNzGwKx5cJwPFS',
-  transcoder: { quantity: 4, type: '8vCPU' },
+  title: 'Launch video',
 });
 
-console.log(job.id);
+console.log(asset.id);
 ```
 
 ### Request & Response types
@@ -52,7 +46,7 @@ const client = new Chunkify({
   projectAccessToken: process.env['CHUNKIFY_TOKEN'], // This is the default and can be omitted
 });
 
-const [jobFile]: [Chunkify.JobFile] = await client.files.list();
+const [asset]: [Chunkify.Asset] = await client.assets.list();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -65,7 +59,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const page = await client.files.list().catch(async (err) => {
+const page = await client.assets.list().catch(async (err) => {
   if (err instanceof Chunkify.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -105,7 +99,7 @@ const client = new Chunkify({
 });
 
 // Or, configure per-request:
-await client.files.list({
+await client.assets.list({
   maxRetries: 5,
 });
 ```
@@ -122,7 +116,7 @@ const client = new Chunkify({
 });
 
 // Override per-request:
-await client.files.list({
+await client.assets.list({
   timeout: 5 * 1000,
 });
 ```
@@ -176,14 +170,14 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Chunkify();
 
-const response = await client.files.list().asResponse();
+const response = await client.assets.list().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: page, response: raw } = await client.files.list().withResponse();
+const { data: page, response: raw } = await client.assets.list().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-for await (const jobFile of page) {
-  console.log(jobFile.id);
+for await (const asset of page) {
+  console.log(asset.id);
 }
 ```
 
@@ -264,7 +258,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.jobs.create({
+client.assets.create({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
