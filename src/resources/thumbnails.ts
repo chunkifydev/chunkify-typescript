@@ -394,7 +394,7 @@ export namespace Thumbnail {
 /**
  * Output Storage selection, independent of Source storage.
  */
-export interface ThumbnailCreateStorage {
+export interface ThumbnailCreateStorageParams {
   /**
    * Id identifies output Storage in this Project. Omit to use the Project default.
    */
@@ -457,7 +457,7 @@ export interface ThumbnailCreateParams {
    * Storage overrides the Project output destination and names the output files.
    * Source storage remains independent.
    */
-  storage?: ThumbnailCreateStorage;
+  storage?: ThumbnailCreateStorageParams;
 
   /**
    * Timestamps specifies 1 to 100 Source-relative target times in seconds. Every
@@ -544,7 +544,7 @@ export interface ThumbnailDeleteParams {
 export declare namespace Thumbnails {
   export {
     type Thumbnail as Thumbnail,
-    type ThumbnailCreateStorage as ThumbnailCreateStorage,
+    type ThumbnailCreateStorageParams as ThumbnailCreateStorageParams,
     type ThumbnailsPaginatedResults as ThumbnailsPaginatedResults,
     type ThumbnailCreateParams as ThumbnailCreateParams,
     type ThumbnailListParams as ThumbnailListParams,

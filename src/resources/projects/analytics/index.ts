@@ -7,5 +7,7 @@ export {
   type ConnectionCreateResponse,
   type ConnectionListResponse,
   type ConnectionCreateParams,
+  type ConnectionRetrieveParams,
   type ConnectionUpdateParams,
+  type ConnectionDeleteParams,
 } from './connections/index';
