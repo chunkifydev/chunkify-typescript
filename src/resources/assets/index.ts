@@ -3,6 +3,7 @@
 export {
   Assets,
   type Asset,
+  type AssetStaticRenditionCreateParams,
   type AssetStatus,
   type AssetCreateParams,
   type AssetUpdateParams,
@@ -19,9 +20,4 @@ export {
   type OutputDeleteParams,
   type AssetOutputsPaginatedResults,
 } from './outputs';
-export {
-  Workflow,
-  type AssetActionRun,
-  type WorkflowListActionsParams,
-  type AssetActionRunsPaginatedResults,
-} from './workflow';
+export { Workflow, type AssetActionRun, type AssetActionRunsPaginatedResults } from './workflow/index';
