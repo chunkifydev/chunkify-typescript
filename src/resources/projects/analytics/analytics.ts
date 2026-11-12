@@ -6,7 +6,9 @@ import {
   AnalyticsConnection,
   ConnectionCreateParams,
   ConnectionCreateResponse,
+  ConnectionDeleteParams,
   ConnectionListResponse,
+  ConnectionRetrieveParams,
   ConnectionUpdateParams,
   Connections,
 } from './connections/connections';
@@ -24,6 +26,8 @@ export declare namespace Analytics {
     type ConnectionCreateResponse as ConnectionCreateResponse,
     type ConnectionListResponse as ConnectionListResponse,
     type ConnectionCreateParams as ConnectionCreateParams,
+    type ConnectionRetrieveParams as ConnectionRetrieveParams,
     type ConnectionUpdateParams as ConnectionUpdateParams,
+    type ConnectionDeleteParams as ConnectionDeleteParams,
   };
 }

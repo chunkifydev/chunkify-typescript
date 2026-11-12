@@ -179,10 +179,10 @@ Types:
 Methods:
 
 - <code title="post /projects/{projectId}/analytics/connections">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">create</a>(projectID, { ...params }) -> ConnectionCreateResponse</code>
-- <code title="get /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">retrieve</a>(projectID, connectionID) -> AnalyticsConnection</code>
-- <code title="patch /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">update</a>(projectID, connectionID, { ...params }) -> AnalyticsConnection</code>
+- <code title="get /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">retrieve</a>(connectionID, { ...params }) -> AnalyticsConnection</code>
+- <code title="patch /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">update</a>(connectionID, { ...params }) -> AnalyticsConnection</code>
 - <code title="get /projects/{projectId}/analytics/connections">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">list</a>(projectID) -> ConnectionListResponse</code>
-- <code title="delete /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">delete</a>(projectID, connectionID) -> void</code>
+- <code title="delete /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">delete</a>(connectionID, { ...params }) -> void</code>
 
 #### Keys
 
@@ -195,9 +195,9 @@ Types:
 
 Methods:
 
-- <code title="post /projects/{projectId}/analytics/connections/{connectionId}/keys">client.projects.analytics.connections.keys.<a href="./src/resources/projects/analytics/connections/keys.ts">create</a>(projectID, connectionID, { ...params }) -> KeyCreateResponse</code>
-- <code title="get /projects/{projectId}/analytics/connections/{connectionId}/keys">client.projects.analytics.connections.keys.<a href="./src/resources/projects/analytics/connections/keys.ts">list</a>(projectID, connectionID) -> KeyListResponse</code>
-- <code title="post /projects/{projectId}/analytics/connections/{connectionId}/keys/{keyId}/rotate">client.projects.analytics.connections.keys.<a href="./src/resources/projects/analytics/connections/keys.ts">rotate</a>(projectID, connectionID, keyID) -> KeyRotateResponse</code>
+- <code title="post /projects/{projectId}/analytics/connections/{connectionId}/keys">client.projects.analytics.connections.keys.<a href="./src/resources/projects/analytics/connections/keys.ts">create</a>(connectionID, { ...params }) -> KeyCreateResponse</code>
+- <code title="get /projects/{projectId}/analytics/connections/{connectionId}/keys">client.projects.analytics.connections.keys.<a href="./src/resources/projects/analytics/connections/keys.ts">list</a>(connectionID, { ...params }) -> KeyListResponse</code>
+- <code title="post /projects/{projectId}/analytics/connections/{connectionId}/keys/{keyId}/rotate">client.projects.analytics.connections.keys.<a href="./src/resources/projects/analytics/connections/keys.ts">rotate</a>(keyID, { ...params }) -> KeyRotateResponse</code>
 
 # Sources
 
@@ -232,7 +232,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/thumbnails.ts">Thumbnail</a></code>
-- <code><a href="./src/resources/thumbnails.ts">ThumbnailCreateStorage</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailCreateStorageParams</a></code>
 
 Methods:
 

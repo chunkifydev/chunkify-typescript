@@ -11,7 +11,8 @@ const client = new Chunkify({
 describe('resource keys', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.projects.analytics.connections.keys.create('projectId', 'connectionId', {
+    const responsePromise = client.projects.analytics.connections.keys.create('connectionId', {
+      projectId: 'projectId',
       purpose: 'player',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -25,14 +26,17 @@ describe('resource keys', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.projects.analytics.connections.keys.create('projectId', 'connectionId', {
+    const response = await client.projects.analytics.connections.keys.create('connectionId', {
+      projectId: 'projectId',
       purpose: 'player',
     });
   });
 
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.projects.analytics.connections.keys.list('projectId', 'connectionId');
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.projects.analytics.connections.keys.list('connectionId', {
+      projectId: 'projectId',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -43,12 +47,18 @@ describe('resource keys', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('rotate', async () => {
-    const responsePromise = client.projects.analytics.connections.keys.rotate(
-      'projectId',
-      'connectionId',
-      'keyId',
-    );
+  test.skip('list: required and optional params', async () => {
+    const response = await client.projects.analytics.connections.keys.list('connectionId', {
+      projectId: 'projectId',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('rotate: only required params', async () => {
+    const responsePromise = client.projects.analytics.connections.keys.rotate('keyId', {
+      projectId: 'projectId',
+      connectionId: 'connectionId',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -56,5 +66,13 @@ describe('resource keys', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('rotate: required and optional params', async () => {
+    const response = await client.projects.analytics.connections.keys.rotate('keyId', {
+      projectId: 'projectId',
+      connectionId: 'connectionId',
+    });
   });
 });

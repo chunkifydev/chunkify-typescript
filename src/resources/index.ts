@@ -69,7 +69,7 @@ export {
 export {
   Thumbnails,
   type Thumbnail,
-  type ThumbnailCreateStorage,
+  type ThumbnailCreateStorageParams,
   type ThumbnailCreateParams,
   type ThumbnailListParams,
   type ThumbnailDeleteParams,
