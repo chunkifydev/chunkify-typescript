@@ -8,17 +8,13 @@ import { path } from '../../internal/utils/path';
 
 export class Transcoders extends APIResource {
   /**
-   * Retrieve all the transcoders statuses for a specific job
+   * Retrieve all the transcoders statuses for a specific job. Deprecated: Jobs are a
+   * legacy resource. Use Assets, Transcodings or Thumbnails instead.
    *
-   * @example
-   * ```ts
-   * const transcoders = await client.jobs.transcoders.list(
-   *   'jobId',
-   * );
-   * ```
+   * @deprecated
    */
   list(jobID: string, options?: RequestOptions): APIPromise<TranscoderListResponse> {
-    return this._client.get(path`/api/jobs/${jobID}/transcoders`, {
+    return this._client.get(path`/jobs/${jobID}/transcoders`, {
       ...options,
       __security: { projectAccessTokenAuth: true },
     });

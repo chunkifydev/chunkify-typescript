@@ -27,7 +27,7 @@ export class Storages extends APIResource {
   create(params: StorageCreateParams, options?: RequestOptions): APIPromise<Storage> {
     const { storage } = params;
     return (
-      this._client.post('/api/storages', {
+      this._client.post('/storages', {
         body: storage,
         ...options,
         __security: { projectAccessTokenAuth: true },
@@ -45,7 +45,7 @@ export class Storages extends APIResource {
    */
   retrieve(storageID: string, options?: RequestOptions): APIPromise<Storage> {
     return (
-      this._client.get(path`/api/storages/${storageID}`, {
+      this._client.get(path`/storages/${storageID}`, {
         ...options,
         __security: { projectAccessTokenAuth: true },
       }) as APIPromise<{ data: Storage }>
@@ -53,8 +53,20 @@ export class Storages extends APIResource {
   }
 
   /**
-   * Update customer-owned storage settings. Prefix changes apply to final outputs
-   * that have not been uploaded yet. Existing files keep their stored object keys.
+   * Update customer-owned storage settings. Send access_key_id and secret_access_key
+   * together to rotate credentials for AWS S3, Cloudflare R2, or S3-compatible
+   * storage. Both values must be non-empty and non-null. Omitting both preserves the
+   * saved pair and skips connection validation. Replacement credentials are checked
+   * against the saved bucket, endpoint, region, and addressing style using the
+   * creation upload, metadata, and download checks with best-effort probe cleanup. A
+   * prefix changed in the same request is used for validation. Both credentials are
+   * encrypted and saved atomically with other settings; a failed update preserves
+   * the previous values. Credential-only updates keep the Storage ID, resource
+   * associations, object paths, and Project default. Subsequent storage lookups use
+   * the new pair; running work may retain an existing client or signed URL. Rotation
+   * does not renew issued URLs, and revoking old keys can invalidate them. Prefix
+   * changes apply to final outputs that have not been uploaded yet. Existing files
+   * keep their stored object keys.
    *
    * @example
    * ```ts
@@ -62,7 +74,7 @@ export class Storages extends APIResource {
    * ```
    */
   update(storageID: string, body: StorageUpdateParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.patch(path`/api/storages/${storageID}`, {
+    return this._client.patch(path`/storages/${storageID}`, {
       body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
@@ -79,7 +91,7 @@ export class Storages extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<StorageListResponse> {
-    return this._client.get('/api/storages', { ...options, __security: { projectAccessTokenAuth: true } });
+    return this._client.get('/storages', { ...options, __security: { projectAccessTokenAuth: true } });
   }
 
   /**
@@ -92,7 +104,7 @@ export class Storages extends APIResource {
    * ```
    */
   delete(storageID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/storages/${storageID}`, {
+    return this._client.delete(path`/storages/${storageID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
       __security: { projectAccessTokenAuth: true },
@@ -584,6 +596,14 @@ export namespace StorageCreateParams {
 
 export interface StorageUpdateParams {
   /**
+   * Replacement access key ID for customer-managed storage. Send with a non-empty
+   * secret_access_key. Omit both credential fields to keep the saved pair. Null and
+   * empty values are rejected. Credentials are validated before either value is
+   * saved and are never returned.
+   */
+  access_key_id?: string;
+
+  /**
    * Object-key prefix for future final job outputs. Existing files keep their stored
    * object keys. Send an empty string to use the bucket root.
    */
@@ -593,6 +613,13 @@ export interface StorageUpdateParams {
    * Customer-managed HTTPS delivery origin, or null to remove the current value.
    */
   cdn_base_url?: string | null;
+
+  /**
+   * Replacement secret access key. Required with access_key_id; cannot be null or
+   * empty. The pair is encrypted and saved atomically only after validation
+   * succeeds.
+   */
+  secret_access_key?: string;
 }
 
 export declare namespace Storages {
