@@ -1,25 +1,15 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as AnalyticsConnectionsAPI from './analytics-connections/analytics-connections';
-import {
-  AnalyticsConnection,
-  AnalyticsConnectionCreateParams,
-  AnalyticsConnectionCreateResponse,
-  AnalyticsConnectionDeleteParams,
-  AnalyticsConnectionListResponse,
-  AnalyticsConnectionRetrieveParams,
-  AnalyticsConnectionUpdateParams,
-  AnalyticsConnections,
-} from './analytics-connections/analytics-connections';
+import * as AnalyticsAPI from './analytics/analytics';
+import { Analytics } from './analytics/analytics';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Projects extends APIResource {
-  analyticsConnections: AnalyticsConnectionsAPI.AnalyticsConnections =
-    new AnalyticsConnectionsAPI.AnalyticsConnections(this._client);
+  analytics: AnalyticsAPI.Analytics = new AnalyticsAPI.Analytics(this._client);
 
   /**
    * Create a new project with the specified name. The project will be created with
@@ -281,7 +271,7 @@ export namespace ProjectUpdateParams {
   }
 }
 
-Projects.AnalyticsConnections = AnalyticsConnections;
+Projects.Analytics = Analytics;
 
 export declare namespace Projects {
   export {
@@ -291,14 +281,5 @@ export declare namespace Projects {
     type ProjectUpdateParams as ProjectUpdateParams,
   };
 
-  export {
-    AnalyticsConnections as AnalyticsConnections,
-    type AnalyticsConnection as AnalyticsConnection,
-    type AnalyticsConnectionCreateResponse as AnalyticsConnectionCreateResponse,
-    type AnalyticsConnectionListResponse as AnalyticsConnectionListResponse,
-    type AnalyticsConnectionCreateParams as AnalyticsConnectionCreateParams,
-    type AnalyticsConnectionRetrieveParams as AnalyticsConnectionRetrieveParams,
-    type AnalyticsConnectionUpdateParams as AnalyticsConnectionUpdateParams,
-    type AnalyticsConnectionDeleteParams as AnalyticsConnectionDeleteParams,
-  };
+  export { Analytics as Analytics };
 }

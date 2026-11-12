@@ -11,13 +11,8 @@ import {
   OutputRetrieveParams,
   Outputs,
 } from './outputs';
-import * as WorkflowAPI from './workflow';
-import {
-  AssetActionRun,
-  AssetActionRunsPaginatedResults,
-  Workflow,
-  WorkflowListActionsParams,
-} from './workflow';
+import * as WorkflowAPI from './workflow/workflow';
+import { AssetActionRun, Workflow } from './workflow/workflow';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
@@ -480,6 +475,18 @@ export namespace Asset {
   }
 }
 
+/**
+ * Parameters for an independently processed H.264 MP4 rendition.
+ */
+export interface AssetStaticRenditionCreateParams {
+  /**
+   * H.264 MP4 resolution. highest selects the largest supported output without
+   * upscaling. Hobby supports up to 1080p; other plans support up to 2160p.
+   * Independent of the streaming resolution limits.
+   */
+  resolution: 'highest' | '240p' | '360p' | '480p' | '540p' | '720p' | '1080p' | '1440p' | '2160p';
+}
+
 export type AssetStatus = 'preparing' | 'ready' | 'failed' | 'expired';
 
 export interface AssetCreateParams {
@@ -642,6 +649,7 @@ Assets.Workflow = Workflow;
 export declare namespace Assets {
   export {
     type Asset as Asset,
+    type AssetStaticRenditionCreateParams as AssetStaticRenditionCreateParams,
     type AssetStatus as AssetStatus,
     type AssetsPaginatedResults as AssetsPaginatedResults,
     type AssetCreateParams as AssetCreateParams,
@@ -660,10 +668,5 @@ export declare namespace Assets {
     type OutputDeleteParams as OutputDeleteParams,
   };
 
-  export {
-    Workflow as Workflow,
-    type AssetActionRun as AssetActionRun,
-    type AssetActionRunsPaginatedResults as AssetActionRunsPaginatedResults,
-    type WorkflowListActionsParams as WorkflowListActionsParams,
-  };
+  export { Workflow as Workflow, type AssetActionRun as AssetActionRun };
 }

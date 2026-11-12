@@ -1,23 +1,21 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../../core/resource';
+import { APIResource } from '../../../../core/resource';
 import * as KeysAPI from './keys';
 import {
   AnalyticsKey,
   KeyCreateParams,
   KeyCreateResponse,
-  KeyListParams,
   KeyListResponse,
-  KeyRotateParams,
   KeyRotateResponse,
   Keys,
 } from './keys';
-import { APIPromise } from '../../../core/api-promise';
-import { buildHeaders } from '../../../internal/headers';
-import { RequestOptions } from '../../../internal/request-options';
-import { path } from '../../../internal/utils/path';
+import { APIPromise } from '../../../../core/api-promise';
+import { buildHeaders } from '../../../../internal/headers';
+import { RequestOptions } from '../../../../internal/request-options';
+import { path } from '../../../../internal/utils/path';
 
-export class AnalyticsConnections extends APIResource {
+export class Connections extends APIResource {
   keys: KeysAPI.Keys = new KeysAPI.Keys(this._client);
 
   /**
@@ -28,8 +26,8 @@ export class AnalyticsConnections extends APIResource {
    *
    * @example
    * ```ts
-   * const analyticsConnection =
-   *   await client.projects.analyticsConnections.create(
+   * const connection =
+   *   await client.projects.analytics.connections.create(
    *     'projectId',
    *     {
    *       name: 'Website analytics',
@@ -42,9 +40,9 @@ export class AnalyticsConnections extends APIResource {
    */
   create(
     projectID: string,
-    body: AnalyticsConnectionCreateParams,
+    body: ConnectionCreateParams,
     options?: RequestOptions,
-  ): APIPromise<AnalyticsConnectionCreateResponse> {
+  ): APIPromise<ConnectionCreateResponse> {
     return this._client.post(path`/projects/${projectID}/analytics/connections`, {
       body,
       ...options,
@@ -58,20 +56,19 @@ export class AnalyticsConnections extends APIResource {
    * @example
    * ```ts
    * const analyticsConnection =
-   *   await client.projects.analyticsConnections.retrieve(
+   *   await client.projects.analytics.connections.retrieve(
+   *     'projectId',
    *     'connectionId',
-   *     { projectId: 'projectId' },
    *   );
    * ```
    */
   retrieve(
+    projectID: string,
     connectionID: string,
-    params: AnalyticsConnectionRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<AnalyticsConnection> {
-    const { projectId } = params;
     return (
-      this._client.get(path`/projects/${projectId}/analytics/connections/${connectionID}`, {
+      this._client.get(path`/projects/${projectID}/analytics/connections/${connectionID}`, {
         ...options,
         __security: { teamAccessTokenAuth: true },
       }) as APIPromise<{ data: AnalyticsConnection }>
@@ -85,23 +82,21 @@ export class AnalyticsConnections extends APIResource {
    * @example
    * ```ts
    * const analyticsConnection =
-   *   await client.projects.analyticsConnections.update(
+   *   await client.projects.analytics.connections.update(
+   *     'projectId',
    *     'connectionId',
-   *     {
-   *       projectId: 'projectId',
-   *       name: 'Production analytics',
-   *     },
+   *     { name: 'Production analytics' },
    *   );
    * ```
    */
   update(
+    projectID: string,
     connectionID: string,
-    params: AnalyticsConnectionUpdateParams,
+    body: ConnectionUpdateParams,
     options?: RequestOptions,
   ): APIPromise<AnalyticsConnection> {
-    const { projectId, ...body } = params;
     return (
-      this._client.patch(path`/projects/${projectId}/analytics/connections/${connectionID}`, {
+      this._client.patch(path`/projects/${projectID}/analytics/connections/${connectionID}`, {
         body,
         ...options,
         __security: { teamAccessTokenAuth: true },
@@ -115,13 +110,13 @@ export class AnalyticsConnections extends APIResource {
    *
    * @example
    * ```ts
-   * const analyticsConnections =
-   *   await client.projects.analyticsConnections.list(
+   * const connections =
+   *   await client.projects.analytics.connections.list(
    *     'projectId',
    *   );
    * ```
    */
-  list(projectID: string, options?: RequestOptions): APIPromise<AnalyticsConnectionListResponse> {
+  list(projectID: string, options?: RequestOptions): APIPromise<ConnectionListResponse> {
     return this._client.get(path`/projects/${projectID}/analytics/connections`, {
       ...options,
       __security: { teamAccessTokenAuth: true },
@@ -138,19 +133,14 @@ export class AnalyticsConnections extends APIResource {
    *
    * @example
    * ```ts
-   * await client.projects.analyticsConnections.delete(
+   * await client.projects.analytics.connections.delete(
+   *   'projectId',
    *   'connectionId',
-   *   { projectId: 'projectId' },
    * );
    * ```
    */
-  delete(
-    connectionID: string,
-    params: AnalyticsConnectionDeleteParams,
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { projectId } = params;
-    return this._client.delete(path`/projects/${projectId}/analytics/connections/${connectionID}`, {
+  delete(projectID: string, connectionID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/projects/${projectID}/analytics/connections/${connectionID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
       __security: { teamAccessTokenAuth: true },
@@ -241,7 +231,7 @@ export interface AnalyticsConnection {
   retention_seconds?: number;
 }
 
-export interface AnalyticsConnectionCreateResponse {
+export interface ConnectionCreateResponse {
   /**
    * A saved source for analytics reports. The dashboard player default is
    * independent of the connection selected in reports. External players keep their
@@ -259,7 +249,7 @@ export interface AnalyticsConnectionCreateResponse {
   public_key?: string;
 }
 
-export interface AnalyticsConnectionListResponse {
+export interface ConnectionListResponse {
   /**
    * Saved connections in creation order.
    */
@@ -268,7 +258,7 @@ export interface AnalyticsConnectionListResponse {
   status: 'success';
 }
 
-export interface AnalyticsConnectionCreateParams {
+export interface ConnectionCreateParams {
   /**
    * Name identifies this connection in the dashboard.
    */
@@ -301,82 +291,61 @@ export interface AnalyticsConnectionCreateParams {
   read_key?: string;
 }
 
-export interface AnalyticsConnectionRetrieveParams {
+export interface ConnectionUpdateParams {
   /**
-   * The owning Chunkify project ID.
-   */
-  projectId: string;
-}
-
-export interface AnalyticsConnectionUpdateParams {
-  /**
-   * Path param: The owning Chunkify project ID.
-   */
-  projectId: string;
-
-  /**
-   * Body param: AllowedOrigins lists additional website origins permitted to ingest
-   * events for a hosted connection. Shared installation origins remain allowed. An
-   * empty list clears project-specific origins. Custom servers manage origins on
-   * their own infrastructure.
+   * AllowedOrigins lists additional website origins permitted to ingest events for a
+   * hosted connection. Shared installation origins remain allowed. An empty list
+   * clears project-specific origins. Custom servers manage origins on their own
+   * infrastructure.
    */
   allowed_origins?: Array<string>;
 
   /**
-   * Body param: DefaultForDashboard selects this ready connection for Chunkify
-   * dashboard players, public previews, the playground and newly generated snippets.
-   * Requires a public ingest key. Setting true replaces the previous default
-   * atomically. Setting false disables dashboard tracking if no default remains;
-   * another connection is not selected automatically. Existing external players keep
-   * their own configuration.
+   * DefaultForDashboard selects this ready connection for Chunkify dashboard
+   * players, public previews, the playground and newly generated snippets. Requires
+   * a public ingest key. Setting true replaces the previous default atomically.
+   * Setting false disables dashboard tracking if no default remains; another
+   * connection is not selected automatically. Existing external players keep their
+   * own configuration.
    */
   default_for_dashboard?: boolean;
 
   /**
-   * Body param: Endpoint specifies a replacement custom server base URL. Supply
-   * read_key together with it.
+   * Endpoint specifies a replacement custom server base URL. Supply read_key
+   * together with it.
    */
   endpoint?: string;
 
   /**
-   * Body param: Name identifies this connection in the dashboard.
+   * Name identifies this connection in the dashboard.
    */
   name?: string;
 
   /**
-   * Body param: PublicIngestKey optionally enables preview tracking for a custom
-   * connection. Supply the public ingestion key for the same analytics project as
-   * read_key. It is returned in connection reads and used in browser code. Omit for
-   * hosted connections. An empty string disables preview tracking. A replacement
-   * endpoint clears the saved public key unless a replacement is supplied.
+   * PublicIngestKey optionally enables preview tracking for a custom connection.
+   * Supply the public ingestion key for the same analytics project as read_key. It
+   * is returned in connection reads and used in browser code. Omit for hosted
+   * connections. An empty string disables preview tracking. A replacement endpoint
+   * clears the saved public key unless a replacement is supplied.
    */
   public_ingest_key?: string;
 
   /**
-   * Body param: ReadKey replaces the custom connection credential after validation.
-   * Its value is never returned.
+   * ReadKey replaces the custom connection credential after validation. Its value is
+   * never returned.
    */
   read_key?: string;
 }
 
-export interface AnalyticsConnectionDeleteParams {
-  /**
-   * The owning Chunkify project ID.
-   */
-  projectId: string;
-}
+Connections.Keys = Keys;
 
-AnalyticsConnections.Keys = Keys;
-
-export declare namespace AnalyticsConnections {
+export declare namespace Connections {
   export {
     type AnalyticsConnection as AnalyticsConnection,
-    type AnalyticsConnectionCreateResponse as AnalyticsConnectionCreateResponse,
-    type AnalyticsConnectionListResponse as AnalyticsConnectionListResponse,
-    type AnalyticsConnectionCreateParams as AnalyticsConnectionCreateParams,
-    type AnalyticsConnectionRetrieveParams as AnalyticsConnectionRetrieveParams,
-    type AnalyticsConnectionUpdateParams as AnalyticsConnectionUpdateParams,
-    type AnalyticsConnectionDeleteParams as AnalyticsConnectionDeleteParams,
+    type ConnectionCreateResponse as ConnectionCreateResponse,
+    type ConnectionListResponse as ConnectionListResponse,
+    type ConnectionCreateParams as ConnectionCreateParams,
+    type ConnectionUpdateParams as ConnectionUpdateParams,
   };
 
   export {
@@ -386,7 +355,5 @@ export declare namespace AnalyticsConnections {
     type KeyListResponse as KeyListResponse,
     type KeyRotateResponse as KeyRotateResponse,
     type KeyCreateParams as KeyCreateParams,
-    type KeyListParams as KeyListParams,
-    type KeyRotateParams as KeyRotateParams,
   };
 }
