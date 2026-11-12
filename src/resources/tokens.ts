@@ -20,7 +20,7 @@ export class Tokens extends APIResource {
    */
   create(body: TokenCreateParams, options?: RequestOptions): APIPromise<Token> {
     return (
-      this._client.post('/api/tokens', {
+      this._client.post('/tokens', {
         body,
         ...options,
         __security: { teamAccessTokenAuth: true },
@@ -40,7 +40,7 @@ export class Tokens extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<TokenListResponse> {
-    return this._client.get('/api/tokens', { ...options, __security: { teamAccessTokenAuth: true } });
+    return this._client.get('/tokens', { ...options, __security: { teamAccessTokenAuth: true } });
   }
 
   /**
@@ -53,7 +53,7 @@ export class Tokens extends APIResource {
    * ```
    */
   revoke(tokenID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/tokens/${tokenID}`, {
+    return this._client.delete(path`/tokens/${tokenID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
       __security: { teamAccessTokenAuth: true },

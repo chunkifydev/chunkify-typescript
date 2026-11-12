@@ -3,8 +3,14 @@
 import { APIResource } from '../core/resource';
 import * as FilesAPI from './files';
 import * as SourcesAPI from './sources';
+import * as ThumbnailsAPI from './thumbnails';
+import * as TranscodingsAPI from './transcodings';
 import * as UploadsAPI from './uploads';
+import * as AssetsAPI from './assets/assets';
+import * as OutputsAPI from './assets/outputs';
+import * as WorkflowAPI from './assets/workflow';
 import * as JobsAPI from './jobs/jobs';
+import * as RunsAPI from './workflows/runs/runs';
 import { Webhook as Webhook_ } from 'standardwebhooks';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
@@ -25,7 +31,7 @@ export class Webhooks extends APIResource {
    */
   create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<Webhook> {
     return (
-      this._client.post('/api/webhooks', {
+      this._client.post('/webhooks', {
         body,
         ...options,
         __security: { projectAccessTokenAuth: true },
@@ -44,7 +50,7 @@ export class Webhooks extends APIResource {
    */
   retrieve(webhookID: string, options?: RequestOptions): APIPromise<Webhook> {
     return (
-      this._client.get(path`/api/webhooks/${webhookID}`, {
+      this._client.get(path`/webhooks/${webhookID}`, {
         ...options,
         __security: { projectAccessTokenAuth: true },
       }) as APIPromise<{ data: Webhook }>
@@ -61,7 +67,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   update(webhookID: string, body: WebhookUpdateParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.patch(path`/api/webhooks/${webhookID}`, {
+    return this._client.patch(path`/webhooks/${webhookID}`, {
       body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
@@ -79,7 +85,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<WebhookListResponse> {
-    return this._client.get('/api/webhooks', { ...options, __security: { projectAccessTokenAuth: true } });
+    return this._client.get('/webhooks', { ...options, __security: { projectAccessTokenAuth: true } });
   }
 
   /**
@@ -92,7 +98,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   delete(webhookID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/webhooks/${webhookID}`, {
+    return this._client.delete(path`/webhooks/${webhookID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
       __security: { projectAccessTokenAuth: true },
@@ -128,7 +134,41 @@ export interface Webhook {
    * Array of event types this webhook subscribes to
    */
   events: Array<
-    'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
+    | 'job.created'
+    | 'job.completed'
+    | 'job.failed'
+    | 'job.cancelled'
+    | 'source.created'
+    | 'source.deleted'
+    | 'upload.created'
+    | 'upload.completed'
+    | 'upload.failed'
+    | 'upload.expired'
+    | 'asset.created'
+    | 'asset.ready'
+    | 'asset.playback_ready'
+    | 'asset.failed'
+    | 'asset.expired'
+    | 'asset.deleted'
+    | 'asset.output.created'
+    | 'asset.output.ready'
+    | 'asset.output.failed'
+    | 'asset.output.deleted'
+    | 'workflow_run.created'
+    | 'workflow_run.completed'
+    | 'workflow_run.failed'
+    | 'workflow_run.cancelled'
+    | 'transcoding.created'
+    | 'transcoding.ready'
+    | 'transcoding.failed'
+    | 'transcoding.cancelled'
+    | 'transcoding.expired'
+    | 'transcoding.deleted'
+    | 'thumbnail.created'
+    | 'thumbnail.ready'
+    | 'thumbnail.failed'
+    | 'thumbnail.expired'
+    | 'thumbnail.deleted'
   >;
 
   /**
@@ -164,16 +204,27 @@ export interface NewEventWebhookEvent {
   id: string;
 
   /**
-   * Event-specific payload data
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
    */
   data:
     | NewEventWebhookEvent.NotificationPayloadJobCompleted
     | NewEventWebhookEvent.NotificationPayloadJobFailed
+    | NewEventWebhookEvent.NotificationPayloadJobCreated
+    | NewEventWebhookEvent.NotificationPayloadSourceCreated
+    | NewEventWebhookEvent.NotificationPayloadUploadCreated
     | NewEventWebhookEvent.NotificationPayloadUploadCompleted
-    | NewEventWebhookEvent.NotificationPayloadUploadFailed;
+    | NewEventWebhookEvent.NotificationPayloadUploadFailed
+    | NewEventWebhookEvent.NotificationPayloadAsset
+    | NewEventWebhookEvent.NotificationPayloadAssetOutput
+    | NewEventWebhookEvent.NotificationPayloadAssetOutputDeleted
+    | NewEventWebhookEvent.NotificationPayloadAssetDeleted
+    | NewEventWebhookEvent.NotificationPayloadWorkflowRun
+    | NewEventWebhookEvent.NotificationPayloadTranscoding
+    | NewEventWebhookEvent.ThumbnailEventData;
 
   /**
-   * Timestamp when the notification was sent
+   * Timestamp of the event payload.
    */
   date: string;
 
@@ -181,12 +232,41 @@ export interface NewEventWebhookEvent {
    * Type of event that triggered the notification.
    */
   event:
+    | 'job.created'
     | 'job.completed'
     | 'job.failed'
     | 'job.cancelled'
+    | 'source.created'
+    | 'source.deleted'
+    | 'upload.created'
     | 'upload.completed'
     | 'upload.failed'
-    | 'upload.expired';
+    | 'upload.expired'
+    | 'asset.created'
+    | 'asset.ready'
+    | 'asset.playback_ready'
+    | 'asset.failed'
+    | 'asset.expired'
+    | 'asset.deleted'
+    | 'asset.output.created'
+    | 'asset.output.ready'
+    | 'asset.output.failed'
+    | 'asset.output.deleted'
+    | 'workflow_run.created'
+    | 'workflow_run.completed'
+    | 'workflow_run.failed'
+    | 'workflow_run.cancelled'
+    | 'transcoding.created'
+    | 'transcoding.ready'
+    | 'transcoding.failed'
+    | 'transcoding.cancelled'
+    | 'transcoding.expired'
+    | 'transcoding.deleted'
+    | 'thumbnail.created'
+    | 'thumbnail.ready'
+    | 'thumbnail.failed'
+    | 'thumbnail.expired'
+    | 'thumbnail.deleted';
 }
 
 export namespace NewEventWebhookEvent {
@@ -210,6 +290,31 @@ export namespace NewEventWebhookEvent {
   }
 
   /**
+   * Payload for job.created. A standalone Job has been accepted for processing;
+   * execution may not have started.
+   */
+  export interface NotificationPayloadJobCreated {
+    job: JobsAPI.Job;
+  }
+
+  /**
+   * Payload for source.created. The Source has been validated and saved. Thumbnails
+   * may still be pending.
+   */
+  export interface NotificationPayloadSourceCreated {
+    source: SourcesAPI.Source;
+  }
+
+  /**
+   * Payload for upload.created. A waiting upload session has been created; its
+   * Source is created only after successful completion. Transfer credentials are not
+   * included.
+   */
+  export interface NotificationPayloadUploadCreated {
+    upload: UploadsAPI.Upload;
+  }
+
+  /**
    * Payload data structure for upload.completed events
    */
   export interface NotificationPayloadUploadCompleted {
@@ -224,6 +329,104 @@ export namespace NewEventWebhookEvent {
   export interface NotificationPayloadUploadFailed {
     upload: UploadsAPI.Upload;
   }
+
+  export interface NotificationPayloadAsset {
+    asset: AssetsAPI.Asset;
+  }
+
+  /**
+   * Payload for Asset output creation, readiness, and failure events.
+   */
+  export interface NotificationPayloadAssetOutput {
+    /**
+     * Output contains the canonical typed output snapshot at the event time, matching
+     * the output API.
+     */
+    output: OutputsAPI.AssetOutput;
+  }
+
+  /**
+   * Payload for asset.output.deleted. The output snapshot is preserved after
+   * removal.
+   */
+  export interface NotificationPayloadAssetOutputDeleted {
+    /**
+     * FilesDeleted indicates whether the requested cleanup of the output files
+     * completed without error. Missing files count as successful cleanup. False means
+     * these files were not removed at event time. Private transcript text and saved
+     * subtitle copies are always scheduled for asynchronous cleanup.
+     */
+    files_deleted: boolean;
+
+    /**
+     * Output contains the canonical typed output snapshot before removal.
+     */
+    output: OutputsAPI.AssetOutput;
+  }
+
+  /**
+   * Payload for asset.deleted. The Asset snapshot is preserved after record
+   * deletion.
+   */
+  export interface NotificationPayloadAssetDeleted {
+    asset: AssetsAPI.Asset;
+
+    /**
+     * FilesDeleted indicates whether the requested cleanup of the Asset's generated
+     * files completed without error. Missing files count as successful cleanup. False
+     * means these files were not removed at event time. Private transcript text and
+     * saved subtitle copies are always scheduled for asynchronous cleanup.
+     */
+    files_deleted: boolean;
+
+    /**
+     * DeletedSize specifies the recorded generated-file bytes removed with the Asset,
+     * including attached outputs. Omitted when cleanup was not requested or the total
+     * is unavailable. Missing storage objects still contribute their recorded sizes.
+     */
+    deleted_size?: number;
+  }
+
+  /**
+   * Payload for workflow_run.created, workflow_run.completed, workflow_run.failed,
+   * and workflow_run.cancelled. The run and its actions are snapshots taken when the
+   * event was recorded.
+   */
+  export interface NotificationPayloadWorkflowRun {
+    /**
+     * ActionRuns specifies every action admitted by this run, including its rule and
+     * action IDs, type, input, status, output reference, and any skip or failure
+     * reason. Actions from other runs are excluded.
+     */
+    action_runs: Array<WorkflowAPI.AssetActionRun>;
+
+    /**
+     * Snapshot of the Workflow run when the event was recorded.
+     */
+    workflow_run: RunsAPI.WorkflowRun;
+  }
+
+  /**
+   * Payload for transcoding.created, transcoding.ready, transcoding.failed,
+   * transcoding.cancelled, transcoding.expired and transcoding.deleted events.
+   */
+  export interface NotificationPayloadTranscoding {
+    /**
+     * Transcoding contains the canonical resource snapshot at the event time.
+     */
+    transcoding: TranscodingsAPI.Transcoding;
+  }
+
+  /**
+   * A canonical thumbnail snapshot for standalone thumbnail.\* events. Asset-owned
+   * thumbnails use the Asset output event payload.
+   */
+  export interface ThumbnailEventData {
+    /**
+     * Thumbnail contains the resource at the event time.
+     */
+    thumbnail: ThumbnailsAPI.Thumbnail;
+  }
 }
 
 export interface UnwrapWebhookEvent {
@@ -233,16 +436,27 @@ export interface UnwrapWebhookEvent {
   id: string;
 
   /**
-   * Event-specific payload data
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
    */
   data:
     | UnwrapWebhookEvent.NotificationPayloadJobCompleted
     | UnwrapWebhookEvent.NotificationPayloadJobFailed
+    | UnwrapWebhookEvent.NotificationPayloadJobCreated
+    | UnwrapWebhookEvent.NotificationPayloadSourceCreated
+    | UnwrapWebhookEvent.NotificationPayloadUploadCreated
     | UnwrapWebhookEvent.NotificationPayloadUploadCompleted
-    | UnwrapWebhookEvent.NotificationPayloadUploadFailed;
+    | UnwrapWebhookEvent.NotificationPayloadUploadFailed
+    | UnwrapWebhookEvent.NotificationPayloadAsset
+    | UnwrapWebhookEvent.NotificationPayloadAssetOutput
+    | UnwrapWebhookEvent.NotificationPayloadAssetOutputDeleted
+    | UnwrapWebhookEvent.NotificationPayloadAssetDeleted
+    | UnwrapWebhookEvent.NotificationPayloadWorkflowRun
+    | UnwrapWebhookEvent.NotificationPayloadTranscoding
+    | UnwrapWebhookEvent.ThumbnailEventData;
 
   /**
-   * Timestamp when the notification was sent
+   * Timestamp of the event payload.
    */
   date: string;
 
@@ -250,12 +464,41 @@ export interface UnwrapWebhookEvent {
    * Type of event that triggered the notification.
    */
   event:
+    | 'job.created'
     | 'job.completed'
     | 'job.failed'
     | 'job.cancelled'
+    | 'source.created'
+    | 'source.deleted'
+    | 'upload.created'
     | 'upload.completed'
     | 'upload.failed'
-    | 'upload.expired';
+    | 'upload.expired'
+    | 'asset.created'
+    | 'asset.ready'
+    | 'asset.playback_ready'
+    | 'asset.failed'
+    | 'asset.expired'
+    | 'asset.deleted'
+    | 'asset.output.created'
+    | 'asset.output.ready'
+    | 'asset.output.failed'
+    | 'asset.output.deleted'
+    | 'workflow_run.created'
+    | 'workflow_run.completed'
+    | 'workflow_run.failed'
+    | 'workflow_run.cancelled'
+    | 'transcoding.created'
+    | 'transcoding.ready'
+    | 'transcoding.failed'
+    | 'transcoding.cancelled'
+    | 'transcoding.expired'
+    | 'transcoding.deleted'
+    | 'thumbnail.created'
+    | 'thumbnail.ready'
+    | 'thumbnail.failed'
+    | 'thumbnail.expired'
+    | 'thumbnail.deleted';
 }
 
 export namespace UnwrapWebhookEvent {
@@ -279,6 +522,31 @@ export namespace UnwrapWebhookEvent {
   }
 
   /**
+   * Payload for job.created. A standalone Job has been accepted for processing;
+   * execution may not have started.
+   */
+  export interface NotificationPayloadJobCreated {
+    job: JobsAPI.Job;
+  }
+
+  /**
+   * Payload for source.created. The Source has been validated and saved. Thumbnails
+   * may still be pending.
+   */
+  export interface NotificationPayloadSourceCreated {
+    source: SourcesAPI.Source;
+  }
+
+  /**
+   * Payload for upload.created. A waiting upload session has been created; its
+   * Source is created only after successful completion. Transfer credentials are not
+   * included.
+   */
+  export interface NotificationPayloadUploadCreated {
+    upload: UploadsAPI.Upload;
+  }
+
+  /**
    * Payload data structure for upload.completed events
    */
   export interface NotificationPayloadUploadCompleted {
@@ -292,6 +560,104 @@ export namespace UnwrapWebhookEvent {
    */
   export interface NotificationPayloadUploadFailed {
     upload: UploadsAPI.Upload;
+  }
+
+  export interface NotificationPayloadAsset {
+    asset: AssetsAPI.Asset;
+  }
+
+  /**
+   * Payload for Asset output creation, readiness, and failure events.
+   */
+  export interface NotificationPayloadAssetOutput {
+    /**
+     * Output contains the canonical typed output snapshot at the event time, matching
+     * the output API.
+     */
+    output: OutputsAPI.AssetOutput;
+  }
+
+  /**
+   * Payload for asset.output.deleted. The output snapshot is preserved after
+   * removal.
+   */
+  export interface NotificationPayloadAssetOutputDeleted {
+    /**
+     * FilesDeleted indicates whether the requested cleanup of the output files
+     * completed without error. Missing files count as successful cleanup. False means
+     * these files were not removed at event time. Private transcript text and saved
+     * subtitle copies are always scheduled for asynchronous cleanup.
+     */
+    files_deleted: boolean;
+
+    /**
+     * Output contains the canonical typed output snapshot before removal.
+     */
+    output: OutputsAPI.AssetOutput;
+  }
+
+  /**
+   * Payload for asset.deleted. The Asset snapshot is preserved after record
+   * deletion.
+   */
+  export interface NotificationPayloadAssetDeleted {
+    asset: AssetsAPI.Asset;
+
+    /**
+     * FilesDeleted indicates whether the requested cleanup of the Asset's generated
+     * files completed without error. Missing files count as successful cleanup. False
+     * means these files were not removed at event time. Private transcript text and
+     * saved subtitle copies are always scheduled for asynchronous cleanup.
+     */
+    files_deleted: boolean;
+
+    /**
+     * DeletedSize specifies the recorded generated-file bytes removed with the Asset,
+     * including attached outputs. Omitted when cleanup was not requested or the total
+     * is unavailable. Missing storage objects still contribute their recorded sizes.
+     */
+    deleted_size?: number;
+  }
+
+  /**
+   * Payload for workflow_run.created, workflow_run.completed, workflow_run.failed,
+   * and workflow_run.cancelled. The run and its actions are snapshots taken when the
+   * event was recorded.
+   */
+  export interface NotificationPayloadWorkflowRun {
+    /**
+     * ActionRuns specifies every action admitted by this run, including its rule and
+     * action IDs, type, input, status, output reference, and any skip or failure
+     * reason. Actions from other runs are excluded.
+     */
+    action_runs: Array<WorkflowAPI.AssetActionRun>;
+
+    /**
+     * Snapshot of the Workflow run when the event was recorded.
+     */
+    workflow_run: RunsAPI.WorkflowRun;
+  }
+
+  /**
+   * Payload for transcoding.created, transcoding.ready, transcoding.failed,
+   * transcoding.cancelled, transcoding.expired and transcoding.deleted events.
+   */
+  export interface NotificationPayloadTranscoding {
+    /**
+     * Transcoding contains the canonical resource snapshot at the event time.
+     */
+    transcoding: TranscodingsAPI.Transcoding;
+  }
+
+  /**
+   * A canonical thumbnail snapshot for standalone thumbnail.\* events. Asset-owned
+   * thumbnails use the Asset output event payload.
+   */
+  export interface ThumbnailEventData {
+    /**
+     * Thumbnail contains the resource at the event time.
+     */
+    thumbnail: ThumbnailsAPI.Thumbnail;
   }
 }
 
@@ -311,7 +677,41 @@ export interface WebhookCreateParams {
    * Events specifies the types of events that will trigger the webhook.
    */
   events?: Array<
-    'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
+    | 'job.created'
+    | 'job.completed'
+    | 'job.failed'
+    | 'job.cancelled'
+    | 'source.created'
+    | 'source.deleted'
+    | 'upload.created'
+    | 'upload.completed'
+    | 'upload.failed'
+    | 'upload.expired'
+    | 'asset.created'
+    | 'asset.ready'
+    | 'asset.playback_ready'
+    | 'asset.failed'
+    | 'asset.expired'
+    | 'asset.deleted'
+    | 'asset.output.created'
+    | 'asset.output.ready'
+    | 'asset.output.failed'
+    | 'asset.output.deleted'
+    | 'workflow_run.created'
+    | 'workflow_run.completed'
+    | 'workflow_run.failed'
+    | 'workflow_run.cancelled'
+    | 'transcoding.created'
+    | 'transcoding.ready'
+    | 'transcoding.failed'
+    | 'transcoding.cancelled'
+    | 'transcoding.expired'
+    | 'transcoding.deleted'
+    | 'thumbnail.created'
+    | 'thumbnail.ready'
+    | 'thumbnail.failed'
+    | 'thumbnail.expired'
+    | 'thumbnail.deleted'
   >;
 }
 
@@ -325,7 +725,41 @@ export interface WebhookUpdateParams {
    * Events specifies the types of events that will trigger the webhook.
    */
   events?: Array<
-    'job.completed' | 'job.failed' | 'job.cancelled' | 'upload.completed' | 'upload.failed' | 'upload.expired'
+    | 'job.created'
+    | 'job.completed'
+    | 'job.failed'
+    | 'job.cancelled'
+    | 'source.created'
+    | 'source.deleted'
+    | 'upload.created'
+    | 'upload.completed'
+    | 'upload.failed'
+    | 'upload.expired'
+    | 'asset.created'
+    | 'asset.ready'
+    | 'asset.playback_ready'
+    | 'asset.failed'
+    | 'asset.expired'
+    | 'asset.deleted'
+    | 'asset.output.created'
+    | 'asset.output.ready'
+    | 'asset.output.failed'
+    | 'asset.output.deleted'
+    | 'workflow_run.created'
+    | 'workflow_run.completed'
+    | 'workflow_run.failed'
+    | 'workflow_run.cancelled'
+    | 'transcoding.created'
+    | 'transcoding.ready'
+    | 'transcoding.failed'
+    | 'transcoding.cancelled'
+    | 'transcoding.expired'
+    | 'transcoding.deleted'
+    | 'thumbnail.created'
+    | 'thumbnail.ready'
+    | 'thumbnail.failed'
+    | 'thumbnail.expired'
+    | 'thumbnail.deleted'
   >;
 }
 
