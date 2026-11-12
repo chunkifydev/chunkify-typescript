@@ -6,7 +6,9 @@ import {
   AnalyticsKey,
   KeyCreateParams,
   KeyCreateResponse,
+  KeyListParams,
   KeyListResponse,
+  KeyRotateParams,
   KeyRotateResponse,
   Keys,
 } from './keys';
@@ -57,18 +59,19 @@ export class Connections extends APIResource {
    * ```ts
    * const analyticsConnection =
    *   await client.projects.analytics.connections.retrieve(
-   *     'projectId',
    *     'connectionId',
+   *     { projectId: 'projectId' },
    *   );
    * ```
    */
   retrieve(
-    projectID: string,
     connectionID: string,
+    params: ConnectionRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<AnalyticsConnection> {
+    const { projectId } = params;
     return (
-      this._client.get(path`/projects/${projectID}/analytics/connections/${connectionID}`, {
+      this._client.get(path`/projects/${projectId}/analytics/connections/${connectionID}`, {
         ...options,
         __security: { teamAccessTokenAuth: true },
       }) as APIPromise<{ data: AnalyticsConnection }>
@@ -83,20 +86,22 @@ export class Connections extends APIResource {
    * ```ts
    * const analyticsConnection =
    *   await client.projects.analytics.connections.update(
-   *     'projectId',
    *     'connectionId',
-   *     { name: 'Production analytics' },
+   *     {
+   *       projectId: 'projectId',
+   *       name: 'Production analytics',
+   *     },
    *   );
    * ```
    */
   update(
-    projectID: string,
     connectionID: string,
-    body: ConnectionUpdateParams,
+    params: ConnectionUpdateParams,
     options?: RequestOptions,
   ): APIPromise<AnalyticsConnection> {
+    const { projectId, ...body } = params;
     return (
-      this._client.patch(path`/projects/${projectID}/analytics/connections/${connectionID}`, {
+      this._client.patch(path`/projects/${projectId}/analytics/connections/${connectionID}`, {
         body,
         ...options,
         __security: { teamAccessTokenAuth: true },
@@ -134,13 +139,14 @@ export class Connections extends APIResource {
    * @example
    * ```ts
    * await client.projects.analytics.connections.delete(
-   *   'projectId',
    *   'connectionId',
+   *   { projectId: 'projectId' },
    * );
    * ```
    */
-  delete(projectID: string, connectionID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/projects/${projectID}/analytics/connections/${connectionID}`, {
+  delete(connectionID: string, params: ConnectionDeleteParams, options?: RequestOptions): APIPromise<void> {
+    const { projectId } = params;
+    return this._client.delete(path`/projects/${projectId}/analytics/connections/${connectionID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
       __security: { teamAccessTokenAuth: true },
@@ -291,50 +297,69 @@ export interface ConnectionCreateParams {
   read_key?: string;
 }
 
+export interface ConnectionRetrieveParams {
+  /**
+   * The owning Chunkify project ID.
+   */
+  projectId: string;
+}
+
 export interface ConnectionUpdateParams {
   /**
-   * AllowedOrigins lists additional website origins permitted to ingest events for a
-   * hosted connection. Shared installation origins remain allowed. An empty list
-   * clears project-specific origins. Custom servers manage origins on their own
-   * infrastructure.
+   * Path param: The owning Chunkify project ID.
+   */
+  projectId: string;
+
+  /**
+   * Body param: AllowedOrigins lists additional website origins permitted to ingest
+   * events for a hosted connection. Shared installation origins remain allowed. An
+   * empty list clears project-specific origins. Custom servers manage origins on
+   * their own infrastructure.
    */
   allowed_origins?: Array<string>;
 
   /**
-   * DefaultForDashboard selects this ready connection for Chunkify dashboard
-   * players, public previews, the playground and newly generated snippets. Requires
-   * a public ingest key. Setting true replaces the previous default atomically.
-   * Setting false disables dashboard tracking if no default remains; another
-   * connection is not selected automatically. Existing external players keep their
-   * own configuration.
+   * Body param: DefaultForDashboard selects this ready connection for Chunkify
+   * dashboard players, public previews, the playground and newly generated snippets.
+   * Requires a public ingest key. Setting true replaces the previous default
+   * atomically. Setting false disables dashboard tracking if no default remains;
+   * another connection is not selected automatically. Existing external players keep
+   * their own configuration.
    */
   default_for_dashboard?: boolean;
 
   /**
-   * Endpoint specifies a replacement custom server base URL. Supply read_key
-   * together with it.
+   * Body param: Endpoint specifies a replacement custom server base URL. Supply
+   * read_key together with it.
    */
   endpoint?: string;
 
   /**
-   * Name identifies this connection in the dashboard.
+   * Body param: Name identifies this connection in the dashboard.
    */
   name?: string;
 
   /**
-   * PublicIngestKey optionally enables preview tracking for a custom connection.
-   * Supply the public ingestion key for the same analytics project as read_key. It
-   * is returned in connection reads and used in browser code. Omit for hosted
-   * connections. An empty string disables preview tracking. A replacement endpoint
-   * clears the saved public key unless a replacement is supplied.
+   * Body param: PublicIngestKey optionally enables preview tracking for a custom
+   * connection. Supply the public ingestion key for the same analytics project as
+   * read_key. It is returned in connection reads and used in browser code. Omit for
+   * hosted connections. An empty string disables preview tracking. A replacement
+   * endpoint clears the saved public key unless a replacement is supplied.
    */
   public_ingest_key?: string;
 
   /**
-   * ReadKey replaces the custom connection credential after validation. Its value is
-   * never returned.
+   * Body param: ReadKey replaces the custom connection credential after validation.
+   * Its value is never returned.
    */
   read_key?: string;
+}
+
+export interface ConnectionDeleteParams {
+  /**
+   * The owning Chunkify project ID.
+   */
+  projectId: string;
 }
 
 Connections.Keys = Keys;
@@ -345,7 +370,9 @@ export declare namespace Connections {
     type ConnectionCreateResponse as ConnectionCreateResponse,
     type ConnectionListResponse as ConnectionListResponse,
     type ConnectionCreateParams as ConnectionCreateParams,
+    type ConnectionRetrieveParams as ConnectionRetrieveParams,
     type ConnectionUpdateParams as ConnectionUpdateParams,
+    type ConnectionDeleteParams as ConnectionDeleteParams,
   };
 
   export {
@@ -355,5 +382,7 @@ export declare namespace Connections {
     type KeyListResponse as KeyListResponse,
     type KeyRotateResponse as KeyRotateResponse,
     type KeyCreateParams as KeyCreateParams,
+    type KeyListParams as KeyListParams,
+    type KeyRotateParams as KeyRotateParams,
   };
 }
