@@ -9,6 +9,7 @@ Types:
 Types:
 
 - <code><a href="./src/resources/assets/assets.ts">Asset</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetStaticRenditionCreateParams</a></code>
 - <code><a href="./src/resources/assets/assets.ts">AssetStatus</a></code>
 
 Methods:
@@ -36,12 +37,17 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/assets/workflow.ts">AssetActionRun</a></code>
+- <code><a href="./src/resources/assets/workflow/workflow.ts">AssetActionRun</a></code>
 
 Methods:
 
-- <code title="post /assets/{assetId}/workflow/update">client.assets.workflow.<a href="./src/resources/assets/workflow.ts">update</a>(assetID) -> WorkflowRun</code>
-- <code title="get /assets/{assetId}/workflow/actions">client.assets.workflow.<a href="./src/resources/assets/workflow.ts">listActions</a>(assetID, { ...params }) -> AssetActionRunsPaginatedResults</code>
+- <code title="post /assets/{assetId}/workflow/update">client.assets.workflow.<a href="./src/resources/assets/workflow/workflow.ts">update</a>(assetID) -> WorkflowRun</code>
+
+### Actions
+
+Methods:
+
+- <code title="get /assets/{assetId}/workflow/actions">client.assets.workflow.actions.<a href="./src/resources/assets/workflow/actions.ts">list</a>(assetID, { ...params }) -> AssetActionRunsPaginatedResults</code>
 
 # Events
 
@@ -160,36 +166,38 @@ Methods:
 - <code title="get /projects">client.projects.<a href="./src/resources/projects/projects.ts">list</a>() -> ProjectListResponse</code>
 - <code title="delete /projects/{projectId}">client.projects.<a href="./src/resources/projects/projects.ts">delete</a>(projectID) -> void</code>
 
-## AnalyticsConnections
+## Analytics
+
+### Connections
 
 Types:
 
-- <code><a href="./src/resources/projects/analytics-connections/analytics-connections.ts">AnalyticsConnection</a></code>
-- <code><a href="./src/resources/projects/analytics-connections/analytics-connections.ts">AnalyticsConnectionCreateResponse</a></code>
-- <code><a href="./src/resources/projects/analytics-connections/analytics-connections.ts">AnalyticsConnectionListResponse</a></code>
+- <code><a href="./src/resources/projects/analytics/connections/connections.ts">AnalyticsConnection</a></code>
+- <code><a href="./src/resources/projects/analytics/connections/connections.ts">ConnectionCreateResponse</a></code>
+- <code><a href="./src/resources/projects/analytics/connections/connections.ts">ConnectionListResponse</a></code>
 
 Methods:
 
-- <code title="post /projects/{projectId}/analytics/connections">client.projects.analyticsConnections.<a href="./src/resources/projects/analytics-connections/analytics-connections.ts">create</a>(projectID, { ...params }) -> AnalyticsConnectionCreateResponse</code>
-- <code title="get /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analyticsConnections.<a href="./src/resources/projects/analytics-connections/analytics-connections.ts">retrieve</a>(connectionID, { ...params }) -> AnalyticsConnection</code>
-- <code title="patch /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analyticsConnections.<a href="./src/resources/projects/analytics-connections/analytics-connections.ts">update</a>(connectionID, { ...params }) -> AnalyticsConnection</code>
-- <code title="get /projects/{projectId}/analytics/connections">client.projects.analyticsConnections.<a href="./src/resources/projects/analytics-connections/analytics-connections.ts">list</a>(projectID) -> AnalyticsConnectionListResponse</code>
-- <code title="delete /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analyticsConnections.<a href="./src/resources/projects/analytics-connections/analytics-connections.ts">delete</a>(connectionID, { ...params }) -> void</code>
+- <code title="post /projects/{projectId}/analytics/connections">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">create</a>(projectID, { ...params }) -> ConnectionCreateResponse</code>
+- <code title="get /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">retrieve</a>(projectID, connectionID) -> AnalyticsConnection</code>
+- <code title="patch /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">update</a>(projectID, connectionID, { ...params }) -> AnalyticsConnection</code>
+- <code title="get /projects/{projectId}/analytics/connections">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">list</a>(projectID) -> ConnectionListResponse</code>
+- <code title="delete /projects/{projectId}/analytics/connections/{connectionId}">client.projects.analytics.connections.<a href="./src/resources/projects/analytics/connections/connections.ts">delete</a>(projectID, connectionID) -> void</code>
 
-### Keys
+#### Keys
 
 Types:
 
-- <code><a href="./src/resources/projects/analytics-connections/keys.ts">AnalyticsKey</a></code>
-- <code><a href="./src/resources/projects/analytics-connections/keys.ts">KeyCreateResponse</a></code>
-- <code><a href="./src/resources/projects/analytics-connections/keys.ts">KeyListResponse</a></code>
-- <code><a href="./src/resources/projects/analytics-connections/keys.ts">KeyRotateResponse</a></code>
+- <code><a href="./src/resources/projects/analytics/connections/keys.ts">AnalyticsKey</a></code>
+- <code><a href="./src/resources/projects/analytics/connections/keys.ts">KeyCreateResponse</a></code>
+- <code><a href="./src/resources/projects/analytics/connections/keys.ts">KeyListResponse</a></code>
+- <code><a href="./src/resources/projects/analytics/connections/keys.ts">KeyRotateResponse</a></code>
 
 Methods:
 
-- <code title="post /projects/{projectId}/analytics/connections/{connectionId}/keys">client.projects.analyticsConnections.keys.<a href="./src/resources/projects/analytics-connections/keys.ts">create</a>(connectionID, { ...params }) -> KeyCreateResponse</code>
-- <code title="get /projects/{projectId}/analytics/connections/{connectionId}/keys">client.projects.analyticsConnections.keys.<a href="./src/resources/projects/analytics-connections/keys.ts">list</a>(connectionID, { ...params }) -> KeyListResponse</code>
-- <code title="post /projects/{projectId}/analytics/connections/{connectionId}/keys/{keyId}/rotate">client.projects.analyticsConnections.keys.<a href="./src/resources/projects/analytics-connections/keys.ts">rotate</a>(keyID, { ...params }) -> KeyRotateResponse</code>
+- <code title="post /projects/{projectId}/analytics/connections/{connectionId}/keys">client.projects.analytics.connections.keys.<a href="./src/resources/projects/analytics/connections/keys.ts">create</a>(projectID, connectionID, { ...params }) -> KeyCreateResponse</code>
+- <code title="get /projects/{projectId}/analytics/connections/{connectionId}/keys">client.projects.analytics.connections.keys.<a href="./src/resources/projects/analytics/connections/keys.ts">list</a>(projectID, connectionID) -> KeyListResponse</code>
+- <code title="post /projects/{projectId}/analytics/connections/{connectionId}/keys/{keyId}/rotate">client.projects.analytics.connections.keys.<a href="./src/resources/projects/analytics/connections/keys.ts">rotate</a>(projectID, connectionID, keyID) -> KeyRotateResponse</code>
 
 # Sources
 
@@ -224,6 +232,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/thumbnails.ts">Thumbnail</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailCreateStorage</a></code>
 
 Methods:
 
@@ -250,6 +259,11 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/transcodings.ts">Transcoding</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingM4aAac</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingMP4Av1</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingMP4H264</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingMP4H265</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingWebmVp9</a></code>
 
 Methods:
 
@@ -296,6 +310,17 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/workflows/workflows.ts">Workflow</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowCaptionAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowCaptionParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRule</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowStaticAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowStaticParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThumbnailAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThumbnailParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranscriptAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranslationAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranslationParams</a></code>
 
 Methods:
 

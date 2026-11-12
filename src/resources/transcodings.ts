@@ -14,7 +14,7 @@ export class Transcodings extends APIResource {
    * @example
    * ```ts
    * const transcoding = await client.transcodings.create({
-   *   format: { id: 'mp4_h264' },
+   *   format: { id: 'mp4_h264', height: 720 },
    *   source_id: 'src_example',
    * });
    * ```
@@ -569,16 +569,757 @@ export namespace Transcoding {
   }
 }
 
+export interface TranscodingM4aAac {
+  /**
+   * Id specifies an AAC M4A export.
+   */
+  id: 'm4a_aac';
+
+  /**
+   * AudioBitrate specifies the output audio bitrate in bits per second. Defaults
+   * to 128000.
+   */
+  audio_bitrate?: number;
+
+  /**
+   * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
+   * Opus audio uses 48000.
+   */
+  audio_samplerate?:
+    | 8000
+    | 11025
+    | 12000
+    | 16000
+    | 22050
+    | 24000
+    | 32000
+    | 44100
+    | 48000
+    | 64000
+    | 88200
+    | 96000;
+
+  /**
+   * Channels specifies the output channel count. Defaults to stereo. Six channels
+   * means 5.1; eight means 7.1.
+   */
+  channels?: 1 | 2 | 6 | 8;
+
+  /**
+   * Duration specifies the requested output length in seconds. Defaults to the
+   * remaining source duration and is capped at the source end. Audio-only output
+   * must resolve to at least 0.001 seconds after trimming and sample rounding. The
+   * accepted interval determines the fixed price.
+   */
+  duration?: number;
+
+  /**
+   * Seek specifies the start in source seconds. Defaults to zero and must precede
+   * the source end. The accepted interval uses the output frame or sample timeline.
+   * Audio-only output must retain at least 0.001 seconds after sample rounding.
+   */
+  seek?: number;
+}
+
+export interface TranscodingMP4Av1 {
+  /**
+   * Id specifies the output format.
+   */
+  id: 'mp4_av1';
+
+  /**
+   * AudioBitrate specifies the output audio bitrate in bits per second. Defaults
+   * to 128000.
+   */
+  audio_bitrate?: number;
+
+  /**
+   * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
+   * Opus audio uses 48000.
+   */
+  audio_samplerate?:
+    | 8000
+    | 11025
+    | 12000
+    | 16000
+    | 22050
+    | 24000
+    | 32000
+    | 44100
+    | 48000
+    | 64000
+    | 88200
+    | 96000;
+
+  /**
+   * Bufsize specifies the video buffer size in bits, from 100000 through 50000000.
+   * H.264 and H.265 require maxrate. AV1 and VP9 require a bitrate-controlled mode.
+   */
+  bufsize?: number;
+
+  /**
+   * Channels specifies the output channel count. Defaults to stereo. Six channels
+   * means 5.1; eight means 7.1.
+   */
+  channels?: 1 | 2 | 6 | 8;
+
+  /**
+   * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+   * values mean better quality but larger file size. Range: 16 to 63. Recommended
+   * values: 16-35 for high quality, 35-45 for good quality, 45-63 for acceptable
+   * quality.
+   */
+  crf?: number;
+
+  /**
+   * DisableAudio omits the audio stream. Defaults to false. A source without audio
+   * produces video only.
+   */
+  disable_audio?: boolean;
+
+  /**
+   * DisableVideo selects an audio-only AAC M4A export. Defaults to false. The source
+   * must contain audio.
+   */
+  disable_video?: boolean;
+
+  /**
+   * Duration specifies the requested output length in seconds. Defaults to the
+   * remaining source duration and is capped at the source end. Audio-only output
+   * must resolve to at least 0.001 seconds after trimming and sample rounding. The
+   * accepted interval determines the fixed price.
+   */
+  duration?: number;
+
+  /**
+   * Framerate specifies the output video frame rate. Defaults to the source rate and
+   * must be between 0.001 and 240 fps.
+   */
+  framerate?: number;
+
+  /**
+   * Gop specifies the maximum keyframe interval in frames. Defaults to four seconds
+   * at the accepted frame rate, capped at 960 frames.
+   */
+  gop?: number;
+
+  /**
+   * Height specifies the output dimension in pixels. Use -2 or omit one dimension to
+   * preserve the source aspect ratio. Explicit dimensions must be 2 to 7680 and
+   * even. Omitting both preserves the source dimensions rounded down to even pixels.
+   */
+  height?: number;
+
+  /**
+   * Level specifies the AV1 level using its two-digit representation, such as 31 for
+   * level 3.1. The dimensions, frame rate and rate controls must fit this level.
+   * Omitted rate limits resolve to level-compatible defaults.
+   */
+  level?: 30 | 31 | 41;
+
+  /**
+   * Maxrate specifies the video buffer maximum rate in bits per second, from 100000
+   * through 50000000. H.264 and H.265 require bufsize. VP9 requires video_bitrate;
+   * AV1 requires CRF mode.
+   */
+  maxrate?: number;
+
+  /**
+   * Movflags specifies MP4 packaging. Defaults to faststart, which places playback
+   * metadata before the media.
+   */
+  movflags?: 'faststart';
+
+  /**
+   * PerTitle enables independent content-based bitrate prediction for each part of
+   * the video. Analysis uses only the selected trim interval. Defaults to false.
+   * Explicit rate-control settings cannot be combined with it.
+   */
+  per_title?: boolean;
+
+  /**
+   * Pixfmt specifies the output pixel format. Defaults to yuv420p. The selected
+   * profile must support it.
+   */
+  pixfmt?: 'yuv420p' | 'yuv420p10le';
+
+  /**
+   * Preset controls the encoding efficiency and processing intensity. Lower presets
+   * use more optimization features, creating smaller files with better quality but
+   * requiring more compute time. Higher presets encode faster but produce larger
+   * files.
+   *
+   * Preset ranges:
+   *
+   * - 6-7: Fast encoding for real-time applications (smaller files)
+   * - 8-10: Balanced efficiency and speed for general use
+   * - 11-13: Fastest encoding for real-time applications (larger files)
+   */
+  preset?: '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13';
+
+  /**
+   * Profilev selects the AV1 Main profile. Use pixfmt to select 8-bit or 10-bit
+   * output.
+   */
+  profilev?: 'main';
+
+  /**
+   * Seek specifies the start in source seconds. Defaults to zero and must precede
+   * the source end. The accepted interval uses the output frame or sample timeline.
+   * Audio-only output must retain at least 0.001 seconds after sample rounding.
+   */
+  seek?: number;
+
+  /**
+   * VideoBitrate specifies the target video bitrate in bits per second, from 1000
+   * through 100000000. Omit it for CRF or per-title encoding.
+   */
+  video_bitrate?: number;
+
+  /**
+   * Width specifies the output dimension in pixels. Use -2 or omit one dimension to
+   * preserve the source aspect ratio. Explicit dimensions must be 2 to 7680 and
+   * even. Omitting both preserves the source dimensions rounded down to even pixels.
+   */
+  width?: number;
+}
+
+export interface TranscodingMP4H264 {
+  /**
+   * Id specifies the output format.
+   */
+  id: 'mp4_h264';
+
+  /**
+   * AudioBitrate specifies the output audio bitrate in bits per second. Defaults
+   * to 128000.
+   */
+  audio_bitrate?: number;
+
+  /**
+   * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
+   * Opus audio uses 48000.
+   */
+  audio_samplerate?:
+    | 8000
+    | 11025
+    | 12000
+    | 16000
+    | 22050
+    | 24000
+    | 32000
+    | 44100
+    | 48000
+    | 64000
+    | 88200
+    | 96000;
+
+  /**
+   * Bufsize specifies the video buffer size in bits, from 100000 through 50000000.
+   * H.264 and H.265 require maxrate. AV1 and VP9 require a bitrate-controlled mode.
+   */
+  bufsize?: number;
+
+  /**
+   * Channels specifies the output channel count. Defaults to stereo. Six channels
+   * means 5.1; eight means 7.1.
+   */
+  channels?: 1 | 2 | 6 | 8;
+
+  /**
+   * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+   * values mean better quality but larger file size. Range: 16 to 35. Recommended
+   * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
+   * quality.
+   */
+  crf?: number;
+
+  /**
+   * DisableAudio omits the audio stream. Defaults to false. A source without audio
+   * produces video only.
+   */
+  disable_audio?: boolean;
+
+  /**
+   * DisableVideo selects an audio-only AAC M4A export. Defaults to false. The source
+   * must contain audio.
+   */
+  disable_video?: boolean;
+
+  /**
+   * Duration specifies the requested output length in seconds. Defaults to the
+   * remaining source duration and is capped at the source end. Audio-only output
+   * must resolve to at least 0.001 seconds after trimming and sample rounding. The
+   * accepted interval determines the fixed price.
+   */
+  duration?: number;
+
+  /**
+   * Framerate specifies the output video frame rate. Defaults to the source rate and
+   * must be between 0.001 and 240 fps.
+   */
+  framerate?: number;
+
+  /**
+   * Gop specifies the maximum keyframe interval in frames. Defaults to four seconds
+   * at the accepted frame rate, capped at 960 frames.
+   */
+  gop?: number;
+
+  /**
+   * Height specifies the output dimension in pixels. Use -2 or omit one dimension to
+   * preserve the source aspect ratio. Explicit dimensions must be 2 to 7680 and
+   * even. Omitting both preserves the source dimensions rounded down to even pixels.
+   */
+  height?: number;
+
+  /**
+   * Level specifies the H.264 decoder level using its two-digit representation, such
+   * as 41 for level 4.1. The dimensions, frame rate and rate controls must fit this
+   * level and the effective profile. Omitted rate limits resolve to level-compatible
+   * defaults.
+   */
+  level?: 10 | 11 | 12 | 13 | 20 | 21 | 22 | 30 | 31 | 32 | 40 | 41 | 42 | 50 | 51;
+
+  /**
+   * Maxrate specifies the video buffer maximum rate in bits per second, from 100000
+   * through 50000000. H.264 and H.265 require bufsize. VP9 requires video_bitrate;
+   * AV1 requires CRF mode.
+   */
+  maxrate?: number;
+
+  /**
+   * Movflags specifies MP4 packaging. Defaults to faststart, which places playback
+   * metadata before the media.
+   */
+  movflags?: 'faststart';
+
+  /**
+   * PerTitle enables independent content-based bitrate prediction for each part of
+   * the video. Analysis uses only the selected trim interval. Defaults to false.
+   * Explicit rate-control settings cannot be combined with it.
+   */
+  per_title?: boolean;
+
+  /**
+   * Pixfmt specifies the output pixel format. Defaults to yuv420p. The selected
+   * profile must support it.
+   */
+  pixfmt?: 'yuv420p' | 'yuv422p' | 'yuv444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv444p10le';
+
+  /**
+   * Preset specifies the encoding speed preset. Valid values (from fastest to
+   * slowest):
+   *
+   * - ultrafast: Fastest encoding, lowest quality
+   * - superfast: Very fast encoding, lower quality
+   * - veryfast: Fast encoding, moderate quality
+   * - faster: Faster encoding, good quality
+   * - fast: Fast encoding, better quality
+   * - medium: Balanced preset, best quality
+   */
+  preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
+
+  /**
+   * Profilev specifies the H.264 profile. Valid values:
+   *
+   * - baseline: Basic profile, good for mobile devices
+   * - main: Main profile, good for most applications
+   * - high: High profile, best quality but requires more processing
+   * - high10: High 10-bit profile, supports 10-bit color
+   * - high422: High 4:2:2 profile, supports 4:2:2 color sampling
+   * - high444: High 4:4:4 profile, supports 4:4:4 color sampling
+   */
+  profilev?: 'baseline' | 'main' | 'high' | 'high10' | 'high422' | 'high444';
+
+  /**
+   * Seek specifies the start in source seconds. Defaults to zero and must precede
+   * the source end. The accepted interval uses the output frame or sample timeline.
+   * Audio-only output must retain at least 0.001 seconds after sample rounding.
+   */
+  seek?: number;
+
+  /**
+   * VideoBitrate specifies the target video bitrate in bits per second, from 1000
+   * through 100000000. Omit it for CRF or per-title encoding.
+   */
+  video_bitrate?: number;
+
+  /**
+   * Width specifies the output dimension in pixels. Use -2 or omit one dimension to
+   * preserve the source aspect ratio. Explicit dimensions must be 2 to 7680 and
+   * even. Omitting both preserves the source dimensions rounded down to even pixels.
+   */
+  width?: number;
+
+  /**
+   * X264KeyInt specifies the maximum number of frames between keyframes for H.264
+   * encoding. Range: 1 to 960. Higher values can improve compression but may affect
+   * seeking.
+   */
+  x264_keyint?: number;
+}
+
+export interface TranscodingMP4H265 {
+  /**
+   * Id specifies the output format.
+   */
+  id: 'mp4_h265';
+
+  /**
+   * AudioBitrate specifies the output audio bitrate in bits per second. Defaults
+   * to 128000.
+   */
+  audio_bitrate?: number;
+
+  /**
+   * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
+   * Opus audio uses 48000.
+   */
+  audio_samplerate?:
+    | 8000
+    | 11025
+    | 12000
+    | 16000
+    | 22050
+    | 24000
+    | 32000
+    | 44100
+    | 48000
+    | 64000
+    | 88200
+    | 96000;
+
+  /**
+   * Bufsize specifies the video buffer size in bits, from 100000 through 50000000.
+   * H.264 and H.265 require maxrate. AV1 and VP9 require a bitrate-controlled mode.
+   */
+  bufsize?: number;
+
+  /**
+   * Channels specifies the output channel count. Defaults to stereo. Six channels
+   * means 5.1; eight means 7.1.
+   */
+  channels?: 1 | 2 | 6 | 8;
+
+  /**
+   * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+   * values mean better quality but larger file size. Range: 16 to 35. Recommended
+   * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
+   * quality.
+   */
+  crf?: number;
+
+  /**
+   * DisableAudio omits the audio stream. Defaults to false. A source without audio
+   * produces video only.
+   */
+  disable_audio?: boolean;
+
+  /**
+   * DisableVideo selects an audio-only AAC M4A export. Defaults to false. The source
+   * must contain audio.
+   */
+  disable_video?: boolean;
+
+  /**
+   * Duration specifies the requested output length in seconds. Defaults to the
+   * remaining source duration and is capped at the source end. Audio-only output
+   * must resolve to at least 0.001 seconds after trimming and sample rounding. The
+   * accepted interval determines the fixed price.
+   */
+  duration?: number;
+
+  /**
+   * Framerate specifies the output video frame rate. Defaults to the source rate and
+   * must be between 0.001 and 240 fps.
+   */
+  framerate?: number;
+
+  /**
+   * Gop specifies the maximum keyframe interval in frames. Defaults to four seconds
+   * at the accepted frame rate, capped at 960 frames.
+   */
+  gop?: number;
+
+  /**
+   * Height specifies the output dimension in pixels. Use -2 or omit one dimension to
+   * preserve the source aspect ratio. Explicit dimensions must be 2 to 7680 and
+   * even. Omitting both preserves the source dimensions rounded down to even pixels.
+   */
+  height?: number;
+
+  /**
+   * Level specifies the HEVC level using its two-digit representation, such as 31
+   * for level 3.1. The dimensions, frame rate and rate controls must fit this level.
+   * Omitted rate limits resolve to level-compatible defaults.
+   */
+  level?: 30 | 31 | 41;
+
+  /**
+   * Maxrate specifies the video buffer maximum rate in bits per second, from 100000
+   * through 50000000. H.264 and H.265 require bufsize. VP9 requires video_bitrate;
+   * AV1 requires CRF mode.
+   */
+  maxrate?: number;
+
+  /**
+   * Movflags specifies MP4 packaging. Defaults to faststart, which places playback
+   * metadata before the media.
+   */
+  movflags?: 'faststart';
+
+  /**
+   * PerTitle enables independent content-based bitrate prediction for each part of
+   * the video. Analysis uses only the selected trim interval. Defaults to false.
+   * Explicit rate-control settings cannot be combined with it.
+   */
+  per_title?: boolean;
+
+  /**
+   * Pixfmt specifies the output pixel format. Defaults to yuv420p. The selected
+   * profile must support it.
+   */
+  pixfmt?:
+    | 'yuv420p'
+    | 'yuv422p'
+    | 'yuv444p'
+    | 'yuv420p10le'
+    | 'yuv422p10le'
+    | 'yuv444p10le'
+    | 'yuv420p12le'
+    | 'yuv422p12le'
+    | 'yuv444p12le';
+
+  /**
+   * Preset specifies the encoding speed preset. Valid values (from fastest to
+   * slowest):
+   *
+   * - ultrafast: Fastest encoding, lowest quality
+   * - superfast: Very fast encoding, lower quality
+   * - veryfast: Fast encoding, moderate quality
+   * - faster: Faster encoding, good quality
+   * - fast: Fast encoding, better quality
+   * - medium: Balanced preset, best quality
+   */
+  preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
+
+  /**
+   * Profilev selects the HEVC profile. It must support the requested pixel format.
+   */
+  profilev?:
+    | 'main'
+    | 'main10'
+    | 'main12'
+    | 'main422-10'
+    | 'main422-12'
+    | 'main444-8'
+    | 'main444-10'
+    | 'main444-12';
+
+  /**
+   * Seek specifies the start in source seconds. Defaults to zero and must precede
+   * the source end. The accepted interval uses the output frame or sample timeline.
+   * Audio-only output must retain at least 0.001 seconds after sample rounding.
+   */
+  seek?: number;
+
+  /**
+   * VideoBitrate specifies the target video bitrate in bits per second, from 1000
+   * through 100000000. Omit it for CRF or per-title encoding.
+   */
+  video_bitrate?: number;
+
+  /**
+   * Width specifies the output dimension in pixels. Use -2 or omit one dimension to
+   * preserve the source aspect ratio. Explicit dimensions must be 2 to 7680 and
+   * even. Omitting both preserves the source dimensions rounded down to even pixels.
+   */
+  width?: number;
+
+  /**
+   * X265KeyInt specifies the maximum number of frames between keyframes for H.265
+   * encoding. Range: 1 to 300. Higher values can improve compression but may affect
+   * seeking.
+   */
+  x265_keyint?: number;
+}
+
+export interface TranscodingWebmVp9 {
+  /**
+   * Id specifies the output format.
+   */
+  id: 'webm_vp9';
+
+  /**
+   * AudioBitrate specifies the output audio bitrate in bits per second. Defaults
+   * to 128000.
+   */
+  audio_bitrate?: number;
+
+  /**
+   * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
+   * Opus audio uses 48000.
+   */
+  audio_samplerate?:
+    | 8000
+    | 11025
+    | 12000
+    | 16000
+    | 22050
+    | 24000
+    | 32000
+    | 44100
+    | 48000
+    | 64000
+    | 88200
+    | 96000;
+
+  /**
+   * Bufsize specifies the video buffer size in bits, from 100000 through 50000000.
+   * H.264 and H.265 require maxrate. AV1 and VP9 require a bitrate-controlled mode.
+   */
+  bufsize?: number;
+
+  /**
+   * Channels specifies the output channel count. Defaults to stereo. Six channels
+   * means 5.1; eight means 7.1.
+   */
+  channels?: 1 | 2 | 6 | 8;
+
+  /**
+   * CpuUsed specifies the CPU usage level for VP9 encoding. Range: 0 to 8. Lower
+   * values mean better quality but slower encoding, higher values mean faster
+   * encoding but lower quality. Recommended values: 0-2 for high quality, 2-4 for
+   * good quality, 4-6 for balanced, 6-8 for speed
+   */
+  cpu_used?: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8';
+
+  /**
+   * Crf (Constant Rate Factor) controls the quality of the output video. Lower
+   * values mean better quality but larger file size. Range: 15 to 35. Recommended
+   * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
+   * quality.
+   */
+  crf?: number;
+
+  /**
+   * DisableAudio omits the audio stream. Defaults to false. A source without audio
+   * produces video only.
+   */
+  disable_audio?: boolean;
+
+  /**
+   * DisableVideo selects an audio-only AAC M4A export. Defaults to false. The source
+   * must contain audio.
+   */
+  disable_video?: boolean;
+
+  /**
+   * Duration specifies the requested output length in seconds. Defaults to the
+   * remaining source duration and is capped at the source end. Audio-only output
+   * must resolve to at least 0.001 seconds after trimming and sample rounding. The
+   * accepted interval determines the fixed price.
+   */
+  duration?: number;
+
+  /**
+   * Framerate specifies the output video frame rate. Defaults to the source rate and
+   * must be between 0.001 and 240 fps.
+   */
+  framerate?: number;
+
+  /**
+   * Gop specifies the maximum keyframe interval in frames. Defaults to four seconds
+   * at the accepted frame rate, capped at 960 frames.
+   */
+  gop?: number;
+
+  /**
+   * Height specifies the output dimension in pixels. Use -2 or omit one dimension to
+   * preserve the source aspect ratio. Explicit dimensions must be 2 to 7680 and
+   * even. Omitting both preserves the source dimensions rounded down to even pixels.
+   */
+  height?: number;
+
+  /**
+   * Maxrate specifies the video buffer maximum rate in bits per second, from 100000
+   * through 50000000. H.264 and H.265 require bufsize. VP9 requires video_bitrate;
+   * AV1 requires CRF mode.
+   */
+  maxrate?: number;
+
+  /**
+   * Minrate selects VP9 constant bitrate when equal to video_bitrate and maxrate.
+   * Other minimum-rate combinations are unsupported.
+   */
+  minrate?: number;
+
+  /**
+   * PerTitle enables independent content-based bitrate prediction for each part of
+   * the video. Analysis uses only the selected trim interval. Defaults to false.
+   * Explicit rate-control settings cannot be combined with it.
+   */
+  per_title?: boolean;
+
+  /**
+   * Pixfmt specifies the output pixel format. Defaults to yuv420p. The selected
+   * profile must support it.
+   */
+  pixfmt?:
+    | 'yuv420p'
+    | 'yuv422p'
+    | 'yuv440p'
+    | 'yuv444p'
+    | 'yuv420p10le'
+    | 'yuv422p10le'
+    | 'yuv440p10le'
+    | 'yuv444p10le'
+    | 'yuv420p12le'
+    | 'yuv422p12le'
+    | 'yuv440p12le'
+    | 'yuv444p12le';
+
+  /**
+   * Quality specifies the VP9 encoding quality preset. Valid values:
+   *
+   * - good: Balanced quality preset, good for most applications
+   * - best: Best quality preset, slower encoding
+   * - realtime: Fast encoding preset, suitable for live streaming
+   */
+  quality?: 'good' | 'best' | 'realtime';
+
+  /**
+   * Seek specifies the start in source seconds. Defaults to zero and must precede
+   * the source end. The accepted interval uses the output frame or sample timeline.
+   * Audio-only output must retain at least 0.001 seconds after sample rounding.
+   */
+  seek?: number;
+
+  /**
+   * VideoBitrate specifies the target video bitrate in bits per second, from 1000
+   * through 100000000. Omit it for CRF or per-title encoding.
+   */
+  video_bitrate?: number;
+
+  /**
+   * Width specifies the output dimension in pixels. Use -2 or omit one dimension to
+   * preserve the source aspect ratio. Explicit dimensions must be 2 to 7680 and
+   * even. Omitting both preserves the source dimensions rounded down to even pixels.
+   */
+  width?: number;
+}
+
 export interface TranscodingCreateParams {
   /**
    * Format specifies the requested encoding settings.
    */
   format:
-    | TranscodingCreateParams.MP4H264
-    | TranscodingCreateParams.MP4H265
-    | TranscodingCreateParams.MP4Av1
-    | TranscodingCreateParams.WebmVp9
-    | TranscodingCreateParams.M4aAac;
+    | TranscodingMP4H264
+    | TranscodingMP4H265
+    | TranscodingMP4Av1
+    | TranscodingWebmVp9
+    | TranscodingM4aAac;
 
   /**
    * SourceId identifies a Source in this Project.
@@ -599,491 +1340,6 @@ export interface TranscodingCreateParams {
 }
 
 export namespace TranscodingCreateParams {
-  export interface MP4H264 {
-    /**
-     * Id specifies the output format.
-     */
-    id: 'mp4_h264';
-
-    /**
-     * AudioBitrate specifies the output audio bitrate in bits per second. Defaults
-     * to 128000.
-     */
-    audio_bitrate?: number;
-
-    /**
-     * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
-     * Opus audio uses 48000.
-     */
-    audio_samplerate?:
-      | 8000
-      | 11025
-      | 12000
-      | 16000
-      | 22050
-      | 24000
-      | 32000
-      | 44100
-      | 48000
-      | 64000
-      | 88200
-      | 96000;
-
-    /**
-     * Channels specifies the output channel count. Defaults to stereo. Six channels
-     * means 5.1; eight means 7.1.
-     */
-    channels?: 1 | 2 | 6 | 8;
-
-    /**
-     * Crf (Constant Rate Factor) controls the quality of the output video. Lower
-     * values mean better quality but larger file size. Range: 16 to 35. Recommended
-     * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
-     * quality.
-     */
-    crf?: number;
-
-    /**
-     * Duration specifies the requested output length in seconds. Defaults to the
-     * remaining source duration and is capped at the source end. Audio-only output
-     * must resolve to at least 0.001 seconds after trimming and sample rounding. The
-     * accepted interval determines the fixed price.
-     */
-    duration?: number;
-
-    /**
-     * Level specifies the H.264 decoder level using its two-digit representation, such
-     * as 41 for level 4.1. The dimensions, frame rate and rate controls must fit this
-     * level and the effective profile. Omitted rate limits resolve to level-compatible
-     * defaults.
-     */
-    level?: 10 | 11 | 12 | 13 | 20 | 21 | 22 | 30 | 31 | 32 | 40 | 41 | 42 | 50 | 51;
-
-    /**
-     * Movflags specifies MP4 packaging. Defaults to faststart, which places playback
-     * metadata before the media.
-     */
-    movflags?: 'faststart';
-
-    /**
-     * Pixfmt specifies the output pixel format. Defaults to yuv420p. The selected
-     * profile must support it.
-     */
-    pixfmt?: 'yuv420p' | 'yuv422p' | 'yuv444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv444p10le';
-
-    /**
-     * Preset specifies the encoding speed preset. Valid values (from fastest to
-     * slowest):
-     *
-     * - ultrafast: Fastest encoding, lowest quality
-     * - superfast: Very fast encoding, lower quality
-     * - veryfast: Fast encoding, moderate quality
-     * - faster: Faster encoding, good quality
-     * - fast: Fast encoding, better quality
-     * - medium: Balanced preset, best quality
-     */
-    preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
-
-    /**
-     * Profilev specifies the H.264 profile. Valid values:
-     *
-     * - baseline: Basic profile, good for mobile devices
-     * - main: Main profile, good for most applications
-     * - high: High profile, best quality but requires more processing
-     * - high10: High 10-bit profile, supports 10-bit color
-     * - high422: High 4:2:2 profile, supports 4:2:2 color sampling
-     * - high444: High 4:4:4 profile, supports 4:4:4 color sampling
-     */
-    profilev?: 'baseline' | 'main' | 'high' | 'high10' | 'high422' | 'high444';
-
-    /**
-     * Seek specifies the start in source seconds. Defaults to zero and must precede
-     * the source end. The accepted interval uses the output frame or sample timeline.
-     * Audio-only output must retain at least 0.001 seconds after sample rounding.
-     */
-    seek?: number;
-
-    /**
-     * X264KeyInt specifies the maximum number of frames between keyframes for H.264
-     * encoding. Range: 1 to 960. Higher values can improve compression but may affect
-     * seeking.
-     */
-    x264_keyint?: number;
-  }
-
-  export interface MP4H265 {
-    /**
-     * Id specifies the output format.
-     */
-    id: 'mp4_h265';
-
-    /**
-     * AudioBitrate specifies the output audio bitrate in bits per second. Defaults
-     * to 128000.
-     */
-    audio_bitrate?: number;
-
-    /**
-     * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
-     * Opus audio uses 48000.
-     */
-    audio_samplerate?:
-      | 8000
-      | 11025
-      | 12000
-      | 16000
-      | 22050
-      | 24000
-      | 32000
-      | 44100
-      | 48000
-      | 64000
-      | 88200
-      | 96000;
-
-    /**
-     * Channels specifies the output channel count. Defaults to stereo. Six channels
-     * means 5.1; eight means 7.1.
-     */
-    channels?: 1 | 2 | 6 | 8;
-
-    /**
-     * Crf (Constant Rate Factor) controls the quality of the output video. Lower
-     * values mean better quality but larger file size. Range: 16 to 35. Recommended
-     * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
-     * quality.
-     */
-    crf?: number;
-
-    /**
-     * Duration specifies the requested output length in seconds. Defaults to the
-     * remaining source duration and is capped at the source end. Audio-only output
-     * must resolve to at least 0.001 seconds after trimming and sample rounding. The
-     * accepted interval determines the fixed price.
-     */
-    duration?: number;
-
-    /**
-     * Level specifies the HEVC level using its two-digit representation, such as 31
-     * for level 3.1. The dimensions, frame rate and rate controls must fit this level.
-     * Omitted rate limits resolve to level-compatible defaults.
-     */
-    level?: 30 | 31 | 41;
-
-    /**
-     * Movflags specifies MP4 packaging. Defaults to faststart, which places playback
-     * metadata before the media.
-     */
-    movflags?: 'faststart';
-
-    /**
-     * Pixfmt specifies the output pixel format. Defaults to yuv420p. The selected
-     * profile must support it.
-     */
-    pixfmt?:
-      | 'yuv420p'
-      | 'yuv422p'
-      | 'yuv444p'
-      | 'yuv420p10le'
-      | 'yuv422p10le'
-      | 'yuv444p10le'
-      | 'yuv420p12le'
-      | 'yuv422p12le'
-      | 'yuv444p12le';
-
-    /**
-     * Preset specifies the encoding speed preset. Valid values (from fastest to
-     * slowest):
-     *
-     * - ultrafast: Fastest encoding, lowest quality
-     * - superfast: Very fast encoding, lower quality
-     * - veryfast: Fast encoding, moderate quality
-     * - faster: Faster encoding, good quality
-     * - fast: Fast encoding, better quality
-     * - medium: Balanced preset, best quality
-     */
-    preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium';
-
-    /**
-     * Profilev selects the HEVC profile. It must support the requested pixel format.
-     */
-    profilev?:
-      | 'main'
-      | 'main10'
-      | 'main12'
-      | 'main422-10'
-      | 'main422-12'
-      | 'main444-8'
-      | 'main444-10'
-      | 'main444-12';
-
-    /**
-     * Seek specifies the start in source seconds. Defaults to zero and must precede
-     * the source end. The accepted interval uses the output frame or sample timeline.
-     * Audio-only output must retain at least 0.001 seconds after sample rounding.
-     */
-    seek?: number;
-
-    /**
-     * X265KeyInt specifies the maximum number of frames between keyframes for H.265
-     * encoding. Range: 1 to 300. Higher values can improve compression but may affect
-     * seeking.
-     */
-    x265_keyint?: number;
-  }
-
-  export interface MP4Av1 {
-    /**
-     * Id specifies the output format.
-     */
-    id: 'mp4_av1';
-
-    /**
-     * AudioBitrate specifies the output audio bitrate in bits per second. Defaults
-     * to 128000.
-     */
-    audio_bitrate?: number;
-
-    /**
-     * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
-     * Opus audio uses 48000.
-     */
-    audio_samplerate?:
-      | 8000
-      | 11025
-      | 12000
-      | 16000
-      | 22050
-      | 24000
-      | 32000
-      | 44100
-      | 48000
-      | 64000
-      | 88200
-      | 96000;
-
-    /**
-     * Channels specifies the output channel count. Defaults to stereo. Six channels
-     * means 5.1; eight means 7.1.
-     */
-    channels?: 1 | 2 | 6 | 8;
-
-    /**
-     * Crf (Constant Rate Factor) controls the quality of the output video. Lower
-     * values mean better quality but larger file size. Range: 16 to 63. Recommended
-     * values: 16-35 for high quality, 35-45 for good quality, 45-63 for acceptable
-     * quality.
-     */
-    crf?: number;
-
-    /**
-     * Duration specifies the requested output length in seconds. Defaults to the
-     * remaining source duration and is capped at the source end. Audio-only output
-     * must resolve to at least 0.001 seconds after trimming and sample rounding. The
-     * accepted interval determines the fixed price.
-     */
-    duration?: number;
-
-    /**
-     * Level specifies the AV1 level using its two-digit representation, such as 31 for
-     * level 3.1. The dimensions, frame rate and rate controls must fit this level.
-     * Omitted rate limits resolve to level-compatible defaults.
-     */
-    level?: 30 | 31 | 41;
-
-    /**
-     * Movflags specifies MP4 packaging. Defaults to faststart, which places playback
-     * metadata before the media.
-     */
-    movflags?: 'faststart';
-
-    /**
-     * Pixfmt specifies the output pixel format. Defaults to yuv420p. The selected
-     * profile must support it.
-     */
-    pixfmt?: 'yuv420p' | 'yuv420p10le';
-
-    /**
-     * Preset controls the encoding efficiency and processing intensity. Lower presets
-     * use more optimization features, creating smaller files with better quality but
-     * requiring more compute time. Higher presets encode faster but produce larger
-     * files.
-     *
-     * Preset ranges:
-     *
-     * - 6-7: Fast encoding for real-time applications (smaller files)
-     * - 8-10: Balanced efficiency and speed for general use
-     * - 11-13: Fastest encoding for real-time applications (larger files)
-     */
-    preset?: '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13';
-
-    /**
-     * Profilev selects the AV1 Main profile. Use pixfmt to select 8-bit or 10-bit
-     * output.
-     */
-    profilev?: 'main';
-
-    /**
-     * Seek specifies the start in source seconds. Defaults to zero and must precede
-     * the source end. The accepted interval uses the output frame or sample timeline.
-     * Audio-only output must retain at least 0.001 seconds after sample rounding.
-     */
-    seek?: number;
-  }
-
-  export interface WebmVp9 {
-    /**
-     * Id specifies the output format.
-     */
-    id: 'webm_vp9';
-
-    /**
-     * AudioBitrate specifies the output audio bitrate in bits per second. Defaults
-     * to 128000.
-     */
-    audio_bitrate?: number;
-
-    /**
-     * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
-     * Opus audio uses 48000.
-     */
-    audio_samplerate?:
-      | 8000
-      | 11025
-      | 12000
-      | 16000
-      | 22050
-      | 24000
-      | 32000
-      | 44100
-      | 48000
-      | 64000
-      | 88200
-      | 96000;
-
-    /**
-     * Channels specifies the output channel count. Defaults to stereo. Six channels
-     * means 5.1; eight means 7.1.
-     */
-    channels?: 1 | 2 | 6 | 8;
-
-    /**
-     * CpuUsed specifies the CPU usage level for VP9 encoding. Range: 0 to 8. Lower
-     * values mean better quality but slower encoding, higher values mean faster
-     * encoding but lower quality. Recommended values: 0-2 for high quality, 2-4 for
-     * good quality, 4-6 for balanced, 6-8 for speed
-     */
-    cpu_used?: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8';
-
-    /**
-     * Crf (Constant Rate Factor) controls the quality of the output video. Lower
-     * values mean better quality but larger file size. Range: 15 to 35. Recommended
-     * values: 18-28 for high quality, 23-28 for good quality, 28-35 for acceptable
-     * quality.
-     */
-    crf?: number;
-
-    /**
-     * Duration specifies the requested output length in seconds. Defaults to the
-     * remaining source duration and is capped at the source end. Audio-only output
-     * must resolve to at least 0.001 seconds after trimming and sample rounding. The
-     * accepted interval determines the fixed price.
-     */
-    duration?: number;
-
-    /**
-     * Minrate selects VP9 constant bitrate when equal to video_bitrate and maxrate.
-     * Other minimum-rate combinations are unsupported.
-     */
-    minrate?: number;
-
-    /**
-     * Pixfmt specifies the output pixel format. Defaults to yuv420p. The selected
-     * profile must support it.
-     */
-    pixfmt?:
-      | 'yuv420p'
-      | 'yuv422p'
-      | 'yuv440p'
-      | 'yuv444p'
-      | 'yuv420p10le'
-      | 'yuv422p10le'
-      | 'yuv440p10le'
-      | 'yuv444p10le'
-      | 'yuv420p12le'
-      | 'yuv422p12le'
-      | 'yuv440p12le'
-      | 'yuv444p12le';
-
-    /**
-     * Quality specifies the VP9 encoding quality preset. Valid values:
-     *
-     * - good: Balanced quality preset, good for most applications
-     * - best: Best quality preset, slower encoding
-     * - realtime: Fast encoding preset, suitable for live streaming
-     */
-    quality?: 'good' | 'best' | 'realtime';
-
-    /**
-     * Seek specifies the start in source seconds. Defaults to zero and must precede
-     * the source end. The accepted interval uses the output frame or sample timeline.
-     * Audio-only output must retain at least 0.001 seconds after sample rounding.
-     */
-    seek?: number;
-  }
-
-  export interface M4aAac {
-    /**
-     * Id specifies an AAC M4A export.
-     */
-    id: 'm4a_aac';
-
-    /**
-     * AudioBitrate specifies the output audio bitrate in bits per second. Defaults
-     * to 128000.
-     */
-    audio_bitrate?: number;
-
-    /**
-     * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
-     * Opus audio uses 48000.
-     */
-    audio_samplerate?:
-      | 8000
-      | 11025
-      | 12000
-      | 16000
-      | 22050
-      | 24000
-      | 32000
-      | 44100
-      | 48000
-      | 64000
-      | 88200
-      | 96000;
-
-    /**
-     * Channels specifies the output channel count. Defaults to stereo. Six channels
-     * means 5.1; eight means 7.1.
-     */
-    channels?: 1 | 2 | 6 | 8;
-
-    /**
-     * Duration specifies the requested output length in seconds. Defaults to the
-     * remaining source duration and is capped at the source end. Audio-only output
-     * must resolve to at least 0.001 seconds after trimming and sample rounding. The
-     * accepted interval determines the fixed price.
-     */
-    duration?: number;
-
-    /**
-     * Seek specifies the start in source seconds. Defaults to zero and must precede
-     * the source end. The accepted interval uses the output frame or sample timeline.
-     * Audio-only output must retain at least 0.001 seconds after sample rounding.
-     */
-    seek?: number;
-  }
-
   /**
    * Storage overrides the Project output destination. Source storage remains
    * independent.
@@ -1163,6 +1419,11 @@ export interface TranscodingDeleteParams {
 export declare namespace Transcodings {
   export {
     type Transcoding as Transcoding,
+    type TranscodingM4aAac as TranscodingM4aAac,
+    type TranscodingMP4Av1 as TranscodingMP4Av1,
+    type TranscodingMP4H264 as TranscodingMP4H264,
+    type TranscodingMP4H265 as TranscodingMP4H265,
+    type TranscodingWebmVp9 as TranscodingWebmVp9,
     type TranscodingsPaginatedResults as TranscodingsPaginatedResults,
     type TranscodingCreateParams as TranscodingCreateParams,
     type TranscodingListParams as TranscodingListParams,

@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
-import * as WorkflowAPI from '../../assets/workflow';
-import { AssetActionRunsPaginatedResults } from '../../assets/workflow';
+import * as WorkflowAPI from '../../assets/workflow/workflow';
+import { AssetActionRunsPaginatedResults } from '../../assets/workflow/workflow';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
