@@ -8,10 +8,10 @@ const client = new Chunkify({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource analyticsConnections', () => {
+describe('resource connections', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.create('projectId', {
+    const responsePromise = client.projects.analytics.connections.create('projectId', {
       name: 'Website analytics',
       type: 'custom',
     });
@@ -26,7 +26,7 @@ describe('resource analyticsConnections', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.create('projectId', {
+    const response = await client.projects.analytics.connections.create('projectId', {
       name: 'Website analytics',
       type: 'custom',
       endpoint: 'https://analytics.example.com',
@@ -36,10 +36,8 @@ describe('resource analyticsConnections', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.retrieve('connectionId', {
-      projectId: 'projectId',
-    });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.projects.analytics.connections.retrieve('projectId', 'connectionId');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -50,17 +48,8 @@ describe('resource analyticsConnections', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.retrieve('connectionId', {
-      projectId: 'projectId',
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('update: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.update('connectionId', {
-      projectId: 'projectId',
-    });
+  test.skip('update', async () => {
+    const responsePromise = client.projects.analytics.connections.update('projectId', 'connectionId', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -68,24 +57,11 @@ describe('resource analyticsConnections', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('update: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.update('connectionId', {
-      projectId: 'projectId',
-      allowed_origins: ['string'],
-      default_for_dashboard: true,
-      endpoint: 'endpoint',
-      name: 'Production analytics',
-      public_ingest_key: 'ck_public_de90a6057194afc9913a4adcd7ef960db1a91a48d2a13b6b2f7dfe671fd5be36',
-      read_key: 'x',
-    });
   });
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.projects.analyticsConnections.list('projectId');
+    const responsePromise = client.projects.analytics.connections.list('projectId');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -96,10 +72,8 @@ describe('resource analyticsConnections', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('delete: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.delete('connectionId', {
-      projectId: 'projectId',
-    });
+  test.skip('delete', async () => {
+    const responsePromise = client.projects.analytics.connections.delete('projectId', 'connectionId');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -107,12 +81,5 @@ describe('resource analyticsConnections', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('delete: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.delete('connectionId', {
-      projectId: 'projectId',
-    });
   });
 });
