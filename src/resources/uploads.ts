@@ -196,7 +196,7 @@ export interface Upload {
    * dashboard for the Chunkify dashboard, mcp for MCP clients, and workflow for
    * Workflow actions. Omitted when the creator is unknown.
    */
-  created_via?: 'api' | 'dashboard' | 'mcp' | 'workflow';
+  created_via?: Shared.CreatedVia;
 
   /**
    * Error message of the upload
@@ -216,7 +216,7 @@ export interface Upload {
   /**
    * Multipart transfer details, returned only on creation for multipart Uploads.
    */
-  multipart?: Upload.Multipart;
+  multipart?: UploadMultipartSession;
 
   /**
    * SourceId is the id of the source that was created from the upload
@@ -236,43 +236,63 @@ export interface Upload {
   upload_url?: string;
 }
 
-export namespace Upload {
+export interface UploadCreateStorageParams {
   /**
-   * Multipart transfer details, returned only on creation for multipart Uploads.
+   * Storage belonging to this Project. Omit to use the Project default.
    */
-  export interface Multipart {
-    /**
-     * ExpiresAt specifies when the signed part URLs expire. URLs cannot be refreshed;
-     * create a new Upload after expiry.
-     */
-    expires_at: string;
+  id?: string;
 
-    /**
-     * PartSizeBytes specifies the size of each part except the final part, in bytes.
-     */
-    part_size_bytes: number;
+  /**
+   * Exact object key including filename, required for customer Storage and forbidden
+   * for Chunkify Storage. The output base_prefix is not added. Existing keys may be
+   * overwritten.
+   */
+  path?: string;
+}
 
-    /**
-     * Parts contains every signed upload URL in ascending part_number order. Upload
-     * file slices directly to these URLs.
-     */
-    parts: Array<Multipart.Part>;
-  }
+export interface UploadMultipartPartParams {
+  /**
+   * ETag returned by storage for this part, including its quotation marks when
+   * present.
+   */
+  etag: string;
 
-  export namespace Multipart {
-    export interface Part {
-      /**
-       * PartNumber specifies the one-based part number for this URL.
-       */
-      part_number: number;
+  /**
+   * One-based part number.
+   */
+  part_number: number;
+}
 
-      /**
-       * UploadUrl specifies the signed PUT URL for this part. Retry the same file slice
-       * with this URL before multipart.expires_at.
-       */
-      upload_url: string;
-    }
-  }
+export interface UploadMultipartSession {
+  /**
+   * ExpiresAt specifies when the signed part URLs expire. URLs cannot be refreshed;
+   * create a new Upload after expiry.
+   */
+  expires_at: string;
+
+  /**
+   * PartSizeBytes specifies the size of each part except the final part, in bytes.
+   */
+  part_size_bytes: number;
+
+  /**
+   * Parts contains every signed upload URL in ascending part_number order. Upload
+   * file slices directly to these URLs.
+   */
+  parts: Array<UploadMultipartSignedPart>;
+}
+
+export interface UploadMultipartSignedPart {
+  /**
+   * PartNumber specifies the one-based part number for this URL.
+   */
+  part_number: number;
+
+  /**
+   * UploadUrl specifies the signed PUT URL for this part. Retry the same file slice
+   * with this URL before multipart.expires_at.
+   */
+  upload_url: string;
 }
 
 export interface UploadCreateParams {
@@ -303,7 +323,7 @@ export interface UploadCreateParams {
    * Customer-connected Storage requires path; Chunkify Storage generates its own
    * path.
    */
-  storage?: UploadCreateParams.Storage;
+  storage?: UploadCreateStorageParams;
 
   /**
    * UploadMode specifies the transfer method. Defaults to auto. Auto chooses
@@ -329,27 +349,6 @@ export interface UploadCreateParams {
    * creation is accepted.
    */
   workflow_id?: string | null;
-}
-
-export namespace UploadCreateParams {
-  /**
-   * Optional Storage override. Omit id to use the Project default.
-   * Customer-connected Storage requires path; Chunkify Storage generates its own
-   * path.
-   */
-  export interface Storage {
-    /**
-     * Storage belonging to this Project. Omit to use the Project default.
-     */
-    id?: string;
-
-    /**
-     * Exact object key including filename, required for customer Storage and forbidden
-     * for Chunkify Storage. The output base_prefix is not added. Existing keys may be
-     * overwritten.
-     */
-    path?: string;
-  }
 }
 
 export interface UploadListParams extends PaginatedResultsParams {
@@ -400,27 +399,16 @@ export interface UploadCompleteParams {
    * All uploaded parts in ascending part_number order, with the ETags returned by
    * storage.
    */
-  parts?: Array<UploadCompleteParams.Part>;
-}
-
-export namespace UploadCompleteParams {
-  export interface Part {
-    /**
-     * ETag returned by storage for this part, including its quotation marks when
-     * present.
-     */
-    etag: string;
-
-    /**
-     * One-based part number.
-     */
-    part_number: number;
-  }
+  parts?: Array<UploadMultipartPartParams>;
 }
 
 export declare namespace Uploads {
   export {
     type Upload as Upload,
+    type UploadCreateStorageParams as UploadCreateStorageParams,
+    type UploadMultipartPartParams as UploadMultipartPartParams,
+    type UploadMultipartSession as UploadMultipartSession,
+    type UploadMultipartSignedPart as UploadMultipartSignedPart,
     type UploadsPaginatedResults as UploadsPaginatedResults,
     type UploadCreateParams as UploadCreateParams,
     type UploadListParams as UploadListParams,

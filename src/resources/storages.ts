@@ -113,241 +113,445 @@ export class Storages extends APIResource {
 }
 
 /**
+ * Region specifies the region of the storage provider.
+ */
+export type AwsRegion =
+  | 'us-east-1'
+  | 'us-east-2'
+  | 'us-central-1'
+  | 'us-west-1'
+  | 'us-west-2'
+  | 'eu-west-1'
+  | 'eu-west-2'
+  | 'eu-west-3'
+  | 'eu-central-1'
+  | 'eu-north-1'
+  | 'ap-east-1'
+  | 'ap-east-2'
+  | 'ap-northeast-1'
+  | 'ap-northeast-2'
+  | 'ap-south-1'
+  | 'ap-southeast-1'
+  | 'ap-southeast-2';
+
+/**
+ * Chunkify available regions.
+ */
+export type ChunkifyRegion =
+  | 'us-east-1'
+  | 'us-east-2'
+  | 'us-west-1'
+  | 'us-west-2'
+  | 'eu-west-1'
+  | 'eu-west-2'
+  | 'ap-northeast-1'
+  | 'ap-southeast-1';
+
+/**
  * A customer-owned storage connection using the standard S3 API.
  */
-export type Storage = Storage.Chunkify | Storage.Cloudflare | Storage.Aws | Storage.S3Compatible;
+export type Storage = StorageChunkify | StorageCloudflare | StorageAws | StorageS3Compatible;
 
-export namespace Storage {
-  export interface Chunkify {
-    /**
-     * Unique identifier of the storage configuration
-     */
-    id: string;
-
-    /**
-     * Created at timestamp
-     */
-    created_at: string;
-
-    /**
-     * Provider specifies the storage provider.
-     */
-    provider: 'chunkify';
-
-    /**
-     * Region specifies the region of the storage provider.
-     */
-    region:
-      | 'us-east-1'
-      | 'us-east-2'
-      | 'us-west-1'
-      | 'us-west-2'
-      | 'eu-west-1'
-      | 'eu-west-2'
-      | 'ap-northeast-1'
-      | 'ap-southeast-1';
-
-    /**
-     * Unique identifier of the storage configuration
-     */
-    slug: string;
-  }
-
-  export interface Cloudflare {
-    /**
-     * Unique identifier of the storage configuration
-     */
-    id: string;
-
-    /**
-     * Canonical object-key prefix prepended to every final job output in this
-     * customer-owned storage. An empty string means the bucket root.
-     */
-    base_prefix: string;
-
-    /**
-     * Bucket is the name of the storage bucket.
-     */
-    bucket: string;
-
-    /**
-     * Created at timestamp
-     */
-    created_at: string;
-
-    /**
-     * Endpoint is the endpoint of the storage provider.
-     */
-    endpoint: string;
-
-    /**
-     * Location specifies the location of the storage provider.
-     */
-    location: 'US' | 'EU' | 'ASIA';
-
-    /**
-     * Provider specifies the storage provider.
-     */
-    provider: 'cloudflare';
-
-    /**
-     * Public indicates whether the storage is publicly accessible.
-     */
-    public: boolean;
-
-    /**
-     * Region specifies the region of the storage provider.
-     */
-    region: 'auto';
-
-    /**
-     * Unique identifier of the storage configuration
-     */
-    slug: string;
-
-    /**
-     * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
-     * for objects in this storage.
-     */
-    cdn_base_url?: string | null;
-  }
-
-  export interface Aws {
-    /**
-     * Unique identifier of the storage configuration
-     */
-    id: string;
-
-    /**
-     * Canonical object-key prefix prepended to every final job output in this
-     * customer-owned storage. An empty string means the bucket root.
-     */
-    base_prefix: string;
-
-    /**
-     * Bucket is the name of the storage bucket.
-     */
-    bucket: string;
-
-    /**
-     * Created at timestamp
-     */
-    created_at: string;
-
-    /**
-     * Provider specifies the storage provider.
-     */
-    provider: 'aws';
-
-    /**
-     * Public indicates whether the storage is publicly accessible.
-     */
-    public: boolean;
-
-    /**
-     * Region specifies the region of the storage provider.
-     */
-    region:
-      | 'us-east-1'
-      | 'us-east-2'
-      | 'us-central-1'
-      | 'us-west-1'
-      | 'us-west-2'
-      | 'eu-west-1'
-      | 'eu-west-2'
-      | 'eu-west-3'
-      | 'eu-central-1'
-      | 'eu-north-1'
-      | 'ap-east-1'
-      | 'ap-east-2'
-      | 'ap-northeast-1'
-      | 'ap-northeast-2'
-      | 'ap-south-1'
-      | 'ap-southeast-1'
-      | 'ap-southeast-2';
-
-    /**
-     * Unique identifier of the storage configuration
-     */
-    slug: string;
-
-    /**
-     * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
-     * for objects in this storage.
-     */
-    cdn_base_url?: string | null;
-  }
+export interface StorageAws {
+  /**
+   * Unique identifier of the storage configuration
+   */
+  id: string;
 
   /**
-   * A customer-owned storage connection using the standard S3 API.
+   * Canonical object-key prefix prepended to every final job output in this
+   * customer-owned storage. An empty string means the bucket root.
    */
-  export interface S3Compatible {
-    /**
-     * Unique identifier of the storage configuration
-     */
-    id: string;
+  base_prefix: string;
 
-    /**
-     * Addressing style detected during connection validation and used for later S3
-     * operations.
-     */
-    addressing_style: 'virtual' | 'path';
+  /**
+   * Bucket is the name of the storage bucket.
+   */
+  bucket: string;
 
-    /**
-     * Canonical object-key prefix prepended to every final job output in this
-     * customer-owned storage. An empty string means the bucket root.
-     */
-    base_prefix: string;
+  /**
+   * Created at timestamp
+   */
+  created_at: string;
 
-    /**
-     * Bucket is the name of the storage bucket.
-     */
-    bucket: string;
+  /**
+   * Provider specifies the storage provider.
+   */
+  provider: 'aws';
 
-    /**
-     * Created at timestamp
-     */
-    created_at: string;
+  /**
+   * Public indicates whether the storage is publicly accessible.
+   */
+  public: boolean;
 
-    /**
-     * Public HTTPS origin for the S3-compatible service. Credentials, paths, queries,
-     * fragments, and non-public destinations are rejected.
-     */
-    endpoint: string;
+  /**
+   * Region specifies the region of the storage provider.
+   */
+  region: AwsRegion;
 
-    /**
-     * Chunkify workload location. This is independent from the provider signing
-     * region.
-     */
-    location: 'US' | 'EU' | 'ASIA';
+  /**
+   * Unique identifier of the storage configuration
+   */
+  slug: string;
 
-    /**
-     * Stable provider identifier for generic S3-compatible storage.
-     */
-    provider: 's3_compatible';
+  /**
+   * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+   * for objects in this storage.
+   */
+  cdn_base_url?: string | null;
+}
 
-    /**
-     * Public indicates whether the storage is publicly accessible.
-     */
-    public: boolean;
+/**
+ * Storage parameters for AWS S3 storage.
+ */
+export interface StorageAwsCreateParams {
+  /**
+   * AccessKeyId is the access key for the storage provider. Required if not using
+   * Chunkify storage.
+   */
+  access_key_id: string;
 
-    /**
-     * Provider region used for S3 request signing. This is independent from the
-     * Chunkify workload location.
-     */
-    region: string;
+  /**
+   * Bucket is the name of the storage bucket.
+   */
+  bucket: string;
 
-    /**
-     * Unique identifier of the storage configuration
-     */
-    slug: string;
+  /**
+   * Provider specifies the storage provider.
+   */
+  provider: 'aws';
 
-    /**
-     * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
-     * for objects in this storage.
-     */
-    cdn_base_url?: string | null;
-  }
+  /**
+   * Region specifies the region of the storage provider.
+   */
+  region: AwsRegion;
+
+  /**
+   * SecretAccessKey is the secret key for the storage provider. Required if not
+   * using Chunkify storage.
+   */
+  secret_access_key: string;
+
+  /**
+   * Object-key prefix for final job outputs. The API normalizes it without a leading
+   * slash and with one trailing slash. Omit it or send an empty string to use the
+   * bucket root.
+   */
+  base_prefix?: string;
+
+  /**
+   * Optional customer-managed HTTPS delivery origin. It must not contain
+   * credentials, a path, query string, or fragment.
+   */
+  cdn_base_url?: string | null;
+
+  /**
+   * Public indicates whether the storage is publicly accessible.
+   */
+  public?: boolean;
+}
+
+export interface StorageChunkify {
+  /**
+   * Unique identifier of the storage configuration
+   */
+  id: string;
+
+  /**
+   * Created at timestamp
+   */
+  created_at: string;
+
+  /**
+   * Provider specifies the storage provider.
+   */
+  provider: 'chunkify';
+
+  /**
+   * Region specifies the region of the storage provider.
+   */
+  region: ChunkifyRegion;
+
+  /**
+   * Unique identifier of the storage configuration
+   */
+  slug: string;
+}
+
+/**
+ * Storage parameters for Chunkify ephemeral storage.
+ */
+export interface StorageChunkifyCreateParams {
+  /**
+   * Provider specifies the storage provider.
+   */
+  provider: 'chunkify';
+
+  /**
+   * Region specifies the region of the storage provider.
+   */
+  region: ChunkifyRegion;
+
+  /**
+   * Unsupported for Chunkify-managed temporary storage. Requests that provide this
+   * field are rejected.
+   */
+  cdn_base_url?: string | null;
+}
+
+export interface StorageCloudflare {
+  /**
+   * Unique identifier of the storage configuration
+   */
+  id: string;
+
+  /**
+   * Canonical object-key prefix prepended to every final job output in this
+   * customer-owned storage. An empty string means the bucket root.
+   */
+  base_prefix: string;
+
+  /**
+   * Bucket is the name of the storage bucket.
+   */
+  bucket: string;
+
+  /**
+   * Created at timestamp
+   */
+  created_at: string;
+
+  /**
+   * Endpoint is the endpoint of the storage provider.
+   */
+  endpoint: string;
+
+  /**
+   * Location specifies the location of the storage provider.
+   */
+  location: StorageLocation;
+
+  /**
+   * Provider specifies the storage provider.
+   */
+  provider: 'cloudflare';
+
+  /**
+   * Public indicates whether the storage is publicly accessible.
+   */
+  public: boolean;
+
+  /**
+   * Region specifies the region of the storage provider.
+   */
+  region: 'auto';
+
+  /**
+   * Unique identifier of the storage configuration
+   */
+  slug: string;
+
+  /**
+   * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+   * for objects in this storage.
+   */
+  cdn_base_url?: string | null;
+}
+
+/**
+ * Storage parameters for Cloudflare R2 storage.
+ */
+export interface StorageCloudflareCreateParams {
+  /**
+   * AccessKeyId is the access key for the storage provider.
+   */
+  access_key_id: string;
+
+  /**
+   * Bucket is the name of the storage bucket.
+   */
+  bucket: string;
+
+  /**
+   * Endpoint is the endpoint of the storage provider.
+   */
+  endpoint: string;
+
+  /**
+   * Location specifies the location of the storage provider.
+   */
+  location: 'US' | 'EU' | 'ASIA';
+
+  /**
+   * Provider specifies the storage provider.
+   */
+  provider: 'cloudflare';
+
+  /**
+   * Region must be set to 'auto'.
+   */
+  region: 'auto';
+
+  /**
+   * SecretAccessKey is the secret key for the storage provider.
+   */
+  secret_access_key: string;
+
+  /**
+   * Object-key prefix for final job outputs. The API normalizes it without a leading
+   * slash and with one trailing slash. Omit it or send an empty string to use the
+   * bucket root.
+   */
+  base_prefix?: string;
+
+  /**
+   * Optional customer-managed HTTPS delivery origin. It must not contain
+   * credentials, a path, query string, or fragment.
+   */
+  cdn_base_url?: string | null;
+
+  /**
+   * Public indicates whether the storage is publicly accessible.
+   */
+  public?: boolean;
+}
+
+/**
+ * Location specifies the location of the storage provider.
+ */
+export type StorageLocation = 'US' | 'EU' | 'ASIA';
+
+/**
+ * A customer-owned storage connection using the standard S3 API.
+ */
+export interface StorageS3Compatible {
+  /**
+   * Unique identifier of the storage configuration
+   */
+  id: string;
+
+  /**
+   * Addressing style detected during connection validation and used for later S3
+   * operations.
+   */
+  addressing_style: 'virtual' | 'path';
+
+  /**
+   * Canonical object-key prefix prepended to every final job output in this
+   * customer-owned storage. An empty string means the bucket root.
+   */
+  base_prefix: string;
+
+  /**
+   * Bucket is the name of the storage bucket.
+   */
+  bucket: string;
+
+  /**
+   * Created at timestamp
+   */
+  created_at: string;
+
+  /**
+   * Public HTTPS origin for the S3-compatible service. Credentials, paths, queries,
+   * fragments, and non-public destinations are rejected.
+   */
+  endpoint: string;
+
+  /**
+   * Chunkify workload location. This is independent from the provider signing
+   * region.
+   */
+  location: StorageLocation;
+
+  /**
+   * Stable provider identifier for generic S3-compatible storage.
+   */
+  provider: 's3_compatible';
+
+  /**
+   * Public indicates whether the storage is publicly accessible.
+   */
+  public: boolean;
+
+  /**
+   * Provider region used for S3 request signing. This is independent from the
+   * Chunkify workload location.
+   */
+  region: string;
+
+  /**
+   * Unique identifier of the storage configuration
+   */
+  slug: string;
+
+  /**
+   * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+   * for objects in this storage.
+   */
+  cdn_base_url?: string | null;
+}
+
+/**
+ * Storage parameters for a public S3-compatible service such as MinIO, Wasabi, or
+ * Backblaze B2.
+ */
+export interface StorageS3CompatibleCreateParams {
+  /**
+   * Access key for the storage provider.
+   */
+  access_key_id: string;
+
+  /**
+   * Bucket is the name of the storage bucket.
+   */
+  bucket: string;
+
+  /**
+   * Public HTTPS origin for the S3-compatible service. Credentials, paths, queries,
+   * fragments, and non-public destinations are rejected.
+   */
+  endpoint: string;
+
+  /**
+   * Chunkify workload location. It controls where Chunkify processes the workload
+   * and is independent from the provider region.
+   */
+  location: StorageLocation;
+
+  /**
+   * Stable provider identifier for generic S3-compatible storage.
+   */
+  provider: 's3_compatible';
+
+  /**
+   * Explicit provider region used for S3 request signing. Vendor-specific
+   * identifiers are accepted.
+   */
+  region: string;
+
+  /**
+   * Secret key for the storage provider.
+   */
+  secret_access_key: string;
+
+  /**
+   * Object-key prefix for final job outputs. The API normalizes it without a leading
+   * slash and with one trailing slash. Omit it or send an empty string to use the
+   * bucket root.
+   */
+  base_prefix?: string;
+
+  /**
+   * Optional customer-managed HTTPS delivery origin. It must not contain
+   * credentials, a path, query string, or fragment.
+   */
+  cdn_base_url?: string | null;
+
+  /**
+   * Whether the bucket is publicly readable.
+   */
+  public?: boolean;
 }
 
 /**
@@ -370,228 +574,10 @@ export interface StorageCreateParams {
    * The parameters for creating a new storage configuration.
    */
   storage:
-    | StorageCreateParams.Aws
-    | StorageCreateParams.Chunkify
-    | StorageCreateParams.Cloudflare
-    | StorageCreateParams.S3Compatible;
-}
-
-export namespace StorageCreateParams {
-  /**
-   * Storage parameters for AWS S3 storage.
-   */
-  export interface Aws {
-    /**
-     * AccessKeyId is the access key for the storage provider. Required if not using
-     * Chunkify storage.
-     */
-    access_key_id: string;
-
-    /**
-     * Bucket is the name of the storage bucket.
-     */
-    bucket: string;
-
-    /**
-     * Provider specifies the storage provider.
-     */
-    provider: 'aws';
-
-    /**
-     * Region specifies the region of the storage provider.
-     */
-    region:
-      | 'us-east-1'
-      | 'us-east-2'
-      | 'us-central-1'
-      | 'us-west-1'
-      | 'us-west-2'
-      | 'eu-west-1'
-      | 'eu-west-2'
-      | 'eu-west-3'
-      | 'eu-central-1'
-      | 'eu-north-1'
-      | 'ap-east-1'
-      | 'ap-east-2'
-      | 'ap-northeast-1'
-      | 'ap-northeast-2'
-      | 'ap-south-1'
-      | 'ap-southeast-1'
-      | 'ap-southeast-2';
-
-    /**
-     * SecretAccessKey is the secret key for the storage provider. Required if not
-     * using Chunkify storage.
-     */
-    secret_access_key: string;
-
-    /**
-     * Object-key prefix for final job outputs. The API normalizes it without a leading
-     * slash and with one trailing slash. Omit it or send an empty string to use the
-     * bucket root.
-     */
-    base_prefix?: string;
-
-    /**
-     * Optional customer-managed HTTPS delivery origin. It must not contain
-     * credentials, a path, query string, or fragment.
-     */
-    cdn_base_url?: string | null;
-
-    /**
-     * Public indicates whether the storage is publicly accessible.
-     */
-    public?: boolean;
-  }
-
-  /**
-   * Storage parameters for Chunkify ephemeral storage.
-   */
-  export interface Chunkify {
-    /**
-     * Provider specifies the storage provider.
-     */
-    provider: 'chunkify';
-
-    /**
-     * Region specifies the region of the storage provider.
-     */
-    region:
-      | 'us-east-1'
-      | 'us-east-2'
-      | 'us-west-1'
-      | 'us-west-2'
-      | 'eu-west-1'
-      | 'eu-west-2'
-      | 'ap-northeast-1'
-      | 'ap-southeast-1';
-
-    /**
-     * Unsupported for Chunkify-managed temporary storage. Requests that provide this
-     * field are rejected.
-     */
-    cdn_base_url?: string | null;
-  }
-
-  /**
-   * Storage parameters for Cloudflare R2 storage.
-   */
-  export interface Cloudflare {
-    /**
-     * AccessKeyId is the access key for the storage provider.
-     */
-    access_key_id: string;
-
-    /**
-     * Bucket is the name of the storage bucket.
-     */
-    bucket: string;
-
-    /**
-     * Endpoint is the endpoint of the storage provider.
-     */
-    endpoint: string;
-
-    /**
-     * Location specifies the location of the storage provider.
-     */
-    location: 'US' | 'EU' | 'ASIA';
-
-    /**
-     * Provider specifies the storage provider.
-     */
-    provider: 'cloudflare';
-
-    /**
-     * Region must be set to 'auto'.
-     */
-    region: 'auto';
-
-    /**
-     * SecretAccessKey is the secret key for the storage provider.
-     */
-    secret_access_key: string;
-
-    /**
-     * Object-key prefix for final job outputs. The API normalizes it without a leading
-     * slash and with one trailing slash. Omit it or send an empty string to use the
-     * bucket root.
-     */
-    base_prefix?: string;
-
-    /**
-     * Optional customer-managed HTTPS delivery origin. It must not contain
-     * credentials, a path, query string, or fragment.
-     */
-    cdn_base_url?: string | null;
-
-    /**
-     * Public indicates whether the storage is publicly accessible.
-     */
-    public?: boolean;
-  }
-
-  /**
-   * Storage parameters for a public S3-compatible service such as MinIO, Wasabi, or
-   * Backblaze B2.
-   */
-  export interface S3Compatible {
-    /**
-     * Access key for the storage provider.
-     */
-    access_key_id: string;
-
-    /**
-     * Bucket is the name of the storage bucket.
-     */
-    bucket: string;
-
-    /**
-     * Public HTTPS origin for the S3-compatible service. Credentials, paths, queries,
-     * fragments, and non-public destinations are rejected.
-     */
-    endpoint: string;
-
-    /**
-     * Chunkify workload location. It controls where Chunkify processes the workload
-     * and is independent from the provider region.
-     */
-    location: 'US' | 'EU' | 'ASIA';
-
-    /**
-     * Stable provider identifier for generic S3-compatible storage.
-     */
-    provider: 's3_compatible';
-
-    /**
-     * Explicit provider region used for S3 request signing. Vendor-specific
-     * identifiers are accepted.
-     */
-    region: string;
-
-    /**
-     * Secret key for the storage provider.
-     */
-    secret_access_key: string;
-
-    /**
-     * Object-key prefix for final job outputs. The API normalizes it without a leading
-     * slash and with one trailing slash. Omit it or send an empty string to use the
-     * bucket root.
-     */
-    base_prefix?: string;
-
-    /**
-     * Optional customer-managed HTTPS delivery origin. It must not contain
-     * credentials, a path, query string, or fragment.
-     */
-    cdn_base_url?: string | null;
-
-    /**
-     * Whether the bucket is publicly readable.
-     */
-    public?: boolean;
-  }
+    | StorageAwsCreateParams
+    | StorageChunkifyCreateParams
+    | StorageCloudflareCreateParams
+    | StorageS3CompatibleCreateParams;
 }
 
 export interface StorageUpdateParams {
@@ -624,7 +610,18 @@ export interface StorageUpdateParams {
 
 export declare namespace Storages {
   export {
+    type AwsRegion as AwsRegion,
+    type ChunkifyRegion as ChunkifyRegion,
     type Storage as Storage,
+    type StorageAws as StorageAws,
+    type StorageAwsCreateParams as StorageAwsCreateParams,
+    type StorageChunkify as StorageChunkify,
+    type StorageChunkifyCreateParams as StorageChunkifyCreateParams,
+    type StorageCloudflare as StorageCloudflare,
+    type StorageCloudflareCreateParams as StorageCloudflareCreateParams,
+    type StorageLocation as StorageLocation,
+    type StorageS3Compatible as StorageS3Compatible,
+    type StorageS3CompatibleCreateParams as StorageS3CompatibleCreateParams,
     type StorageListResponse as StorageListResponse,
     type StorageCreateParams as StorageCreateParams,
     type StorageUpdateParams as StorageUpdateParams,

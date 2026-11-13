@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import * as WorkflowsAPI from '../workflows';
 import * as ActionsAPI from './actions';
-import { ActionListParams, ActionRetrieveParams, Actions as ActionsAPIActions } from './actions';
+import { ActionListParams, ActionRetrieveParams, Actions } from './actions';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
@@ -74,7 +75,7 @@ export interface WorkflowRun {
   /**
    * Counts of action outcomes in this run. Reused actions are included in completed.
    */
-  actions: WorkflowRun.Actions;
+  actions: WorkflowsAPI.WorkflowActionCounts;
 
   /**
    * AssetExecutionStatus specifies the combined status of this revision for the
@@ -82,7 +83,7 @@ export interface WorkflowRun {
    * active work, or an Asset still preparing for an unarchived Workflow, makes it
    * running. Otherwise it is completed.
    */
-  asset_execution_status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
+  asset_execution_status: WorkflowsAPI.WorkflowRunStatus;
 
   /**
    * ID of the Asset processed by this run.
@@ -127,7 +128,7 @@ export interface WorkflowRun {
   /**
    * Current status of this event run, based on its own actions.
    */
-  status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
+  status: WorkflowsAPI.WorkflowRunStatus;
 
   /**
    * When the run was last updated.
@@ -143,44 +144,6 @@ export interface WorkflowRun {
    * Reason the run failed. Omitted when no failure message is available.
    */
   error?: string;
-}
-
-export namespace WorkflowRun {
-  /**
-   * Counts of action outcomes in this run. Reused actions are included in completed.
-   */
-  export interface Actions {
-    /**
-     * Number of actions cancelled before completion.
-     */
-    cancelled: number;
-
-    /**
-     * Number of actions that completed successfully, including reused outputs.
-     */
-    completed: number;
-
-    /**
-     * Number of actions that failed.
-     */
-    failed: number;
-
-    /**
-     * Number of completed actions that reused an existing output. Included in
-     * completed.
-     */
-    reused: number;
-
-    /**
-     * Number of actions skipped without producing an output.
-     */
-    skipped: number;
-
-    /**
-     * Total number of actions in the run, including unfinished actions.
-     */
-    total: number;
-  }
 }
 
 export interface RunRetrieveParams {
@@ -231,7 +194,7 @@ export namespace RunListParams {
   }
 }
 
-Runs.Actions = ActionsAPIActions;
+Runs.Actions = Actions;
 
 export declare namespace Runs {
   export {
@@ -242,7 +205,7 @@ export declare namespace Runs {
   };
 
   export {
-    ActionsAPIActions as Actions,
+    Actions as Actions,
     type ActionRetrieveParams as ActionRetrieveParams,
     type ActionListParams as ActionListParams,
   };
