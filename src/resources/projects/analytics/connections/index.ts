@@ -1,15 +1,15 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
-  AnalyticsConnections,
+  Connections,
   type AnalyticsConnection,
-  type AnalyticsConnectionCreateResponse,
-  type AnalyticsConnectionListResponse,
-  type AnalyticsConnectionCreateParams,
-  type AnalyticsConnectionRetrieveParams,
-  type AnalyticsConnectionUpdateParams,
-  type AnalyticsConnectionDeleteParams,
-} from './analytics-connections';
+  type ConnectionCreateResponse,
+  type ConnectionListResponse,
+  type ConnectionCreateParams,
+  type ConnectionRetrieveParams,
+  type ConnectionUpdateParams,
+  type ConnectionDeleteParams,
+} from './connections';
 export {
   Keys,
   type AnalyticsKey,

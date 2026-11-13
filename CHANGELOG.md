@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.12.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.11.3...v0.12.0) (2026-11-12)
+
+
+### Features
+
+* sync OpenAPI schema from Chunkify v2.0.0 ([0985f70](https://github.com/chunkifydev/chunkify-typescript/commit/0985f70dd8a31cee491dba46e253d0f93e2de6c3))
+
+
+### Bug Fixes
+
+* align SDK method names with the API reference ([dfe1418](https://github.com/chunkifydev/chunkify-typescript/commit/dfe1418b5414299d862c77ee1c430e949c0e1bbb))
+
 ## [0.11.3](https://github.com/chunkifydev/chunkify-typescript/compare/v0.11.2...v0.11.3) (2026-09-15)
 
 

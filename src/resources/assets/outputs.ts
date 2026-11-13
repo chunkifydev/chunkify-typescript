@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as Shared from '../shared';
 import * as ThumbnailsAPI from '../thumbnails';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../../core/pagination';
@@ -188,7 +189,7 @@ export namespace AssetOutput {
       /**
        * Reason caption processing failed.
        */
-      error?: Details.Error;
+      error?: Shared.AssetOutputError;
 
       /**
        * Primary language of this subtitle track, such as en or fr. Omitted when no
@@ -222,28 +223,6 @@ export namespace AssetOutput {
        * WebVTT subtitle segment path in Storage. Available when speech was detected.
        */
       vtt_path?: string;
-    }
-
-    export namespace Details {
-      /**
-       * Reason caption processing failed.
-       */
-      export interface Error {
-        /**
-         * Machine-readable processing error code.
-         */
-        code: string;
-
-        /**
-         * Description of the processing failure.
-         */
-        message: string;
-
-        /**
-         * Processing stage that failed.
-         */
-        stage: 'ingest' | 'analysis' | 'encoding' | 'packaging' | 'upload' | 'validation' | 'cleanup';
-      }
     }
   }
 
@@ -389,7 +368,10 @@ export namespace AssetOutput {
        */
       duration?: number;
 
-      error?: Details.Error;
+      /**
+       * A customer-facing Asset output processing failure.
+       */
+      error?: Shared.AssetOutputError;
 
       /**
        * Progress specifies the current processing stage and encoding percentage. Omitted
@@ -425,23 +407,6 @@ export namespace AssetOutput {
     }
 
     export namespace Details {
-      export interface Error {
-        /**
-         * Machine-readable processing error code.
-         */
-        code: string;
-
-        /**
-         * Description of the processing failure.
-         */
-        message: string;
-
-        /**
-         * Processing stage that failed.
-         */
-        stage: 'ingest' | 'analysis' | 'encoding' | 'packaging' | 'upload' | 'validation' | 'cleanup';
-      }
-
       /**
        * Progress specifies the current processing stage and encoding percentage. Omitted
        * after processing ends.
@@ -552,7 +517,10 @@ export namespace AssetOutput {
        */
       content?: Details.Content;
 
-      error?: Details.Error;
+      /**
+       * A customer-facing Asset output processing failure.
+       */
+      error?: Shared.AssetOutputError;
 
       /**
        * LanguageCode identifies the detected primary language, such as en. Omitted
@@ -600,23 +568,6 @@ export namespace AssetOutput {
            */
           text: string;
         }
-      }
-
-      export interface Error {
-        /**
-         * Machine-readable processing error code.
-         */
-        code: string;
-
-        /**
-         * Description of the processing failure.
-         */
-        message: string;
-
-        /**
-         * Processing stage that failed.
-         */
-        stage: 'ingest' | 'analysis' | 'encoding' | 'packaging' | 'upload' | 'validation' | 'cleanup';
       }
     }
   }

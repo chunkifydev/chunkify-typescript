@@ -11,7 +11,7 @@ const client = new Chunkify({
 describe('resource keys', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.keys.create('connectionId', {
+    const responsePromise = client.projects.analytics.connections.keys.create('connectionId', {
       projectId: 'projectId',
       purpose: 'player',
     });
@@ -26,7 +26,7 @@ describe('resource keys', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.keys.create('connectionId', {
+    const response = await client.projects.analytics.connections.keys.create('connectionId', {
       projectId: 'projectId',
       purpose: 'player',
     });
@@ -34,7 +34,7 @@ describe('resource keys', () => {
 
   // Mock server tests are disabled
   test.skip('list: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.keys.list('connectionId', {
+    const responsePromise = client.projects.analytics.connections.keys.list('connectionId', {
       projectId: 'projectId',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -48,14 +48,14 @@ describe('resource keys', () => {
 
   // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.keys.list('connectionId', {
+    const response = await client.projects.analytics.connections.keys.list('connectionId', {
       projectId: 'projectId',
     });
   });
 
   // Mock server tests are disabled
   test.skip('rotate: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.keys.rotate('keyId', {
+    const responsePromise = client.projects.analytics.connections.keys.rotate('keyId', {
       projectId: 'projectId',
       connectionId: 'connectionId',
     });
@@ -70,7 +70,7 @@ describe('resource keys', () => {
 
   // Mock server tests are disabled
   test.skip('rotate: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.keys.rotate('keyId', {
+    const response = await client.projects.analytics.connections.keys.rotate('keyId', {
       projectId: 'projectId',
       connectionId: 'connectionId',
     });

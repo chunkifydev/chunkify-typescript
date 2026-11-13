@@ -4,7 +4,6 @@ export * from './shared';
 export {
   Assets,
   type Asset,
-  type AssetStatus,
   type AssetCreateParams,
   type AssetUpdateParams,
   type AssetListParams,
@@ -77,6 +76,11 @@ export { Tokens, type Token, type TokenListResponse, type TokenCreateParams } fr
 export {
   Transcodings,
   type Transcoding,
+  type TranscodingM4aAac,
+  type TranscodingMP4Av1,
+  type TranscodingMP4H264,
+  type TranscodingMP4H265,
+  type TranscodingWebmVp9,
   type TranscodingCreateParams,
   type TranscodingListParams,
   type TranscodingDeleteParams,

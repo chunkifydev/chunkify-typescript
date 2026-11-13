@@ -65,6 +65,11 @@ import {
   TranscodingCreateParams,
   TranscodingDeleteParams,
   TranscodingListParams,
+  TranscodingM4aAac,
+  TranscodingMP4Av1,
+  TranscodingMP4H264,
+  TranscodingMP4H265,
+  TranscodingWebmVp9,
   Transcodings,
   TranscodingsPaginatedResults,
 } from './resources/transcodings';
@@ -90,7 +95,6 @@ import {
   AssetCreateParams,
   AssetDeleteParams,
   AssetListParams,
-  AssetStatus,
   AssetUpdateParams,
   Assets,
   AssetsPaginatedResults,
@@ -953,7 +957,6 @@ export declare namespace Chunkify {
   export {
     Assets as Assets,
     type Asset as Asset,
-    type AssetStatus as AssetStatus,
     type AssetsPaginatedResults as AssetsPaginatedResults,
     type AssetCreateParams as AssetCreateParams,
     type AssetUpdateParams as AssetUpdateParams,
@@ -1052,6 +1055,11 @@ export declare namespace Chunkify {
   export {
     Transcodings as Transcodings,
     type Transcoding as Transcoding,
+    type TranscodingM4aAac as TranscodingM4aAac,
+    type TranscodingMP4Av1 as TranscodingMP4Av1,
+    type TranscodingMP4H264 as TranscodingMP4H264,
+    type TranscodingMP4H265 as TranscodingMP4H265,
+    type TranscodingWebmVp9 as TranscodingWebmVp9,
     type TranscodingsPaginatedResults as TranscodingsPaginatedResults,
     type TranscodingCreateParams as TranscodingCreateParams,
     type TranscodingListParams as TranscodingListParams,
@@ -1086,5 +1094,6 @@ export declare namespace Chunkify {
     type WorkflowListParams as WorkflowListParams,
   };
 
+  export type AssetOutputError = API.AssetOutputError;
   export type ChunkifyError = API.ChunkifyError;
 }

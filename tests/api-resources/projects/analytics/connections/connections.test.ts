@@ -8,10 +8,10 @@ const client = new Chunkify({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource analyticsConnections', () => {
+describe('resource connections', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.create('projectId', {
+    const responsePromise = client.projects.analytics.connections.create('projectId', {
       name: 'Website analytics',
       type: 'custom',
     });
@@ -26,7 +26,7 @@ describe('resource analyticsConnections', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.create('projectId', {
+    const response = await client.projects.analytics.connections.create('projectId', {
       name: 'Website analytics',
       type: 'custom',
       endpoint: 'https://analytics.example.com',
@@ -37,7 +37,7 @@ describe('resource analyticsConnections', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.retrieve('connectionId', {
+    const responsePromise = client.projects.analytics.connections.retrieve('connectionId', {
       projectId: 'projectId',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -51,14 +51,14 @@ describe('resource analyticsConnections', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.retrieve('connectionId', {
+    const response = await client.projects.analytics.connections.retrieve('connectionId', {
       projectId: 'projectId',
     });
   });
 
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.update('connectionId', {
+    const responsePromise = client.projects.analytics.connections.update('connectionId', {
       projectId: 'projectId',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -72,7 +72,7 @@ describe('resource analyticsConnections', () => {
 
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.update('connectionId', {
+    const response = await client.projects.analytics.connections.update('connectionId', {
       projectId: 'projectId',
       allowed_origins: ['string'],
       default_for_dashboard: true,
@@ -85,7 +85,7 @@ describe('resource analyticsConnections', () => {
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.projects.analyticsConnections.list('projectId');
+    const responsePromise = client.projects.analytics.connections.list('projectId');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -97,7 +97,7 @@ describe('resource analyticsConnections', () => {
 
   // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
-    const responsePromise = client.projects.analyticsConnections.delete('connectionId', {
+    const responsePromise = client.projects.analytics.connections.delete('connectionId', {
       projectId: 'projectId',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -111,7 +111,7 @@ describe('resource analyticsConnections', () => {
 
   // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
-    const response = await client.projects.analyticsConnections.delete('connectionId', {
+    const response = await client.projects.analytics.connections.delete('connectionId', {
       projectId: 'projectId',
     });
   });

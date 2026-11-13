@@ -103,7 +103,11 @@ export class Uploads extends APIResource {
    * });
    * ```
    */
-  complete(token: string, body: UploadCompleteParams, options?: RequestOptions): APIPromise<void> {
+  complete(
+    token: string,
+    body: UploadCompleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
     return this._client.post(path`/uploads/completion/${token}`, {
       body,
       ...options,
@@ -396,7 +400,7 @@ export interface UploadCompleteParams {
    * All uploaded parts in ascending part_number order, with the ETags returned by
    * storage.
    */
-  parts: Array<UploadCompleteParams.Part>;
+  parts?: Array<UploadCompleteParams.Part>;
 }
 
 export namespace UploadCompleteParams {

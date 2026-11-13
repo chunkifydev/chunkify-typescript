@@ -11,13 +11,8 @@ import {
   OutputRetrieveParams,
   Outputs,
 } from './outputs';
-import * as WorkflowAPI from './workflow';
-import {
-  AssetActionRun,
-  AssetActionRunsPaginatedResults,
-  Workflow,
-  WorkflowListActionsParams,
-} from './workflow';
+import * as WorkflowAPI from './workflow/workflow';
+import { Workflow } from './workflow/workflow';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
@@ -191,7 +186,7 @@ export interface Asset {
    * for playback, with its poster and timeline previews available. Static renditions
    * and captions have independent statuses.
    */
-  status: AssetStatus;
+  status: 'preparing' | 'ready' | 'failed' | 'expired';
 
   /**
    * ID of the output Storage.
@@ -480,8 +475,6 @@ export namespace Asset {
   }
 }
 
-export type AssetStatus = 'preparing' | 'ready' | 'failed' | 'expired';
-
 export interface AssetCreateParams {
   /**
    * ID of the video Source to process.
@@ -598,7 +591,7 @@ export interface AssetListParams extends PaginatedResultsParams {
   /**
    * Filter by Asset status.
    */
-  status?: AssetStatus;
+  status?: 'preparing' | 'ready' | 'failed' | 'expired';
 
   /**
    * Filter by output Storage ID.
@@ -642,7 +635,6 @@ Assets.Workflow = Workflow;
 export declare namespace Assets {
   export {
     type Asset as Asset,
-    type AssetStatus as AssetStatus,
     type AssetsPaginatedResults as AssetsPaginatedResults,
     type AssetCreateParams as AssetCreateParams,
     type AssetUpdateParams as AssetUpdateParams,
@@ -660,10 +652,5 @@ export declare namespace Assets {
     type OutputDeleteParams as OutputDeleteParams,
   };
 
-  export {
-    Workflow as Workflow,
-    type AssetActionRun as AssetActionRun,
-    type AssetActionRunsPaginatedResults as AssetActionRunsPaginatedResults,
-    type WorkflowListActionsParams as WorkflowListActionsParams,
-  };
+  export { Workflow as Workflow };
 }

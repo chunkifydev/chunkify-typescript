@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../../core/resource';
-import { APIPromise } from '../../../core/api-promise';
-import { RequestOptions } from '../../../internal/request-options';
-import { path } from '../../../internal/utils/path';
+import { APIResource } from '../../../../core/resource';
+import { APIPromise } from '../../../../core/api-promise';
+import { RequestOptions } from '../../../../internal/request-options';
+import { path } from '../../../../internal/utils/path';
 
 export class Keys extends APIResource {
   /**
@@ -14,7 +14,7 @@ export class Keys extends APIResource {
    * @example
    * ```ts
    * const key =
-   *   await client.projects.analyticsConnections.keys.create(
+   *   await client.projects.analytics.connections.keys.create(
    *     'connectionId',
    *     { projectId: 'projectId', purpose: 'player' },
    *   );
@@ -41,7 +41,7 @@ export class Keys extends APIResource {
    * @example
    * ```ts
    * const keys =
-   *   await client.projects.analyticsConnections.keys.list(
+   *   await client.projects.analytics.connections.keys.list(
    *     'connectionId',
    *     { projectId: 'projectId' },
    *   );
@@ -63,7 +63,7 @@ export class Keys extends APIResource {
    * @example
    * ```ts
    * const response =
-   *   await client.projects.analyticsConnections.keys.rotate(
+   *   await client.projects.analytics.connections.keys.rotate(
    *     'keyId',
    *     {
    *       projectId: 'projectId',
