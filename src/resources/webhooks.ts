@@ -9,7 +9,7 @@ import * as UploadsAPI from './uploads';
 import * as AssetsAPI from './assets/assets';
 import * as OutputsAPI from './assets/outputs';
 import * as JobsAPI from './jobs/jobs';
-import * as WorkflowAPI from './assets/workflow/workflow';
+import * as ActionsAPI from './assets/workflow/actions';
 import * as RunsAPI from './workflows/runs/runs';
 import { Webhook as Webhook_ } from 'standardwebhooks';
 import { APIPromise } from '../core/api-promise';
@@ -398,7 +398,7 @@ export namespace NewEventWebhookEvent {
      * action IDs, type, input, status, output reference, and any skip or failure
      * reason. Actions from other runs are excluded.
      */
-    action_runs: Array<WorkflowAPI.AssetActionRun>;
+    action_runs: Array<ActionsAPI.AssetActionRun>;
 
     /**
      * Snapshot of the Workflow run when the event was recorded.
@@ -630,7 +630,7 @@ export namespace UnwrapWebhookEvent {
      * action IDs, type, input, status, output reference, and any skip or failure
      * reason. Actions from other runs are excluded.
      */
-    action_runs: Array<WorkflowAPI.AssetActionRun>;
+    action_runs: Array<ActionsAPI.AssetActionRun>;
 
     /**
      * Snapshot of the Workflow run when the event was recorded.
