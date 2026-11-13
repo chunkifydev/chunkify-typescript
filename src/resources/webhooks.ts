@@ -119,6 +119,602 @@ export class Webhooks extends APIResource {
   }
 }
 
+/**
+ * Webhook notification. The event field selects the shape of data.
+ */
+export type NotificationPayload =
+  | NotificationPayloadJobCompleted
+  | NotificationPayloadJobFailed
+  | NotificationPayloadJobCreated
+  | NotificationPayloadSourceCreated
+  | NotificationPayloadSourceDeleted
+  | NotificationPayloadUploadCreated
+  | NotificationPayloadUploadCompleted
+  | NotificationPayloadUploadFailed
+  | NotificationPayloadAsset
+  | NotificationPayloadAssetOutput
+  | NotificationPayloadAssetOutputDeleted
+  | NotificationPayloadAssetDeleted
+  | NotificationPayloadWorkflowRun
+  | NotificationPayloadTranscoding
+  | NotificationPayloadThumbnail;
+
+/**
+ * Notification for asset.created, asset.ready, asset.playback_ready, asset.failed
+ * and asset.expired.
+ */
+export interface NotificationPayloadAsset {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadAssetData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired';
+}
+
+export interface NotificationPayloadAssetData {
+  asset: AssetsAPI.Asset;
+}
+
+/**
+ * Notification for asset.deleted.
+ */
+export interface NotificationPayloadAssetDeleted {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadAssetDeletedData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'asset.deleted';
+}
+
+/**
+ * Payload for asset.deleted. The Asset snapshot is preserved after record
+ * deletion.
+ */
+export interface NotificationPayloadAssetDeletedData {
+  asset: AssetsAPI.Asset;
+
+  /**
+   * FilesDeleted indicates whether the requested cleanup of the Asset's generated
+   * files completed without error. Missing files count as successful cleanup. False
+   * means these files were not removed at event time. Private transcript text and
+   * saved subtitle copies are always scheduled for asynchronous cleanup.
+   */
+  files_deleted: boolean;
+
+  /**
+   * DeletedSize specifies the recorded generated-file bytes removed with the Asset,
+   * including attached outputs. Omitted when cleanup was not requested or the total
+   * is unavailable. Missing storage objects still contribute their recorded sizes.
+   */
+  deleted_size?: number;
+}
+
+/**
+ * Notification for asset.output.created, asset.output.ready and
+ * asset.output.failed.
+ */
+export interface NotificationPayloadAssetOutput {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadAssetOutputData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed';
+}
+
+/**
+ * Payload for Asset output creation, readiness, and failure events.
+ */
+export interface NotificationPayloadAssetOutputData {
+  /**
+   * Output contains the canonical typed output snapshot at the event time, matching
+   * the output API.
+   */
+  output: OutputsAPI.AssetOutput;
+}
+
+/**
+ * Notification for asset.output.deleted.
+ */
+export interface NotificationPayloadAssetOutputDeleted {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadAssetOutputDeletedData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'asset.output.deleted';
+}
+
+/**
+ * Payload for asset.output.deleted. The output snapshot is preserved after
+ * removal.
+ */
+export interface NotificationPayloadAssetOutputDeletedData {
+  /**
+   * FilesDeleted indicates whether the requested cleanup of the output files
+   * completed without error. Missing files count as successful cleanup. False means
+   * these files were not removed at event time. Private transcript text and saved
+   * subtitle copies are always scheduled for asynchronous cleanup.
+   */
+  files_deleted: boolean;
+
+  /**
+   * Output contains the canonical typed output snapshot before removal.
+   */
+  output: OutputsAPI.AssetOutput;
+}
+
+/**
+ * Notification for job.completed.
+ */
+export interface NotificationPayloadJobCompleted {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadJobCompletedData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'job.completed';
+}
+
+/**
+ * Payload data structure for job.completed events
+ */
+export interface NotificationPayloadJobCompletedData {
+  /**
+   * List of files generated by the job
+   */
+  files: Array<FilesAPI.JobFile>;
+
+  job: JobsAPI.Job;
+}
+
+/**
+ * Notification for job.created.
+ */
+export interface NotificationPayloadJobCreated {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadJobCreatedData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'job.created';
+}
+
+/**
+ * Payload for job.created. A standalone Job has been accepted for processing;
+ * execution may not have started.
+ */
+export interface NotificationPayloadJobCreatedData {
+  job: JobsAPI.Job;
+}
+
+/**
+ * Notification for job.failed and job.cancelled.
+ */
+export interface NotificationPayloadJobFailed {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadJobFailedData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'job.failed' | 'job.cancelled';
+}
+
+/**
+ * Payload data structure for job.failed and job.cancelled events
+ */
+export interface NotificationPayloadJobFailedData {
+  job: JobsAPI.Job;
+}
+
+/**
+ * Notification for source.created.
+ */
+export interface NotificationPayloadSourceCreated {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadSourceCreatedData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'source.created';
+}
+
+/**
+ * Payload for source.created. The Source has been validated and saved. Thumbnails
+ * may still be pending.
+ */
+export interface NotificationPayloadSourceCreatedData {
+  source: SourcesAPI.Source;
+}
+
+/**
+ * Notification for source.deleted.
+ */
+export interface NotificationPayloadSourceDeleted {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadSourceDeletedData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'source.deleted';
+}
+
+/**
+ * Payload for source.deleted. The Source was deleted on request or after the
+ * team's data retention period. Resources created from it are preserved and no
+ * longer report its source_id.
+ */
+export interface NotificationPayloadSourceDeletedData {
+  /**
+   * Source contains the last snapshot before deletion.
+   */
+  source: SourcesAPI.Source;
+}
+
+/**
+ * Notification for thumbnail.created, thumbnail.ready, thumbnail.failed,
+ * thumbnail.expired and thumbnail.deleted.
+ */
+export interface NotificationPayloadThumbnail {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadThumbnailData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event:
+    | 'thumbnail.created'
+    | 'thumbnail.ready'
+    | 'thumbnail.failed'
+    | 'thumbnail.expired'
+    | 'thumbnail.deleted';
+}
+
+/**
+ * A canonical thumbnail snapshot for standalone thumbnail.\* events. Asset-owned
+ * thumbnails use the Asset output event payload.
+ */
+export interface NotificationPayloadThumbnailData {
+  /**
+   * Thumbnail contains the resource at the event time.
+   */
+  thumbnail: ThumbnailsAPI.Thumbnail;
+}
+
+/**
+ * Notification for transcoding.created, transcoding.ready, transcoding.failed,
+ * transcoding.cancelled, transcoding.expired and transcoding.deleted.
+ */
+export interface NotificationPayloadTranscoding {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadTranscodingData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event:
+    | 'transcoding.created'
+    | 'transcoding.ready'
+    | 'transcoding.failed'
+    | 'transcoding.cancelled'
+    | 'transcoding.expired'
+    | 'transcoding.deleted';
+}
+
+/**
+ * Payload for transcoding.created, transcoding.ready, transcoding.failed,
+ * transcoding.cancelled, transcoding.expired and transcoding.deleted events.
+ */
+export interface NotificationPayloadTranscodingData {
+  /**
+   * Transcoding contains the canonical resource snapshot at the event time.
+   */
+  transcoding: TranscodingsAPI.Transcoding;
+}
+
+/**
+ * Notification for upload.completed.
+ */
+export interface NotificationPayloadUploadCompleted {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadUploadCompletedData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'upload.completed';
+}
+
+/**
+ * Payload data structure for upload.completed events
+ */
+export interface NotificationPayloadUploadCompletedData {
+  source: SourcesAPI.Source;
+
+  upload: UploadsAPI.Upload;
+}
+
+/**
+ * Notification for upload.created.
+ */
+export interface NotificationPayloadUploadCreated {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadUploadCreatedData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'upload.created';
+}
+
+/**
+ * Payload for upload.created. A waiting upload session has been created; its
+ * Source is created only after successful completion. Transfer credentials are not
+ * included.
+ */
+export interface NotificationPayloadUploadCreatedData {
+  upload: UploadsAPI.Upload;
+}
+
+/**
+ * Notification for upload.failed and upload.expired.
+ */
+export interface NotificationPayloadUploadFailed {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadUploadFailedData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'upload.failed' | 'upload.expired';
+}
+
+/**
+ * Payload data structure for upload.failed and upload.expired events
+ */
+export interface NotificationPayloadUploadFailedData {
+  upload: UploadsAPI.Upload;
+}
+
+/**
+ * Notification for workflow_run.created, workflow_run.completed,
+ * workflow_run.failed and workflow_run.cancelled.
+ */
+export interface NotificationPayloadWorkflowRun {
+  /**
+   * Unique identifier of the notification
+   */
+  id: string;
+
+  /**
+   * Payload for the event named in event. Replays preserve the original data;
+   * retrieve the resource for current state and fresh signed URLs.
+   */
+  data: NotificationPayloadWorkflowRunData;
+
+  /**
+   * Timestamp of the event payload.
+   */
+  date: string;
+
+  /**
+   * Type of event that triggered the notification.
+   */
+  event: 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled';
+}
+
+/**
+ * Payload for workflow_run.created, workflow_run.completed, workflow_run.failed,
+ * and workflow_run.cancelled. The run and its actions are snapshots taken when the
+ * event was recorded.
+ */
+export interface NotificationPayloadWorkflowRunData {
+  /**
+   * ActionRuns specifies every action admitted by this run, including its rule and
+   * action IDs, type, input, status, output reference, and any skip or failure
+   * reason. Actions from other runs are excluded.
+   */
+  action_runs: Array<ActionsAPI.AssetActionRun>;
+
+  /**
+   * Snapshot of the Workflow run when the event was recorded.
+   */
+  workflow_run: RunsAPI.WorkflowRun;
+}
+
 export interface Webhook {
   /**
    * Unique identifier of the webhook
@@ -133,43 +729,7 @@ export interface Webhook {
   /**
    * Array of event types this webhook subscribes to
    */
-  events: Array<
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted'
-  >;
+  events: Array<WebhookEvent>;
 
   /**
    * ID of the project this webhook belongs to
@@ -181,6 +741,43 @@ export interface Webhook {
    */
   url: string;
 }
+
+export type WebhookEvent =
+  | 'job.created'
+  | 'job.completed'
+  | 'job.failed'
+  | 'job.cancelled'
+  | 'source.created'
+  | 'source.deleted'
+  | 'upload.created'
+  | 'upload.completed'
+  | 'upload.failed'
+  | 'upload.expired'
+  | 'asset.created'
+  | 'asset.ready'
+  | 'asset.playback_ready'
+  | 'asset.failed'
+  | 'asset.expired'
+  | 'asset.deleted'
+  | 'asset.output.created'
+  | 'asset.output.ready'
+  | 'asset.output.failed'
+  | 'asset.output.deleted'
+  | 'workflow_run.created'
+  | 'workflow_run.completed'
+  | 'workflow_run.failed'
+  | 'workflow_run.cancelled'
+  | 'transcoding.created'
+  | 'transcoding.ready'
+  | 'transcoding.failed'
+  | 'transcoding.cancelled'
+  | 'transcoding.expired'
+  | 'transcoding.deleted'
+  | 'thumbnail.created'
+  | 'thumbnail.ready'
+  | 'thumbnail.failed'
+  | 'thumbnail.expired'
+  | 'thumbnail.deleted';
 
 /**
  * Response containing the list of all webhooks for a project
@@ -200,1278 +797,22 @@ export interface WebhookListResponse {
 /**
  * Webhook notification. The event field selects the shape of data.
  */
-export type NewEventWebhookEvent =
-  | NewEventWebhookEvent.NotificationPayloadJobCompleted
-  | NewEventWebhookEvent.NotificationPayloadJobFailed
-  | NewEventWebhookEvent.NotificationPayloadJobCreated
-  | NewEventWebhookEvent.NotificationPayloadSourceCreated
-  | NewEventWebhookEvent.NotificationPayloadSourceDeleted
-  | NewEventWebhookEvent.NotificationPayloadUploadCreated
-  | NewEventWebhookEvent.NotificationPayloadUploadCompleted
-  | NewEventWebhookEvent.NotificationPayloadUploadFailed
-  | NewEventWebhookEvent.NotificationPayloadAsset
-  | NewEventWebhookEvent.NotificationPayloadAssetOutput
-  | NewEventWebhookEvent.NotificationPayloadAssetOutputDeleted
-  | NewEventWebhookEvent.NotificationPayloadAssetDeleted
-  | NewEventWebhookEvent.NotificationPayloadWorkflowRun
-  | NewEventWebhookEvent.NotificationPayloadTranscoding
-  | NewEventWebhookEvent.NotificationPayloadThumbnail;
-
-export namespace NewEventWebhookEvent {
-  /**
-   * Notification for job.completed.
-   */
-  export interface NotificationPayloadJobCompleted {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadJobCompleted.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'job.completed';
-  }
-
-  export namespace NotificationPayloadJobCompleted {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * List of files generated by the job
-       */
-      files: Array<FilesAPI.JobFile>;
-
-      job: JobsAPI.Job;
-    }
-  }
-
-  /**
-   * Notification for job.failed and job.cancelled.
-   */
-  export interface NotificationPayloadJobFailed {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadJobFailed.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'job.failed' | 'job.cancelled';
-  }
-
-  export namespace NotificationPayloadJobFailed {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      job: JobsAPI.Job;
-    }
-  }
-
-  /**
-   * Notification for job.created.
-   */
-  export interface NotificationPayloadJobCreated {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadJobCreated.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'job.created';
-  }
-
-  export namespace NotificationPayloadJobCreated {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      job: JobsAPI.Job;
-    }
-  }
-
-  /**
-   * Notification for source.created.
-   */
-  export interface NotificationPayloadSourceCreated {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadSourceCreated.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'source.created';
-  }
-
-  export namespace NotificationPayloadSourceCreated {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      source: SourcesAPI.Source;
-    }
-  }
-
-  /**
-   * Notification for source.deleted.
-   */
-  export interface NotificationPayloadSourceDeleted {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadSourceDeleted.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'source.deleted';
-  }
-
-  export namespace NotificationPayloadSourceDeleted {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * Source contains the last snapshot before deletion.
-       */
-      source: SourcesAPI.Source;
-    }
-  }
-
-  /**
-   * Notification for upload.created.
-   */
-  export interface NotificationPayloadUploadCreated {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadUploadCreated.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'upload.created';
-  }
-
-  export namespace NotificationPayloadUploadCreated {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      upload: UploadsAPI.Upload;
-    }
-  }
-
-  /**
-   * Notification for upload.completed.
-   */
-  export interface NotificationPayloadUploadCompleted {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadUploadCompleted.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'upload.completed';
-  }
-
-  export namespace NotificationPayloadUploadCompleted {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      source: SourcesAPI.Source;
-
-      upload: UploadsAPI.Upload;
-    }
-  }
-
-  /**
-   * Notification for upload.failed and upload.expired.
-   */
-  export interface NotificationPayloadUploadFailed {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadUploadFailed.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'upload.failed' | 'upload.expired';
-  }
-
-  export namespace NotificationPayloadUploadFailed {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      upload: UploadsAPI.Upload;
-    }
-  }
-
-  /**
-   * Notification for asset.created, asset.ready, asset.playback_ready, asset.failed
-   * and asset.expired.
-   */
-  export interface NotificationPayloadAsset {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadAsset.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired';
-  }
-
-  export namespace NotificationPayloadAsset {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      asset: AssetsAPI.Asset;
-    }
-  }
-
-  /**
-   * Notification for asset.output.created, asset.output.ready and
-   * asset.output.failed.
-   */
-  export interface NotificationPayloadAssetOutput {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadAssetOutput.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed';
-  }
-
-  export namespace NotificationPayloadAssetOutput {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * Output contains the canonical typed output snapshot at the event time, matching
-       * the output API.
-       */
-      output: OutputsAPI.AssetOutput;
-    }
-  }
-
-  /**
-   * Notification for asset.output.deleted.
-   */
-  export interface NotificationPayloadAssetOutputDeleted {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadAssetOutputDeleted.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'asset.output.deleted';
-  }
-
-  export namespace NotificationPayloadAssetOutputDeleted {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * FilesDeleted indicates whether the requested cleanup of the output files
-       * completed without error. Missing files count as successful cleanup. False means
-       * these files were not removed at event time. Private transcript text and saved
-       * subtitle copies are always scheduled for asynchronous cleanup.
-       */
-      files_deleted: boolean;
-
-      /**
-       * Output contains the canonical typed output snapshot before removal.
-       */
-      output: OutputsAPI.AssetOutput;
-    }
-  }
-
-  /**
-   * Notification for asset.deleted.
-   */
-  export interface NotificationPayloadAssetDeleted {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadAssetDeleted.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'asset.deleted';
-  }
-
-  export namespace NotificationPayloadAssetDeleted {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      asset: AssetsAPI.Asset;
-
-      /**
-       * FilesDeleted indicates whether the requested cleanup of the Asset's generated
-       * files completed without error. Missing files count as successful cleanup. False
-       * means these files were not removed at event time. Private transcript text and
-       * saved subtitle copies are always scheduled for asynchronous cleanup.
-       */
-      files_deleted: boolean;
-
-      /**
-       * DeletedSize specifies the recorded generated-file bytes removed with the Asset,
-       * including attached outputs. Omitted when cleanup was not requested or the total
-       * is unavailable. Missing storage objects still contribute their recorded sizes.
-       */
-      deleted_size?: number;
-    }
-  }
-
-  /**
-   * Notification for workflow_run.created, workflow_run.completed,
-   * workflow_run.failed and workflow_run.cancelled.
-   */
-  export interface NotificationPayloadWorkflowRun {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadWorkflowRun.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event:
-      | 'workflow_run.created'
-      | 'workflow_run.completed'
-      | 'workflow_run.failed'
-      | 'workflow_run.cancelled';
-  }
-
-  export namespace NotificationPayloadWorkflowRun {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * ActionRuns specifies every action admitted by this run, including its rule and
-       * action IDs, type, input, status, output reference, and any skip or failure
-       * reason. Actions from other runs are excluded.
-       */
-      action_runs: Array<ActionsAPI.AssetActionRun>;
-
-      /**
-       * Snapshot of the Workflow run when the event was recorded.
-       */
-      workflow_run: RunsAPI.WorkflowRun;
-    }
-  }
-
-  /**
-   * Notification for transcoding.created, transcoding.ready, transcoding.failed,
-   * transcoding.cancelled, transcoding.expired and transcoding.deleted.
-   */
-  export interface NotificationPayloadTranscoding {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadTranscoding.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event:
-      | 'transcoding.created'
-      | 'transcoding.ready'
-      | 'transcoding.failed'
-      | 'transcoding.cancelled'
-      | 'transcoding.expired'
-      | 'transcoding.deleted';
-  }
-
-  export namespace NotificationPayloadTranscoding {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * Transcoding contains the canonical resource snapshot at the event time.
-       */
-      transcoding: TranscodingsAPI.Transcoding;
-    }
-  }
-
-  /**
-   * Notification for thumbnail.created, thumbnail.ready, thumbnail.failed,
-   * thumbnail.expired and thumbnail.deleted.
-   */
-  export interface NotificationPayloadThumbnail {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadThumbnail.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event:
-      | 'thumbnail.created'
-      | 'thumbnail.ready'
-      | 'thumbnail.failed'
-      | 'thumbnail.expired'
-      | 'thumbnail.deleted';
-  }
-
-  export namespace NotificationPayloadThumbnail {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * Thumbnail contains the resource at the event time.
-       */
-      thumbnail: ThumbnailsAPI.Thumbnail;
-    }
-  }
-}
-
-/**
- * Webhook notification. The event field selects the shape of data.
- */
 export type UnwrapWebhookEvent =
-  | UnwrapWebhookEvent.NotificationPayloadJobCompleted
-  | UnwrapWebhookEvent.NotificationPayloadJobFailed
-  | UnwrapWebhookEvent.NotificationPayloadJobCreated
-  | UnwrapWebhookEvent.NotificationPayloadSourceCreated
-  | UnwrapWebhookEvent.NotificationPayloadSourceDeleted
-  | UnwrapWebhookEvent.NotificationPayloadUploadCreated
-  | UnwrapWebhookEvent.NotificationPayloadUploadCompleted
-  | UnwrapWebhookEvent.NotificationPayloadUploadFailed
-  | UnwrapWebhookEvent.NotificationPayloadAsset
-  | UnwrapWebhookEvent.NotificationPayloadAssetOutput
-  | UnwrapWebhookEvent.NotificationPayloadAssetOutputDeleted
-  | UnwrapWebhookEvent.NotificationPayloadAssetDeleted
-  | UnwrapWebhookEvent.NotificationPayloadWorkflowRun
-  | UnwrapWebhookEvent.NotificationPayloadTranscoding
-  | UnwrapWebhookEvent.NotificationPayloadThumbnail;
-
-export namespace UnwrapWebhookEvent {
-  /**
-   * Notification for job.completed.
-   */
-  export interface NotificationPayloadJobCompleted {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadJobCompleted.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'job.completed';
-  }
-
-  export namespace NotificationPayloadJobCompleted {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * List of files generated by the job
-       */
-      files: Array<FilesAPI.JobFile>;
-
-      job: JobsAPI.Job;
-    }
-  }
-
-  /**
-   * Notification for job.failed and job.cancelled.
-   */
-  export interface NotificationPayloadJobFailed {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadJobFailed.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'job.failed' | 'job.cancelled';
-  }
-
-  export namespace NotificationPayloadJobFailed {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      job: JobsAPI.Job;
-    }
-  }
-
-  /**
-   * Notification for job.created.
-   */
-  export interface NotificationPayloadJobCreated {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadJobCreated.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'job.created';
-  }
-
-  export namespace NotificationPayloadJobCreated {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      job: JobsAPI.Job;
-    }
-  }
-
-  /**
-   * Notification for source.created.
-   */
-  export interface NotificationPayloadSourceCreated {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadSourceCreated.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'source.created';
-  }
-
-  export namespace NotificationPayloadSourceCreated {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      source: SourcesAPI.Source;
-    }
-  }
-
-  /**
-   * Notification for source.deleted.
-   */
-  export interface NotificationPayloadSourceDeleted {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadSourceDeleted.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'source.deleted';
-  }
-
-  export namespace NotificationPayloadSourceDeleted {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * Source contains the last snapshot before deletion.
-       */
-      source: SourcesAPI.Source;
-    }
-  }
-
-  /**
-   * Notification for upload.created.
-   */
-  export interface NotificationPayloadUploadCreated {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadUploadCreated.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'upload.created';
-  }
-
-  export namespace NotificationPayloadUploadCreated {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      upload: UploadsAPI.Upload;
-    }
-  }
-
-  /**
-   * Notification for upload.completed.
-   */
-  export interface NotificationPayloadUploadCompleted {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadUploadCompleted.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'upload.completed';
-  }
-
-  export namespace NotificationPayloadUploadCompleted {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      source: SourcesAPI.Source;
-
-      upload: UploadsAPI.Upload;
-    }
-  }
-
-  /**
-   * Notification for upload.failed and upload.expired.
-   */
-  export interface NotificationPayloadUploadFailed {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadUploadFailed.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'upload.failed' | 'upload.expired';
-  }
-
-  export namespace NotificationPayloadUploadFailed {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      upload: UploadsAPI.Upload;
-    }
-  }
-
-  /**
-   * Notification for asset.created, asset.ready, asset.playback_ready, asset.failed
-   * and asset.expired.
-   */
-  export interface NotificationPayloadAsset {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadAsset.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired';
-  }
-
-  export namespace NotificationPayloadAsset {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      asset: AssetsAPI.Asset;
-    }
-  }
-
-  /**
-   * Notification for asset.output.created, asset.output.ready and
-   * asset.output.failed.
-   */
-  export interface NotificationPayloadAssetOutput {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadAssetOutput.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed';
-  }
-
-  export namespace NotificationPayloadAssetOutput {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * Output contains the canonical typed output snapshot at the event time, matching
-       * the output API.
-       */
-      output: OutputsAPI.AssetOutput;
-    }
-  }
-
-  /**
-   * Notification for asset.output.deleted.
-   */
-  export interface NotificationPayloadAssetOutputDeleted {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadAssetOutputDeleted.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'asset.output.deleted';
-  }
-
-  export namespace NotificationPayloadAssetOutputDeleted {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * FilesDeleted indicates whether the requested cleanup of the output files
-       * completed without error. Missing files count as successful cleanup. False means
-       * these files were not removed at event time. Private transcript text and saved
-       * subtitle copies are always scheduled for asynchronous cleanup.
-       */
-      files_deleted: boolean;
-
-      /**
-       * Output contains the canonical typed output snapshot before removal.
-       */
-      output: OutputsAPI.AssetOutput;
-    }
-  }
-
-  /**
-   * Notification for asset.deleted.
-   */
-  export interface NotificationPayloadAssetDeleted {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadAssetDeleted.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event: 'asset.deleted';
-  }
-
-  export namespace NotificationPayloadAssetDeleted {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      asset: AssetsAPI.Asset;
-
-      /**
-       * FilesDeleted indicates whether the requested cleanup of the Asset's generated
-       * files completed without error. Missing files count as successful cleanup. False
-       * means these files were not removed at event time. Private transcript text and
-       * saved subtitle copies are always scheduled for asynchronous cleanup.
-       */
-      files_deleted: boolean;
-
-      /**
-       * DeletedSize specifies the recorded generated-file bytes removed with the Asset,
-       * including attached outputs. Omitted when cleanup was not requested or the total
-       * is unavailable. Missing storage objects still contribute their recorded sizes.
-       */
-      deleted_size?: number;
-    }
-  }
-
-  /**
-   * Notification for workflow_run.created, workflow_run.completed,
-   * workflow_run.failed and workflow_run.cancelled.
-   */
-  export interface NotificationPayloadWorkflowRun {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadWorkflowRun.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event:
-      | 'workflow_run.created'
-      | 'workflow_run.completed'
-      | 'workflow_run.failed'
-      | 'workflow_run.cancelled';
-  }
-
-  export namespace NotificationPayloadWorkflowRun {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * ActionRuns specifies every action admitted by this run, including its rule and
-       * action IDs, type, input, status, output reference, and any skip or failure
-       * reason. Actions from other runs are excluded.
-       */
-      action_runs: Array<ActionsAPI.AssetActionRun>;
-
-      /**
-       * Snapshot of the Workflow run when the event was recorded.
-       */
-      workflow_run: RunsAPI.WorkflowRun;
-    }
-  }
-
-  /**
-   * Notification for transcoding.created, transcoding.ready, transcoding.failed,
-   * transcoding.cancelled, transcoding.expired and transcoding.deleted.
-   */
-  export interface NotificationPayloadTranscoding {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadTranscoding.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event:
-      | 'transcoding.created'
-      | 'transcoding.ready'
-      | 'transcoding.failed'
-      | 'transcoding.cancelled'
-      | 'transcoding.expired'
-      | 'transcoding.deleted';
-  }
-
-  export namespace NotificationPayloadTranscoding {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * Transcoding contains the canonical resource snapshot at the event time.
-       */
-      transcoding: TranscodingsAPI.Transcoding;
-    }
-  }
-
-  /**
-   * Notification for thumbnail.created, thumbnail.ready, thumbnail.failed,
-   * thumbnail.expired and thumbnail.deleted.
-   */
-  export interface NotificationPayloadThumbnail {
-    /**
-     * Unique identifier of the notification
-     */
-    id: string;
-
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    data: NotificationPayloadThumbnail.Data;
-
-    /**
-     * Timestamp of the event payload.
-     */
-    date: string;
-
-    /**
-     * Type of event that triggered the notification.
-     */
-    event:
-      | 'thumbnail.created'
-      | 'thumbnail.ready'
-      | 'thumbnail.failed'
-      | 'thumbnail.expired'
-      | 'thumbnail.deleted';
-  }
-
-  export namespace NotificationPayloadThumbnail {
-    /**
-     * Payload for the event named in event. Replays preserve the original data;
-     * retrieve the resource for current state and fresh signed URLs.
-     */
-    export interface Data {
-      /**
-       * Thumbnail contains the resource at the event time.
-       */
-      thumbnail: ThumbnailsAPI.Thumbnail;
-    }
-  }
-}
+  | NotificationPayloadJobCompleted
+  | NotificationPayloadJobFailed
+  | NotificationPayloadJobCreated
+  | NotificationPayloadSourceCreated
+  | NotificationPayloadSourceDeleted
+  | NotificationPayloadUploadCreated
+  | NotificationPayloadUploadCompleted
+  | NotificationPayloadUploadFailed
+  | NotificationPayloadAsset
+  | NotificationPayloadAssetOutput
+  | NotificationPayloadAssetOutputDeleted
+  | NotificationPayloadAssetDeleted
+  | NotificationPayloadWorkflowRun
+  | NotificationPayloadTranscoding
+  | NotificationPayloadThumbnail;
 
 export interface WebhookCreateParams {
   /**
@@ -1488,43 +829,7 @@ export interface WebhookCreateParams {
   /**
    * Events specifies the types of events that will trigger the webhook.
    */
-  events?: Array<
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted'
-  >;
+  events?: Array<WebhookEvent>;
 }
 
 export interface WebhookUpdateParams {
@@ -1536,50 +841,45 @@ export interface WebhookUpdateParams {
   /**
    * Events specifies the types of events that will trigger the webhook.
    */
-  events?: Array<
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted'
-  >;
+  events?: Array<WebhookEvent>;
 }
 
 export declare namespace Webhooks {
   export {
+    type NotificationPayload as NotificationPayload,
+    type NotificationPayloadAsset as NotificationPayloadAsset,
+    type NotificationPayloadAssetData as NotificationPayloadAssetData,
+    type NotificationPayloadAssetDeleted as NotificationPayloadAssetDeleted,
+    type NotificationPayloadAssetDeletedData as NotificationPayloadAssetDeletedData,
+    type NotificationPayloadAssetOutput as NotificationPayloadAssetOutput,
+    type NotificationPayloadAssetOutputData as NotificationPayloadAssetOutputData,
+    type NotificationPayloadAssetOutputDeleted as NotificationPayloadAssetOutputDeleted,
+    type NotificationPayloadAssetOutputDeletedData as NotificationPayloadAssetOutputDeletedData,
+    type NotificationPayloadJobCompleted as NotificationPayloadJobCompleted,
+    type NotificationPayloadJobCompletedData as NotificationPayloadJobCompletedData,
+    type NotificationPayloadJobCreated as NotificationPayloadJobCreated,
+    type NotificationPayloadJobCreatedData as NotificationPayloadJobCreatedData,
+    type NotificationPayloadJobFailed as NotificationPayloadJobFailed,
+    type NotificationPayloadJobFailedData as NotificationPayloadJobFailedData,
+    type NotificationPayloadSourceCreated as NotificationPayloadSourceCreated,
+    type NotificationPayloadSourceCreatedData as NotificationPayloadSourceCreatedData,
+    type NotificationPayloadSourceDeleted as NotificationPayloadSourceDeleted,
+    type NotificationPayloadSourceDeletedData as NotificationPayloadSourceDeletedData,
+    type NotificationPayloadThumbnail as NotificationPayloadThumbnail,
+    type NotificationPayloadThumbnailData as NotificationPayloadThumbnailData,
+    type NotificationPayloadTranscoding as NotificationPayloadTranscoding,
+    type NotificationPayloadTranscodingData as NotificationPayloadTranscodingData,
+    type NotificationPayloadUploadCompleted as NotificationPayloadUploadCompleted,
+    type NotificationPayloadUploadCompletedData as NotificationPayloadUploadCompletedData,
+    type NotificationPayloadUploadCreated as NotificationPayloadUploadCreated,
+    type NotificationPayloadUploadCreatedData as NotificationPayloadUploadCreatedData,
+    type NotificationPayloadUploadFailed as NotificationPayloadUploadFailed,
+    type NotificationPayloadUploadFailedData as NotificationPayloadUploadFailedData,
+    type NotificationPayloadWorkflowRun as NotificationPayloadWorkflowRun,
+    type NotificationPayloadWorkflowRunData as NotificationPayloadWorkflowRunData,
     type Webhook as Webhook,
+    type WebhookEvent as WebhookEvent,
     type WebhookListResponse as WebhookListResponse,
-    type NewEventWebhookEvent as NewEventWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,

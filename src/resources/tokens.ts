@@ -90,8 +90,10 @@ export interface Token {
   /**
    * Access scope of the token
    */
-  scope: 'project' | 'team';
+  scope: TokenScope;
 }
+
+export type TokenScope = 'project' | 'team';
 
 /**
  * Response containing the list of all tokens for a team. Including project and
@@ -114,7 +116,7 @@ export interface TokenCreateParams {
    * Scope specifies the scope of the token, which must be either "team" or
    * "project".
    */
-  scope: 'project' | 'team';
+  scope: TokenScope;
 
   /**
    * Name is the name of the token, which can be up to 64 characters long.
@@ -130,6 +132,7 @@ export interface TokenCreateParams {
 export declare namespace Tokens {
   export {
     type Token as Token,
+    type TokenScope as TokenScope,
     type TokenListResponse as TokenListResponse,
     type TokenCreateParams as TokenCreateParams,
   };
