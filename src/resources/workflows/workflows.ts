@@ -558,11 +558,11 @@ export namespace WorkflowCreateParams {
      * actions per rule, with at most 32 across the definition.
      */
     actions: Array<
-      | Rule.WorkflowStaticAction
-      | Rule.WorkflowCaptionAction
-      | Rule.WorkflowTranslationAction
-      | Rule.WorkflowThumbnailAction
-      | Rule.WorkflowTranscriptAction
+      | Rule.WorkflowStaticActionParams
+      | Rule.WorkflowCaptionActionParams
+      | Rule.WorkflowTranslationActionParams
+      | Rule.WorkflowThumbnailActionParams
+      | Rule.WorkflowTranscriptActionParams
     >;
 
     /**
@@ -585,7 +585,7 @@ export namespace WorkflowCreateParams {
     /**
      * Creates or reuses one static rendition for the Asset.
      */
-    export interface WorkflowStaticAction {
+    export interface WorkflowStaticActionParams {
       /**
        * Id specifies a stable action key, unique within its rule. Use 1 to 64
        * characters, starting with a letter and containing only letters, digits, or
@@ -596,7 +596,7 @@ export namespace WorkflowCreateParams {
       /**
        * Params specifies the static rendition resolution.
        */
-      params: WorkflowStaticAction.Params;
+      params: WorkflowStaticActionParams.Params;
 
       /**
        * Type specifies the action to perform. Must be create_static_rendition.
@@ -604,7 +604,7 @@ export namespace WorkflowCreateParams {
       type: 'create_static_rendition';
     }
 
-    export namespace WorkflowStaticAction {
+    export namespace WorkflowStaticActionParams {
       /**
        * Params specifies the static rendition resolution.
        */
@@ -622,7 +622,7 @@ export namespace WorkflowCreateParams {
      * Generates or reuses original captions and their transcript from the Asset's
      * speech.
      */
-    export interface WorkflowCaptionAction {
+    export interface WorkflowCaptionActionParams {
       /**
        * Id specifies a stable action key, unique within its rule. Use 1 to 64
        * characters, starting with a letter and containing only letters, digits, or
@@ -645,10 +645,10 @@ export namespace WorkflowCreateParams {
        * event. Use it only when connected to create_transcript. When omitted, creates or
        * reuses the Asset’s original transcript.
        */
-      transcript_id?: WorkflowCaptionAction.TranscriptID;
+      transcript_id?: WorkflowCaptionActionParams.TranscriptID;
     }
 
-    export namespace WorkflowCaptionAction {
+    export namespace WorkflowCaptionActionParams {
       /**
        * TranscriptId binds caption publication to the transcript in the triggering
        * event. Use it only when connected to create_transcript. When omitted, creates or
@@ -667,7 +667,7 @@ export namespace WorkflowCreateParams {
      * Translates or reuses an original caption in one target language. Requires an
      * asset.output.ready rule connected to an original caption creation action.
      */
-    export interface WorkflowTranslationAction {
+    export interface WorkflowTranslationActionParams {
       /**
        * Id specifies a stable action key, unique within its rule. Use 1 to 64
        * characters, starting with a letter and containing only letters, digits, or
@@ -678,12 +678,12 @@ export namespace WorkflowCreateParams {
       /**
        * CaptionId specifies the binding to the original caption in the triggering event.
        */
-      caption_id: WorkflowTranslationAction.CaptionID;
+      caption_id: WorkflowTranslationActionParams.CaptionID;
 
       /**
        * Params specifies the target language.
        */
-      params: WorkflowTranslationAction.Params;
+      params: WorkflowTranslationActionParams.Params;
 
       /**
        * Type specifies the action to perform. Must be translate_caption.
@@ -691,7 +691,7 @@ export namespace WorkflowCreateParams {
       type: 'translate_caption';
     }
 
-    export namespace WorkflowTranslationAction {
+    export namespace WorkflowTranslationActionParams {
       /**
        * CaptionId specifies the binding to the original caption in the triggering event.
        */
@@ -735,7 +735,7 @@ export namespace WorkflowCreateParams {
      * Creates an independent thumbnail request after asset.ready. Replaying this
      * action uses its accepted request; separate actions create separate requests.
      */
-    export interface WorkflowThumbnailAction {
+    export interface WorkflowThumbnailActionParams {
       /**
        * Id specifies a stable action key, unique within its rule.
        */
@@ -745,7 +745,7 @@ export namespace WorkflowCreateParams {
        * Params specifies sampling and image settings. Outputs use the Asset folder and
        * Storage.
        */
-      params: WorkflowThumbnailAction.Params;
+      params: WorkflowThumbnailActionParams.Params;
 
       /**
        * Type specifies the action to perform. Must be create_thumbnails.
@@ -753,7 +753,7 @@ export namespace WorkflowCreateParams {
       type: 'create_thumbnails';
     }
 
-    export namespace WorkflowThumbnailAction {
+    export namespace WorkflowThumbnailActionParams {
       /**
        * Params specifies sampling and image settings. Outputs use the Asset folder and
        * Storage.
@@ -826,7 +826,7 @@ export namespace WorkflowCreateParams {
      * Creates or reuses the original-language transcript. Can run alongside caption
      * generation in the same asset.ready rule.
      */
-    export interface WorkflowTranscriptAction {
+    export interface WorkflowTranscriptActionParams {
       /**
        * Id specifies a stable action key, unique within its rule. Use 1 to 64
        * characters, starting with a letter and containing only letters, digits, or
@@ -916,11 +916,11 @@ export namespace WorkflowUpdateParams {
      * actions per rule, with at most 32 across the definition.
      */
     actions: Array<
-      | Rule.WorkflowStaticAction
-      | Rule.WorkflowCaptionAction
-      | Rule.WorkflowTranslationAction
-      | Rule.WorkflowThumbnailAction
-      | Rule.WorkflowTranscriptAction
+      | Rule.WorkflowStaticActionParams
+      | Rule.WorkflowCaptionActionParams
+      | Rule.WorkflowTranslationActionParams
+      | Rule.WorkflowThumbnailActionParams
+      | Rule.WorkflowTranscriptActionParams
     >;
 
     /**
@@ -943,7 +943,7 @@ export namespace WorkflowUpdateParams {
     /**
      * Creates or reuses one static rendition for the Asset.
      */
-    export interface WorkflowStaticAction {
+    export interface WorkflowStaticActionParams {
       /**
        * Id specifies a stable action key, unique within its rule. Use 1 to 64
        * characters, starting with a letter and containing only letters, digits, or
@@ -954,7 +954,7 @@ export namespace WorkflowUpdateParams {
       /**
        * Params specifies the static rendition resolution.
        */
-      params: WorkflowStaticAction.Params;
+      params: WorkflowStaticActionParams.Params;
 
       /**
        * Type specifies the action to perform. Must be create_static_rendition.
@@ -962,7 +962,7 @@ export namespace WorkflowUpdateParams {
       type: 'create_static_rendition';
     }
 
-    export namespace WorkflowStaticAction {
+    export namespace WorkflowStaticActionParams {
       /**
        * Params specifies the static rendition resolution.
        */
@@ -980,7 +980,7 @@ export namespace WorkflowUpdateParams {
      * Generates or reuses original captions and their transcript from the Asset's
      * speech.
      */
-    export interface WorkflowCaptionAction {
+    export interface WorkflowCaptionActionParams {
       /**
        * Id specifies a stable action key, unique within its rule. Use 1 to 64
        * characters, starting with a letter and containing only letters, digits, or
@@ -1003,10 +1003,10 @@ export namespace WorkflowUpdateParams {
        * event. Use it only when connected to create_transcript. When omitted, creates or
        * reuses the Asset’s original transcript.
        */
-      transcript_id?: WorkflowCaptionAction.TranscriptID;
+      transcript_id?: WorkflowCaptionActionParams.TranscriptID;
     }
 
-    export namespace WorkflowCaptionAction {
+    export namespace WorkflowCaptionActionParams {
       /**
        * TranscriptId binds caption publication to the transcript in the triggering
        * event. Use it only when connected to create_transcript. When omitted, creates or
@@ -1025,7 +1025,7 @@ export namespace WorkflowUpdateParams {
      * Translates or reuses an original caption in one target language. Requires an
      * asset.output.ready rule connected to an original caption creation action.
      */
-    export interface WorkflowTranslationAction {
+    export interface WorkflowTranslationActionParams {
       /**
        * Id specifies a stable action key, unique within its rule. Use 1 to 64
        * characters, starting with a letter and containing only letters, digits, or
@@ -1036,12 +1036,12 @@ export namespace WorkflowUpdateParams {
       /**
        * CaptionId specifies the binding to the original caption in the triggering event.
        */
-      caption_id: WorkflowTranslationAction.CaptionID;
+      caption_id: WorkflowTranslationActionParams.CaptionID;
 
       /**
        * Params specifies the target language.
        */
-      params: WorkflowTranslationAction.Params;
+      params: WorkflowTranslationActionParams.Params;
 
       /**
        * Type specifies the action to perform. Must be translate_caption.
@@ -1049,7 +1049,7 @@ export namespace WorkflowUpdateParams {
       type: 'translate_caption';
     }
 
-    export namespace WorkflowTranslationAction {
+    export namespace WorkflowTranslationActionParams {
       /**
        * CaptionId specifies the binding to the original caption in the triggering event.
        */
@@ -1093,7 +1093,7 @@ export namespace WorkflowUpdateParams {
      * Creates an independent thumbnail request after asset.ready. Replaying this
      * action uses its accepted request; separate actions create separate requests.
      */
-    export interface WorkflowThumbnailAction {
+    export interface WorkflowThumbnailActionParams {
       /**
        * Id specifies a stable action key, unique within its rule.
        */
@@ -1103,7 +1103,7 @@ export namespace WorkflowUpdateParams {
        * Params specifies sampling and image settings. Outputs use the Asset folder and
        * Storage.
        */
-      params: WorkflowThumbnailAction.Params;
+      params: WorkflowThumbnailActionParams.Params;
 
       /**
        * Type specifies the action to perform. Must be create_thumbnails.
@@ -1111,7 +1111,7 @@ export namespace WorkflowUpdateParams {
       type: 'create_thumbnails';
     }
 
-    export namespace WorkflowThumbnailAction {
+    export namespace WorkflowThumbnailActionParams {
       /**
        * Params specifies sampling and image settings. Outputs use the Asset folder and
        * Storage.
@@ -1184,7 +1184,7 @@ export namespace WorkflowUpdateParams {
      * Creates or reuses the original-language transcript. Can run alongside caption
      * generation in the same asset.ready rule.
      */
-    export interface WorkflowTranscriptAction {
+    export interface WorkflowTranscriptActionParams {
       /**
        * Id specifies a stable action key, unique within its rule. Use 1 to 64
        * characters, starting with a letter and containing only letters, digits, or

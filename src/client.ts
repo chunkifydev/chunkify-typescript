@@ -1094,5 +1094,6 @@ export declare namespace Chunkify {
     type WorkflowListParams as WorkflowListParams,
   };
 
+  export type AssetOutputError = API.AssetOutputError;
   export type ChunkifyError = API.ChunkifyError;
 }
