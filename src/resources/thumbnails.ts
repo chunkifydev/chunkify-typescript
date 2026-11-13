@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -126,7 +127,7 @@ export interface Thumbnail {
    * Files contains all published images or sheets and the WebVTT index. Empty while
    * preparing.
    */
-  files: Array<Thumbnail.File>;
+  files: Array<ThumbnailFile>;
 
   /**
    * Metadata contains the accepted string metadata.
@@ -137,12 +138,12 @@ export interface Thumbnail {
    * Samples contains published thumbnails ordered by timestamp. Empty while
    * preparing. A ready resource may contain fewer samples than requested.
    */
-  samples: Array<Thumbnail.Sample>;
+  samples: Array<ThumbnailSample>;
 
   /**
    * Settings contains the accepted sampling and output settings.
    */
-  settings: Thumbnail.Settings;
+  settings: ThumbnailSettings;
 
   /**
    * SourceId identifies the input Source, or null if it has been deleted.
@@ -152,7 +153,7 @@ export interface Thumbnail {
   /**
    * Status reports processing or output expiry.
    */
-  status: 'preparing' | 'ready' | 'failed' | 'expired';
+  status: ThumbnailStatus;
 
   /**
    * StorageId identifies the accepted output Storage.
@@ -194,7 +195,7 @@ export interface Thumbnail {
    * dashboard for the Chunkify dashboard, mcp for MCP clients, and workflow for
    * Workflow actions. Omitted when the creator is unknown.
    */
-  created_via?: 'api' | 'dashboard' | 'mcp' | 'workflow';
+  created_via?: Shared.CreatedVia;
 
   /**
    * DeleteAt specifies when this standalone request is deleted: three days after its
@@ -208,7 +209,7 @@ export interface Thumbnail {
   /**
    * Error explains a failed request. Omitted otherwise.
    */
-  error?: Thumbnail.Error;
+  error?: ThumbnailError;
 
   /**
    * ExpiresAt specifies when temporary output files expire. Omitted for customer
@@ -223,173 +224,219 @@ export interface Thumbnail {
   ready_at?: string;
 }
 
-export namespace Thumbnail {
+/**
+ * Output Storage selection, independent of Source storage.
+ */
+export interface ThumbnailCreateStorageParams {
   /**
-   * One published image, sprite sheet, or WebVTT file.
+   * Id identifies output Storage in this Project. Omit to use the Project default.
    */
-  export interface File {
-    /**
-     * Kind identifies an individual image, sprite sheet, or WebVTT index.
-     */
-    kind: 'image' | 'sprite' | 'vtt';
-
-    /**
-     * Path specifies the file relative to storage_prefix.
-     */
-    path: string;
-
-    /**
-     * Size specifies the measured encoded file size in bytes.
-     */
-    size: number;
-
-    /**
-     * CdnUrl provides delivery through the configured CDN. Omitted without a CDN or
-     * after expiry.
-     */
-    cdn_url?: string;
-
-    /**
-     * Height specifies the measured image or complete sprite canvas height. Omitted
-     * for WebVTT.
-     */
-    height?: number;
-
-    /**
-     * Url provides temporary authorized delivery. Omitted after expiry or when
-     * unavailable.
-     */
-    url?: string;
-
-    /**
-     * Width specifies the measured image or complete sprite canvas width. Omitted for
-     * WebVTT.
-     */
-    width?: number;
-  }
+  id?: string;
 
   /**
-   * One successfully published requested sample. Repeated samples remain separate
-   * entries.
+   * Path specifies the output filename template relative to the selected Storage
+   * base_prefix. Required for customer storage; generated for Chunkify temporary
+   * storage. The filename must contain one %05d placeholder, replaced by the image
+   * or sprite sheet number starting at 1, and end in .jpg for jpeg or .webp for
+   * webp. The WebVTT file uses the filename without the placeholder and its adjacent
+   * separator, such as thumb.vtt for thumb-%05d.jpg. The combined path may contain
+   * at most 1024 bytes.
    */
-  export interface Sample {
-    /**
-     * Height specifies this image or tile height in pixels.
-     */
-    height: number;
-
-    /**
-     * Path identifies the image or sprite sheet in files.
-     */
-    path: string;
-
-    /**
-     * Timestamp specifies the measured Source-relative presentation time of the
-     * selected frame in seconds. Compatible cached inputs use millisecond timestamps,
-     * which can select a neighboring frame compared with the original Source.
-     */
-    timestamp: number;
-
-    /**
-     * Width specifies this image or tile width in pixels.
-     */
-    width: number;
-
-    /**
-     * Crop specifies the tile origin in its sprite sheet. Omitted for individual
-     * images; width and height give the tile dimensions.
-     */
-    crop?: Sample.Crop;
-  }
-
-  export namespace Sample {
-    /**
-     * Crop specifies the tile origin in its sprite sheet. Omitted for individual
-     * images; width and height give the tile dimensions.
-     */
-    export interface Crop {
-      /**
-       * X specifies the left edge in pixels.
-       */
-      x: number;
-
-      /**
-       * Y specifies the top edge in pixels.
-       */
-      y: number;
-    }
-  }
-
-  /**
-   * Settings contains the accepted sampling and output settings.
-   */
-  export interface Settings {
-    /**
-     * Format specifies the accepted image encoding.
-     */
-    format: 'jpeg' | 'webp';
-
-    /**
-     * Output specifies the accepted output mode.
-     */
-    output: 'images' | 'sprites';
-
-    /**
-     * Range contains the accepted sampling boundaries.
-     */
-    range: Settings.Range;
-
-    /**
-     * Size specifies the accepted maximum image or tile edge in pixels.
-     */
-    size: number;
-
-    /**
-     * Count specifies 1 to 100 thumbnails at the middle of equal sections of the
-     * selected range.
-     */
-    count?: number;
-
-    /**
-     * Timestamps specifies 1 to 100 Source-relative target times in seconds. Every
-     * time must be within the selected range. Repeated targets produce separate
-     * outputs.
-     */
-    timestamps?: Array<number>;
-  }
-
-  export namespace Settings {
-    /**
-     * Range contains the accepted sampling boundaries.
-     */
-    export interface Range {
-      /**
-       * End specifies the exclusive upper bound in seconds.
-       */
-      end: number;
-
-      /**
-       * Start specifies the inclusive lower bound in seconds.
-       */
-      start: number;
-    }
-  }
-
-  /**
-   * Error explains a failed request. Omitted otherwise.
-   */
-  export interface Error {
-    /**
-     * Code identifies the processing failure.
-     */
-    code: string;
-
-    /**
-     * Message explains the processing failure.
-     */
-    message: string;
-  }
+  path?: string;
 }
+
+/**
+ * The image rectangle within a sprite sheet.
+ */
+export interface ThumbnailCrop {
+  /**
+   * X specifies the left edge in pixels.
+   */
+  x: number;
+
+  /**
+   * Y specifies the top edge in pixels.
+   */
+  y: number;
+}
+
+/**
+ * A customer-facing processing failure.
+ */
+export interface ThumbnailError {
+  /**
+   * Code identifies the processing failure.
+   */
+  code: string;
+
+  /**
+   * Message explains the processing failure.
+   */
+  message: string;
+}
+
+/**
+ * One published image, sprite sheet, or WebVTT file.
+ */
+export interface ThumbnailFile {
+  /**
+   * Kind identifies an individual image, sprite sheet, or WebVTT index.
+   */
+  kind: 'image' | 'sprite' | 'vtt';
+
+  /**
+   * Path specifies the file relative to storage_prefix.
+   */
+  path: string;
+
+  /**
+   * Size specifies the measured encoded file size in bytes.
+   */
+  size: number;
+
+  /**
+   * CdnUrl provides delivery through the configured CDN. Omitted without a CDN or
+   * after expiry.
+   */
+  cdn_url?: string;
+
+  /**
+   * Height specifies the measured image or complete sprite canvas height. Omitted
+   * for WebVTT.
+   */
+  height?: number;
+
+  /**
+   * Url provides temporary authorized delivery. Omitted after expiry or when
+   * unavailable.
+   */
+  url?: string;
+
+  /**
+   * Width specifies the measured image or complete sprite canvas width. Omitted for
+   * WebVTT.
+   */
+  width?: number;
+}
+
+/**
+ * Format specifies the image encoding.
+ */
+export type ThumbnailFormat = 'jpeg' | 'webp';
+
+/**
+ * Output specifies individual images or automatically arranged sprite sheets.
+ */
+export type ThumbnailOutput = 'images' | 'sprites';
+
+/**
+ * The resolved Source-relative sampling range.
+ */
+export interface ThumbnailRange {
+  /**
+   * End specifies the exclusive upper bound in seconds.
+   */
+  end: number;
+
+  /**
+   * Start specifies the inclusive lower bound in seconds.
+   */
+  start: number;
+}
+
+/**
+ * Optional Source-relative sampling boundaries.
+ */
+export interface ThumbnailRangeParams {
+  /**
+   * End specifies the exclusive upper bound in seconds. Defaults to the Source
+   * duration.
+   */
+  end?: number;
+
+  /**
+   * Start specifies the inclusive lower bound in seconds. Defaults to zero.
+   */
+  start?: number;
+}
+
+/**
+ * One successfully published requested sample. Repeated samples remain separate
+ * entries.
+ */
+export interface ThumbnailSample {
+  /**
+   * Height specifies this image or tile height in pixels.
+   */
+  height: number;
+
+  /**
+   * Path identifies the image or sprite sheet in files.
+   */
+  path: string;
+
+  /**
+   * Timestamp specifies the measured Source-relative presentation time of the
+   * selected frame in seconds. Compatible cached inputs use millisecond timestamps,
+   * which can select a neighboring frame compared with the original Source.
+   */
+  timestamp: number;
+
+  /**
+   * Width specifies this image or tile width in pixels.
+   */
+  width: number;
+
+  /**
+   * Crop specifies the tile origin in its sprite sheet. Omitted for individual
+   * images; width and height give the tile dimensions.
+   */
+  crop?: ThumbnailCrop;
+}
+
+/**
+ * Accepted sampling and output settings, with defaults resolved.
+ */
+export interface ThumbnailSettings {
+  /**
+   * Format specifies the accepted image encoding.
+   */
+  format: ThumbnailFormat;
+
+  /**
+   * Output specifies the accepted output mode.
+   */
+  output: ThumbnailOutput;
+
+  /**
+   * Range contains the accepted sampling boundaries.
+   */
+  range: ThumbnailRange;
+
+  /**
+   * Size specifies the accepted maximum image or tile edge in pixels.
+   */
+  size: number;
+
+  /**
+   * Count specifies 1 to 100 thumbnails at the middle of equal sections of the
+   * selected range.
+   */
+  count?: number;
+
+  /**
+   * Timestamps specifies 1 to 100 Source-relative target times in seconds. Every
+   * time must be within the selected range. Repeated targets produce separate
+   * outputs.
+   */
+  timestamps?: Array<number>;
+}
+
+/**
+ * Status is ready only after processing and publication finish. Temporary outputs
+ * become expired after their retention period.
+ */
+export type ThumbnailStatus = 'preparing' | 'ready' | 'failed' | 'expired';
 
 export interface ThumbnailCreateParams {
   /**
@@ -406,7 +453,7 @@ export interface ThumbnailCreateParams {
   /**
    * Format selects JPEG or WebP. Defaults to JPEG.
    */
-  format?: 'jpeg' | 'webp';
+  format?: ThumbnailFormat;
 
   /**
    * Metadata attaches string values to this request. The serialized object may
@@ -417,13 +464,13 @@ export interface ThumbnailCreateParams {
   /**
    * Output selects images or sprites. Defaults to images.
    */
-  output?: 'images' | 'sprites';
+  output?: ThumbnailOutput;
 
   /**
    * Range limits sampling to part of the Source. Defaults to the whole Source
    * duration.
    */
-  range?: ThumbnailCreateParams.Range;
+  range?: ThumbnailRangeParams;
 
   /**
    * Size specifies the maximum image or tile edge in pixels, from 64 to 1920.
@@ -436,7 +483,7 @@ export interface ThumbnailCreateParams {
    * Storage overrides the Project output destination and names the output files.
    * Source storage remains independent.
    */
-  storage?: ThumbnailCreateParams.Storage;
+  storage?: ThumbnailCreateStorageParams;
 
   /**
    * Timestamps specifies 1 to 100 Source-relative target times in seconds. Every
@@ -444,47 +491,6 @@ export interface ThumbnailCreateParams {
    * outputs.
    */
   timestamps?: Array<number>;
-}
-
-export namespace ThumbnailCreateParams {
-  /**
-   * Range limits sampling to part of the Source. Defaults to the whole Source
-   * duration.
-   */
-  export interface Range {
-    /**
-     * End specifies the exclusive upper bound in seconds. Defaults to the Source
-     * duration.
-     */
-    end?: number;
-
-    /**
-     * Start specifies the inclusive lower bound in seconds. Defaults to zero.
-     */
-    start?: number;
-  }
-
-  /**
-   * Storage overrides the Project output destination and names the output files.
-   * Source storage remains independent.
-   */
-  export interface Storage {
-    /**
-     * Id identifies output Storage in this Project. Omit to use the Project default.
-     */
-    id?: string;
-
-    /**
-     * Path specifies the output filename template relative to the selected Storage
-     * base_prefix. Required for customer storage; generated for Chunkify temporary
-     * storage. The filename must contain one %05d placeholder, replaced by the image
-     * or sprite sheet number starting at 1, and end in .jpg for jpeg or .webp for
-     * webp. The WebVTT file uses the filename without the placeholder and its adjacent
-     * separator, such as thumb.vtt for thumb-%05d.jpg. The combined path may contain
-     * at most 1024 bytes.
-     */
-    path?: string;
-  }
 }
 
 export interface ThumbnailListParams extends PaginatedResultsParams {
@@ -504,7 +510,7 @@ export interface ThumbnailListParams extends PaginatedResultsParams {
   /**
    * Filter by Thumbnail status.
    */
-  status?: 'preparing' | 'ready' | 'failed' | 'expired';
+  status?: ThumbnailStatus;
 
   /**
    * Filter by output Storage ID.
@@ -545,6 +551,17 @@ export interface ThumbnailDeleteParams {
 export declare namespace Thumbnails {
   export {
     type Thumbnail as Thumbnail,
+    type ThumbnailCreateStorageParams as ThumbnailCreateStorageParams,
+    type ThumbnailCrop as ThumbnailCrop,
+    type ThumbnailError as ThumbnailError,
+    type ThumbnailFile as ThumbnailFile,
+    type ThumbnailFormat as ThumbnailFormat,
+    type ThumbnailOutput as ThumbnailOutput,
+    type ThumbnailRange as ThumbnailRange,
+    type ThumbnailRangeParams as ThumbnailRangeParams,
+    type ThumbnailSample as ThumbnailSample,
+    type ThumbnailSettings as ThumbnailSettings,
+    type ThumbnailStatus as ThumbnailStatus,
     type ThumbnailsPaginatedResults as ThumbnailsPaginatedResults,
     type ThumbnailCreateParams as ThumbnailCreateParams,
     type ThumbnailListParams as ThumbnailListParams,
