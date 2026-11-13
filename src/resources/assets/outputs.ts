@@ -758,12 +758,20 @@ export namespace OutputCreateParams {
      * Parameters for an original-language transcript. Pass an empty object; the spoken
      * language is detected automatically.
      */
-    params: unknown;
+    params: AssetTranscriptOutputCreateParams.Params;
 
     /**
      * Type specifies the output kind.
      */
     type: 'transcript';
+  }
+
+  export namespace AssetTranscriptOutputCreateParams {
+    /**
+     * Parameters for an original-language transcript. Pass an empty object; the spoken
+     * language is detected automatically.
+     */
+    export interface Params {}
   }
 }
 
