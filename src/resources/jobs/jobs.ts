@@ -30,13 +30,7 @@ export class Jobs extends APIResource {
    * @deprecated
    */
   create(body: JobCreateParams, options?: RequestOptions): APIPromise<Job> {
-    return (
-      this._client.post('/jobs', {
-        body,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Job }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.post('/jobs', { body, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Job }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -46,12 +40,7 @@ export class Jobs extends APIResource {
    * @deprecated
    */
   retrieve(jobID: string, options?: RequestOptions): APIPromise<Job> {
-    return (
-      this._client.get(path`/jobs/${jobID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Job }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/jobs/${jobID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Job }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -60,15 +49,8 @@ export class Jobs extends APIResource {
    *
    * @deprecated
    */
-  list(
-    query: JobListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<JobsPaginatedResults, Job> {
-    return this._client.getAPIList('/jobs', PaginatedResults<Job>, {
-      query,
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+  list(query: JobListParams | null | undefined = {}, options?: RequestOptions): PagePromise<JobsPaginatedResults, Job> {
+    return this._client.getAPIList('/jobs', PaginatedResults<Job>, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -78,11 +60,7 @@ export class Jobs extends APIResource {
    * @deprecated
    */
   delete(jobID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/jobs/${jobID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.delete(path`/jobs/${jobID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -92,15 +70,11 @@ export class Jobs extends APIResource {
    * @deprecated
    */
   cancel(jobID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/jobs/${jobID}/cancel`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.post(path`/jobs/${jobID}/cancel`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 }
 
-export type JobsPaginatedResults = PaginatedResults<Job>;
+export type JobsPaginatedResults = PaginatedResults<Job>
 
 export interface HlsAv1 {
   id: 'hls_av1';
@@ -240,34 +214,7 @@ export interface HlsAv1 {
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
-  pixfmt?:
-    | 'yuv410p'
-    | 'yuv411p'
-    | 'yuv420p'
-    | 'yuv422p'
-    | 'yuv440p'
-    | 'yuv444p'
-    | 'yuvJ411p'
-    | 'yuvJ420p'
-    | 'yuvJ422p'
-    | 'yuvJ440p'
-    | 'yuvJ444p'
-    | 'yuv420p10le'
-    | 'yuv422p10le'
-    | 'yuv440p10le'
-    | 'yuv444p10le'
-    | 'yuv420p12le'
-    | 'yuv422p12le'
-    | 'yuv440p12le'
-    | 'yuv444p12le'
-    | 'yuv420p10be'
-    | 'yuv422p10be'
-    | 'yuv440p10be'
-    | 'yuv444p10be'
-    | 'yuv420p12be'
-    | 'yuv422p12be'
-    | 'yuv440p12be'
-    | 'yuv444p12be';
+  pixfmt?: 'yuv410p' | 'yuv411p' | 'yuv420p' | 'yuv422p' | 'yuv440p' | 'yuv444p' | 'yuvJ411p' | 'yuvJ420p' | 'yuvJ422p' | 'yuvJ440p' | 'yuvJ444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv440p10le' | 'yuv444p10le' | 'yuv420p12le' | 'yuv422p12le' | 'yuv440p12le' | 'yuv444p12le' | 'yuv420p10be' | 'yuv422p10be' | 'yuv440p10be' | 'yuv444p10be' | 'yuv420p12be' | 'yuv422p12be' | 'yuv440p12be' | 'yuv444p12be';
 
   /**
    * Preset controls the encoding efficiency and processing intensity. Lower presets
@@ -449,34 +396,7 @@ export interface HlsH264 {
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
-  pixfmt?:
-    | 'yuv410p'
-    | 'yuv411p'
-    | 'yuv420p'
-    | 'yuv422p'
-    | 'yuv440p'
-    | 'yuv444p'
-    | 'yuvJ411p'
-    | 'yuvJ420p'
-    | 'yuvJ422p'
-    | 'yuvJ440p'
-    | 'yuvJ444p'
-    | 'yuv420p10le'
-    | 'yuv422p10le'
-    | 'yuv440p10le'
-    | 'yuv444p10le'
-    | 'yuv420p12le'
-    | 'yuv422p12le'
-    | 'yuv440p12le'
-    | 'yuv444p12le'
-    | 'yuv420p10be'
-    | 'yuv422p10be'
-    | 'yuv440p10be'
-    | 'yuv444p10be'
-    | 'yuv420p12be'
-    | 'yuv422p12be'
-    | 'yuv440p12be'
-    | 'yuv444p12be';
+  pixfmt?: 'yuv410p' | 'yuv411p' | 'yuv420p' | 'yuv422p' | 'yuv440p' | 'yuv444p' | 'yuvJ411p' | 'yuvJ420p' | 'yuvJ422p' | 'yuvJ440p' | 'yuvJ444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv440p10le' | 'yuv444p10le' | 'yuv420p12le' | 'yuv422p12le' | 'yuv440p12le' | 'yuv444p12le' | 'yuv420p10be' | 'yuv422p10be' | 'yuv440p10be' | 'yuv444p10be' | 'yuv420p12be' | 'yuv422p12be' | 'yuv440p12be' | 'yuv444p12be';
 
   /**
    * Preset specifies the encoding speed preset. Valid values (from fastest to
@@ -667,34 +587,7 @@ export interface HlsH265 {
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
-  pixfmt?:
-    | 'yuv410p'
-    | 'yuv411p'
-    | 'yuv420p'
-    | 'yuv422p'
-    | 'yuv440p'
-    | 'yuv444p'
-    | 'yuvJ411p'
-    | 'yuvJ420p'
-    | 'yuvJ422p'
-    | 'yuvJ440p'
-    | 'yuvJ444p'
-    | 'yuv420p10le'
-    | 'yuv422p10le'
-    | 'yuv440p10le'
-    | 'yuv444p10le'
-    | 'yuv420p12le'
-    | 'yuv422p12le'
-    | 'yuv440p12le'
-    | 'yuv444p12le'
-    | 'yuv420p10be'
-    | 'yuv422p10be'
-    | 'yuv440p10be'
-    | 'yuv444p10be'
-    | 'yuv420p12be'
-    | 'yuv422p12be'
-    | 'yuv440p12be'
-    | 'yuv444p12be';
+  pixfmt?: 'yuv410p' | 'yuv411p' | 'yuv420p' | 'yuv422p' | 'yuv440p' | 'yuv444p' | 'yuvJ411p' | 'yuvJ420p' | 'yuvJ422p' | 'yuvJ440p' | 'yuvJ444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv440p10le' | 'yuv444p10le' | 'yuv420p12le' | 'yuv422p12le' | 'yuv440p12le' | 'yuv444p12le' | 'yuv420p10be' | 'yuv422p10be' | 'yuv440p10be' | 'yuv444p10be' | 'yuv420p12be' | 'yuv422p12be' | 'yuv440p12be' | 'yuv444p12be';
 
   /**
    * Preset specifies the encoding speed preset. Valid values (from fastest to
@@ -763,15 +656,7 @@ export interface Job {
   /**
    * The format parameters and settings for a job
    */
-  format:
-    | Job.MP4Av1
-    | Job.MP4H264
-    | Job.MP4H265
-    | Job.WebmVp9
-    | Job.HlsAv1
-    | Job.HlsH264
-    | Job.HlsH265
-    | Job.Jpg;
+  format: Job.MP4Av1 | Job.MP4H264 | Job.MP4H265 | Job.WebmVp9 | Job.HlsAv1 | Job.HlsH264 | Job.HlsH265 | Job.Jpg;
 
   /**
    * Progress percentage of the job (0-100)
@@ -786,21 +671,7 @@ export interface Job {
   /**
    * Current status of the job.
    */
-  status:
-    | 'pending'
-    | 'queued'
-    | 'ingesting'
-    | 'transcoding'
-    | 'downloading'
-    | 'merging'
-    | 'uploading'
-    | 'failed'
-    | 'completed'
-    | 'cancelled'
-    | 'merged'
-    | 'downloaded'
-    | 'transcoded'
-    | 'waiting';
+  status: 'pending' | 'queued' | 'ingesting' | 'transcoding' | 'downloading' | 'merging' | 'uploading' | 'failed' | 'completed' | 'cancelled' | 'merged' | 'downloaded' | 'transcoded' | 'waiting';
 
   /**
    * Storage settings for where the job output will be saved
@@ -1087,34 +958,7 @@ export interface MP4Av1 {
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
-  pixfmt?:
-    | 'yuv410p'
-    | 'yuv411p'
-    | 'yuv420p'
-    | 'yuv422p'
-    | 'yuv440p'
-    | 'yuv444p'
-    | 'yuvJ411p'
-    | 'yuvJ420p'
-    | 'yuvJ422p'
-    | 'yuvJ440p'
-    | 'yuvJ444p'
-    | 'yuv420p10le'
-    | 'yuv422p10le'
-    | 'yuv440p10le'
-    | 'yuv444p10le'
-    | 'yuv420p12le'
-    | 'yuv422p12le'
-    | 'yuv440p12le'
-    | 'yuv444p12le'
-    | 'yuv420p10be'
-    | 'yuv422p10be'
-    | 'yuv440p10be'
-    | 'yuv444p10be'
-    | 'yuv420p12be'
-    | 'yuv422p12be'
-    | 'yuv440p12be'
-    | 'yuv444p12be';
+  pixfmt?: 'yuv410p' | 'yuv411p' | 'yuv420p' | 'yuv422p' | 'yuv440p' | 'yuv444p' | 'yuvJ411p' | 'yuvJ420p' | 'yuvJ422p' | 'yuvJ440p' | 'yuvJ444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv440p10le' | 'yuv444p10le' | 'yuv420p12le' | 'yuv422p12le' | 'yuv440p12le' | 'yuv444p12le' | 'yuv420p10be' | 'yuv422p10be' | 'yuv440p10be' | 'yuv444p10be' | 'yuv420p12be' | 'yuv422p12be' | 'yuv440p12be' | 'yuv444p12be';
 
   /**
    * Preset controls the encoding efficiency and processing intensity. Lower presets
@@ -1252,34 +1096,7 @@ export interface MP4H264 {
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
-  pixfmt?:
-    | 'yuv410p'
-    | 'yuv411p'
-    | 'yuv420p'
-    | 'yuv422p'
-    | 'yuv440p'
-    | 'yuv444p'
-    | 'yuvJ411p'
-    | 'yuvJ420p'
-    | 'yuvJ422p'
-    | 'yuvJ440p'
-    | 'yuvJ444p'
-    | 'yuv420p10le'
-    | 'yuv422p10le'
-    | 'yuv440p10le'
-    | 'yuv444p10le'
-    | 'yuv420p12le'
-    | 'yuv422p12le'
-    | 'yuv440p12le'
-    | 'yuv444p12le'
-    | 'yuv420p10be'
-    | 'yuv422p10be'
-    | 'yuv440p10be'
-    | 'yuv444p10be'
-    | 'yuv420p12be'
-    | 'yuv422p12be'
-    | 'yuv440p12be'
-    | 'yuv444p12be';
+  pixfmt?: 'yuv410p' | 'yuv411p' | 'yuv420p' | 'yuv422p' | 'yuv440p' | 'yuv444p' | 'yuvJ411p' | 'yuvJ420p' | 'yuvJ422p' | 'yuvJ440p' | 'yuvJ444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv440p10le' | 'yuv444p10le' | 'yuv420p12le' | 'yuv422p12le' | 'yuv440p12le' | 'yuv444p12le' | 'yuv420p10be' | 'yuv422p10be' | 'yuv440p10be' | 'yuv444p10be' | 'yuv420p12be' | 'yuv422p12be' | 'yuv440p12be' | 'yuv444p12be';
 
   /**
    * Preset specifies the encoding speed preset. Valid values (from fastest to
@@ -1426,34 +1243,7 @@ export interface MP4H265 {
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
-  pixfmt?:
-    | 'yuv410p'
-    | 'yuv411p'
-    | 'yuv420p'
-    | 'yuv422p'
-    | 'yuv440p'
-    | 'yuv444p'
-    | 'yuvJ411p'
-    | 'yuvJ420p'
-    | 'yuvJ422p'
-    | 'yuvJ440p'
-    | 'yuvJ444p'
-    | 'yuv420p10le'
-    | 'yuv422p10le'
-    | 'yuv440p10le'
-    | 'yuv444p10le'
-    | 'yuv420p12le'
-    | 'yuv422p12le'
-    | 'yuv440p12le'
-    | 'yuv444p12le'
-    | 'yuv420p10be'
-    | 'yuv422p10be'
-    | 'yuv440p10be'
-    | 'yuv444p10be'
-    | 'yuv420p12be'
-    | 'yuv422p12be'
-    | 'yuv440p12be'
-    | 'yuv444p12be';
+  pixfmt?: 'yuv410p' | 'yuv411p' | 'yuv420p' | 'yuv422p' | 'yuv440p' | 'yuv444p' | 'yuvJ411p' | 'yuvJ420p' | 'yuvJ422p' | 'yuvJ440p' | 'yuvJ444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv440p10le' | 'yuv444p10le' | 'yuv420p12le' | 'yuv422p12le' | 'yuv440p12le' | 'yuv444p12le' | 'yuv420p10be' | 'yuv422p10be' | 'yuv440p10be' | 'yuv444p10be' | 'yuv420p12be' | 'yuv422p12be' | 'yuv440p12be' | 'yuv444p12be';
 
   /**
    * Preset specifies the encoding speed preset. Valid values (from fastest to
@@ -1596,34 +1386,7 @@ export interface WebmVp9 {
   /**
    * PixFmt specifies the pixel format. Valid value: yuv420p
    */
-  pixfmt?:
-    | 'yuv410p'
-    | 'yuv411p'
-    | 'yuv420p'
-    | 'yuv422p'
-    | 'yuv440p'
-    | 'yuv444p'
-    | 'yuvJ411p'
-    | 'yuvJ420p'
-    | 'yuvJ422p'
-    | 'yuvJ440p'
-    | 'yuvJ444p'
-    | 'yuv420p10le'
-    | 'yuv422p10le'
-    | 'yuv440p10le'
-    | 'yuv444p10le'
-    | 'yuv420p12le'
-    | 'yuv422p12le'
-    | 'yuv440p12le'
-    | 'yuv444p12le'
-    | 'yuv420p10be'
-    | 'yuv422p10be'
-    | 'yuv440p10be'
-    | 'yuv444p10be'
-    | 'yuv420p12be'
-    | 'yuv422p12be'
-    | 'yuv440p12be'
-    | 'yuv444p12be';
+  pixfmt?: 'yuv410p' | 'yuv411p' | 'yuv420p' | 'yuv422p' | 'yuv440p' | 'yuv444p' | 'yuvJ411p' | 'yuvJ420p' | 'yuvJ422p' | 'yuvJ440p' | 'yuvJ444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv440p10le' | 'yuv444p10le' | 'yuv420p12le' | 'yuv422p12le' | 'yuv440p12le' | 'yuv444p12le' | 'yuv420p10be' | 'yuv422p10be' | 'yuv440p10be' | 'yuv444p10be' | 'yuv420p12be' | 'yuv422p12be' | 'yuv440p12be' | 'yuv444p12be';
 
   /**
    * Quality specifies the VP9 encoding quality preset. Valid values:
@@ -1804,12 +1567,22 @@ export declare namespace Jobs {
     type WebmVp9 as WebmVp9,
     type JobsPaginatedResults as JobsPaginatedResults,
     type JobCreateParams as JobCreateParams,
-    type JobListParams as JobListParams,
+    type JobListParams as JobListParams
   };
 
-  export { Files as Files, type FileListResponse as FileListResponse };
+  export {
+    Files as Files,
+    type FileListResponse as FileListResponse
+  };
 
-  export { Logs as Logs, type LogListResponse as LogListResponse, type LogListParams as LogListParams };
+  export {
+    Logs as Logs,
+    type LogListResponse as LogListResponse,
+    type LogListParams as LogListParams
+  };
 
-  export { Transcoders as Transcoders, type TranscoderListResponse as TranscoderListResponse };
+  export {
+    Transcoders as Transcoders,
+    type TranscoderListResponse as TranscoderListResponse
+  };
 }

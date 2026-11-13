@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Chunkify from '@chunkify/chunkify';
+import Chunkify, { toFile } from '@chunkify/chunkify';
 
 const client = new Chunkify({
   projectAccessToken: 'My Project Access Token',
   teamAccessToken: 'My Team Access Token',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource tokens', () => {
@@ -24,10 +24,10 @@ describe('resource tokens', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.tokens.create({
-      scope: 'project',
-      name: 'My Token',
-      project_id: 'proj_A1cce6120E56e7Tu9ioP09Nhjk1',
-    });
+    scope: 'project',
+    name: 'My Token',
+    project_id: 'proj_A1cce6120E56e7Tu9ioP09Nhjk1',
+  });
   });
 
   // Mock server tests are disabled

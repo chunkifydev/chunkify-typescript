@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as StoragesAPI from './storages';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -25,14 +26,8 @@ export class Storages extends APIResource {
    * ```
    */
   create(params: StorageCreateParams, options?: RequestOptions): APIPromise<Storage> {
-    const { storage } = params;
-    return (
-      this._client.post('/storages', {
-        body: storage,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Storage }>
-    )._thenUnwrap((obj) => obj.data);
+    const { storage } = params
+    return (this._client.post('/storages', { body: storage, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Storage }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -44,12 +39,7 @@ export class Storages extends APIResource {
    * ```
    */
   retrieve(storageID: string, options?: RequestOptions): APIPromise<Storage> {
-    return (
-      this._client.get(path`/storages/${storageID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Storage }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/storages/${storageID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Storage }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -74,12 +64,7 @@ export class Storages extends APIResource {
    * ```
    */
   update(storageID: string, body: StorageUpdateParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.patch(path`/storages/${storageID}`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.patch(path`/storages/${storageID}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -91,7 +76,7 @@ export class Storages extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<StorageListResponse> {
-    return this._client.get('/storages', { ...options, __security: { projectAccessTokenAuth: true } });
+    return this._client.get('/storages', { ...options, __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -104,18 +89,14 @@ export class Storages extends APIResource {
    * ```
    */
   delete(storageID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/storages/${storageID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.delete(path`/storages/${storageID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 }
 
 /**
  * A customer-owned storage connection using the standard S3 API.
  */
-export type Storage = Storage.Chunkify | Storage.Cloudflare | Storage.Aws | Storage.S3Compatible;
+export type Storage = Storage.Chunkify | Storage.Cloudflare | Storage.Aws | Storage.S3Compatible
 
 export namespace Storage {
   export interface Chunkify {
@@ -137,15 +118,7 @@ export namespace Storage {
     /**
      * Region specifies the region of the storage provider.
      */
-    region:
-      | 'us-east-1'
-      | 'us-east-2'
-      | 'us-west-1'
-      | 'us-west-2'
-      | 'eu-west-1'
-      | 'eu-west-2'
-      | 'ap-northeast-1'
-      | 'ap-southeast-1';
+    region: 'us-east-1' | 'us-east-2' | 'us-west-1' | 'us-west-2' | 'eu-west-1' | 'eu-west-2' | 'ap-northeast-1' | 'ap-southeast-1';
 
     /**
      * Unique identifier of the storage configuration
@@ -247,24 +220,7 @@ export namespace Storage {
     /**
      * Region specifies the region of the storage provider.
      */
-    region:
-      | 'us-east-1'
-      | 'us-east-2'
-      | 'us-central-1'
-      | 'us-west-1'
-      | 'us-west-2'
-      | 'eu-west-1'
-      | 'eu-west-2'
-      | 'eu-west-3'
-      | 'eu-central-1'
-      | 'eu-north-1'
-      | 'ap-east-1'
-      | 'ap-east-2'
-      | 'ap-northeast-1'
-      | 'ap-northeast-2'
-      | 'ap-south-1'
-      | 'ap-southeast-1'
-      | 'ap-southeast-2';
+    region: 'us-east-1' | 'us-east-2' | 'us-central-1' | 'us-west-1' | 'us-west-2' | 'eu-west-1' | 'eu-west-2' | 'eu-west-3' | 'eu-central-1' | 'eu-north-1' | 'ap-east-1' | 'ap-east-2' | 'ap-northeast-1' | 'ap-northeast-2' | 'ap-south-1' | 'ap-southeast-1' | 'ap-southeast-2';
 
     /**
      * Unique identifier of the storage configuration
@@ -369,11 +325,7 @@ export interface StorageCreateParams {
   /**
    * The parameters for creating a new storage configuration.
    */
-  storage:
-    | StorageCreateParams.Aws
-    | StorageCreateParams.Chunkify
-    | StorageCreateParams.Cloudflare
-    | StorageCreateParams.S3Compatible;
+  storage: StorageCreateParams.Aws | StorageCreateParams.Chunkify | StorageCreateParams.Cloudflare | StorageCreateParams.S3Compatible;
 }
 
 export namespace StorageCreateParams {
@@ -400,24 +352,7 @@ export namespace StorageCreateParams {
     /**
      * Region specifies the region of the storage provider.
      */
-    region:
-      | 'us-east-1'
-      | 'us-east-2'
-      | 'us-central-1'
-      | 'us-west-1'
-      | 'us-west-2'
-      | 'eu-west-1'
-      | 'eu-west-2'
-      | 'eu-west-3'
-      | 'eu-central-1'
-      | 'eu-north-1'
-      | 'ap-east-1'
-      | 'ap-east-2'
-      | 'ap-northeast-1'
-      | 'ap-northeast-2'
-      | 'ap-south-1'
-      | 'ap-southeast-1'
-      | 'ap-southeast-2';
+    region: 'us-east-1' | 'us-east-2' | 'us-central-1' | 'us-west-1' | 'us-west-2' | 'eu-west-1' | 'eu-west-2' | 'eu-west-3' | 'eu-central-1' | 'eu-north-1' | 'ap-east-1' | 'ap-east-2' | 'ap-northeast-1' | 'ap-northeast-2' | 'ap-south-1' | 'ap-southeast-1' | 'ap-southeast-2';
 
     /**
      * SecretAccessKey is the secret key for the storage provider. Required if not
@@ -456,15 +391,7 @@ export namespace StorageCreateParams {
     /**
      * Region specifies the region of the storage provider.
      */
-    region:
-      | 'us-east-1'
-      | 'us-east-2'
-      | 'us-west-1'
-      | 'us-west-2'
-      | 'eu-west-1'
-      | 'eu-west-2'
-      | 'ap-northeast-1'
-      | 'ap-southeast-1';
+    region: 'us-east-1' | 'us-east-2' | 'us-west-1' | 'us-west-2' | 'eu-west-1' | 'eu-west-2' | 'ap-northeast-1' | 'ap-southeast-1';
 
     /**
      * Unsupported for Chunkify-managed temporary storage. Requests that provide this
@@ -627,6 +554,6 @@ export declare namespace Storages {
     type Storage as Storage,
     type StorageListResponse as StorageListResponse,
     type StorageCreateParams as StorageCreateParams,
-    type StorageUpdateParams as StorageUpdateParams,
+    type StorageUpdateParams as StorageUpdateParams
   };
 }

@@ -6,7 +6,7 @@
     "rootDir": "./dist/src",
     "paths": {
       "@chunkify/chunkify/*": ["./dist/src/*"],
-      "@chunkify/chunkify": ["./dist/src/index.ts"]
+      "@chunkify/chunkify": ["./dist/src/index.ts"],
     },
     "noEmit": false,
     "declaration": true,

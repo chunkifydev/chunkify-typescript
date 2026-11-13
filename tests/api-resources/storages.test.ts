@@ -1,25 +1,23 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Chunkify from '@chunkify/chunkify';
+import Chunkify, { toFile } from '@chunkify/chunkify';
 
 const client = new Chunkify({
   projectAccessToken: 'My Project Access Token',
   teamAccessToken: 'My Team Access Token',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource storages', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.storages.create({
-      storage: {
-        access_key_id: '1234567890',
-        bucket: 'my-bucket',
-        provider: 'aws',
-        region: 'us-east-1',
-        secret_access_key: '1234567890',
-      },
-    });
+    const responsePromise = client.storages.create({ storage: {
+    access_key_id: '1234567890',
+    bucket: 'my-bucket',
+    provider: 'aws',
+    region: 'us-east-1',
+    secret_access_key: '1234567890',
+  } });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -31,18 +29,16 @@ describe('resource storages', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.storages.create({
-      storage: {
-        access_key_id: '1234567890',
-        bucket: 'my-bucket',
-        provider: 'aws',
-        region: 'us-east-1',
-        secret_access_key: '1234567890',
-        base_prefix: 'chunkify/',
-        cdn_base_url: 'https://media.example.com',
-        public: true,
-      },
-    });
+    const response = await client.storages.create({ storage: {
+    access_key_id: '1234567890',
+    bucket: 'my-bucket',
+    provider: 'aws',
+    region: 'us-east-1',
+    secret_access_key: '1234567890',
+    base_prefix: 'chunkify/',
+    cdn_base_url: 'https://media.example.com',
+    public: true,
+  } });
   });
 
   // Mock server tests are disabled

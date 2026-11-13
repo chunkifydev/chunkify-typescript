@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as TranscodersAPI from './transcoders';
 import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
@@ -14,10 +15,7 @@ export class Transcoders extends APIResource {
    * @deprecated
    */
   list(jobID: string, options?: RequestOptions): APIPromise<TranscoderListResponse> {
-    return this._client.get(path`/jobs/${jobID}/transcoders`, {
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.get(path`/jobs/${jobID}/transcoders`, { ...options, __security: { projectAccessTokenAuth : true } });
   }
 }
 
@@ -123,5 +121,7 @@ export namespace TranscoderListResponse {
 }
 
 export declare namespace Transcoders {
-  export { type TranscoderListResponse as TranscoderListResponse };
+  export {
+    type TranscoderListResponse as TranscoderListResponse
+  };
 }

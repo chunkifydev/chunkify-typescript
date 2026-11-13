@@ -2,12 +2,12 @@
 
 import { Webhook } from 'standardwebhooks';
 
-import Chunkify from '@chunkify/chunkify';
+import Chunkify, { toFile } from '@chunkify/chunkify';
 
 const client = new Chunkify({
   projectAccessToken: 'My Project Access Token',
   teamAccessToken: 'My Team Access Token',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource webhooks', () => {
@@ -26,10 +26,10 @@ describe('resource webhooks', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.webhooks.create({
-      url: 'https://example.com/webhook',
-      enabled: true,
-      events: ['asset.playback_ready'],
-    });
+    url: 'https://example.com/webhook',
+    enabled: true,
+    events: ['asset.playback_ready'],
+  });
   });
 
   // Mock server tests are disabled
@@ -82,8 +82,7 @@ describe('resource webhooks', () => {
 
   test.skip('unwrap', () => {
     const key = 'whsec_c2VjcmV0Cg==';
-    const payload =
-      '{"id":"notf_2G6MJiNz71bHQGNzGwKx5cJwPFS","data":{"files":[{"id":"file_2G6MJiNz71bHQGNzGwKx5cJwPFS","audio_bitrate":128000,"audio_codec":"aac","created_at":"2025-01-01T12:00:00Z","duration":120,"height":1080,"job_id":"job_2G6MJiNz71bHQGNzGwKx5cJwPFS","mime_type":"video/mp4","path":"path/to/file.mp4","size":1234567,"storage_id":"stor_chunkify_2wLmj1fp8neUaFAWwwxvzKAT0Fa","url":"https://my-bucket.s3.us-east-1.amazonaws.com/path/to/file.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256","video_bitrate":20000000,"video_codec":"h264","video_framerate":29.97,"width":1920,"cdn_url":"https://media.example.com/path/to/file.mp4","package_size":12345678}],"job":{"id":"job_2G6MJiNz71bHQGNzGwKx5cJwPFS","billable_time":120,"created_at":"2025-01-01T12:00:00Z","format":{"id":"mp4_h264","audio_bitrate":32000,"bufsize":100000,"channels":1,"crf":35,"disable_audio":true,"disable_video":true,"duration":1,"framerate":1,"gop":1,"height":-2,"level":41,"maxrate":100000,"minrate":100000,"movflags":"movflags","per_title":true,"pixfmt":"yuv410p","preset":"10","profilev":"main10","seek":1,"video_bitrate":1,"width":-2},"progress":45.5,"source_id":"src_2G6MJiNz71bHQGNzGwKx5cJwPFS","status":"pending","storage":{"id":"stor_aws_S1cce6120E56e7Tu9ioP09Nhjk1","path":"path/to/video.mp4"},"updated_at":"2025-01-01T12:05:00Z","error":{"detail":"detail","message":"message","type":"setup"},"hls_manifest_id":"hls_2v6EIgcNAycdS5g0IUm0TXBjvHV","metadata":{"key1":"value1","key2":"value2"},"started_at":"2025-01-01T12:01:00Z","transcoder":{"auto":true,"quantity":10,"type":"4vCPU"}}},"date":"2025-01-01T12:00:00Z","event":"asset.playback_ready"}';
+    const payload = '{"id":"notf_2G6MJiNz71bHQGNzGwKx5cJwPFS","data":{"files":[{"id":"file_2G6MJiNz71bHQGNzGwKx5cJwPFS","audio_bitrate":128000,"audio_codec":"aac","created_at":"2025-01-01T12:00:00Z","duration":120,"height":1080,"job_id":"job_2G6MJiNz71bHQGNzGwKx5cJwPFS","mime_type":"video/mp4","path":"path/to/file.mp4","size":1234567,"storage_id":"stor_chunkify_2wLmj1fp8neUaFAWwwxvzKAT0Fa","url":"https://my-bucket.s3.us-east-1.amazonaws.com/path/to/file.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256","video_bitrate":20000000,"video_codec":"h264","video_framerate":29.97,"width":1920,"cdn_url":"https://media.example.com/path/to/file.mp4","package_size":12345678}],"job":{"id":"job_2G6MJiNz71bHQGNzGwKx5cJwPFS","billable_time":120,"created_at":"2025-01-01T12:00:00Z","format":{"id":"mp4_h264","audio_bitrate":32000,"bufsize":100000,"channels":1,"crf":35,"disable_audio":true,"disable_video":true,"duration":1,"framerate":1,"gop":1,"height":-2,"level":41,"maxrate":100000,"minrate":100000,"movflags":"movflags","per_title":true,"pixfmt":"yuv410p","preset":"10","profilev":"main10","seek":1,"video_bitrate":1,"width":-2},"progress":45.5,"source_id":"src_2G6MJiNz71bHQGNzGwKx5cJwPFS","status":"pending","storage":{"id":"stor_aws_S1cce6120E56e7Tu9ioP09Nhjk1","path":"path/to/video.mp4"},"updated_at":"2025-01-01T12:05:00Z","error":{"detail":"detail","message":"message","type":"setup"},"hls_manifest_id":"hls_2v6EIgcNAycdS5g0IUm0TXBjvHV","metadata":{"key1":"value1","key2":"value2"},"started_at":"2025-01-01T12:01:00Z","transcoder":{"auto":true,"quantity":10,"type":"4vCPU"}}},"date":"2025-01-01T12:00:00Z","event":"asset.playback_ready"}';
     const msgID = '1';
     const timestamp = new Date();
     const wh = new Webhook('whsec_c2VjcmV0Cg==');
@@ -91,44 +90,38 @@ describe('resource webhooks', () => {
     const headers: Record<string, string> = {
       'webhook-signature': signature,
       'webhook-id': msgID,
-      'webhook-timestamp': String(Math.floor(timestamp.getTime() / 1000)),
+      'webhook-timestamp': String(Math.floor(timestamp.getTime()/1000)),
     };
-    client.webhooks.unwrap(payload, { headers, key });
-    client.withOptions({ webhookKey: key }).webhooks.unwrap(payload, { headers });
-    client.withOptions({ webhookKey: 'whsec_aaaaaaaaaa==' }).webhooks.unwrap(payload, { headers, key });
+    client.webhooks.unwrap(payload, { headers, key })
+    client.withOptions({webhookKey: key}).webhooks.unwrap(payload, { headers })
+    client.withOptions({webhookKey: 'whsec_aaaaaaaaaa=='}).webhooks.unwrap(payload, { headers, key })
     expect(() => {
       const wrongKey = 'whsec_aaaaaaaaaa==';
-      client.webhooks.unwrap(payload, { headers, key: wrongKey });
+      client.webhooks.unwrap(payload, { headers, key: wrongKey })
     }).toThrow('No matching signature found');
     expect(() => {
       const wrongKey = 'whsec_aaaaaaaaaa==';
-      client.withOptions({ webhookKey: wrongKey }).webhooks.unwrap(payload, { headers });
+      client.withOptions({webhookKey: wrongKey}).webhooks.unwrap(payload, { headers })
     }).toThrow('No matching signature found');
     expect(() => {
       const badSig = wh.sign(msgID, timestamp, 'some other payload');
-      client.webhooks.unwrap(payload, { headers: { ...headers, 'webhook-signature': badSig }, key });
+      client.webhooks.unwrap(payload, { headers: {...headers, 'webhook-signature': badSig }, key})
     }).toThrow('No matching signature found');
     expect(() => {
       const badSig = wh.sign(msgID, timestamp, 'some other payload');
-      client
-        .withOptions({ webhookKey: key })
-        .webhooks.unwrap(payload, { headers: { ...headers, 'webhook-signature': badSig } });
+      client.withOptions({webhookKey: key}).webhooks.unwrap(payload, { headers: {...headers, 'webhook-signature': badSig }})
     }).toThrow('No matching signature found');
     expect(() => {
-      client.webhooks.unwrap(payload, { headers: { ...headers, 'webhook-timestamp': '5' }, key });
+      client.webhooks.unwrap(payload, { headers: {...headers, 'webhook-timestamp': '5' }, key})
     }).toThrow('Message timestamp too old');
     expect(() => {
-      client
-        .withOptions({ webhookKey: key })
-        .webhooks.unwrap(payload, { headers: { ...headers, 'webhook-timestamp': '5' } });
+      client.withOptions({webhookKey: key}).webhooks.unwrap(payload, { headers: {...headers, 'webhook-timestamp': '5' }})
     }).toThrow('Message timestamp too old');
     expect(() => {
-      client.webhooks.unwrap(payload, { headers: { ...headers, 'webhook-id': 'wrong' }, key });
+      client.webhooks.unwrap(payload, { headers: {...headers, 'webhook-id': 'wrong' }, key})
     }).toThrow('No matching signature found');
     expect(() => {
-      client
-        .withOptions({ webhookKey: key })
-        .webhooks.unwrap(payload, { headers: { ...headers, 'webhook-id': 'wrong' } });
+      client.withOptions({webhookKey: key}).webhooks.unwrap(payload, { headers: {...headers, 'webhook-id': 'wrong' }})
     }).toThrow('No matching signature found');
   });
 });

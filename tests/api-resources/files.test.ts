@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Chunkify from '@chunkify/chunkify';
+import Chunkify, { toFile } from '@chunkify/chunkify';
 
 const client = new Chunkify({
   projectAccessToken: 'My Project Access Token',
   teamAccessToken: 'My Team Access Token',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource files', () => {
@@ -36,55 +36,52 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.files.list(
-        {
-          id: 'id',
-          audio_codec: 'audio_codec',
-          created: {
-            gte: 0,
-            lte: 0,
-            sort: 'asc',
-          },
-          duration: {
-            eq: 0,
-            gt: 0,
-            gte: 0,
-            lt: 0,
-            lte: 0,
-          },
-          height: {
-            eq: 0,
-            gt: 0,
-            gte: 0,
-            lt: 0,
-            lte: 0,
-          },
-          job_id: 'job_id',
-          limit: 1,
-          mime_type: 'mime_type',
-          offset: 0,
-          path: { eq: 'eq', ilike: 'ilike' },
-          size: {
-            eq: 0,
-            gt: 0,
-            gte: 0,
-            lt: 0,
-            lte: 0,
-          },
-          storage_id: 'storage_id',
-          video_codec: 'video_codec',
-          width: {
-            eq: 0,
-            gt: 0,
-            gte: 0,
-            lt: 0,
-            lte: 0,
-          },
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Chunkify.NotFoundError);
+    await expect(client.files.list({
+    id: 'id',
+    audio_codec: 'audio_codec',
+    created: {
+    gte: 0,
+    lte: 0,
+    sort: 'asc',
+  },
+    duration: {
+    eq: 0,
+    gt: 0,
+    gte: 0,
+    lt: 0,
+    lte: 0,
+  },
+    height: {
+    eq: 0,
+    gt: 0,
+    gte: 0,
+    lt: 0,
+    lte: 0,
+  },
+    job_id: 'job_id',
+    limit: 1,
+    mime_type: 'mime_type',
+    offset: 0,
+    path: { eq: 'eq', ilike: 'ilike' },
+    size: {
+    eq: 0,
+    gt: 0,
+    gte: 0,
+    lt: 0,
+    lte: 0,
+  },
+    storage_id: 'storage_id',
+    video_codec: 'video_codec',
+    width: {
+    eq: 0,
+    gt: 0,
+    gte: 0,
+    lt: 0,
+    lte: 0,
+  },
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Chunkify.NotFoundError);
   });
 
   // Mock server tests are disabled

@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as EventsAPI from './events';
 import * as NotificationsAPI from './notifications';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
@@ -13,12 +14,7 @@ export class Events extends APIResource {
    * delivery attempts. No webhook configuration is required.
    */
   retrieve(eventID: string, options?: RequestOptions): APIPromise<Event> {
-    return (
-      this._client.get(path`/events/${eventID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Event }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/events/${eventID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Event }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -27,19 +23,12 @@ export class Events extends APIResource {
    * notifications recorded before the event log remain available through
    * Notifications.
    */
-  list(
-    query: EventListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<EventsPaginatedResults, Event> {
-    return this._client.getAPIList('/events', PaginatedResults<Event>, {
-      query,
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+  list(query: EventListParams | null | undefined = {}, options?: RequestOptions): PagePromise<EventsPaginatedResults, Event> {
+    return this._client.getAPIList('/events', PaginatedResults<Event>, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 }
 
-export type EventsPaginatedResults = PaginatedResults<Event>;
+export type EventsPaginatedResults = PaginatedResults<Event>
 
 /**
  * A retained lifecycle event, recorded independently of webhook subscriptions. The
@@ -70,42 +59,7 @@ export interface Event {
    */
   delivery_status: 'none' | 'pending' | 'delivered' | 'failed';
 
-  event:
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted';
+  event: 'job.created' | 'job.completed' | 'job.failed' | 'job.cancelled' | 'source.created' | 'source.deleted' | 'upload.created' | 'upload.completed' | 'upload.failed' | 'upload.expired' | 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired' | 'asset.deleted' | 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed' | 'asset.output.deleted' | 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled' | 'transcoding.created' | 'transcoding.ready' | 'transcoding.failed' | 'transcoding.cancelled' | 'transcoding.expired' | 'transcoding.deleted' | 'thumbnail.created' | 'thumbnail.ready' | 'thumbnail.failed' | 'thumbnail.expired' | 'thumbnail.deleted';
 
   /**
    * Retention deadline set from the project team plan when the event was recorded.
@@ -143,43 +97,7 @@ export interface EventListParams extends PaginatedResultsParams {
   /**
    * Filter by events
    */
-  events?: Array<
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted'
-  >;
+  events?: Array<'job.created' | 'job.completed' | 'job.failed' | 'job.cancelled' | 'source.created' | 'source.deleted' | 'upload.created' | 'upload.completed' | 'upload.failed' | 'upload.expired' | 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired' | 'asset.deleted' | 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed' | 'asset.output.deleted' | 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled' | 'transcoding.created' | 'transcoding.ready' | 'transcoding.failed' | 'transcoding.cancelled' | 'transcoding.expired' | 'transcoding.deleted' | 'thumbnail.created' | 'thumbnail.ready' | 'thumbnail.failed' | 'thumbnail.expired' | 'thumbnail.deleted'>;
 
   /**
    * Filter by the primary or a related resource ID, including retained associations
@@ -211,6 +129,6 @@ export declare namespace Events {
   export {
     type Event as Event,
     type EventsPaginatedResults as EventsPaginatedResults,
-    type EventListParams as EventListParams,
+    type EventListParams as EventListParams
   };
 }

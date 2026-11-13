@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as NotificationsAPI from './notifications';
 import * as WebhooksAPI from './webhooks';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
@@ -23,13 +24,7 @@ export class Notifications extends APIResource {
    * ```
    */
   create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<Notification> {
-    return (
-      this._client.post('/notifications', {
-        body,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Notification }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.post('/notifications', { body, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Notification }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -43,12 +38,7 @@ export class Notifications extends APIResource {
    * ```
    */
   retrieve(notificationID: string, options?: RequestOptions): APIPromise<Notification> {
-    return (
-      this._client.get(path`/notifications/${notificationID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Notification }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/notifications/${notificationID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Notification }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -62,15 +52,8 @@ export class Notifications extends APIResource {
    * }
    * ```
    */
-  list(
-    query: NotificationListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<NotificationsPaginatedResults, Notification> {
-    return this._client.getAPIList('/notifications', PaginatedResults<Notification>, {
-      query,
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+  list(query: NotificationListParams | null | undefined = {}, options?: RequestOptions): PagePromise<NotificationsPaginatedResults, Notification> {
+    return this._client.getAPIList('/notifications', PaginatedResults<Notification>, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -82,15 +65,11 @@ export class Notifications extends APIResource {
    * ```
    */
   delete(notificationID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/notifications/${notificationID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.delete(path`/notifications/${notificationID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 }
 
-export type NotificationsPaginatedResults = PaginatedResults<Notification>;
+export type NotificationsPaginatedResults = PaginatedResults<Notification>
 
 export interface Notification {
   /**
@@ -106,42 +85,7 @@ export interface Notification {
   /**
    * Type of event that triggered this notification
    */
-  event:
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted';
+  event: 'job.created' | 'job.completed' | 'job.failed' | 'job.cancelled' | 'source.created' | 'source.deleted' | 'upload.created' | 'upload.completed' | 'upload.failed' | 'upload.expired' | 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired' | 'asset.deleted' | 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed' | 'asset.output.deleted' | 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled' | 'transcoding.created' | 'transcoding.ready' | 'transcoding.failed' | 'transcoding.cancelled' | 'transcoding.expired' | 'transcoding.deleted' | 'thumbnail.created' | 'thumbnail.ready' | 'thumbnail.failed' | 'thumbnail.expired' | 'thumbnail.deleted';
 
   /**
    * ID of the object that triggered this notification
@@ -173,42 +117,7 @@ export interface NotificationCreateParams {
   /**
    * Event specifies the type of event that triggered the notification.
    */
-  event:
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted';
+  event: 'job.created' | 'job.completed' | 'job.failed' | 'job.cancelled' | 'source.created' | 'source.deleted' | 'upload.created' | 'upload.completed' | 'upload.failed' | 'upload.expired' | 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired' | 'asset.deleted' | 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed' | 'asset.output.deleted' | 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled' | 'transcoding.created' | 'transcoding.ready' | 'transcoding.failed' | 'transcoding.cancelled' | 'transcoding.expired' | 'transcoding.deleted' | 'thumbnail.created' | 'thumbnail.ready' | 'thumbnail.failed' | 'thumbnail.expired' | 'thumbnail.deleted';
 
   /**
    * ID of the resource that triggered the event. Use the caption, static rendition,
@@ -235,43 +144,7 @@ export interface NotificationListParams extends PaginatedResultsParams {
   /**
    * Filter by events
    */
-  events?: Array<
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted'
-  >;
+  events?: Array<'job.created' | 'job.completed' | 'job.failed' | 'job.cancelled' | 'source.created' | 'source.deleted' | 'upload.created' | 'upload.completed' | 'upload.failed' | 'upload.expired' | 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired' | 'asset.deleted' | 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed' | 'asset.output.deleted' | 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled' | 'transcoding.created' | 'transcoding.ready' | 'transcoding.failed' | 'transcoding.cancelled' | 'transcoding.expired' | 'transcoding.deleted' | 'thumbnail.created' | 'thumbnail.ready' | 'thumbnail.failed' | 'thumbnail.expired' | 'thumbnail.deleted'>;
 
   /**
    * Filter by object ID
@@ -327,6 +200,6 @@ export declare namespace Notifications {
     type Notification as Notification,
     type NotificationsPaginatedResults as NotificationsPaginatedResults,
     type NotificationCreateParams as NotificationCreateParams,
-    type NotificationListParams as NotificationListParams,
+    type NotificationListParams as NotificationListParams
   };
 }

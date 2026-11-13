@@ -87,8 +87,7 @@ export class PagePromise<
     super(
       client,
       request,
-      async (client, props) =>
-        new Page(client, props.response, await defaultParseResponse(client, props), props.options),
+      async (client, props) => new Page(client, props.response, await defaultParseResponse(client, props), props.options)
     );
   }
 
@@ -134,12 +133,7 @@ export class PaginatedResults<Item> extends AbstractPage<Item> implements Pagina
 
   offset: number;
 
-  constructor(
-    client: Chunkify,
-    response: Response,
-    body: PaginatedResultsResponse<Item>,
-    options: FinalRequestOptions,
-  ) {
+  constructor(client: Chunkify, response: Response, body: PaginatedResultsResponse<Item>, options: FinalRequestOptions) {
     super(client, response, body, options);
 
     this.data = body.data || [];
@@ -163,14 +157,14 @@ export class PaginatedResults<Item> extends AbstractPage<Item> implements Pagina
 
     if (currentCount < totalCount) {
       return {
-        ...this.options,
-        query: {
-          ...maybeObj(this.options.query),
-          offset: currentCount,
-        },
-      };
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        offset: currentCount,
+      },
+    };
     }
 
-    return null;
+    return null
   }
 }

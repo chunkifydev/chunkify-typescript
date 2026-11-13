@@ -1,17 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../../core/resource';
+import * as ConnectionsAPI from './connections';
 import * as KeysAPI from './keys';
-import {
-  AnalyticsKey,
-  KeyCreateParams,
-  KeyCreateResponse,
-  KeyListParams,
-  KeyListResponse,
-  KeyRotateParams,
-  KeyRotateResponse,
-  Keys,
-} from './keys';
+import { AnalyticsKey, KeyCreateParams, KeyCreateResponse, KeyListParams, KeyListResponse, KeyRotateParams, KeyRotateResponse, Keys } from './keys';
 import { APIPromise } from '../../../../core/api-promise';
 import { buildHeaders } from '../../../../internal/headers';
 import { RequestOptions } from '../../../../internal/request-options';
@@ -40,16 +32,8 @@ export class Connections extends APIResource {
    *   );
    * ```
    */
-  create(
-    projectID: string,
-    body: ConnectionCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<ConnectionCreateResponse> {
-    return this._client.post(path`/projects/${projectID}/analytics/connections`, {
-      body,
-      ...options,
-      __security: { teamAccessTokenAuth: true },
-    });
+  create(projectID: string, body: ConnectionCreateParams, options?: RequestOptions): APIPromise<ConnectionCreateResponse> {
+    return this._client.post(path`/projects/${projectID}/analytics/connections`, { body, ...options, __security: { teamAccessTokenAuth : true } });
   }
 
   /**
@@ -64,18 +48,9 @@ export class Connections extends APIResource {
    *   );
    * ```
    */
-  retrieve(
-    connectionID: string,
-    params: ConnectionRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<AnalyticsConnection> {
-    const { projectId } = params;
-    return (
-      this._client.get(path`/projects/${projectId}/analytics/connections/${connectionID}`, {
-        ...options,
-        __security: { teamAccessTokenAuth: true },
-      }) as APIPromise<{ data: AnalyticsConnection }>
-    )._thenUnwrap((obj) => obj.data);
+  retrieve(connectionID: string, params: ConnectionRetrieveParams, options?: RequestOptions): APIPromise<AnalyticsConnection> {
+    const { projectId } = params
+    return (this._client.get(path`/projects/${projectId}/analytics/connections/${connectionID}`, { ...options, __security: { teamAccessTokenAuth : true } }) as APIPromise<{ data: AnalyticsConnection }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -94,19 +69,9 @@ export class Connections extends APIResource {
    *   );
    * ```
    */
-  update(
-    connectionID: string,
-    params: ConnectionUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<AnalyticsConnection> {
-    const { projectId, ...body } = params;
-    return (
-      this._client.patch(path`/projects/${projectId}/analytics/connections/${connectionID}`, {
-        body,
-        ...options,
-        __security: { teamAccessTokenAuth: true },
-      }) as APIPromise<{ data: AnalyticsConnection }>
-    )._thenUnwrap((obj) => obj.data);
+  update(connectionID: string, params: ConnectionUpdateParams, options?: RequestOptions): APIPromise<AnalyticsConnection> {
+    const { projectId, ...body } = params
+    return (this._client.patch(path`/projects/${projectId}/analytics/connections/${connectionID}`, { body, ...options, __security: { teamAccessTokenAuth : true } }) as APIPromise<{ data: AnalyticsConnection }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -122,10 +87,7 @@ export class Connections extends APIResource {
    * ```
    */
   list(projectID: string, options?: RequestOptions): APIPromise<ConnectionListResponse> {
-    return this._client.get(path`/projects/${projectID}/analytics/connections`, {
-      ...options,
-      __security: { teamAccessTokenAuth: true },
-    });
+    return this._client.get(path`/projects/${projectID}/analytics/connections`, { ...options, __security: { teamAccessTokenAuth : true } });
   }
 
   /**
@@ -145,12 +107,8 @@ export class Connections extends APIResource {
    * ```
    */
   delete(connectionID: string, params: ConnectionDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { projectId } = params;
-    return this._client.delete(path`/projects/${projectId}/analytics/connections/${connectionID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { teamAccessTokenAuth: true },
-    });
+    const { projectId } = params
+    return this._client.delete(path`/projects/${projectId}/analytics/connections/${connectionID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { teamAccessTokenAuth : true } });
   }
 }
 
@@ -372,7 +330,7 @@ export declare namespace Connections {
     type ConnectionCreateParams as ConnectionCreateParams,
     type ConnectionRetrieveParams as ConnectionRetrieveParams,
     type ConnectionUpdateParams as ConnectionUpdateParams,
-    type ConnectionDeleteParams as ConnectionDeleteParams,
+    type ConnectionDeleteParams as ConnectionDeleteParams
   };
 
   export {
@@ -383,6 +341,6 @@ export declare namespace Connections {
     type KeyRotateResponse as KeyRotateResponse,
     type KeyCreateParams as KeyCreateParams,
     type KeyListParams as KeyListParams,
-    type KeyRotateParams as KeyRotateParams,
+    type KeyRotateParams as KeyRotateParams
   };
 }

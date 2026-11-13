@@ -1,21 +1,21 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Chunkify from '@chunkify/chunkify';
+import Chunkify, { toFile } from '@chunkify/chunkify';
 
 const client = new Chunkify({
   projectAccessToken: 'My Project Access Token',
   teamAccessToken: 'My Team Access Token',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource notifications', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.notifications.create({
-      event: 'asset.playback_ready',
-      object_id: 'ast_A1cce6120E56e7Tu9ioP09Nhjk9',
-      webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
-    });
+    event: 'asset.playback_ready',
+    object_id: 'ast_A1cce6120E56e7Tu9ioP09Nhjk9',
+    webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
+  });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -28,10 +28,10 @@ describe('resource notifications', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.notifications.create({
-      event: 'asset.playback_ready',
-      object_id: 'ast_A1cce6120E56e7Tu9ioP09Nhjk9',
-      webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
-    });
+    event: 'asset.playback_ready',
+    object_id: 'ast_A1cce6120E56e7Tu9ioP09Nhjk9',
+    webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
+  });
   });
 
   // Mock server tests are disabled
@@ -61,29 +61,26 @@ describe('resource notifications', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.notifications.list(
-        {
-          created: {
-            gte: 0,
-            lte: 0,
-            sort: 'asc',
-          },
-          event_id: 'event_id',
-          events: ['asset.playback_ready'],
-          limit: 1,
-          object_id: 'object_id',
-          offset: 0,
-          response_status_code: {
-            eq: 100,
-            gte: 100,
-            lte: 100,
-          },
-          webhook_id: 'webhook_id',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Chunkify.NotFoundError);
+    await expect(client.notifications.list({
+    created: {
+    gte: 0,
+    lte: 0,
+    sort: 'asc',
+  },
+    event_id: 'event_id',
+    events: ['asset.playback_ready'],
+    limit: 1,
+    object_id: 'object_id',
+    offset: 0,
+    response_status_code: {
+    eq: 100,
+    gte: 100,
+    lte: 100,
+  },
+    webhook_id: 'webhook_id',
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Chunkify.NotFoundError);
   });
 
   // Mock server tests are disabled

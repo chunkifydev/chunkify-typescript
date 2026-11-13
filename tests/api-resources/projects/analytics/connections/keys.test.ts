@@ -1,20 +1,17 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Chunkify from '@chunkify/chunkify';
+import Chunkify, { toFile } from '@chunkify/chunkify';
 
 const client = new Chunkify({
   projectAccessToken: 'My Project Access Token',
   teamAccessToken: 'My Team Access Token',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource keys', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.projects.analytics.connections.keys.create('connectionId', {
-      projectId: 'projectId',
-      purpose: 'player',
-    });
+    const responsePromise = client.projects.analytics.connections.keys.create('connectionId', { projectId: 'projectId', purpose: 'player' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,17 +23,12 @@ describe('resource keys', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.projects.analytics.connections.keys.create('connectionId', {
-      projectId: 'projectId',
-      purpose: 'player',
-    });
+    const response = await client.projects.analytics.connections.keys.create('connectionId', { projectId: 'projectId', purpose: 'player' });
   });
 
   // Mock server tests are disabled
   test.skip('list: only required params', async () => {
-    const responsePromise = client.projects.analytics.connections.keys.list('connectionId', {
-      projectId: 'projectId',
-    });
+    const responsePromise = client.projects.analytics.connections.keys.list('connectionId', { projectId: 'projectId' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -48,17 +40,12 @@ describe('resource keys', () => {
 
   // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
-    const response = await client.projects.analytics.connections.keys.list('connectionId', {
-      projectId: 'projectId',
-    });
+    const response = await client.projects.analytics.connections.keys.list('connectionId', { projectId: 'projectId' });
   });
 
   // Mock server tests are disabled
   test.skip('rotate: only required params', async () => {
-    const responsePromise = client.projects.analytics.connections.keys.rotate('keyId', {
-      projectId: 'projectId',
-      connectionId: 'connectionId',
-    });
+    const responsePromise = client.projects.analytics.connections.keys.rotate('keyId', { projectId: 'projectId', connectionId: 'connectionId' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -70,9 +57,6 @@ describe('resource keys', () => {
 
   // Mock server tests are disabled
   test.skip('rotate: required and optional params', async () => {
-    const response = await client.projects.analytics.connections.keys.rotate('keyId', {
-      projectId: 'projectId',
-      connectionId: 'connectionId',
-    });
+    const response = await client.projects.analytics.connections.keys.rotate('keyId', { projectId: 'projectId', connectionId: 'connectionId' });
   });
 });

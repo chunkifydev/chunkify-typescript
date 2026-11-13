@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as ProjectsAPI from './projects';
 import * as AnalyticsAPI from './analytics/analytics';
 import { Analytics } from './analytics/analytics';
 import { APIPromise } from '../../core/api-promise';
@@ -23,13 +24,7 @@ export class Projects extends APIResource {
    * ```
    */
   create(body: ProjectCreateParams, options?: RequestOptions): APIPromise<Project> {
-    return (
-      this._client.post('/projects', {
-        body,
-        ...options,
-        __security: { teamAccessTokenAuth: true },
-      }) as APIPromise<{ data: Project }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.post('/projects', { body, ...options, __security: { teamAccessTokenAuth : true } }) as APIPromise<{ data: Project }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -41,12 +36,7 @@ export class Projects extends APIResource {
    * ```
    */
   retrieve(projectID: string, options?: RequestOptions): APIPromise<Project> {
-    return (
-      this._client.get(path`/projects/${projectID}`, {
-        ...options,
-        __security: { teamAccessTokenAuth: true },
-      }) as APIPromise<{ data: Project }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/projects/${projectID}`, { ...options, __security: { teamAccessTokenAuth : true } }) as APIPromise<{ data: Project }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -59,12 +49,7 @@ export class Projects extends APIResource {
    * ```
    */
   update(projectID: string, body: ProjectUpdateParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.patch(path`/projects/${projectID}`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { teamAccessTokenAuth: true },
-    });
+    return this._client.patch(path`/projects/${projectID}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { teamAccessTokenAuth : true } });
   }
 
   /**
@@ -76,7 +61,7 @@ export class Projects extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<ProjectListResponse> {
-    return this._client.get('/projects', { ...options, __security: { teamAccessTokenAuth: true } });
+    return this._client.get('/projects', { ...options, __security: { teamAccessTokenAuth : true } });
   }
 
   /**
@@ -90,11 +75,7 @@ export class Projects extends APIResource {
    * ```
    */
   delete(projectID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/projects/${projectID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { teamAccessTokenAuth: true },
-    });
+    return this._client.delete(path`/projects/${projectID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { teamAccessTokenAuth : true } });
   }
 }
 
@@ -278,8 +259,10 @@ export declare namespace Projects {
     type Project as Project,
     type ProjectListResponse as ProjectListResponse,
     type ProjectCreateParams as ProjectCreateParams,
-    type ProjectUpdateParams as ProjectUpdateParams,
+    type ProjectUpdateParams as ProjectUpdateParams
   };
 
-  export { Analytics as Analytics };
+  export {
+    Analytics as Analytics
+  };
 }

@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as WebhooksAPI from './webhooks';
 import * as FilesAPI from './files';
 import * as SourcesAPI from './sources';
 import * as ThumbnailsAPI from './thumbnails';
@@ -9,7 +10,7 @@ import * as UploadsAPI from './uploads';
 import * as AssetsAPI from './assets/assets';
 import * as OutputsAPI from './assets/outputs';
 import * as JobsAPI from './jobs/jobs';
-import * as WorkflowAPI from './assets/workflow/workflow';
+import * as ActionsAPI from './assets/workflow/actions';
 import * as RunsAPI from './workflows/runs/runs';
 import { Webhook as Webhook_ } from 'standardwebhooks';
 import { APIPromise } from '../core/api-promise';
@@ -30,13 +31,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<Webhook> {
-    return (
-      this._client.post('/webhooks', {
-        body,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Webhook }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.post('/webhooks', { body, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Webhook }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -49,12 +44,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   retrieve(webhookID: string, options?: RequestOptions): APIPromise<Webhook> {
-    return (
-      this._client.get(path`/webhooks/${webhookID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Webhook }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/webhooks/${webhookID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Webhook }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -67,12 +57,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   update(webhookID: string, body: WebhookUpdateParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.patch(path`/webhooks/${webhookID}`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.patch(path`/webhooks/${webhookID}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -85,7 +70,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<WebhookListResponse> {
-    return this._client.get('/webhooks', { ...options, __security: { projectAccessTokenAuth: true } });
+    return this._client.get('/webhooks', { ...options, __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -98,17 +83,10 @@ export class Webhooks extends APIResource {
    * ```
    */
   delete(webhookID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/webhooks/${webhookID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.delete(path`/webhooks/${webhookID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 
-  unwrap(
-    body: string,
-    { headers, key }: { headers: Record<string, string>; key?: string },
-  ): UnwrapWebhookEvent {
+  unwrap(body: string, { headers, key }: { headers: Record<string, string>; key?: string }): UnwrapWebhookEvent {
     if (headers !== undefined) {
       const keyStr: string | null = key === undefined ? this._client.webhookKey : key;
       if (keyStr === null) throw new Error('Webhook key must not be null in order to unwrap');
@@ -133,43 +111,7 @@ export interface Webhook {
   /**
    * Array of event types this webhook subscribes to
    */
-  events: Array<
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted'
-  >;
+  events: Array<'job.created' | 'job.completed' | 'job.failed' | 'job.cancelled' | 'source.created' | 'source.deleted' | 'upload.created' | 'upload.completed' | 'upload.failed' | 'upload.expired' | 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired' | 'asset.deleted' | 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed' | 'asset.output.deleted' | 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled' | 'transcoding.created' | 'transcoding.ready' | 'transcoding.failed' | 'transcoding.cancelled' | 'transcoding.expired' | 'transcoding.deleted' | 'thumbnail.created' | 'thumbnail.ready' | 'thumbnail.failed' | 'thumbnail.expired' | 'thumbnail.deleted'>;
 
   /**
    * ID of the project this webhook belongs to
@@ -207,21 +149,7 @@ export interface NewEventWebhookEvent {
    * Payload for the event named in event. Replays preserve the original data;
    * retrieve the resource for current state and fresh signed URLs.
    */
-  data:
-    | NewEventWebhookEvent.NotificationPayloadJobCompleted
-    | NewEventWebhookEvent.NotificationPayloadJobFailed
-    | NewEventWebhookEvent.NotificationPayloadJobCreated
-    | NewEventWebhookEvent.NotificationPayloadSourceCreated
-    | NewEventWebhookEvent.NotificationPayloadUploadCreated
-    | NewEventWebhookEvent.NotificationPayloadUploadCompleted
-    | NewEventWebhookEvent.NotificationPayloadUploadFailed
-    | NewEventWebhookEvent.NotificationPayloadAsset
-    | NewEventWebhookEvent.NotificationPayloadAssetOutput
-    | NewEventWebhookEvent.NotificationPayloadAssetOutputDeleted
-    | NewEventWebhookEvent.NotificationPayloadAssetDeleted
-    | NewEventWebhookEvent.NotificationPayloadWorkflowRun
-    | NewEventWebhookEvent.NotificationPayloadTranscoding
-    | NewEventWebhookEvent.ThumbnailEventData;
+  data: NewEventWebhookEvent.NotificationPayloadJobCompleted | NewEventWebhookEvent.NotificationPayloadJobFailed | NewEventWebhookEvent.NotificationPayloadJobCreated | NewEventWebhookEvent.NotificationPayloadSourceCreated | NewEventWebhookEvent.NotificationPayloadUploadCreated | NewEventWebhookEvent.NotificationPayloadUploadCompleted | NewEventWebhookEvent.NotificationPayloadUploadFailed | NewEventWebhookEvent.NotificationPayloadAsset | NewEventWebhookEvent.NotificationPayloadAssetOutput | NewEventWebhookEvent.NotificationPayloadAssetOutputDeleted | NewEventWebhookEvent.NotificationPayloadAssetDeleted | NewEventWebhookEvent.NotificationPayloadWorkflowRun | NewEventWebhookEvent.NotificationPayloadTranscoding | NewEventWebhookEvent.ThumbnailEventData;
 
   /**
    * Timestamp of the event payload.
@@ -231,42 +159,7 @@ export interface NewEventWebhookEvent {
   /**
    * Type of event that triggered the notification.
    */
-  event:
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted';
+  event: 'job.created' | 'job.completed' | 'job.failed' | 'job.cancelled' | 'source.created' | 'source.deleted' | 'upload.created' | 'upload.completed' | 'upload.failed' | 'upload.expired' | 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired' | 'asset.deleted' | 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed' | 'asset.output.deleted' | 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled' | 'transcoding.created' | 'transcoding.ready' | 'transcoding.failed' | 'transcoding.cancelled' | 'transcoding.expired' | 'transcoding.deleted' | 'thumbnail.created' | 'thumbnail.ready' | 'thumbnail.failed' | 'thumbnail.expired' | 'thumbnail.deleted';
 }
 
 export namespace NewEventWebhookEvent {
@@ -398,7 +291,7 @@ export namespace NewEventWebhookEvent {
      * action IDs, type, input, status, output reference, and any skip or failure
      * reason. Actions from other runs are excluded.
      */
-    action_runs: Array<WorkflowAPI.AssetActionRun>;
+    action_runs: Array<ActionsAPI.AssetActionRun>;
 
     /**
      * Snapshot of the Workflow run when the event was recorded.
@@ -439,21 +332,7 @@ export interface UnwrapWebhookEvent {
    * Payload for the event named in event. Replays preserve the original data;
    * retrieve the resource for current state and fresh signed URLs.
    */
-  data:
-    | UnwrapWebhookEvent.NotificationPayloadJobCompleted
-    | UnwrapWebhookEvent.NotificationPayloadJobFailed
-    | UnwrapWebhookEvent.NotificationPayloadJobCreated
-    | UnwrapWebhookEvent.NotificationPayloadSourceCreated
-    | UnwrapWebhookEvent.NotificationPayloadUploadCreated
-    | UnwrapWebhookEvent.NotificationPayloadUploadCompleted
-    | UnwrapWebhookEvent.NotificationPayloadUploadFailed
-    | UnwrapWebhookEvent.NotificationPayloadAsset
-    | UnwrapWebhookEvent.NotificationPayloadAssetOutput
-    | UnwrapWebhookEvent.NotificationPayloadAssetOutputDeleted
-    | UnwrapWebhookEvent.NotificationPayloadAssetDeleted
-    | UnwrapWebhookEvent.NotificationPayloadWorkflowRun
-    | UnwrapWebhookEvent.NotificationPayloadTranscoding
-    | UnwrapWebhookEvent.ThumbnailEventData;
+  data: UnwrapWebhookEvent.NotificationPayloadJobCompleted | UnwrapWebhookEvent.NotificationPayloadJobFailed | UnwrapWebhookEvent.NotificationPayloadJobCreated | UnwrapWebhookEvent.NotificationPayloadSourceCreated | UnwrapWebhookEvent.NotificationPayloadUploadCreated | UnwrapWebhookEvent.NotificationPayloadUploadCompleted | UnwrapWebhookEvent.NotificationPayloadUploadFailed | UnwrapWebhookEvent.NotificationPayloadAsset | UnwrapWebhookEvent.NotificationPayloadAssetOutput | UnwrapWebhookEvent.NotificationPayloadAssetOutputDeleted | UnwrapWebhookEvent.NotificationPayloadAssetDeleted | UnwrapWebhookEvent.NotificationPayloadWorkflowRun | UnwrapWebhookEvent.NotificationPayloadTranscoding | UnwrapWebhookEvent.ThumbnailEventData;
 
   /**
    * Timestamp of the event payload.
@@ -463,42 +342,7 @@ export interface UnwrapWebhookEvent {
   /**
    * Type of event that triggered the notification.
    */
-  event:
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted';
+  event: 'job.created' | 'job.completed' | 'job.failed' | 'job.cancelled' | 'source.created' | 'source.deleted' | 'upload.created' | 'upload.completed' | 'upload.failed' | 'upload.expired' | 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired' | 'asset.deleted' | 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed' | 'asset.output.deleted' | 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled' | 'transcoding.created' | 'transcoding.ready' | 'transcoding.failed' | 'transcoding.cancelled' | 'transcoding.expired' | 'transcoding.deleted' | 'thumbnail.created' | 'thumbnail.ready' | 'thumbnail.failed' | 'thumbnail.expired' | 'thumbnail.deleted';
 }
 
 export namespace UnwrapWebhookEvent {
@@ -630,7 +474,7 @@ export namespace UnwrapWebhookEvent {
      * action IDs, type, input, status, output reference, and any skip or failure
      * reason. Actions from other runs are excluded.
      */
-    action_runs: Array<WorkflowAPI.AssetActionRun>;
+    action_runs: Array<ActionsAPI.AssetActionRun>;
 
     /**
      * Snapshot of the Workflow run when the event was recorded.
@@ -676,43 +520,7 @@ export interface WebhookCreateParams {
   /**
    * Events specifies the types of events that will trigger the webhook.
    */
-  events?: Array<
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted'
-  >;
+  events?: Array<'job.created' | 'job.completed' | 'job.failed' | 'job.cancelled' | 'source.created' | 'source.deleted' | 'upload.created' | 'upload.completed' | 'upload.failed' | 'upload.expired' | 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired' | 'asset.deleted' | 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed' | 'asset.output.deleted' | 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled' | 'transcoding.created' | 'transcoding.ready' | 'transcoding.failed' | 'transcoding.cancelled' | 'transcoding.expired' | 'transcoding.deleted' | 'thumbnail.created' | 'thumbnail.ready' | 'thumbnail.failed' | 'thumbnail.expired' | 'thumbnail.deleted'>;
 }
 
 export interface WebhookUpdateParams {
@@ -724,43 +532,7 @@ export interface WebhookUpdateParams {
   /**
    * Events specifies the types of events that will trigger the webhook.
    */
-  events?: Array<
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted'
-  >;
+  events?: Array<'job.created' | 'job.completed' | 'job.failed' | 'job.cancelled' | 'source.created' | 'source.deleted' | 'upload.created' | 'upload.completed' | 'upload.failed' | 'upload.expired' | 'asset.created' | 'asset.ready' | 'asset.playback_ready' | 'asset.failed' | 'asset.expired' | 'asset.deleted' | 'asset.output.created' | 'asset.output.ready' | 'asset.output.failed' | 'asset.output.deleted' | 'workflow_run.created' | 'workflow_run.completed' | 'workflow_run.failed' | 'workflow_run.cancelled' | 'transcoding.created' | 'transcoding.ready' | 'transcoding.failed' | 'transcoding.cancelled' | 'transcoding.expired' | 'transcoding.deleted' | 'thumbnail.created' | 'thumbnail.ready' | 'thumbnail.failed' | 'thumbnail.expired' | 'thumbnail.deleted'>;
 }
 
 export declare namespace Webhooks {
@@ -770,6 +542,6 @@ export declare namespace Webhooks {
     type NewEventWebhookEvent as NewEventWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
     type WebhookCreateParams as WebhookCreateParams,
-    type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookUpdateParams as WebhookUpdateParams
   };
 }
