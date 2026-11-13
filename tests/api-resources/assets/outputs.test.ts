@@ -12,8 +12,10 @@ describe('resource outputs', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.assets.outputs.create('assetId', {
-      params: {},
-      type: 'caption',
+      output: {
+        params: { resolution: '1080p' },
+        type: 'static_rendition',
+      },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -27,8 +29,10 @@ describe('resource outputs', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.assets.outputs.create('assetId', {
-      params: { language_code: 'en', source_caption_id: 'x' },
-      type: 'caption',
+      output: {
+        params: { resolution: '1080p' },
+        type: 'static_rendition',
+      },
     });
   });
 

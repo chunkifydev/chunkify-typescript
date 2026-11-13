@@ -391,27 +391,6 @@ export namespace Thumbnail {
   }
 }
 
-/**
- * Output Storage selection, independent of Source storage.
- */
-export interface ThumbnailCreateStorageParams {
-  /**
-   * Id identifies output Storage in this Project. Omit to use the Project default.
-   */
-  id?: string;
-
-  /**
-   * Path specifies the output filename template relative to the selected Storage
-   * base_prefix. Required for customer storage; generated for Chunkify temporary
-   * storage. The filename must contain one %05d placeholder, replaced by the image
-   * or sprite sheet number starting at 1, and end in .jpg for jpeg or .webp for
-   * webp. The WebVTT file uses the filename without the placeholder and its adjacent
-   * separator, such as thumb.vtt for thumb-%05d.jpg. The combined path may contain
-   * at most 1024 bytes.
-   */
-  path?: string;
-}
-
 export interface ThumbnailCreateParams {
   /**
    * SourceId identifies a video Source in this Project.
@@ -457,7 +436,7 @@ export interface ThumbnailCreateParams {
    * Storage overrides the Project output destination and names the output files.
    * Source storage remains independent.
    */
-  storage?: ThumbnailCreateStorageParams;
+  storage?: ThumbnailCreateParams.Storage;
 
   /**
    * Timestamps specifies 1 to 100 Source-relative target times in seconds. Every
@@ -483,6 +462,28 @@ export namespace ThumbnailCreateParams {
      * Start specifies the inclusive lower bound in seconds. Defaults to zero.
      */
     start?: number;
+  }
+
+  /**
+   * Storage overrides the Project output destination and names the output files.
+   * Source storage remains independent.
+   */
+  export interface Storage {
+    /**
+     * Id identifies output Storage in this Project. Omit to use the Project default.
+     */
+    id?: string;
+
+    /**
+     * Path specifies the output filename template relative to the selected Storage
+     * base_prefix. Required for customer storage; generated for Chunkify temporary
+     * storage. The filename must contain one %05d placeholder, replaced by the image
+     * or sprite sheet number starting at 1, and end in .jpg for jpeg or .webp for
+     * webp. The WebVTT file uses the filename without the placeholder and its adjacent
+     * separator, such as thumb.vtt for thumb-%05d.jpg. The combined path may contain
+     * at most 1024 bytes.
+     */
+    path?: string;
   }
 }
 
@@ -544,7 +545,6 @@ export interface ThumbnailDeleteParams {
 export declare namespace Thumbnails {
   export {
     type Thumbnail as Thumbnail,
-    type ThumbnailCreateStorageParams as ThumbnailCreateStorageParams,
     type ThumbnailsPaginatedResults as ThumbnailsPaginatedResults,
     type ThumbnailCreateParams as ThumbnailCreateParams,
     type ThumbnailListParams as ThumbnailListParams,
