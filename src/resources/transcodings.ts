@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -136,7 +137,7 @@ export interface Transcoding {
    * by creation time. Empty until publication. Presigned URLs are refreshed on each
    * read and included in lifecycle webhooks when available.
    */
-  files: Array<Transcoding.File>;
+  files: Array<TranscodingFile>;
 
   /**
    * Format contains the resolved encoding settings accepted at creation, including
@@ -144,7 +145,7 @@ export interface Transcoding {
    * rate control is resolved during processing. Measured media properties are
    * available in Files.
    */
-  format: Transcoding.Format;
+  format: TranscodingFormat;
 
   /**
    * Metadata contains the string values attached to the Transcoding.
@@ -154,12 +155,12 @@ export interface Transcoding {
   /**
    * Status reports processing or output expiry.
    */
-  status: 'preparing' | 'ready' | 'failed' | 'cancelled' | 'expired';
+  status: TranscodingStatus;
 
   /**
    * Storage contains the resolved output destination.
    */
-  storage: Transcoding.Storage;
+  storage: TranscodingStorage;
 
   /**
    * UpdatedAt specifies when the request was last updated.
@@ -184,7 +185,7 @@ export interface Transcoding {
    * dashboard for the Chunkify dashboard, mcp for MCP clients, and workflow for
    * Workflow actions. Omitted when the creator is unknown.
    */
-  created_via?: 'api' | 'dashboard' | 'mcp' | 'workflow';
+  created_via?: Shared.CreatedVia;
 
   /**
    * DeleteAt specifies when this record is deleted: three days after its temporary
@@ -198,7 +199,7 @@ export interface Transcoding {
   /**
    * Error describes why processing failed. Omitted when no processing error exists.
    */
-  error?: Transcoding.Error;
+  error?: TranscodingError;
 
   /**
    * ExpiresAt specifies when temporary output files expire. Omitted for customer
@@ -210,7 +211,7 @@ export interface Transcoding {
    * ProcessingStage specifies the current activity while the status is preparing.
    * Omitted otherwise.
    */
-  processing_stage?: 'queued' | 'starting' | 'encoding' | 'finalizing' | 'uploading';
+  processing_stage?: TranscodingProcessingStage;
 
   /**
    * Progress specifies the video encoding percentage. Available once processing
@@ -231,342 +232,348 @@ export interface Transcoding {
   source_id?: string;
 }
 
-export namespace Transcoding {
+/**
+ * Format specifies one supported standalone encoding profile.
+ */
+export type TranscodingCreateFormatParams =
+  | TranscodingMP4H264
+  | TranscodingMP4H265
+  | TranscodingMP4Av1
+  | TranscodingWebmVp9
+  | TranscodingM4aAac;
+
+/**
+ * Output storage selection, independent of the Source storage.
+ */
+export interface TranscodingCreateStorageParams {
   /**
-   * A validated media file published by a Transcoding.
+   * Id specifies a Storage in this Project. Defaults to the Project output storage.
    */
-  export interface File {
-    /**
-     * Id identifies this published Transcoding file.
-     */
-    id: string;
-
-    /**
-     * CreatedAt records when the validated file was published.
-     */
-    created_at: string;
-
-    /**
-     * Duration specifies the measured output duration in seconds.
-     */
-    duration: number;
-
-    /**
-     * MimeType specifies the media content type.
-     */
-    mime_type: string;
-
-    /**
-     * Path specifies the output path relative to the Storage base_prefix saved when
-     * the Transcoding was created. Later Storage prefix changes do not move this file.
-     */
-    path: string;
-
-    /**
-     * Size specifies the measured file size in bytes.
-     */
-    size: number;
-
-    /**
-     * StorageId identifies the output Storage.
-     */
-    storage_id: string;
-
-    /**
-     * Thumbnails contains available dashboard preview images. Empty for audio-only
-     * files, failed previews or expired files.
-     */
-    thumbnails: Array<File.Thumbnail>;
-
-    /**
-     * TranscodingId identifies the Transcoding that produced this file.
-     */
-    transcoding_id: string;
-
-    /**
-     * AudioBitrate specifies measured audio bits per second, or zero when unavailable.
-     * Omitted without audio.
-     */
-    audio_bitrate?: number;
-
-    /**
-     * AudioCodec specifies the measured audio codec. Omitted without audio.
-     */
-    audio_codec?: string;
-
-    /**
-     * AudioSamplerate specifies measured audio samples per second. Omitted without
-     * audio.
-     */
-    audio_samplerate?: number;
-
-    /**
-     * CdnUrl provides the URL from the Storage CDN configuration. Omitted without a
-     * configured CDN or after file expiry.
-     */
-    cdn_url?: string;
-
-    /**
-     * ExpiresAt specifies when a temporary output expires. Omitted for customer-owned
-     * output storage.
-     */
-    expires_at?: string;
-
-    /**
-     * Height specifies the measured video height in pixels. Omitted for audio-only
-     * files.
-     */
-    height?: number;
-
-    /**
-     * ThumbnailStatus reports the optional dashboard preview result. Failure does not
-     * affect the media file. Omitted for audio-only files.
-     */
-    thumbnail_status?: 'ready' | 'failed';
-
-    /**
-     * Url provides a signed download valid for at most ten minutes. Omitted when the
-     * file has expired or signing is unavailable.
-     */
-    url?: string;
-
-    /**
-     * VideoBitrate specifies measured video bits per second, or zero when unavailable.
-     * Omitted without video.
-     */
-    video_bitrate?: number;
-
-    /**
-     * VideoCodec specifies the measured video codec. Omitted for audio-only files.
-     */
-    video_codec?: string;
-
-    /**
-     * VideoFramerate specifies measured video frames per second. Omitted without
-     * video.
-     */
-    video_framerate?: number;
-
-    /**
-     * Width specifies the measured video width in pixels. Omitted for audio-only
-     * files.
-     */
-    width?: number;
-  }
-
-  export namespace File {
-    /**
-     * An optional dashboard preview of the completed output.
-     */
-    export interface Thumbnail {
-      /**
-       * Format specifies the image encoding.
-       */
-      format: 'jpeg' | 'webp';
-
-      /**
-       * Height specifies the measured image height in pixels.
-       */
-      height: number;
-
-      /**
-       * Size specifies the measured image size in bytes.
-       */
-      size: number;
-
-      /**
-       * Url provides a signed image URL valid for at most ten minutes.
-       */
-      url: string;
-
-      /**
-       * Width specifies the measured image width in pixels.
-       */
-      width: number;
-    }
-  }
+  id?: string;
 
   /**
-   * Format contains the resolved encoding settings accepted at creation, including
-   * defaults, dimensions, frame rate and normalized seek and duration. Per-title
-   * rate control is resolved during processing. Measured media properties are
-   * available in Files.
+   * Path specifies the output object path relative to the selected Storage
+   * base_prefix. Required for customer storage; generated for Chunkify temporary
+   * storage. The extension must match the resolved output format. The combined path
+   * may contain at most 1024 bytes.
    */
-  export interface Format {
-    /**
-     * Id specifies the resolved container and codec selection.
-     */
-    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'm4a_aac';
+  path?: string;
+}
 
-    /**
-     * Duration specifies the accepted output duration in seconds, including normalized
-     * trims.
-     */
-    duration: number;
-
-    /**
-     * Seek specifies the accepted start position in source seconds, normalized to the
-     * output timeline.
-     */
-    seek: number;
-
-    /**
-     * AudioBitrate specifies the resolved audio bitrate in bits per second. Omitted
-     * for video-only output.
-     */
-    audio_bitrate?: number;
-
-    /**
-     * AudioSamplerate specifies the resolved audio samples per second. Omitted for
-     * video-only output.
-     */
-    audio_samplerate?: number;
-
-    /**
-     * Bufsize specifies the resolved video buffer size in bits, including codec-level
-     * defaults. Omitted when no buffer applies.
-     */
-    bufsize?: number;
-
-    /**
-     * Channels specifies the resolved audio channel count: 1, 2, 6 or 8. Omitted for
-     * video-only output.
-     */
-    channels?: number;
-
-    /**
-     * CpuUsed specifies the accepted VP9 encoder speed setting from 0 through 8.
-     * Omitted for other codecs.
-     */
-    cpu_used?: string;
-
-    /**
-     * Crf specifies the accepted constant quality. Omitted for bitrate-controlled,
-     * per-title and audio-only encoding.
-     */
-    crf?: number;
-
-    /**
-     * DisableAudio is true for video-only output. Omitted when audio is selected.
-     */
-    disable_audio?: boolean;
-
-    /**
-     * Framerate specifies the resolved video frames per second. Omitted for audio-only
-     * output.
-     */
-    framerate?: number;
-
-    /**
-     * Gop specifies the resolved maximum keyframe interval in frames. Omitted for
-     * audio-only output.
-     */
-    gop?: number;
-
-    /**
-     * Height specifies the resolved video height in pixels. Omitted for audio-only
-     * output.
-     */
-    height?: number;
-
-    /**
-     * Level specifies the accepted codec level when explicitly selected.
-     */
-    level?: number;
-
-    /**
-     * Maxrate specifies the resolved maximum video bitrate in bits per second,
-     * including codec-level defaults. Omitted when no maximum applies.
-     */
-    maxrate?: number;
-
-    /**
-     * Minrate specifies the accepted minimum video bitrate in bits per second, when
-     * configured.
-     */
-    minrate?: number;
-
-    /**
-     * Movflags specifies MP4 packaging. MP4 video exports use faststart.
-     */
-    movflags?: string;
-
-    /**
-     * PerTitle specifies whether video rate control is selected during content
-     * analysis. Omitted for audio-only output.
-     */
-    per_title?: boolean;
-
-    /**
-     * Pixfmt specifies the accepted video pixel format. Omitted for audio-only output.
-     */
-    pixfmt?: string;
-
-    /**
-     * Preset specifies the accepted codec preset. Omitted when the codec does not use
-     * presets.
-     */
-    preset?: string;
-
-    /**
-     * Profilev specifies the accepted codec profile when explicitly selected.
-     */
-    profilev?: string;
-
-    /**
-     * Quality specifies the accepted VP9 deadline policy: good, best or realtime.
-     * Omitted for other codecs.
-     */
-    quality?: string;
-
-    /**
-     * VideoBitrate specifies the accepted video bitrate in bits per second. Omitted
-     * for CRF and per-title encoding.
-     */
-    video_bitrate?: number;
-
-    /**
-     * Width specifies the resolved video width in pixels. Omitted for audio-only
-     * output.
-     */
-    width?: number;
-  }
+/**
+ * A customer-facing Transcoding processing failure.
+ */
+export interface TranscodingError {
+  /**
+   * Code identifies the processing failure.
+   */
+  code: string;
 
   /**
-   * Storage contains the resolved output destination.
+   * Message describes the failure without internal worker or provider diagnostics.
    */
-  export interface Storage {
-    /**
-     * Id identifies the output Storage.
-     */
-    id: string;
-
-    /**
-     * Path specifies the output file path relative to the Storage base_prefix saved at
-     * creation.
-     */
-    path: string;
-  }
+  message: string;
 
   /**
-   * Error describes why processing failed. Omitted when no processing error exists.
+   * Stage identifies where processing failed.
    */
-  export interface Error {
-    /**
-     * Code identifies the processing failure.
-     */
-    code: string;
+  stage: TranscodingProcessingStage;
+}
 
-    /**
-     * Message describes the failure without internal worker or provider diagnostics.
-     */
-    message: string;
+/**
+ * A validated media file published by a Transcoding.
+ */
+export interface TranscodingFile {
+  /**
+   * Id identifies this published Transcoding file.
+   */
+  id: string;
 
-    /**
-     * Stage identifies where processing failed.
-     */
-    stage: 'queued' | 'starting' | 'encoding' | 'finalizing' | 'uploading';
-  }
+  /**
+   * CreatedAt records when the validated file was published.
+   */
+  created_at: string;
+
+  /**
+   * Duration specifies the measured output duration in seconds.
+   */
+  duration: number;
+
+  /**
+   * MimeType specifies the media content type.
+   */
+  mime_type: string;
+
+  /**
+   * Path specifies the output path relative to the Storage base_prefix saved when
+   * the Transcoding was created. Later Storage prefix changes do not move this file.
+   */
+  path: string;
+
+  /**
+   * Size specifies the measured file size in bytes.
+   */
+  size: number;
+
+  /**
+   * StorageId identifies the output Storage.
+   */
+  storage_id: string;
+
+  /**
+   * Thumbnails contains available dashboard preview images. Empty for audio-only
+   * files, failed previews or expired files.
+   */
+  thumbnails: Array<TranscodingFileThumbnail>;
+
+  /**
+   * TranscodingId identifies the Transcoding that produced this file.
+   */
+  transcoding_id: string;
+
+  /**
+   * AudioBitrate specifies measured audio bits per second, or zero when unavailable.
+   * Omitted without audio.
+   */
+  audio_bitrate?: number;
+
+  /**
+   * AudioCodec specifies the measured audio codec. Omitted without audio.
+   */
+  audio_codec?: string;
+
+  /**
+   * AudioSamplerate specifies measured audio samples per second. Omitted without
+   * audio.
+   */
+  audio_samplerate?: number;
+
+  /**
+   * CdnUrl provides the URL from the Storage CDN configuration. Omitted without a
+   * configured CDN or after file expiry.
+   */
+  cdn_url?: string;
+
+  /**
+   * ExpiresAt specifies when a temporary output expires. Omitted for customer-owned
+   * output storage.
+   */
+  expires_at?: string;
+
+  /**
+   * Height specifies the measured video height in pixels. Omitted for audio-only
+   * files.
+   */
+  height?: number;
+
+  /**
+   * ThumbnailStatus reports the optional dashboard preview result. Failure does not
+   * affect the media file. Omitted for audio-only files.
+   */
+  thumbnail_status?: 'ready' | 'failed';
+
+  /**
+   * Url provides a signed download valid for at most ten minutes. Omitted when the
+   * file has expired or signing is unavailable.
+   */
+  url?: string;
+
+  /**
+   * VideoBitrate specifies measured video bits per second, or zero when unavailable.
+   * Omitted without video.
+   */
+  video_bitrate?: number;
+
+  /**
+   * VideoCodec specifies the measured video codec. Omitted for audio-only files.
+   */
+  video_codec?: string;
+
+  /**
+   * VideoFramerate specifies measured video frames per second. Omitted without
+   * video.
+   */
+  video_framerate?: number;
+
+  /**
+   * Width specifies the measured video width in pixels. Omitted for audio-only
+   * files.
+   */
+  width?: number;
+}
+
+/**
+ * An optional dashboard preview of the completed output.
+ */
+export interface TranscodingFileThumbnail {
+  /**
+   * Format specifies the image encoding.
+   */
+  format: 'jpeg' | 'webp';
+
+  /**
+   * Height specifies the measured image height in pixels.
+   */
+  height: number;
+
+  /**
+   * Size specifies the measured image size in bytes.
+   */
+  size: number;
+
+  /**
+   * Url provides a signed image URL valid for at most ten minutes.
+   */
+  url: string;
+
+  /**
+   * Width specifies the measured image width in pixels.
+   */
+  width: number;
+}
+
+/**
+ * Resolved encoding settings accepted at creation. Only settings applicable to the
+ * selected streams and codec are included.
+ */
+export interface TranscodingFormat {
+  /**
+   * Id specifies the resolved container and codec selection.
+   */
+  id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'm4a_aac';
+
+  /**
+   * Duration specifies the accepted output duration in seconds, including normalized
+   * trims.
+   */
+  duration: number;
+
+  /**
+   * Seek specifies the accepted start position in source seconds, normalized to the
+   * output timeline.
+   */
+  seek: number;
+
+  /**
+   * AudioBitrate specifies the resolved audio bitrate in bits per second. Omitted
+   * for video-only output.
+   */
+  audio_bitrate?: number;
+
+  /**
+   * AudioSamplerate specifies the resolved audio samples per second. Omitted for
+   * video-only output.
+   */
+  audio_samplerate?: number;
+
+  /**
+   * Bufsize specifies the resolved video buffer size in bits, including codec-level
+   * defaults. Omitted when no buffer applies.
+   */
+  bufsize?: number;
+
+  /**
+   * Channels specifies the resolved audio channel count: 1, 2, 6 or 8. Omitted for
+   * video-only output.
+   */
+  channels?: number;
+
+  /**
+   * CpuUsed specifies the accepted VP9 encoder speed setting from 0 through 8.
+   * Omitted for other codecs.
+   */
+  cpu_used?: string;
+
+  /**
+   * Crf specifies the accepted constant quality. Omitted for bitrate-controlled,
+   * per-title and audio-only encoding.
+   */
+  crf?: number;
+
+  /**
+   * DisableAudio is true for video-only output. Omitted when audio is selected.
+   */
+  disable_audio?: boolean;
+
+  /**
+   * Framerate specifies the resolved video frames per second. Omitted for audio-only
+   * output.
+   */
+  framerate?: number;
+
+  /**
+   * Gop specifies the resolved maximum keyframe interval in frames. Omitted for
+   * audio-only output.
+   */
+  gop?: number;
+
+  /**
+   * Height specifies the resolved video height in pixels. Omitted for audio-only
+   * output.
+   */
+  height?: number;
+
+  /**
+   * Level specifies the accepted codec level when explicitly selected.
+   */
+  level?: number;
+
+  /**
+   * Maxrate specifies the resolved maximum video bitrate in bits per second,
+   * including codec-level defaults. Omitted when no maximum applies.
+   */
+  maxrate?: number;
+
+  /**
+   * Minrate specifies the accepted minimum video bitrate in bits per second, when
+   * configured.
+   */
+  minrate?: number;
+
+  /**
+   * Movflags specifies MP4 packaging. MP4 video exports use faststart.
+   */
+  movflags?: string;
+
+  /**
+   * PerTitle specifies whether video rate control is selected during content
+   * analysis. Omitted for audio-only output.
+   */
+  per_title?: boolean;
+
+  /**
+   * Pixfmt specifies the accepted video pixel format. Omitted for audio-only output.
+   */
+  pixfmt?: string;
+
+  /**
+   * Preset specifies the accepted codec preset. Omitted when the codec does not use
+   * presets.
+   */
+  preset?: string;
+
+  /**
+   * Profilev specifies the accepted codec profile when explicitly selected.
+   */
+  profilev?: string;
+
+  /**
+   * Quality specifies the accepted VP9 deadline policy: good, best or realtime.
+   * Omitted for other codecs.
+   */
+  quality?: string;
+
+  /**
+   * VideoBitrate specifies the accepted video bitrate in bits per second. Omitted
+   * for CRF and per-title encoding.
+   */
+  video_bitrate?: number;
+
+  /**
+   * Width specifies the resolved video width in pixels. Omitted for audio-only
+   * output.
+   */
+  width?: number;
 }
 
 export interface TranscodingM4aAac {
@@ -1145,6 +1152,34 @@ export interface TranscodingMP4H265 {
   x265_keyint?: number;
 }
 
+/**
+ * ProcessingStage specifies the current preparation activity. queued means the
+ * request is waiting for processing capacity.
+ */
+export type TranscodingProcessingStage = 'queued' | 'starting' | 'encoding' | 'finalizing' | 'uploading';
+
+/**
+ * Status is ready only after the output is validated and published. Temporary
+ * output becomes expired when its files are no longer available.
+ */
+export type TranscodingStatus = 'preparing' | 'ready' | 'failed' | 'cancelled' | 'expired';
+
+/**
+ * The resolved output destination for a Transcoding.
+ */
+export interface TranscodingStorage {
+  /**
+   * Id identifies the output Storage.
+   */
+  id: string;
+
+  /**
+   * Path specifies the output file path relative to the Storage base_prefix saved at
+   * creation.
+   */
+  path: string;
+}
+
 export interface TranscodingWebmVp9 {
   /**
    * Id specifies the output format.
@@ -1314,12 +1349,7 @@ export interface TranscodingCreateParams {
   /**
    * Format specifies the requested encoding settings.
    */
-  format:
-    | TranscodingMP4H264
-    | TranscodingMP4H265
-    | TranscodingMP4Av1
-    | TranscodingWebmVp9
-    | TranscodingM4aAac;
+  format: TranscodingCreateFormatParams;
 
   /**
    * SourceId identifies a Source in this Project.
@@ -1336,28 +1366,7 @@ export interface TranscodingCreateParams {
    * Storage overrides the Project output destination. Source storage remains
    * independent.
    */
-  storage?: TranscodingCreateParams.Storage;
-}
-
-export namespace TranscodingCreateParams {
-  /**
-   * Storage overrides the Project output destination. Source storage remains
-   * independent.
-   */
-  export interface Storage {
-    /**
-     * Id specifies a Storage in this Project. Defaults to the Project output storage.
-     */
-    id?: string;
-
-    /**
-     * Path specifies the output object path relative to the selected Storage
-     * base_prefix. Required for customer storage; generated for Chunkify temporary
-     * storage. The extension must match the resolved output format. The combined path
-     * may contain at most 1024 bytes.
-     */
-    path?: string;
-  }
+  storage?: TranscodingCreateStorageParams;
 }
 
 export interface TranscodingListParams extends PaginatedResultsParams {
@@ -1377,7 +1386,7 @@ export interface TranscodingListParams extends PaginatedResultsParams {
   /**
    * Filter by Transcoding status.
    */
-  status?: 'preparing' | 'ready' | 'failed' | 'cancelled' | 'expired';
+  status?: TranscodingStatus;
 
   /**
    * Filter by output Storage ID.
@@ -1419,10 +1428,19 @@ export interface TranscodingDeleteParams {
 export declare namespace Transcodings {
   export {
     type Transcoding as Transcoding,
+    type TranscodingCreateFormatParams as TranscodingCreateFormatParams,
+    type TranscodingCreateStorageParams as TranscodingCreateStorageParams,
+    type TranscodingError as TranscodingError,
+    type TranscodingFile as TranscodingFile,
+    type TranscodingFileThumbnail as TranscodingFileThumbnail,
+    type TranscodingFormat as TranscodingFormat,
     type TranscodingM4aAac as TranscodingM4aAac,
     type TranscodingMP4Av1 as TranscodingMP4Av1,
     type TranscodingMP4H264 as TranscodingMP4H264,
     type TranscodingMP4H265 as TranscodingMP4H265,
+    type TranscodingProcessingStage as TranscodingProcessingStage,
+    type TranscodingStatus as TranscodingStatus,
+    type TranscodingStorage as TranscodingStorage,
     type TranscodingWebmVp9 as TranscodingWebmVp9,
     type TranscodingsPaginatedResults as TranscodingsPaginatedResults,
     type TranscodingCreateParams as TranscodingCreateParams,

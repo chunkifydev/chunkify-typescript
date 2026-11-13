@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as AssetsAPI from '../assets/assets';
 import * as AnalyticsAPI from './analytics/analytics';
 import { Analytics } from './analytics/analytics';
 import { APIPromise } from '../../core/api-promise';
@@ -107,7 +108,7 @@ export interface Project {
   /**
    * Defaults for new Assets, including Assets created from Uploads.
    */
-  asset_defaults: Project.AssetDefaults;
+  asset_defaults: AssetsAPI.AssetDefaults;
 
   /**
    * Timestamp when the project was created
@@ -134,50 +135,6 @@ export interface Project {
    * clear it.
    */
   default_workflow_id?: string | null;
-}
-
-export namespace Project {
-  /**
-   * Defaults for new Assets, including Assets created from Uploads.
-   */
-  export interface AssetDefaults {
-    /**
-     * Delete generated and partial files from the output Storage when a new Asset
-     * fails. The Asset record and original Source are preserved. Cleanup is attempted
-     * once after a delay and requires delete permission on the Storage. Defaults to
-     * false. Existing Assets are unchanged.
-     */
-    delete_files_on_failure?: boolean;
-
-    /**
-     * Maximum streaming resolution. Defaults to 1080p on Hobby and 2160p on other
-     * plans. 2160p requires Starter or above. Smaller sources are not upscaled. Does
-     * not affect static renditions.
-     */
-    max_resolution?: '1080p' | '2160p';
-
-    /**
-     * Minimum streaming resolution. Defaults to auto, with no minimum. Must not exceed
-     * max_resolution. Smaller sources are not upscaled. Does not affect static
-     * renditions.
-     */
-    min_resolution?: 'auto' | '240p' | '360p' | '540p' | '720p' | '1080p' | '1440p' | '2160p';
-
-    /**
-     * PathTemplate specifies the Asset output folder relative to Storage base_prefix.
-     * Supports {assetID} and case-sensitive {metadata.<key>}; referenced values must
-     * be non-empty. Ignored for Chunkify storage, which always uses {assetID}.
-     * Defaults to {assetID}. Maximum template size: 1024 UTF-8 bytes. Expanded prefix:
-     * 768 bytes including base_prefix and trailing slash.
-     */
-    path_template?: string;
-
-    /**
-     * Allow public preview access for new Assets without an API token. Defaults to
-     * true. Existing Assets are unchanged.
-     */
-    preview_enabled?: boolean;
-  }
 }
 
 /**
@@ -207,7 +164,7 @@ export interface ProjectUpdateParams {
    * Defaults for new Assets and automatic Uploads. Replaces the whole object.
    * Omitted fields reset to their defaults. Existing Assets are unchanged.
    */
-  asset_defaults?: ProjectUpdateParams.AssetDefaults;
+  asset_defaults?: AssetsAPI.AssetDefaultsParams;
 
   /**
    * DefaultWorkflowId specifies the default Workflow for new Assets. Set null to
@@ -224,51 +181,6 @@ export interface ProjectUpdateParams {
    * ID of this Project's default Storage.
    */
   storage_id?: string;
-}
-
-export namespace ProjectUpdateParams {
-  /**
-   * Defaults for new Assets and automatic Uploads. Replaces the whole object.
-   * Omitted fields reset to their defaults. Existing Assets are unchanged.
-   */
-  export interface AssetDefaults {
-    /**
-     * Delete generated and partial files from the output Storage when a new Asset
-     * fails. The Asset record and original Source are preserved. Cleanup is attempted
-     * once after a delay and requires delete permission on the Storage. Defaults to
-     * false. Existing Assets are unchanged.
-     */
-    delete_files_on_failure?: boolean;
-
-    /**
-     * Maximum streaming resolution. Defaults to 1080p on Hobby and 2160p on other
-     * plans. 2160p requires Starter or above. Smaller sources are not upscaled. Does
-     * not affect static renditions.
-     */
-    max_resolution?: '1080p' | '2160p';
-
-    /**
-     * Minimum streaming resolution. Defaults to auto, with no minimum. Must not exceed
-     * max_resolution. Smaller sources are not upscaled. Does not affect static
-     * renditions.
-     */
-    min_resolution?: 'auto' | '240p' | '360p' | '540p' | '720p' | '1080p' | '1440p' | '2160p';
-
-    /**
-     * PathTemplate specifies the Asset output folder relative to Storage base_prefix.
-     * Supports {assetID} and case-sensitive {metadata.<key>}; referenced values must
-     * be non-empty. Ignored for Chunkify storage, which always uses {assetID}.
-     * Defaults to {assetID}. Maximum template size: 1024 UTF-8 bytes. Expanded prefix:
-     * 768 bytes including base_prefix and trailing slash.
-     */
-    path_template?: string;
-
-    /**
-     * Allow public preview access for new Assets without an API token. Defaults to
-     * true. Existing Assets are unchanged.
-     */
-    preview_enabled?: boolean;
-  }
 }
 
 Projects.Analytics = Analytics;

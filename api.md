@@ -4,12 +4,50 @@ Types:
 
 - <code><a href="./src/resources/shared.ts">AssetOutputError</a></code>
 - <code><a href="./src/resources/shared.ts">ChunkifyError</a></code>
+- <code><a href="./src/resources/shared.ts">CreatedVia</a></code>
+- <code><a href="./src/resources/shared.ts">InstanceType</a></code>
+- <code><a href="./src/resources/shared.ts">Log</a></code>
+- <code><a href="./src/resources/shared.ts">TranscoderStatus</a></code>
 
 # Assets
 
 Types:
 
 - <code><a href="./src/resources/assets/assets.ts">Asset</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetActionInput</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetActionResult</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetActionStatus</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetActionType</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetCaption</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetCaptionOutput</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetCaptionOutputCreateParams</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetCaptionOutputParams</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetCreateStorageParams</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetDefaults</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetDefaultsMaxResolution</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetDefaultsMinResolution</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetDefaultsParams</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetError</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetOutputStatus</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetPoster</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetRenditionProgress</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetSourceMetadata</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetStaticRendition</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetStaticRenditionCreateParams</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetStaticRenditionOutput</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetStaticRenditionOutputCreateParams</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetStatus</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetThumbnailCreateParams</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetThumbnailOutput</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetThumbnailOutputCreateParams</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetTimelinePreviews</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetTranscript</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetTranscriptContent</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetTranscriptOutput</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetTranscriptOutputCreateParams</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetTranscriptOutputParams</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetTranscriptSegment</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetUnknownOutput</a></code>
 
 Methods:
 
@@ -79,6 +117,13 @@ Types:
 - <code><a href="./src/resources/jobs/jobs.ts">HlsH264</a></code>
 - <code><a href="./src/resources/jobs/jobs.ts">HlsH265</a></code>
 - <code><a href="./src/resources/jobs/jobs.ts">Job</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">JobCreateFormatParams</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">JobCreateStorageParams</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">JobCreateTranscoderParams</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">JobFormat</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">JobFormatID</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">JobStorage</a></code>
+- <code><a href="./src/resources/jobs/jobs.ts">JobTranscoder</a></code>
 - <code><a href="./src/resources/jobs/jobs.ts">Jpg</a></code>
 - <code><a href="./src/resources/jobs/jobs.ts">MP4Av1</a></code>
 - <code><a href="./src/resources/jobs/jobs.ts">MP4H264</a></code>
@@ -127,9 +172,31 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/metrics.ts">MetricsAssetCounts</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsAssetDay</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsAssetOutputs</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsAssetSources</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsAssetStreaming</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsAssetTimings</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsAssetValues</a></code>
 - <code><a href="./src/resources/metrics.ts">MetricsAssets</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsCreditsSpent</a></code>
 - <code><a href="./src/resources/metrics.ts">MetricsStorage</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsStorageDay</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsStorageEntry</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsStorageValues</a></code>
 - <code><a href="./src/resources/metrics.ts">MetricsUsage</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageAssets</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageCaptions</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageDay</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageEgress</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageNotifications</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageSources</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageStaticRenditions</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageThumbnails</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageTranscodings</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageUploads</a></code>
+- <code><a href="./src/resources/metrics.ts">MetricsUsageValues</a></code>
 
 Methods:
 
@@ -203,6 +270,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/sources.ts">Source</a></code>
+- <code><a href="./src/resources/sources.ts">SourceCreateStorageParams</a></code>
 
 Methods:
 
@@ -215,7 +283,18 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/storages.ts">AwsRegion</a></code>
+- <code><a href="./src/resources/storages.ts">ChunkifyRegion</a></code>
 - <code><a href="./src/resources/storages.ts">Storage</a></code>
+- <code><a href="./src/resources/storages.ts">StorageAws</a></code>
+- <code><a href="./src/resources/storages.ts">StorageAwsCreateParams</a></code>
+- <code><a href="./src/resources/storages.ts">StorageChunkify</a></code>
+- <code><a href="./src/resources/storages.ts">StorageChunkifyCreateParams</a></code>
+- <code><a href="./src/resources/storages.ts">StorageCloudflare</a></code>
+- <code><a href="./src/resources/storages.ts">StorageCloudflareCreateParams</a></code>
+- <code><a href="./src/resources/storages.ts">StorageLocation</a></code>
+- <code><a href="./src/resources/storages.ts">StorageS3Compatible</a></code>
+- <code><a href="./src/resources/storages.ts">StorageS3CompatibleCreateParams</a></code>
 - <code><a href="./src/resources/storages.ts">StorageListResponse</a></code>
 
 Methods:
@@ -231,6 +310,17 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/thumbnails.ts">Thumbnail</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailCreateStorageParams</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailCrop</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailError</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailFile</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailFormat</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailOutput</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailRange</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailRangeParams</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailSample</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailSettings</a></code>
+- <code><a href="./src/resources/thumbnails.ts">ThumbnailStatus</a></code>
 
 Methods:
 
@@ -244,6 +334,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/tokens.ts">Token</a></code>
+- <code><a href="./src/resources/tokens.ts">TokenScope</a></code>
 - <code><a href="./src/resources/tokens.ts">TokenListResponse</a></code>
 
 Methods:
@@ -257,10 +348,19 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/transcodings.ts">Transcoding</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingCreateFormatParams</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingCreateStorageParams</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingError</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingFile</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingFileThumbnail</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingFormat</a></code>
 - <code><a href="./src/resources/transcodings.ts">TranscodingM4aAac</a></code>
 - <code><a href="./src/resources/transcodings.ts">TranscodingMP4Av1</a></code>
 - <code><a href="./src/resources/transcodings.ts">TranscodingMP4H264</a></code>
 - <code><a href="./src/resources/transcodings.ts">TranscodingMP4H265</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingProcessingStage</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingStatus</a></code>
+- <code><a href="./src/resources/transcodings.ts">TranscodingStorage</a></code>
 - <code><a href="./src/resources/transcodings.ts">TranscodingWebmVp9</a></code>
 
 Methods:
@@ -276,6 +376,10 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/uploads.ts">Upload</a></code>
+- <code><a href="./src/resources/uploads.ts">UploadCreateStorageParams</a></code>
+- <code><a href="./src/resources/uploads.ts">UploadMultipartPartParams</a></code>
+- <code><a href="./src/resources/uploads.ts">UploadMultipartSession</a></code>
+- <code><a href="./src/resources/uploads.ts">UploadMultipartSignedPart</a></code>
 
 Methods:
 
@@ -289,9 +393,40 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/webhooks.ts">NotificationPayload</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadAsset</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadAssetData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadAssetDeleted</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadAssetDeletedData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadAssetOutput</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadAssetOutputData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadAssetOutputDeleted</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadAssetOutputDeletedData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadJobCompleted</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadJobCompletedData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadJobCreated</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadJobCreatedData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadJobFailed</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadJobFailedData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadSourceCreated</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadSourceCreatedData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadSourceDeleted</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadSourceDeletedData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadThumbnail</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadThumbnailData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadTranscoding</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadTranscodingData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadUploadCompleted</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadUploadCompletedData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadUploadCreated</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadUploadCreatedData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadUploadFailed</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadUploadFailedData</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadWorkflowRun</a></code>
+- <code><a href="./src/resources/webhooks.ts">NotificationPayloadWorkflowRunData</a></code>
 - <code><a href="./src/resources/webhooks.ts">Webhook</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">WebhookListResponse</a></code>
-- <code><a href="./src/resources/webhooks.ts">NewEventWebhookEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UnwrapWebhookEvent</a></code>
 
 Methods:
@@ -308,6 +443,42 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/workflows/workflows.ts">Workflow</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowActionCounts</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowActionParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowCaption</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowCaptionAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowCaptionActionParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowCaptionParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowOrigin</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowOriginParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowOutputBinding</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowOutputBindingFrom</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowOutputBindingParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRule</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRuleEvent</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRuleParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRunStatus</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowStatic</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowStaticAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowStaticActionParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowStaticParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowStaticResolution</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThumbnail</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThumbnailAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThumbnailActionParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThumbnailParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThumbnailRange</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThumbnailRangeParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranscript</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranscriptAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranscriptActionParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranscriptParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranslation</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranslationAction</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranslationActionParams</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranslationLanguageCode</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranslationParams</a></code>
 
 Methods:
 

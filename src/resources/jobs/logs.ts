@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -26,46 +27,12 @@ export class Logs extends APIResource {
  * Response containing a list of logs for a job
  */
 export interface LogListResponse {
-  data: Array<LogListResponse.Data>;
+  data: Array<Shared.Log>;
 
   /**
    * Status indicates the response status "success"
    */
   status: 'success';
-}
-
-export namespace LogListResponse {
-  export interface Data {
-    /**
-     * Additional structured data attached to the log
-     */
-    attributes: { [key: string]: unknown };
-
-    /**
-     * Log level
-     */
-    level: 'info' | 'error' | 'debug';
-
-    /**
-     * The log message content
-     */
-    msg: string;
-
-    /**
-     * Name of the service that generated the log
-     */
-    service: 'transcoder' | 'manager';
-
-    /**
-     * Timestamp when the log was created
-     */
-    time: string;
-
-    /**
-     * Optional ID of the job this log is associated with
-     */
-    job_id?: string;
-  }
 }
 
 export interface LogListParams {
