@@ -283,7 +283,7 @@ export namespace Workflow {
       /**
        * Params specifies caption generation settings. Pass an empty object.
        */
-      params: unknown;
+      params: WorkflowCaptionAction.Params;
 
       /**
        * Type specifies the action to perform. Must be create_caption.
@@ -299,6 +299,11 @@ export namespace Workflow {
     }
 
     export namespace WorkflowCaptionAction {
+      /**
+       * Params specifies caption generation settings. Pass an empty object.
+       */
+      export interface Params {}
+
       /**
        * TranscriptId binds caption publication to the transcript in the triggering
        * event. Use it only when connected to create_transcript. When omitted, creates or
@@ -487,12 +492,19 @@ export namespace Workflow {
       /**
        * Params specifies transcript settings. Pass an empty object.
        */
-      params: unknown;
+      params: WorkflowTranscriptAction.Params;
 
       /**
        * Type specifies the action to perform. Must be create_transcript.
        */
       type: 'create_transcript';
+    }
+
+    export namespace WorkflowTranscriptAction {
+      /**
+       * Params specifies transcript settings. Pass an empty object.
+       */
+      export interface Params {}
     }
 
     /**
@@ -633,7 +645,7 @@ export namespace WorkflowCreateParams {
       /**
        * Params specifies caption generation settings. Pass an empty object.
        */
-      params: unknown;
+      params: WorkflowCaptionActionParams.Params;
 
       /**
        * Type specifies the action to perform. Must be create_caption.
@@ -649,6 +661,11 @@ export namespace WorkflowCreateParams {
     }
 
     export namespace WorkflowCaptionActionParams {
+      /**
+       * Params specifies caption generation settings. Pass an empty object.
+       */
+      export interface Params {}
+
       /**
        * TranscriptId binds caption publication to the transcript in the triggering
        * event. Use it only when connected to create_transcript. When omitted, creates or
@@ -837,12 +854,19 @@ export namespace WorkflowCreateParams {
       /**
        * Params specifies transcript settings. Pass an empty object.
        */
-      params: unknown;
+      params: WorkflowTranscriptActionParams.Params;
 
       /**
        * Type specifies the action to perform. Must be create_transcript.
        */
       type: 'create_transcript';
+    }
+
+    export namespace WorkflowTranscriptActionParams {
+      /**
+       * Params specifies transcript settings. Pass an empty object.
+       */
+      export interface Params {}
     }
 
     /**
@@ -991,7 +1015,7 @@ export namespace WorkflowUpdateParams {
       /**
        * Params specifies caption generation settings. Pass an empty object.
        */
-      params: unknown;
+      params: WorkflowCaptionActionParams.Params;
 
       /**
        * Type specifies the action to perform. Must be create_caption.
@@ -1007,6 +1031,11 @@ export namespace WorkflowUpdateParams {
     }
 
     export namespace WorkflowCaptionActionParams {
+      /**
+       * Params specifies caption generation settings. Pass an empty object.
+       */
+      export interface Params {}
+
       /**
        * TranscriptId binds caption publication to the transcript in the triggering
        * event. Use it only when connected to create_transcript. When omitted, creates or
@@ -1195,12 +1224,19 @@ export namespace WorkflowUpdateParams {
       /**
        * Params specifies transcript settings. Pass an empty object.
        */
-      params: unknown;
+      params: WorkflowTranscriptActionParams.Params;
 
       /**
        * Type specifies the action to perform. Must be create_transcript.
        */
       type: 'create_transcript';
+    }
+
+    export namespace WorkflowTranscriptActionParams {
+      /**
+       * Params specifies transcript settings. Pass an empty object.
+       */
+      export interface Params {}
     }
 
     /**
