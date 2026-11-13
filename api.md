@@ -2,6 +2,7 @@
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">AssetOutputError</a></code>
 - <code><a href="./src/resources/shared.ts">ChunkifyError</a></code>
 
 # Assets
