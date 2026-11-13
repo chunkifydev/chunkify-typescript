@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as LogsAPI from './logs';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -14,11 +15,7 @@ export class Logs extends APIResource {
    * @deprecated
    */
   list(jobID: string, query: LogListParams, options?: RequestOptions): APIPromise<LogListResponse> {
-    return this._client.get(path`/jobs/${jobID}/logs`, {
-      query,
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.get(path`/jobs/${jobID}/logs`, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 }
 
@@ -81,5 +78,8 @@ export interface LogListParams {
 }
 
 export declare namespace Logs {
-  export { type LogListResponse as LogListResponse, type LogListParams as LogListParams };
+  export {
+    type LogListResponse as LogListResponse,
+    type LogListParams as LogListParams
+  };
 }

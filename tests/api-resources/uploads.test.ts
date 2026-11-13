@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Chunkify from '@chunkify/chunkify';
+import Chunkify, { toFile } from '@chunkify/chunkify';
 
 const client = new Chunkify({
   projectAccessToken: 'My Project Access Token',
   teamAccessToken: 'My Team Access Token',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource uploads', () => {
@@ -48,24 +48,21 @@ describe('resource uploads', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.uploads.list(
-        {
-          id: 'id',
-          created: {
-            gte: 0,
-            lte: 0,
-            sort: 'asc',
-          },
-          limit: 1,
-          metadata: [['key1:value1']],
-          offset: 0,
-          source_id: 'source_id',
-          status: 'waiting',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Chunkify.NotFoundError);
+    await expect(client.uploads.list({
+    id: 'id',
+    created: {
+    gte: 0,
+    lte: 0,
+    sort: 'asc',
+  },
+    limit: 1,
+    metadata: [['key1:value1']],
+    offset: 0,
+    source_id: 'source_id',
+    status: 'waiting',
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Chunkify.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -95,12 +92,8 @@ describe('resource uploads', () => {
   // Mock server tests are disabled
   test.skip('complete: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.uploads.complete(
-        'token',
-        { parts: [{ etag: '"abc123"', part_number: 1 }] },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Chunkify.NotFoundError);
+    await expect(client.uploads.complete('token', { parts: [{ etag: '"abc123"', part_number: 1 }] }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Chunkify.NotFoundError);
   });
 });

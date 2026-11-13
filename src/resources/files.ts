@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -17,12 +18,7 @@ export class Files extends APIResource {
    * @deprecated
    */
   retrieve(fileID: string, options?: RequestOptions): APIPromise<JobFile> {
-    return (
-      this._client.get(path`/files/${fileID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: JobFile }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/files/${fileID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: JobFile }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -32,15 +28,8 @@ export class Files extends APIResource {
    *
    * @deprecated
    */
-  list(
-    query: FileListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<JobFilesPaginatedResults, JobFile> {
-    return this._client.getAPIList('/files', PaginatedResults<JobFile>, {
-      query,
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+  list(query: FileListParams | null | undefined = {}, options?: RequestOptions): PagePromise<JobFilesPaginatedResults, JobFile> {
+    return this._client.getAPIList('/files', PaginatedResults<JobFile>, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -51,15 +40,11 @@ export class Files extends APIResource {
    * @deprecated
    */
   delete(fileID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/files/${fileID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.delete(path`/files/${fileID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 }
 
-export type JobFilesPaginatedResults = PaginatedResults<JobFile>;
+export type JobFilesPaginatedResults = PaginatedResults<JobFile>
 
 export interface JobFile {
   /**
@@ -343,6 +328,6 @@ export declare namespace Files {
   export {
     type JobFile as JobFile,
     type JobFilesPaginatedResults as JobFilesPaginatedResults,
-    type FileListParams as FileListParams,
+    type FileListParams as FileListParams
   };
 }

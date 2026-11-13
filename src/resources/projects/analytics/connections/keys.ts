@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../../core/resource';
+import * as KeysAPI from './keys';
 import { APIPromise } from '../../../../core/api-promise';
 import { RequestOptions } from '../../../../internal/request-options';
 import { path } from '../../../../internal/utils/path';
@@ -20,17 +21,9 @@ export class Keys extends APIResource {
    *   );
    * ```
    */
-  create(
-    connectionID: string,
-    params: KeyCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<KeyCreateResponse> {
-    const { projectId, ...body } = params;
-    return this._client.post(path`/projects/${projectId}/analytics/connections/${connectionID}/keys`, {
-      body,
-      ...options,
-      __security: { teamAccessTokenAuth: true },
-    });
+  create(connectionID: string, params: KeyCreateParams, options?: RequestOptions): APIPromise<KeyCreateResponse> {
+    const { projectId, ...body } = params
+    return this._client.post(path`/projects/${projectId}/analytics/connections/${connectionID}/keys`, { body, ...options, __security: { teamAccessTokenAuth : true } });
   }
 
   /**
@@ -48,11 +41,8 @@ export class Keys extends APIResource {
    * ```
    */
   list(connectionID: string, params: KeyListParams, options?: RequestOptions): APIPromise<KeyListResponse> {
-    const { projectId } = params;
-    return this._client.get(path`/projects/${projectId}/analytics/connections/${connectionID}/keys`, {
-      ...options,
-      __security: { teamAccessTokenAuth: true },
-    });
+    const { projectId } = params
+    return this._client.get(path`/projects/${projectId}/analytics/connections/${connectionID}/keys`, { ...options, __security: { teamAccessTokenAuth : true } });
   }
 
   /**
@@ -73,11 +63,8 @@ export class Keys extends APIResource {
    * ```
    */
   rotate(keyID: string, params: KeyRotateParams, options?: RequestOptions): APIPromise<KeyRotateResponse> {
-    const { projectId, connectionId } = params;
-    return this._client.post(
-      path`/projects/${projectId}/analytics/connections/${connectionId}/keys/${keyID}/rotate`,
-      { ...options, __security: { teamAccessTokenAuth: true } },
-    );
+    const { projectId, connectionId } = params
+    return this._client.post(path`/projects/${projectId}/analytics/connections/${connectionId}/keys/${keyID}/rotate`, { ...options, __security: { teamAccessTokenAuth : true } });
   }
 }
 
@@ -183,6 +170,6 @@ export declare namespace Keys {
     type KeyRotateResponse as KeyRotateResponse,
     type KeyCreateParams as KeyCreateParams,
     type KeyListParams as KeyListParams,
-    type KeyRotateParams as KeyRotateParams,
+    type KeyRotateParams as KeyRotateParams
   };
 }

@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { APIError, APIUserAbortError, APIConnectionTimeoutError, APIConnectionError } from './core/error';
 import type { RequestInit, RequestInfo, BodyInit } from './internal/builtin-types';
-import type { HTTPMethod, PromiseOrValue, MergedRequestInit, FinalizedRequestInit } from './internal/types';
+import type { HTTPMethod, PromiseOrValue, KeysEnum, MergedRequestInit, FinalizedRequestInit } from './internal/types';
 import { uuid4 } from './internal/utils/uuid';
-import { validatePositiveInteger, isAbsoluteURL, safeJSON } from './internal/utils/values';
+import { validatePositiveInteger, isAbsoluteURL, hasOwn, safeJSON } from './internal/utils/values';
 import { sleep } from './internal/utils/sleep';
 export type { Logger, LogLevel } from './internal/utils/log';
 import { castToError, isAbortError } from './internal/errors';
@@ -15,145 +16,31 @@ import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { AbstractPage, type PaginatedResultsParams, PaginatedResultsResponse } from './core/pagination';
+import { AbstractPage, PagePromise, type PaginatedResultsParams, PaginatedResultsResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Event, EventListParams, Events, EventsPaginatedResults } from './resources/events';
 import { FileListParams, Files, JobFile, JobFilesPaginatedResults } from './resources/files';
-import {
-  MetricAssetsParams,
-  MetricStorageParams,
-  MetricUsageParams,
-  Metrics,
-  MetricsAssets,
-  MetricsStorage,
-  MetricsUsage,
-} from './resources/metrics';
-import {
-  Notification,
-  NotificationCreateParams,
-  NotificationListParams,
-  Notifications,
-  NotificationsPaginatedResults,
-} from './resources/notifications';
-import {
-  Source,
-  SourceCreateParams,
-  SourceListParams,
-  Sources,
-  SourcesPaginatedResults,
-} from './resources/sources';
-import {
-  Storage,
-  StorageCreateParams,
-  StorageListResponse,
-  StorageUpdateParams,
-  Storages,
-} from './resources/storages';
-import {
-  Thumbnail,
-  ThumbnailCreateParams,
-  ThumbnailCreateStorageParams,
-  ThumbnailDeleteParams,
-  ThumbnailListParams,
-  Thumbnails,
-  ThumbnailsPaginatedResults,
-} from './resources/thumbnails';
+import { MetricAssetsParams, MetricStorageParams, MetricUsageParams, Metrics, MetricsAssets, MetricsStorage, MetricsUsage } from './resources/metrics';
+import { Notification, NotificationCreateParams, NotificationListParams, Notifications, NotificationsPaginatedResults } from './resources/notifications';
+import { Source, SourceCreateParams, SourceListParams, Sources, SourcesPaginatedResults } from './resources/sources';
+import { Storage, StorageCreateParams, StorageListResponse, StorageUpdateParams, Storages } from './resources/storages';
+import { Thumbnail, ThumbnailCreateParams, ThumbnailDeleteParams, ThumbnailListParams, Thumbnails, ThumbnailsPaginatedResults } from './resources/thumbnails';
 import { Token, TokenCreateParams, TokenListResponse, Tokens } from './resources/tokens';
-import {
-  Transcoding,
-  TranscodingCreateParams,
-  TranscodingDeleteParams,
-  TranscodingListParams,
-  TranscodingM4aAac,
-  TranscodingMP4Av1,
-  TranscodingMP4H264,
-  TranscodingMP4H265,
-  TranscodingWebmVp9,
-  Transcodings,
-  TranscodingsPaginatedResults,
-} from './resources/transcodings';
-import {
-  Upload,
-  UploadCompleteParams,
-  UploadCreateParams,
-  UploadListParams,
-  Uploads as UploadsAPIUploads,
-  UploadsPaginatedResults,
-} from './resources/uploads';
-import {
-  NewEventWebhookEvent,
-  UnwrapWebhookEvent,
-  Webhook,
-  WebhookCreateParams,
-  WebhookListResponse,
-  WebhookUpdateParams,
-  Webhooks,
-} from './resources/webhooks';
-import {
-  Asset,
-  AssetCreateParams,
-  AssetDeleteParams,
-  AssetListParams,
-  AssetStaticRenditionCreateParams,
-  AssetStatus,
-  AssetUpdateParams,
-  Assets,
-  AssetsPaginatedResults,
-} from './resources/assets/assets';
-import {
-  HlsAv1,
-  HlsH264,
-  HlsH265,
-  Job,
-  JobCreateParams,
-  JobListParams,
-  Jobs,
-  JobsPaginatedResults,
-  Jpg,
-  MP4Av1,
-  MP4H264,
-  MP4H265,
-  WebmVp9,
-} from './resources/jobs/jobs';
-import {
-  Project,
-  ProjectCreateParams,
-  ProjectListResponse,
-  ProjectUpdateParams,
-  Projects,
-} from './resources/projects/projects';
-import {
-  Workflow,
-  WorkflowAction,
-  WorkflowCaptionAction,
-  WorkflowCaptionParams,
-  WorkflowCreateParams,
-  WorkflowListParams,
-  WorkflowRule,
-  WorkflowStaticAction,
-  WorkflowStaticParams,
-  WorkflowThumbnailAction,
-  WorkflowThumbnailParams,
-  WorkflowTranscriptAction,
-  WorkflowTranslationAction,
-  WorkflowTranslationParams,
-  WorkflowUpdateParams,
-  Workflows,
-  WorkflowsPaginatedResults,
-} from './resources/workflows/workflows';
+import { Transcoding, TranscodingCreateParams, TranscodingDeleteParams, TranscodingListParams, TranscodingM4aAac, TranscodingMP4Av1, TranscodingMP4H264, TranscodingMP4H265, TranscodingWebmVp9, Transcodings, TranscodingsPaginatedResults } from './resources/transcodings';
+import { Upload, UploadCompleteParams, UploadCreateParams, UploadListParams, Uploads as UploadsAPIUploads, UploadsPaginatedResults } from './resources/uploads';
+import { NewEventWebhookEvent, UnwrapWebhookEvent, Webhook, WebhookCreateParams, WebhookListResponse, WebhookUpdateParams, Webhooks } from './resources/webhooks';
+import { Asset, AssetCreateParams, AssetDeleteParams, AssetListParams, AssetUpdateParams, Assets, AssetsPaginatedResults } from './resources/assets/assets';
+import { HlsAv1, HlsH264, HlsH265, Job, JobCreateParams, JobListParams, Jobs, JobsPaginatedResults, Jpg, MP4Av1, MP4H264, MP4H265, WebmVp9 } from './resources/jobs/jobs';
+import { Project, ProjectCreateParams, ProjectListResponse, ProjectUpdateParams, Projects } from './resources/projects/projects';
+import { Workflow, WorkflowCreateParams, WorkflowListParams, WorkflowUpdateParams, Workflows, WorkflowsPaginatedResults } from './resources/workflows/workflows';
 import { type Fetch } from './internal/builtin-types';
+import { isRunningInBrowser } from './internal/detect-platform';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import { readEnv } from './internal/utils/env';
-import {
-  type LogLevel,
-  type Logger,
-  formatRequestDetails,
-  loggerFor,
-  parseLogLevel,
-} from './internal/utils/log';
+import { type LogLevel, type Logger, formatRequestDetails, loggerFor, parseLogLevel } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
@@ -242,7 +129,7 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Chunkify API.
+ * API Client for interfacing with the Chunkify API. 
  */
 export class Chunkify {
   projectAccessToken: string | null;
@@ -282,6 +169,7 @@ export class Chunkify {
     webhookKey = readEnv('CHUNKIFY_WEBHOOK_SECRET') ?? null,
     ...opts
   }: ClientOptions = {}) {
+
     const options: ClientOptions = {
       projectAccessToken,
       teamAccessToken,
@@ -296,10 +184,7 @@ export class Chunkify {
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
-    this.logLevel =
-      parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('CHUNKIFY_LOG'), "process.env['CHUNKIFY_LOG']", this) ??
-      defaultLogLevel;
+    this.logLevel = parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ?? parseLogLevel(readEnv('CHUNKIFY_LOG'), 'process.env[\'CHUNKIFY_LOG\']', this) ?? defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
@@ -340,7 +225,7 @@ export class Chunkify {
       projectAccessToken: this.projectAccessToken,
       teamAccessToken: this.teamAccessToken,
       webhookKey: this.webhookKey,
-      ...options,
+      ...options
     });
     return client;
   }
@@ -353,21 +238,15 @@ export class Chunkify {
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
-    return this._options.defaultQuery;
+    return this._options.defaultQuery
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
     return;
   }
 
-  protected async authHeaders(
-    opts: FinalRequestOptions,
-    schemes: { projectAccessTokenAuth?: boolean; teamAccessTokenAuth?: boolean },
-  ): Promise<NullableHeaders | undefined> {
-    return buildHeaders([
-      schemes.projectAccessTokenAuth ? await this.projectAccessTokenAuth(opts) : null,
-      schemes.teamAccessTokenAuth ? await this.teamAccessTokenAuth(opts) : null,
-    ]);
+  protected async authHeaders(opts: FinalRequestOptions, schemes: { projectAccessTokenAuth?: boolean, teamAccessTokenAuth?: boolean }): Promise<NullableHeaders | undefined> {
+    return buildHeaders([schemes.projectAccessTokenAuth ? await this.projectAccessTokenAuth(opts) : null, schemes.teamAccessTokenAuth ? await this.teamAccessTokenAuth(opts) : null]);
   }
 
   protected async projectAccessTokenAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
@@ -405,11 +284,7 @@ export class Chunkify {
     return Errors.APIError.generate(status, error, message, headers);
   }
 
-  buildURL(
-    path: string,
-    query: Record<string, unknown> | null | undefined,
-    defaultBaseURL?: string | undefined,
-  ): string {
+  buildURL(path: string, query: Record<string, unknown> | null | undefined, defaultBaseURL?: string | undefined): string {
     const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
     const url =
       isAbsoluteURL(path) ?
@@ -497,9 +372,7 @@ export class Chunkify {
 
     await this.prepareOptions(options);
 
-    const { req, url, timeout } = await this.buildRequest(options, {
-      retryCount: maxRetries - retriesRemaining,
-    });
+    const { req, url, timeout } = await this.buildRequest(options, { retryCount: maxRetries - retriesRemaining });
 
     await this.prepareRequest(req, { url, options });
 
@@ -508,16 +381,7 @@ export class Chunkify {
     const retryLogStr = retryOfRequestLogID === undefined ? '' : `, retryOf: ${retryOfRequestLogID}`;
     const startTime = Date.now();
 
-    loggerFor(this).debug(
-      `[${requestLogID}] sending request`,
-      formatRequestDetails({
-        retryOfRequestLogID,
-        method: options.method,
-        url,
-        options,
-        headers: req.headers,
-      }),
-    );
+    loggerFor(this).debug(`[${requestLogID}] sending request`, formatRequestDetails({ retryOfRequestLogID, method: options.method, url, options, headers: req.headers }));
 
     if (options.signal?.aborted) {
       throw new Errors.APIUserAbortError();
@@ -536,45 +400,21 @@ export class Chunkify {
       // deno throws "TypeError: error sending request for url (https://example/): client error (Connect): tcp connect error: Operation timed out (os error 60): Operation timed out (os error 60)"
       // undici throws "TypeError: fetch failed" with cause "ConnectTimeoutError: Connect Timeout Error (attempted address: example:443, timeout: 1ms)"
       // others do not provide enough information to distinguish timeouts from other connection errors
-      const isTimeout =
-        isAbortError(response) ||
-        /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''));
+      const isTimeout = isAbortError(response) || /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''))
       if (retriesRemaining) {
-        loggerFor(this).info(
-          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`,
-        );
-        loggerFor(this).debug(
-          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`,
-          formatRequestDetails({
-            retryOfRequestLogID,
-            url,
-            durationMs: headersTime - startTime,
-            message: response.message,
-          }),
-        );
+        loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`)
+        loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
         return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
       }
-      loggerFor(this).info(
-        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`,
-      );
-      loggerFor(this).debug(
-        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`,
-        formatRequestDetails({
-          retryOfRequestLogID,
-          url,
-          durationMs: headersTime - startTime,
-          message: response.message,
-        }),
-      );
+      loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`)
+      loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
       if (isTimeout) {
         throw new Errors.APIConnectionTimeoutError();
       }
       throw new Errors.APIConnectionError({ cause: response });
     }
 
-    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${
-      response.ok ? 'succeeded' : 'failed'
-    } with status ${response.status} in ${headersTime - startTime}ms`;
+    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${response.ok ? 'succeeded' : 'failed'} with status ${response.status} in ${headersTime - startTime}ms`;
 
     if (!response.ok) {
       const shouldRetry = await this.shouldRetry(response);
@@ -583,60 +423,27 @@ export class Chunkify {
 
         // We don't need the body of this response.
         await Shims.CancelReadableStream(response.body);
-        loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
-        loggerFor(this).debug(
-          `[${requestLogID}] response error (${retryMessage})`,
-          formatRequestDetails({
-            retryOfRequestLogID,
-            url: response.url,
-            status: response.status,
-            headers: response.headers,
-            durationMs: headersTime - startTime,
-          }),
-        );
-        return this.retryRequest(
-          options,
-          retriesRemaining,
-          retryOfRequestLogID ?? requestLogID,
-          response.headers,
-        );
+        loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
+        loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
+        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID, response.headers);
       }
 
       const retryMessage = shouldRetry ? `error; no more retries left` : `error; not retryable`;
 
-      loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
+      loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
       const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
-      loggerFor(this).debug(
-        `[${requestLogID}] response error (${retryMessage})`,
-        formatRequestDetails({
-          retryOfRequestLogID,
-          url: response.url,
-          status: response.status,
-          headers: response.headers,
-          message: errMessage,
-          durationMs: Date.now() - startTime,
-        }),
-      );
+      loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, message: errMessage, durationMs: Date.now() - startTime }));
 
       const err = this.makeStatusError(response.status, errJSON, errMessage, response.headers);
       throw err;
     }
 
-    loggerFor(this).info(responseInfo);
-    loggerFor(this).debug(
-      `[${requestLogID}] response start`,
-      formatRequestDetails({
-        retryOfRequestLogID,
-        url: response.url,
-        status: response.status,
-        headers: response.headers,
-        durationMs: headersTime - startTime,
-      }),
-    );
+    loggerFor(this).info(responseInfo)
+    loggerFor(this).debug(`[${requestLogID}] response start`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
 
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
@@ -654,10 +461,7 @@ export class Chunkify {
     );
   }
 
-  requestAPIList<
-    Item = unknown,
-    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
-  >(
+  requestAPIList<Item = unknown, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
     Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
     options: PromiseOrValue<FinalRequestOptions>,
   ): Pagination.PagePromise<PageClass, Item> {
@@ -677,9 +481,7 @@ export class Chunkify {
 
     const timeout = setTimeout(abort, ms);
 
-    const isReadableBody =
-      ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
-      (typeof options.body === 'object' && options.body !== null && Symbol.asyncIterator in options.body);
+    const isReadableBody = ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) || (typeof options.body === "object" && options.body !== null && Symbol.asyncIterator in options.body);
 
     const fetchOptions: RequestInit = {
       signal: controller.signal as any,
@@ -694,6 +496,7 @@ export class Chunkify {
     }
 
     try {
+
       // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
       return await this.fetch.call(undefined, url, fetchOptions);
     } finally {
@@ -794,12 +597,11 @@ export class Chunkify {
     const req: FinalizedRequestInit = {
       method,
       headers: reqHeaders,
-      ...(options.signal && { signal: options.signal }),
-      ...((globalThis as any).ReadableStream &&
-        body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
+      ...(options.signal && { signal: options.signal}),
+      ...((globalThis as any).ReadableStream && body instanceof (globalThis as any).ReadableStream && { duplex: "half" }),
       ...(body && { body }),
-      ...((this.fetchOptions as any) ?? {}),
-      ...((options.fetchOptions as any) ?? {}),
+      ...(this.fetchOptions as any ?? {}),
+      ...(options.fetchOptions as any ?? {}),
     };
 
     return { req, url, timeout: options.timeout };
@@ -824,20 +626,15 @@ export class Chunkify {
 
     const headers = buildHeaders([
       idempotencyHeaders,
-      {
-        Accept: 'application/json',
-        'User-Agent': this.getUserAgent(),
-        'X-Stainless-Retry-Count': String(retryCount),
-        ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
-        ...getPlatformHeaders(),
-      },
-      await this.authHeaders(
-        options,
-        options.__security ?? { projectAccessTokenAuth: true, teamAccessTokenAuth: true },
-      ),
+      {Accept: 'application/json',
+      'User-Agent': this.getUserAgent(),
+      'X-Stainless-Retry-Count': String(retryCount),
+      ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
+      ...getPlatformHeaders()},
+      await this.authHeaders(options, options.__security ?? { projectAccessTokenAuth: true,teamAccessTokenAuth: true }),
       this._options.defaultHeaders,
       bodyHeaders,
-      options.headers,
+      options.headers
     ]);
 
     this.validateHeaders(headers);
@@ -872,9 +669,11 @@ export class Chunkify {
       ArrayBuffer.isView(body) ||
       body instanceof ArrayBuffer ||
       body instanceof DataView ||
-      (typeof body === 'string' &&
+      (
+        typeof body === 'string' &&
         // Preserve legacy string encoding behavior for now
-        headers.values.has('content-type')) ||
+        headers.values.has('content-type')
+      ) ||
       // `Blob` is superset of `File`
       ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
@@ -905,7 +704,7 @@ export class Chunkify {
   }
 
   static Chunkify = this;
-  static DEFAULT_TIMEOUT = 60000; // 1 minute
+  static DEFAULT_TIMEOUT = 60000 // 1 minute
 
   static ChunkifyError = Errors.ChunkifyError;
   static APIError = Errors.APIError;
@@ -960,167 +759,153 @@ Chunkify.Webhooks = Webhooks;
 Chunkify.Workflows = Workflows;
 
 export declare namespace Chunkify {
-  export type RequestOptions = Opts.RequestOptions;
+      export type RequestOptions = Opts.RequestOptions;
 
-  export import PaginatedResults = Pagination.PaginatedResults;
-  export {
-    type PaginatedResultsParams as PaginatedResultsParams,
-    type PaginatedResultsResponse as PaginatedResultsResponse,
-  };
+      export import PaginatedResults = Pagination.PaginatedResults;
+export {
+  type PaginatedResultsParams as PaginatedResultsParams,
+  type PaginatedResultsResponse as PaginatedResultsResponse
+};
 
-  export {
-    Assets as Assets,
-    type Asset as Asset,
-    type AssetStaticRenditionCreateParams as AssetStaticRenditionCreateParams,
-    type AssetStatus as AssetStatus,
-    type AssetsPaginatedResults as AssetsPaginatedResults,
-    type AssetCreateParams as AssetCreateParams,
-    type AssetUpdateParams as AssetUpdateParams,
-    type AssetListParams as AssetListParams,
-    type AssetDeleteParams as AssetDeleteParams,
-  };
+export {
+  Assets as Assets,
+  type Asset as Asset,
+  type AssetsPaginatedResults as AssetsPaginatedResults,
+  type AssetCreateParams as AssetCreateParams,
+  type AssetUpdateParams as AssetUpdateParams,
+  type AssetListParams as AssetListParams,
+  type AssetDeleteParams as AssetDeleteParams
+};
 
-  export {
-    Events as Events,
-    type Event as Event,
-    type EventsPaginatedResults as EventsPaginatedResults,
-    type EventListParams as EventListParams,
-  };
+export {
+  Events as Events,
+  type Event as Event,
+  type EventsPaginatedResults as EventsPaginatedResults,
+  type EventListParams as EventListParams
+};
 
-  export {
-    Files as Files,
-    type JobFile as JobFile,
-    type JobFilesPaginatedResults as JobFilesPaginatedResults,
-    type FileListParams as FileListParams,
-  };
+export {
+  Files as Files,
+  type JobFile as JobFile,
+  type JobFilesPaginatedResults as JobFilesPaginatedResults,
+  type FileListParams as FileListParams
+};
 
-  export {
-    Jobs as Jobs,
-    type HlsAv1 as HlsAv1,
-    type HlsH264 as HlsH264,
-    type HlsH265 as HlsH265,
-    type Job as Job,
-    type Jpg as Jpg,
-    type MP4Av1 as MP4Av1,
-    type MP4H264 as MP4H264,
-    type MP4H265 as MP4H265,
-    type WebmVp9 as WebmVp9,
-    type JobsPaginatedResults as JobsPaginatedResults,
-    type JobCreateParams as JobCreateParams,
-    type JobListParams as JobListParams,
-  };
+export {
+  Jobs as Jobs,
+  type HlsAv1 as HlsAv1,
+  type HlsH264 as HlsH264,
+  type HlsH265 as HlsH265,
+  type Job as Job,
+  type Jpg as Jpg,
+  type MP4Av1 as MP4Av1,
+  type MP4H264 as MP4H264,
+  type MP4H265 as MP4H265,
+  type WebmVp9 as WebmVp9,
+  type JobsPaginatedResults as JobsPaginatedResults,
+  type JobCreateParams as JobCreateParams,
+  type JobListParams as JobListParams
+};
 
-  export {
-    Metrics as Metrics,
-    type MetricsAssets as MetricsAssets,
-    type MetricsStorage as MetricsStorage,
-    type MetricsUsage as MetricsUsage,
-    type MetricAssetsParams as MetricAssetsParams,
-    type MetricStorageParams as MetricStorageParams,
-    type MetricUsageParams as MetricUsageParams,
-  };
+export {
+  Metrics as Metrics,
+  type MetricsAssets as MetricsAssets,
+  type MetricsStorage as MetricsStorage,
+  type MetricsUsage as MetricsUsage,
+  type MetricAssetsParams as MetricAssetsParams,
+  type MetricStorageParams as MetricStorageParams,
+  type MetricUsageParams as MetricUsageParams
+};
 
-  export {
-    Notifications as Notifications,
-    type Notification as Notification,
-    type NotificationsPaginatedResults as NotificationsPaginatedResults,
-    type NotificationCreateParams as NotificationCreateParams,
-    type NotificationListParams as NotificationListParams,
-  };
+export {
+  Notifications as Notifications,
+  type Notification as Notification,
+  type NotificationsPaginatedResults as NotificationsPaginatedResults,
+  type NotificationCreateParams as NotificationCreateParams,
+  type NotificationListParams as NotificationListParams
+};
 
-  export {
-    Projects as Projects,
-    type Project as Project,
-    type ProjectListResponse as ProjectListResponse,
-    type ProjectCreateParams as ProjectCreateParams,
-    type ProjectUpdateParams as ProjectUpdateParams,
-  };
+export {
+  Projects as Projects,
+  type Project as Project,
+  type ProjectListResponse as ProjectListResponse,
+  type ProjectCreateParams as ProjectCreateParams,
+  type ProjectUpdateParams as ProjectUpdateParams
+};
 
-  export {
-    Sources as Sources,
-    type Source as Source,
-    type SourcesPaginatedResults as SourcesPaginatedResults,
-    type SourceCreateParams as SourceCreateParams,
-    type SourceListParams as SourceListParams,
-  };
+export {
+  Sources as Sources,
+  type Source as Source,
+  type SourcesPaginatedResults as SourcesPaginatedResults,
+  type SourceCreateParams as SourceCreateParams,
+  type SourceListParams as SourceListParams
+};
 
-  export {
-    Storages as Storages,
-    type Storage as Storage,
-    type StorageListResponse as StorageListResponse,
-    type StorageCreateParams as StorageCreateParams,
-    type StorageUpdateParams as StorageUpdateParams,
-  };
+export {
+  Storages as Storages,
+  type Storage as Storage,
+  type StorageListResponse as StorageListResponse,
+  type StorageCreateParams as StorageCreateParams,
+  type StorageUpdateParams as StorageUpdateParams
+};
 
-  export {
-    Thumbnails as Thumbnails,
-    type Thumbnail as Thumbnail,
-    type ThumbnailCreateStorageParams as ThumbnailCreateStorageParams,
-    type ThumbnailsPaginatedResults as ThumbnailsPaginatedResults,
-    type ThumbnailCreateParams as ThumbnailCreateParams,
-    type ThumbnailListParams as ThumbnailListParams,
-    type ThumbnailDeleteParams as ThumbnailDeleteParams,
-  };
+export {
+  Thumbnails as Thumbnails,
+  type Thumbnail as Thumbnail,
+  type ThumbnailsPaginatedResults as ThumbnailsPaginatedResults,
+  type ThumbnailCreateParams as ThumbnailCreateParams,
+  type ThumbnailListParams as ThumbnailListParams,
+  type ThumbnailDeleteParams as ThumbnailDeleteParams
+};
 
-  export {
-    Tokens as Tokens,
-    type Token as Token,
-    type TokenListResponse as TokenListResponse,
-    type TokenCreateParams as TokenCreateParams,
-  };
+export {
+  Tokens as Tokens,
+  type Token as Token,
+  type TokenListResponse as TokenListResponse,
+  type TokenCreateParams as TokenCreateParams
+};
 
-  export {
-    Transcodings as Transcodings,
-    type Transcoding as Transcoding,
-    type TranscodingM4aAac as TranscodingM4aAac,
-    type TranscodingMP4Av1 as TranscodingMP4Av1,
-    type TranscodingMP4H264 as TranscodingMP4H264,
-    type TranscodingMP4H265 as TranscodingMP4H265,
-    type TranscodingWebmVp9 as TranscodingWebmVp9,
-    type TranscodingsPaginatedResults as TranscodingsPaginatedResults,
-    type TranscodingCreateParams as TranscodingCreateParams,
-    type TranscodingListParams as TranscodingListParams,
-    type TranscodingDeleteParams as TranscodingDeleteParams,
-  };
+export {
+  Transcodings as Transcodings,
+  type Transcoding as Transcoding,
+  type TranscodingM4aAac as TranscodingM4aAac,
+  type TranscodingMP4Av1 as TranscodingMP4Av1,
+  type TranscodingMP4H264 as TranscodingMP4H264,
+  type TranscodingMP4H265 as TranscodingMP4H265,
+  type TranscodingWebmVp9 as TranscodingWebmVp9,
+  type TranscodingsPaginatedResults as TranscodingsPaginatedResults,
+  type TranscodingCreateParams as TranscodingCreateParams,
+  type TranscodingListParams as TranscodingListParams,
+  type TranscodingDeleteParams as TranscodingDeleteParams
+};
 
-  export {
-    UploadsAPIUploads as Uploads,
-    type Upload as Upload,
-    type UploadsPaginatedResults as UploadsPaginatedResults,
-    type UploadCreateParams as UploadCreateParams,
-    type UploadListParams as UploadListParams,
-    type UploadCompleteParams as UploadCompleteParams,
-  };
+export {
+  UploadsAPIUploads as Uploads,
+  type Upload as Upload,
+  type UploadsPaginatedResults as UploadsPaginatedResults,
+  type UploadCreateParams as UploadCreateParams,
+  type UploadListParams as UploadListParams,
+  type UploadCompleteParams as UploadCompleteParams
+};
 
-  export {
-    Webhooks as Webhooks,
-    type Webhook as Webhook,
-    type WebhookListResponse as WebhookListResponse,
-    type NewEventWebhookEvent as NewEventWebhookEvent,
-    type UnwrapWebhookEvent as UnwrapWebhookEvent,
-    type WebhookCreateParams as WebhookCreateParams,
-    type WebhookUpdateParams as WebhookUpdateParams,
-  };
+export {
+  Webhooks as Webhooks,
+  type Webhook as Webhook,
+  type WebhookListResponse as WebhookListResponse,
+  type NewEventWebhookEvent as NewEventWebhookEvent,
+  type UnwrapWebhookEvent as UnwrapWebhookEvent,
+  type WebhookCreateParams as WebhookCreateParams,
+  type WebhookUpdateParams as WebhookUpdateParams
+};
 
-  export {
-    Workflows as Workflows,
-    type Workflow as Workflow,
-    type WorkflowAction as WorkflowAction,
-    type WorkflowCaptionAction as WorkflowCaptionAction,
-    type WorkflowCaptionParams as WorkflowCaptionParams,
-    type WorkflowRule as WorkflowRule,
-    type WorkflowStaticAction as WorkflowStaticAction,
-    type WorkflowStaticParams as WorkflowStaticParams,
-    type WorkflowThumbnailAction as WorkflowThumbnailAction,
-    type WorkflowThumbnailParams as WorkflowThumbnailParams,
-    type WorkflowTranscriptAction as WorkflowTranscriptAction,
-    type WorkflowTranslationAction as WorkflowTranslationAction,
-    type WorkflowTranslationParams as WorkflowTranslationParams,
-    type WorkflowsPaginatedResults as WorkflowsPaginatedResults,
-    type WorkflowCreateParams as WorkflowCreateParams,
-    type WorkflowUpdateParams as WorkflowUpdateParams,
-    type WorkflowListParams as WorkflowListParams,
-  };
+export {
+  Workflows as Workflows,
+  type Workflow as Workflow,
+  type WorkflowsPaginatedResults as WorkflowsPaginatedResults,
+  type WorkflowCreateParams as WorkflowCreateParams,
+  type WorkflowUpdateParams as WorkflowUpdateParams,
+  type WorkflowListParams as WorkflowListParams
+};
 
-  export type ChunkifyError = API.ChunkifyError;
-}
+export type ChunkifyError = API.ChunkifyError;
+    }

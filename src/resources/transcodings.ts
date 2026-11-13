@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as TranscodingsAPI from './transcodings';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -20,13 +21,7 @@ export class Transcodings extends APIResource {
    * ```
    */
   create(body: TranscodingCreateParams, options?: RequestOptions): APIPromise<Transcoding> {
-    return (
-      this._client.post('/transcodings', {
-        body,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Transcoding }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.post('/transcodings', { body, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Transcoding }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -41,12 +36,7 @@ export class Transcodings extends APIResource {
    * ```
    */
   retrieve(transcodingID: string, options?: RequestOptions): APIPromise<Transcoding> {
-    return (
-      this._client.get(path`/transcodings/${transcodingID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Transcoding }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/transcodings/${transcodingID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Transcoding }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -60,15 +50,8 @@ export class Transcodings extends APIResource {
    * }
    * ```
    */
-  list(
-    query: TranscodingListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<TranscodingsPaginatedResults, Transcoding> {
-    return this._client.getAPIList('/transcodings', PaginatedResults<Transcoding>, {
-      query,
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+  list(query: TranscodingListParams | null | undefined = {}, options?: RequestOptions): PagePromise<TranscodingsPaginatedResults, Transcoding> {
+    return this._client.getAPIList('/transcodings', PaginatedResults<Transcoding>, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -82,18 +65,9 @@ export class Transcodings extends APIResource {
    * await client.transcodings.delete('transcodingId');
    * ```
    */
-  delete(
-    transcodingID: string,
-    params: TranscodingDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { delete_files } = params ?? {};
-    return this._client.delete(path`/transcodings/${transcodingID}`, {
-      query: { delete_files },
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+  delete(transcodingID: string, params: TranscodingDeleteParams | null | undefined = {}, options?: RequestOptions): APIPromise<void> {
+    const { delete_files } = params ?? {}
+    return this._client.delete(path`/transcodings/${transcodingID}`, { query: { delete_files }, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -106,15 +80,11 @@ export class Transcodings extends APIResource {
    * ```
    */
   cancel(transcodingID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/transcodings/${transcodingID}/cancel`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.post(path`/transcodings/${transcodingID}/cancel`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 }
 
-export type TranscodingsPaginatedResults = PaginatedResults<Transcoding>;
+export type TranscodingsPaginatedResults = PaginatedResults<Transcoding>
 
 /**
  * A standalone file-encoding request with its accepted settings and published
@@ -585,19 +555,7 @@ export interface TranscodingM4aAac {
    * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
    * Opus audio uses 48000.
    */
-  audio_samplerate?:
-    | 8000
-    | 11025
-    | 12000
-    | 16000
-    | 22050
-    | 24000
-    | 32000
-    | 44100
-    | 48000
-    | 64000
-    | 88200
-    | 96000;
+  audio_samplerate?: 8000 | 11025 | 12000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000 | 64000 | 88200 | 96000;
 
   /**
    * Channels specifies the output channel count. Defaults to stereo. Six channels
@@ -637,19 +595,7 @@ export interface TranscodingMP4Av1 {
    * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
    * Opus audio uses 48000.
    */
-  audio_samplerate?:
-    | 8000
-    | 11025
-    | 12000
-    | 16000
-    | 22050
-    | 24000
-    | 32000
-    | 44100
-    | 48000
-    | 64000
-    | 88200
-    | 96000;
+  audio_samplerate?: 8000 | 11025 | 12000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000 | 64000 | 88200 | 96000;
 
   /**
    * Bufsize specifies the video buffer size in bits, from 100000 through 50000000.
@@ -800,19 +746,7 @@ export interface TranscodingMP4H264 {
    * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
    * Opus audio uses 48000.
    */
-  audio_samplerate?:
-    | 8000
-    | 11025
-    | 12000
-    | 16000
-    | 22050
-    | 24000
-    | 32000
-    | 44100
-    | 48000
-    | 64000
-    | 88200
-    | 96000;
+  audio_samplerate?: 8000 | 11025 | 12000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000 | 64000 | 88200 | 96000;
 
   /**
    * Bufsize specifies the video buffer size in bits, from 100000 through 50000000.
@@ -976,19 +910,7 @@ export interface TranscodingMP4H265 {
    * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
    * Opus audio uses 48000.
    */
-  audio_samplerate?:
-    | 8000
-    | 11025
-    | 12000
-    | 16000
-    | 22050
-    | 24000
-    | 32000
-    | 44100
-    | 48000
-    | 64000
-    | 88200
-    | 96000;
+  audio_samplerate?: 8000 | 11025 | 12000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000 | 64000 | 88200 | 96000;
 
   /**
    * Bufsize specifies the video buffer size in bits, from 100000 through 50000000.
@@ -1080,16 +1002,7 @@ export interface TranscodingMP4H265 {
    * Pixfmt specifies the output pixel format. Defaults to yuv420p. The selected
    * profile must support it.
    */
-  pixfmt?:
-    | 'yuv420p'
-    | 'yuv422p'
-    | 'yuv444p'
-    | 'yuv420p10le'
-    | 'yuv422p10le'
-    | 'yuv444p10le'
-    | 'yuv420p12le'
-    | 'yuv422p12le'
-    | 'yuv444p12le';
+  pixfmt?: 'yuv420p' | 'yuv422p' | 'yuv444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv444p10le' | 'yuv420p12le' | 'yuv422p12le' | 'yuv444p12le';
 
   /**
    * Preset specifies the encoding speed preset. Valid values (from fastest to
@@ -1107,15 +1020,7 @@ export interface TranscodingMP4H265 {
   /**
    * Profilev selects the HEVC profile. It must support the requested pixel format.
    */
-  profilev?:
-    | 'main'
-    | 'main10'
-    | 'main12'
-    | 'main422-10'
-    | 'main422-12'
-    | 'main444-8'
-    | 'main444-10'
-    | 'main444-12';
+  profilev?: 'main' | 'main10' | 'main12' | 'main422-10' | 'main422-12' | 'main444-8' | 'main444-10' | 'main444-12';
 
   /**
    * Seek specifies the start in source seconds. Defaults to zero and must precede
@@ -1161,19 +1066,7 @@ export interface TranscodingWebmVp9 {
    * AudioSamplerate specifies the output sample rate in Hz. Defaults to 48000. WebM
    * Opus audio uses 48000.
    */
-  audio_samplerate?:
-    | 8000
-    | 11025
-    | 12000
-    | 16000
-    | 22050
-    | 24000
-    | 32000
-    | 44100
-    | 48000
-    | 64000
-    | 88200
-    | 96000;
+  audio_samplerate?: 8000 | 11025 | 12000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000 | 64000 | 88200 | 96000;
 
   /**
    * Bufsize specifies the video buffer size in bits, from 100000 through 50000000.
@@ -1266,19 +1159,7 @@ export interface TranscodingWebmVp9 {
    * Pixfmt specifies the output pixel format. Defaults to yuv420p. The selected
    * profile must support it.
    */
-  pixfmt?:
-    | 'yuv420p'
-    | 'yuv422p'
-    | 'yuv440p'
-    | 'yuv444p'
-    | 'yuv420p10le'
-    | 'yuv422p10le'
-    | 'yuv440p10le'
-    | 'yuv444p10le'
-    | 'yuv420p12le'
-    | 'yuv422p12le'
-    | 'yuv440p12le'
-    | 'yuv444p12le';
+  pixfmt?: 'yuv420p' | 'yuv422p' | 'yuv440p' | 'yuv444p' | 'yuv420p10le' | 'yuv422p10le' | 'yuv440p10le' | 'yuv444p10le' | 'yuv420p12le' | 'yuv422p12le' | 'yuv440p12le' | 'yuv444p12le';
 
   /**
    * Quality specifies the VP9 encoding quality preset. Valid values:
@@ -1314,12 +1195,7 @@ export interface TranscodingCreateParams {
   /**
    * Format specifies the requested encoding settings.
    */
-  format:
-    | TranscodingMP4H264
-    | TranscodingMP4H265
-    | TranscodingMP4Av1
-    | TranscodingWebmVp9
-    | TranscodingM4aAac;
+  format: TranscodingMP4H264 | TranscodingMP4H265 | TranscodingMP4Av1 | TranscodingWebmVp9 | TranscodingM4aAac;
 
   /**
    * SourceId identifies a Source in this Project.
@@ -1427,6 +1303,6 @@ export declare namespace Transcodings {
     type TranscodingsPaginatedResults as TranscodingsPaginatedResults,
     type TranscodingCreateParams as TranscodingCreateParams,
     type TranscodingListParams as TranscodingListParams,
-    type TranscodingDeleteParams as TranscodingDeleteParams,
+    type TranscodingDeleteParams as TranscodingDeleteParams
   };
 }

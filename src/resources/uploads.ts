@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as UploadsAPI from './uploads';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
@@ -22,13 +23,7 @@ export class Uploads extends APIResource {
    * ```
    */
   create(body: UploadCreateParams, options?: RequestOptions): APIPromise<Upload> {
-    return (
-      this._client.post('/uploads', {
-        body,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Upload }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.post('/uploads', { body, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Upload }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -41,12 +36,7 @@ export class Uploads extends APIResource {
    * ```
    */
   retrieve(uploadID: string, options?: RequestOptions): APIPromise<Upload> {
-    return (
-      this._client.get(path`/uploads/${uploadID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Upload }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/uploads/${uploadID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Upload }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -60,15 +50,8 @@ export class Uploads extends APIResource {
    * }
    * ```
    */
-  list(
-    query: UploadListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<UploadsPaginatedResults, Upload> {
-    return this._client.getAPIList('/uploads', PaginatedResults<Upload>, {
-      query,
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+  list(query: UploadListParams | null | undefined = {}, options?: RequestOptions): PagePromise<UploadsPaginatedResults, Upload> {
+    return this._client.getAPIList('/uploads', PaginatedResults<Upload>, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -80,11 +63,7 @@ export class Uploads extends APIResource {
    * ```
    */
   delete(uploadID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/uploads/${uploadID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.delete(path`/uploads/${uploadID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -103,21 +82,12 @@ export class Uploads extends APIResource {
    * });
    * ```
    */
-  complete(
-    token: string,
-    body: UploadCompleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    return this._client.post(path`/uploads/completion/${token}`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: {},
-    });
+  complete(token: string, body: UploadCompleteParams | null | undefined = {}, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/uploads/completion/${token}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: {  } });
   }
 }
 
-export type UploadsPaginatedResults = PaginatedResults<Upload>;
+export type UploadsPaginatedResults = PaginatedResults<Upload>
 
 export interface Upload {
   /**
@@ -424,6 +394,6 @@ export declare namespace Uploads {
     type UploadsPaginatedResults as UploadsPaginatedResults,
     type UploadCreateParams as UploadCreateParams,
     type UploadListParams as UploadListParams,
-    type UploadCompleteParams as UploadCompleteParams,
+    type UploadCompleteParams as UploadCompleteParams
   };
 }

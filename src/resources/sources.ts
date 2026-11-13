@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as SourcesAPI from './sources';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -19,13 +20,7 @@ export class Sources extends APIResource {
    * ```
    */
   create(body: SourceCreateParams, options?: RequestOptions): APIPromise<Source> {
-    return (
-      this._client.post('/sources', {
-        body,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Source }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.post('/sources', { body, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Source }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -38,12 +33,7 @@ export class Sources extends APIResource {
    * ```
    */
   retrieve(sourceID: string, options?: RequestOptions): APIPromise<Source> {
-    return (
-      this._client.get(path`/sources/${sourceID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Source }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/sources/${sourceID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Source }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -58,15 +48,8 @@ export class Sources extends APIResource {
    * }
    * ```
    */
-  list(
-    query: SourceListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<SourcesPaginatedResults, Source> {
-    return this._client.getAPIList('/sources', PaginatedResults<Source>, {
-      query,
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+  list(query: SourceListParams | null | undefined = {}, options?: RequestOptions): PagePromise<SourcesPaginatedResults, Source> {
+    return this._client.getAPIList('/sources', PaginatedResults<Source>, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -78,15 +61,11 @@ export class Sources extends APIResource {
    * ```
    */
   delete(sourceID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/sources/${sourceID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+    return this._client.delete(path`/sources/${sourceID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 }
 
-export type SourcesPaginatedResults = PaginatedResults<Source>;
+export type SourcesPaginatedResults = PaginatedResults<Source>
 
 export interface Source {
   /**
@@ -378,6 +357,6 @@ export declare namespace Sources {
     type Source as Source,
     type SourcesPaginatedResults as SourcesPaginatedResults,
     type SourceCreateParams as SourceCreateParams,
-    type SourceListParams as SourceListParams,
+    type SourceListParams as SourceListParams
   };
 }

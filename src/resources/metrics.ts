@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as MetricsAPI from './metrics';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -9,50 +10,23 @@ export class Metrics extends APIResource {
    * Retrieve Asset outcomes, timings, output sizes and source profiles by UTC
    * creation date.
    */
-  assets(
-    query: MetricAssetsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<MetricsAssets> {
-    return (
-      this._client.get('/metrics/assets', {
-        query,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: MetricsAssets }>
-    )._thenUnwrap((obj) => obj.data);
+  assets(query: MetricAssetsParams | null | undefined = {}, options?: RequestOptions): APIPromise<MetricsAssets> {
+    return (this._client.get('/metrics/assets', { query, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: MetricsAssets }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve recorded additions and successful removals by storage and UTC date.
    * Historical coverage depends on event retention.
    */
-  storage(
-    query: MetricStorageParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<MetricsStorage> {
-    return (
-      this._client.get('/metrics/storage', {
-        query,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: MetricsStorage }>
-    )._thenUnwrap((obj) => obj.data);
+  storage(query: MetricStorageParams | null | undefined = {}, options?: RequestOptions): APIPromise<MetricsStorage> {
+    return (this._client.get('/metrics/storage', { query, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: MetricsStorage }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
    * Retrieve project usage totals and daily values for a UTC date range.
    */
-  usage(
-    query: MetricUsageParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<MetricsUsage> {
-    return (
-      this._client.get('/metrics/usage', {
-        query,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: MetricsUsage }>
-    )._thenUnwrap((obj) => obj.data);
+  usage(query: MetricUsageParams | null | undefined = {}, options?: RequestOptions): APIPromise<MetricsUsage> {
+    return (this._client.get('/metrics/usage', { query, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: MetricsUsage }>)._thenUnwrap((obj) => obj.data);
   }
 }
 
@@ -1326,6 +1300,6 @@ export declare namespace Metrics {
     type MetricsUsage as MetricsUsage,
     type MetricAssetsParams as MetricAssetsParams,
     type MetricStorageParams as MetricStorageParams,
-    type MetricUsageParams as MetricUsageParams,
+    type MetricUsageParams as MetricUsageParams
   };
 }

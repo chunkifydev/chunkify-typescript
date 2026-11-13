@@ -1,5 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import * as Core from '../core';
+
 export interface ChunkifyError {
   /**
    * Additional error details or output
@@ -14,16 +16,5 @@ export interface ChunkifyError {
   /**
    * Type of error
    */
-  type:
-    | 'setup'
-    | 'ffmpeg'
-    | 'source'
-    | 'upload'
-    | 'download'
-    | 'ingest'
-    | 'job'
-    | 'unexpected'
-    | 'permission'
-    | 'timeout'
-    | 'cancelled';
+  type: 'setup' | 'ffmpeg' | 'source' | 'upload' | 'download' | 'ingest' | 'job' | 'unexpected' | 'permission' | 'timeout' | 'cancelled';
 }

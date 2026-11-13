@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as ThumbnailsAPI from './thumbnails';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -21,13 +22,7 @@ export class Thumbnails extends APIResource {
    * ```
    */
   create(body: ThumbnailCreateParams, options?: RequestOptions): APIPromise<Thumbnail> {
-    return (
-      this._client.post('/thumbnails', {
-        body,
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Thumbnail }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.post('/thumbnails', { body, ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Thumbnail }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -42,12 +37,7 @@ export class Thumbnails extends APIResource {
    * ```
    */
   retrieve(thumbnailID: string, options?: RequestOptions): APIPromise<Thumbnail> {
-    return (
-      this._client.get(path`/thumbnails/${thumbnailID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: Thumbnail }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.get(path`/thumbnails/${thumbnailID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: Thumbnail }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -61,15 +51,8 @@ export class Thumbnails extends APIResource {
    * }
    * ```
    */
-  list(
-    query: ThumbnailListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<ThumbnailsPaginatedResults, Thumbnail> {
-    return this._client.getAPIList('/thumbnails', PaginatedResults<Thumbnail>, {
-      query,
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+  list(query: ThumbnailListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ThumbnailsPaginatedResults, Thumbnail> {
+    return this._client.getAPIList('/thumbnails', PaginatedResults<Thumbnail>, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 
   /**
@@ -83,22 +66,13 @@ export class Thumbnails extends APIResource {
    * await client.thumbnails.delete('thumbnailId');
    * ```
    */
-  delete(
-    thumbnailID: string,
-    params: ThumbnailDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { delete_files } = params ?? {};
-    return this._client.delete(path`/thumbnails/${thumbnailID}`, {
-      query: { delete_files },
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { projectAccessTokenAuth: true },
-    });
+  delete(thumbnailID: string, params: ThumbnailDeleteParams | null | undefined = {}, options?: RequestOptions): APIPromise<void> {
+    const { delete_files } = params ?? {}
+    return this._client.delete(path`/thumbnails/${thumbnailID}`, { query: { delete_files }, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { projectAccessTokenAuth : true } });
   }
 }
 
-export type ThumbnailsPaginatedResults = PaginatedResults<Thumbnail>;
+export type ThumbnailsPaginatedResults = PaginatedResults<Thumbnail>
 
 /**
  * One thumbnail generation request. At least one sample and its companion files
@@ -391,27 +365,6 @@ export namespace Thumbnail {
   }
 }
 
-/**
- * Output Storage selection, independent of Source storage.
- */
-export interface ThumbnailCreateStorageParams {
-  /**
-   * Id identifies output Storage in this Project. Omit to use the Project default.
-   */
-  id?: string;
-
-  /**
-   * Path specifies the output filename template relative to the selected Storage
-   * base_prefix. Required for customer storage; generated for Chunkify temporary
-   * storage. The filename must contain one %05d placeholder, replaced by the image
-   * or sprite sheet number starting at 1, and end in .jpg for jpeg or .webp for
-   * webp. The WebVTT file uses the filename without the placeholder and its adjacent
-   * separator, such as thumb.vtt for thumb-%05d.jpg. The combined path may contain
-   * at most 1024 bytes.
-   */
-  path?: string;
-}
-
 export interface ThumbnailCreateParams {
   /**
    * SourceId identifies a video Source in this Project.
@@ -457,7 +410,7 @@ export interface ThumbnailCreateParams {
    * Storage overrides the Project output destination and names the output files.
    * Source storage remains independent.
    */
-  storage?: ThumbnailCreateStorageParams;
+  storage?: ThumbnailCreateParams.Storage;
 
   /**
    * Timestamps specifies 1 to 100 Source-relative target times in seconds. Every
@@ -483,6 +436,28 @@ export namespace ThumbnailCreateParams {
      * Start specifies the inclusive lower bound in seconds. Defaults to zero.
      */
     start?: number;
+  }
+
+  /**
+   * Storage overrides the Project output destination and names the output files.
+   * Source storage remains independent.
+   */
+  export interface Storage {
+    /**
+     * Id identifies output Storage in this Project. Omit to use the Project default.
+     */
+    id?: string;
+
+    /**
+     * Path specifies the output filename template relative to the selected Storage
+     * base_prefix. Required for customer storage; generated for Chunkify temporary
+     * storage. The filename must contain one %05d placeholder, replaced by the image
+     * or sprite sheet number starting at 1, and end in .jpg for jpeg or .webp for
+     * webp. The WebVTT file uses the filename without the placeholder and its adjacent
+     * separator, such as thumb.vtt for thumb-%05d.jpg. The combined path may contain
+     * at most 1024 bytes.
+     */
+    path?: string;
   }
 }
 
@@ -544,10 +519,9 @@ export interface ThumbnailDeleteParams {
 export declare namespace Thumbnails {
   export {
     type Thumbnail as Thumbnail,
-    type ThumbnailCreateStorageParams as ThumbnailCreateStorageParams,
     type ThumbnailsPaginatedResults as ThumbnailsPaginatedResults,
     type ThumbnailCreateParams as ThumbnailCreateParams,
     type ThumbnailListParams as ThumbnailListParams,
-    type ThumbnailDeleteParams as ThumbnailDeleteParams,
+    type ThumbnailDeleteParams as ThumbnailDeleteParams
   };
 }

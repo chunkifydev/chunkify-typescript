@@ -2,16 +2,7 @@
 
 import { APIResource } from '../../../core/resource';
 import * as ConnectionsAPI from './connections/connections';
-import {
-  AnalyticsConnection,
-  ConnectionCreateParams,
-  ConnectionCreateResponse,
-  ConnectionDeleteParams,
-  ConnectionListResponse,
-  ConnectionRetrieveParams,
-  ConnectionUpdateParams,
-  Connections,
-} from './connections/connections';
+import { AnalyticsConnection, ConnectionCreateParams, ConnectionCreateResponse, ConnectionDeleteParams, ConnectionListResponse, ConnectionRetrieveParams, ConnectionUpdateParams, Connections } from './connections/connections';
 
 export class Analytics extends APIResource {
   connections: ConnectionsAPI.Connections = new ConnectionsAPI.Connections(this._client);
@@ -28,6 +19,6 @@ export declare namespace Analytics {
     type ConnectionCreateParams as ConnectionCreateParams,
     type ConnectionRetrieveParams as ConnectionRetrieveParams,
     type ConnectionUpdateParams as ConnectionUpdateParams,
-    type ConnectionDeleteParams as ConnectionDeleteParams,
+    type ConnectionDeleteParams as ConnectionDeleteParams
   };
 }

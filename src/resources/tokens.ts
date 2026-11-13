@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as TokensAPI from './tokens';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -19,13 +20,7 @@ export class Tokens extends APIResource {
    * ```
    */
   create(body: TokenCreateParams, options?: RequestOptions): APIPromise<Token> {
-    return (
-      this._client.post('/tokens', {
-        body,
-        ...options,
-        __security: { teamAccessTokenAuth: true },
-      }) as APIPromise<{ data: Token }>
-    )._thenUnwrap((obj) => obj.data);
+    return (this._client.post('/tokens', { body, ...options, __security: { teamAccessTokenAuth : true } }) as APIPromise<{ data: Token }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -40,7 +35,7 @@ export class Tokens extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<TokenListResponse> {
-    return this._client.get('/tokens', { ...options, __security: { teamAccessTokenAuth: true } });
+    return this._client.get('/tokens', { ...options, __security: { teamAccessTokenAuth : true } });
   }
 
   /**
@@ -53,11 +48,7 @@ export class Tokens extends APIResource {
    * ```
    */
   revoke(tokenID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/tokens/${tokenID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-      __security: { teamAccessTokenAuth: true },
-    });
+    return this._client.delete(path`/tokens/${tokenID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]), __security: { teamAccessTokenAuth : true } });
   }
 }
 
@@ -131,6 +122,6 @@ export declare namespace Tokens {
   export {
     type Token as Token,
     type TokenListResponse as TokenListResponse,
-    type TokenCreateParams as TokenCreateParams,
+    type TokenCreateParams as TokenCreateParams
   };
 }

@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import * as RunsAPI from './runs';
 import * as ActionsAPI from './actions';
 import { ActionListParams, ActionRetrieveParams, Actions as ActionsAPIActions } from './actions';
 import { APIPromise } from '../../../core/api-promise';
@@ -23,13 +24,8 @@ export class Runs extends APIResource {
    * ```
    */
   retrieve(runID: string, params: RunRetrieveParams, options?: RequestOptions): APIPromise<WorkflowRun> {
-    const { workflowId } = params;
-    return (
-      this._client.get(path`/workflows/${workflowId}/runs/${runID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: WorkflowRun }>
-    )._thenUnwrap((obj) => obj.data);
+    const { workflowId } = params
+    return (this._client.get(path`/workflows/${workflowId}/runs/${runID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: WorkflowRun }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -46,20 +42,12 @@ export class Runs extends APIResource {
    * }
    * ```
    */
-  list(
-    workflowID: string,
-    query: RunListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<WorkflowRunsPaginatedResults, WorkflowRun> {
-    return this._client.getAPIList(path`/workflows/${workflowID}/runs`, PaginatedResults<WorkflowRun>, {
-      query,
-      ...options,
-      __security: { projectAccessTokenAuth: true },
-    });
+  list(workflowID: string, query: RunListParams | null | undefined = {}, options?: RequestOptions): PagePromise<WorkflowRunsPaginatedResults, WorkflowRun> {
+    return this._client.getAPIList(path`/workflows/${workflowID}/runs`, PaginatedResults<WorkflowRun>, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 }
 
-export type WorkflowRunsPaginatedResults = PaginatedResults<WorkflowRun>;
+export type WorkflowRunsPaginatedResults = PaginatedResults<WorkflowRun>
 
 /**
  * One execution of Workflow rules for an Asset, started by an event or by updating
@@ -238,12 +226,12 @@ export declare namespace Runs {
     type WorkflowRun as WorkflowRun,
     type WorkflowRunsPaginatedResults as WorkflowRunsPaginatedResults,
     type RunRetrieveParams as RunRetrieveParams,
-    type RunListParams as RunListParams,
+    type RunListParams as RunListParams
   };
 
   export {
     ActionsAPIActions as Actions,
     type ActionRetrieveParams as ActionRetrieveParams,
-    type ActionListParams as ActionListParams,
+    type ActionListParams as ActionListParams
   };
 }

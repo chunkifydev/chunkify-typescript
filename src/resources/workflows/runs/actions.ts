@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
-import * as WorkflowAPI from '../../assets/workflow/workflow';
-import { AssetActionRunsPaginatedResults } from '../../assets/workflow/workflow';
+import * as RunsActionsAPI from './actions';
+import * as ActionsAPI from '../../assets/workflow/actions';
+import { AssetActionRunsPaginatedResults } from '../../assets/workflow/actions';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
@@ -22,18 +23,9 @@ export class Actions extends APIResource {
    *   );
    * ```
    */
-  retrieve(
-    actionRunID: string,
-    params: ActionRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<WorkflowAPI.AssetActionRun> {
-    const { workflowId, runId } = params;
-    return (
-      this._client.get(path`/workflows/${workflowId}/runs/${runId}/actions/${actionRunID}`, {
-        ...options,
-        __security: { projectAccessTokenAuth: true },
-      }) as APIPromise<{ data: WorkflowAPI.AssetActionRun }>
-    )._thenUnwrap((obj) => obj.data);
+  retrieve(actionRunID: string, params: ActionRetrieveParams, options?: RequestOptions): APIPromise<ActionsAPI.AssetActionRun> {
+    const { workflowId, runId } = params
+    return (this._client.get(path`/workflows/${workflowId}/runs/${runId}/actions/${actionRunID}`, { ...options, __security: { projectAccessTokenAuth : true } }) as APIPromise<{ data: ActionsAPI.AssetActionRun }>)._thenUnwrap((obj) => obj.data);
   }
 
   /**
@@ -51,17 +43,9 @@ export class Actions extends APIResource {
    * }
    * ```
    */
-  list(
-    runID: string,
-    params: ActionListParams,
-    options?: RequestOptions,
-  ): PagePromise<AssetActionRunsPaginatedResults, WorkflowAPI.AssetActionRun> {
-    const { workflowId, ...query } = params;
-    return this._client.getAPIList(
-      path`/workflows/${workflowId}/runs/${runID}/actions`,
-      PaginatedResults<WorkflowAPI.AssetActionRun>,
-      { query, ...options, __security: { projectAccessTokenAuth: true } },
-    );
+  list(runID: string, params: ActionListParams, options?: RequestOptions): PagePromise<AssetActionRunsPaginatedResults, ActionsAPI.AssetActionRun> {
+    const { workflowId, ...query } = params
+    return this._client.getAPIList(path`/workflows/${workflowId}/runs/${runID}/actions`, PaginatedResults<ActionsAPI.AssetActionRun>, { query, ...options, __security: { projectAccessTokenAuth : true } });
   }
 }
 
@@ -122,7 +106,10 @@ export namespace ActionListParams {
 }
 
 export declare namespace Actions {
-  export { type ActionRetrieveParams as ActionRetrieveParams, type ActionListParams as ActionListParams };
+  export {
+    type ActionRetrieveParams as ActionRetrieveParams,
+    type ActionListParams as ActionListParams
+  };
 }
 
-export { type AssetActionRunsPaginatedResults };
+export { type AssetActionRunsPaginatedResults }
