@@ -160,7 +160,7 @@ export namespace WorkflowRevision {
       /**
        * Params specifies caption generation settings. Pass an empty object.
        */
-      params: unknown;
+      params: WorkflowCaptionAction.Params;
 
       /**
        * Type specifies the action to perform. Must be create_caption.
@@ -176,6 +176,11 @@ export namespace WorkflowRevision {
     }
 
     export namespace WorkflowCaptionAction {
+      /**
+       * Params specifies caption generation settings. Pass an empty object.
+       */
+      export interface Params {}
+
       /**
        * TranscriptId binds caption publication to the transcript in the triggering
        * event. Use it only when connected to create_transcript. When omitted, creates or
@@ -364,12 +369,19 @@ export namespace WorkflowRevision {
       /**
        * Params specifies transcript settings. Pass an empty object.
        */
-      params: unknown;
+      params: WorkflowTranscriptAction.Params;
 
       /**
        * Type specifies the action to perform. Must be create_transcript.
        */
       type: 'create_transcript';
+    }
+
+    export namespace WorkflowTranscriptAction {
+      /**
+       * Params specifies transcript settings. Pass an empty object.
+       */
+      export interface Params {}
     }
 
     /**
