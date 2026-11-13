@@ -763,15 +763,7 @@ export interface Job {
   /**
    * The format parameters and settings for a job
    */
-  format:
-    | Job.MP4Av1
-    | Job.MP4H264
-    | Job.MP4H265
-    | Job.WebmVp9
-    | Job.HlsAv1
-    | Job.HlsH264
-    | Job.HlsH265
-    | Job.Jpg;
+  format: JobFormat;
 
   /**
    * Progress percentage of the job (0-100)
@@ -805,7 +797,7 @@ export interface Job {
   /**
    * Storage settings for where the job output will be saved
    */
-  storage: Job.Storage;
+  storage: JobStorage;
 
   /**
    * Last update timestamp
@@ -835,10 +827,59 @@ export interface Job {
   /**
    * The transcoder configuration for a job
    */
-  transcoder?: Job.Transcoder;
+  transcoder?: JobTranscoder;
 }
 
-export namespace Job {
+/**
+ * The format parameters for creating a new job.
+ */
+export type JobCreateFormatParams = MP4Av1 | MP4H264 | MP4H265 | WebmVp9 | HlsAv1 | HlsH264 | HlsH265 | Jpg;
+
+export interface JobCreateStorageParams {
+  /**
+   * Storage Id specifies the storage configuration to use from pre-configured
+   * storage options. Must be 4-64 characters long and contain only alphanumeric
+   * characters, underscores and hyphens. Optional if Storage Path is provided.
+   */
+  id?: string;
+
+  /**
+   * Storage Path specifies an object path relative to the selected storage
+   * connection's base_prefix. Do not include the base_prefix. Leading slashes are
+   * accepted for compatibility and removed before the path is stored. The
+   * base_prefix and normalized path may contain at most 1024 bytes combined.
+   * Optional if Storage Id is provided.
+   */
+  path?: string;
+}
+
+export interface JobCreateTranscoderParams {
+  /**
+   * Quantity specifies the number of transcoder instances. Required if Type is set.
+   */
+  quantity?: number;
+
+  /**
+   * Type specifies the CPU configuration for each transcoder instance. Required if
+   * Quantity is set.
+   */
+  type?: Shared.InstanceType;
+}
+
+/**
+ * The format parameters and settings for a job
+ */
+export type JobFormat =
+  | JobFormat.MP4Av1
+  | JobFormat.MP4H264
+  | JobFormat.MP4H265
+  | JobFormat.WebmVp9
+  | JobFormat.HlsAv1
+  | JobFormat.HlsH264
+  | JobFormat.HlsH265
+  | JobFormat.Jpg;
+
+export namespace JobFormat {
   /**
    * FFmpeg encoding parameters specific to MP4 with AV1 encoding.
    */
@@ -846,7 +887,7 @@ export namespace Job {
     /**
      * The format ID
      */
-    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+    id: JobsAPI.JobFormatID;
   }
 
   /**
@@ -856,7 +897,7 @@ export namespace Job {
     /**
      * The format ID
      */
-    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+    id: JobsAPI.JobFormatID;
   }
 
   /**
@@ -866,7 +907,7 @@ export namespace Job {
     /**
      * The format ID
      */
-    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+    id: JobsAPI.JobFormatID;
   }
 
   /**
@@ -876,7 +917,7 @@ export namespace Job {
     /**
      * The format ID
      */
-    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+    id: JobsAPI.JobFormatID;
   }
 
   /**
@@ -887,7 +928,7 @@ export namespace Job {
     /**
      * The format ID
      */
-    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+    id: JobsAPI.JobFormatID;
   }
 
   /**
@@ -898,7 +939,7 @@ export namespace Job {
     /**
      * The format ID
      */
-    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+    id: JobsAPI.JobFormatID;
   }
 
   /**
@@ -909,7 +950,7 @@ export namespace Job {
     /**
      * The format ID
      */
-    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+    id: JobsAPI.JobFormatID;
   }
 
   /**
@@ -919,43 +960,53 @@ export namespace Job {
     /**
      * The format ID
      */
-    id: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+    id: JobsAPI.JobFormatID;
   }
+}
+
+export type JobFormatID =
+  | 'mp4_h264'
+  | 'mp4_h265'
+  | 'mp4_av1'
+  | 'webm_vp9'
+  | 'hls_h264'
+  | 'hls_h265'
+  | 'hls_av1'
+  | 'jpg';
+
+/**
+ * Storage settings for where the job output will be saved
+ */
+export interface JobStorage {
+  /**
+   * ID of the storage
+   */
+  id: string;
 
   /**
-   * Storage settings for where the job output will be saved
+   * Path where the output will be stored
    */
-  export interface Storage {
-    /**
-     * ID of the storage
-     */
-    id: string;
+  path: string;
+}
 
-    /**
-     * Path where the output will be stored
-     */
-    path: string;
-  }
+/**
+ * The transcoder configuration for a job
+ */
+export interface JobTranscoder {
+  /**
+   * Whether the transcoder configuration is automatically set by Chunkify
+   */
+  auto: boolean;
 
   /**
-   * The transcoder configuration for a job
+   * Number of instances allocated
    */
-  export interface Transcoder {
-    /**
-     * Whether the transcoder configuration is automatically set by Chunkify
-     */
-    auto: boolean;
+  quantity: number;
 
-    /**
-     * Number of instances allocated
-     */
-    quantity: number;
-
-    /**
-     * Type of transcoder instance
-     */
-    type: '4vCPU' | '8vCPU' | '16vCPU';
-  }
+  /**
+   * Type of transcoder instance
+   */
+  type: Shared.InstanceType;
 }
 
 /**
@@ -1659,7 +1710,7 @@ export interface JobCreateParams {
    * be provided. If you want to use a format without specifying any configuration,
    * use an empty object in the corresponding field.
    */
-  format: MP4Av1 | MP4H264 | MP4H265 | WebmVp9 | HlsAv1 | HlsH264 | HlsH265 | Jpg;
+  format: JobCreateFormatParams;
 
   /**
    * The ID of the source file to transcode
@@ -1681,7 +1732,7 @@ export interface JobCreateParams {
   /**
    * Optional storage configuration
    */
-  storage?: JobCreateParams.Storage;
+  storage?: JobCreateStorageParams;
 
   /**
    * Optional transcoder configuration. If not provided, the system will
@@ -1689,49 +1740,7 @@ export interface JobCreateParams {
    * file specifications and output requirements. This auto-scaling ensures efficient
    * resource utilization.
    */
-  transcoder?: JobCreateParams.Transcoder;
-}
-
-export namespace JobCreateParams {
-  /**
-   * Optional storage configuration
-   */
-  export interface Storage {
-    /**
-     * Storage Id specifies the storage configuration to use from pre-configured
-     * storage options. Must be 4-64 characters long and contain only alphanumeric
-     * characters, underscores and hyphens. Optional if Storage Path is provided.
-     */
-    id?: string;
-
-    /**
-     * Storage Path specifies an object path relative to the selected storage
-     * connection's base_prefix. Do not include the base_prefix. Leading slashes are
-     * accepted for compatibility and removed before the path is stored. The
-     * base_prefix and normalized path may contain at most 1024 bytes combined.
-     * Optional if Storage Id is provided.
-     */
-    path?: string;
-  }
-
-  /**
-   * Optional transcoder configuration. If not provided, the system will
-   * automatically calculate the optimal quantity and CPU type based on the source
-   * file specifications and output requirements. This auto-scaling ensures efficient
-   * resource utilization.
-   */
-  export interface Transcoder {
-    /**
-     * Quantity specifies the number of transcoder instances. Required if Type is set.
-     */
-    quantity?: number;
-
-    /**
-     * Type specifies the CPU configuration for each transcoder instance. Required if
-     * Quantity is set.
-     */
-    type?: '4vCPU' | '8vCPU' | '16vCPU';
-  }
+  transcoder?: JobCreateTranscoderParams;
 }
 
 export interface JobListParams extends PaginatedResultsParams {
@@ -1745,7 +1754,7 @@ export interface JobListParams extends PaginatedResultsParams {
   /**
    * Filter by format id
    */
-  format_id?: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'hls_h264' | 'hls_h265' | 'hls_av1' | 'jpg';
+  format_id?: JobFormatID;
 
   /**
    * Filter by hls manifest ID
@@ -1797,6 +1806,13 @@ export declare namespace Jobs {
     type HlsH264 as HlsH264,
     type HlsH265 as HlsH265,
     type Job as Job,
+    type JobCreateFormatParams as JobCreateFormatParams,
+    type JobCreateStorageParams as JobCreateStorageParams,
+    type JobCreateTranscoderParams as JobCreateTranscoderParams,
+    type JobFormat as JobFormat,
+    type JobFormatID as JobFormatID,
+    type JobStorage as JobStorage,
+    type JobTranscoder as JobTranscoder,
     type Jpg as Jpg,
     type MP4Av1 as MP4Av1,
     type MP4H264 as MP4H264,
