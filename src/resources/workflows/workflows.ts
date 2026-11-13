@@ -253,7 +253,7 @@ export type WorkflowActionParams =
  * Parameters for generating original captions. Pass an empty object; the spoken
  * language is detected automatically.
  */
-export type WorkflowCaption = unknown;
+export interface WorkflowCaption {}
 
 /**
  * Generates or reuses original captions and their transcript from the Asset's
@@ -319,7 +319,7 @@ export interface WorkflowCaptionActionParams {
  * Parameters for generating original captions. Pass an empty object; the spoken
  * language is detected automatically.
  */
-export type WorkflowCaptionParams = unknown;
+export interface WorkflowCaptionParams {}
 
 /**
  * Connects this rule to the output created or reused by an action in the same
@@ -719,7 +719,7 @@ export interface WorkflowThumbnailRangeParams {
  * Parameters for an original-language transcript. Pass an empty object; the spoken
  * language is detected automatically.
  */
-export type WorkflowTranscript = unknown;
+export interface WorkflowTranscript {}
 
 /**
  * Creates or reuses the original-language transcript. Can run alongside caption
@@ -771,7 +771,7 @@ export interface WorkflowTranscriptActionParams {
  * Parameters for an original-language transcript. Pass an empty object; the spoken
  * language is detected automatically.
  */
-export type WorkflowTranscriptParams = unknown;
+export interface WorkflowTranscriptParams {}
 
 /**
  * Parameters for translating one original caption into another language.

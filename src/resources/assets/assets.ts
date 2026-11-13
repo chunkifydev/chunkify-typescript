@@ -1224,7 +1224,7 @@ export interface AssetTranscriptOutputCreateParams {
  * Parameters for an original-language transcript. Pass an empty object; the spoken
  * language is detected automatically.
  */
-export type AssetTranscriptOutputParams = unknown;
+export interface AssetTranscriptOutputParams {}
 
 /**
  * A timed passage of recognized speech. Times are seconds from the start of the
