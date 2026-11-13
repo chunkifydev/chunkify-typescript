@@ -2,6 +2,7 @@
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">AssetOutputError</a></code>
 - <code><a href="./src/resources/shared.ts">ChunkifyError</a></code>
 
 # Assets
@@ -9,8 +10,6 @@ Types:
 Types:
 
 - <code><a href="./src/resources/assets/assets.ts">Asset</a></code>
-- <code><a href="./src/resources/assets/assets.ts">AssetStaticRenditionCreateParams</a></code>
-- <code><a href="./src/resources/assets/assets.ts">AssetStatus</a></code>
 
 Methods:
 
@@ -35,15 +34,15 @@ Methods:
 
 ## Workflow
 
-Types:
-
-- <code><a href="./src/resources/assets/workflow/workflow.ts">AssetActionRun</a></code>
-
 Methods:
 
 - <code title="post /assets/{assetId}/workflow/update">client.assets.workflow.<a href="./src/resources/assets/workflow/workflow.ts">update</a>(assetID) -> WorkflowRun</code>
 
 ### Actions
+
+Types:
+
+- <code><a href="./src/resources/assets/workflow/actions.ts">AssetActionRun</a></code>
 
 Methods:
 
@@ -232,7 +231,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/thumbnails.ts">Thumbnail</a></code>
-- <code><a href="./src/resources/thumbnails.ts">ThumbnailCreateStorageParams</a></code>
 
 Methods:
 
@@ -310,17 +308,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/workflows/workflows.ts">Workflow</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowAction</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowCaptionAction</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowCaptionParams</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRule</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowStaticAction</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowStaticParams</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThumbnailAction</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThumbnailParams</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranscriptAction</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranslationAction</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTranslationParams</a></code>
 
 Methods:
 
