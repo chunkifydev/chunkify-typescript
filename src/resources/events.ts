@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import * as NotificationsAPI from './notifications';
+import * as WebhooksAPI from './webhooks';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedResults, type PaginatedResultsParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
@@ -70,42 +71,7 @@ export interface Event {
    */
   delivery_status: 'none' | 'pending' | 'delivered' | 'failed';
 
-  event:
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted';
+  event: WebhooksAPI.WebhookEvent;
 
   /**
    * Retention deadline set from the project team plan when the event was recorded.
@@ -143,43 +109,7 @@ export interface EventListParams extends PaginatedResultsParams {
   /**
    * Filter by events
    */
-  events?: Array<
-    | 'job.created'
-    | 'job.completed'
-    | 'job.failed'
-    | 'job.cancelled'
-    | 'source.created'
-    | 'source.deleted'
-    | 'upload.created'
-    | 'upload.completed'
-    | 'upload.failed'
-    | 'upload.expired'
-    | 'asset.created'
-    | 'asset.ready'
-    | 'asset.playback_ready'
-    | 'asset.failed'
-    | 'asset.expired'
-    | 'asset.deleted'
-    | 'asset.output.created'
-    | 'asset.output.ready'
-    | 'asset.output.failed'
-    | 'asset.output.deleted'
-    | 'workflow_run.created'
-    | 'workflow_run.completed'
-    | 'workflow_run.failed'
-    | 'workflow_run.cancelled'
-    | 'transcoding.created'
-    | 'transcoding.ready'
-    | 'transcoding.failed'
-    | 'transcoding.cancelled'
-    | 'transcoding.expired'
-    | 'transcoding.deleted'
-    | 'thumbnail.created'
-    | 'thumbnail.ready'
-    | 'thumbnail.failed'
-    | 'thumbnail.expired'
-    | 'thumbnail.deleted'
-  >;
+  events?: Array<WebhooksAPI.WebhookEvent>;
 
   /**
    * Filter by the primary or a related resource ID, including retained associations

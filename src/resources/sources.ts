@@ -171,6 +171,21 @@ export interface Source {
   url?: string;
 }
 
+export interface SourceCreateStorageParams {
+  /**
+   * Exact object key in the configured bucket, 1 to 1024 UTF-8 bytes. The output
+   * base_prefix is not added.
+   */
+  path: string;
+
+  /**
+   * Connected external storage belonging to this project. If omitted, uses the
+   * project default storage, which must be external. The resolved storage ID is
+   * saved on the source.
+   */
+  id?: string;
+}
+
 export interface SourceCreateParams {
   /**
    * Metadata allows for additional information to be attached to the source, with a
@@ -181,32 +196,12 @@ export interface SourceCreateParams {
   /**
    * Storage input configuration. Provide this or url, never both.
    */
-  storage?: SourceCreateParams.Storage;
+  storage?: SourceCreateStorageParams;
 
   /**
    * Url is the URL of the source, which must be a valid HTTP URL.
    */
   url?: string;
-}
-
-export namespace SourceCreateParams {
-  /**
-   * Storage input configuration. Provide this or url, never both.
-   */
-  export interface Storage {
-    /**
-     * Exact object key in the configured bucket, 1 to 1024 UTF-8 bytes. The output
-     * base_prefix is not added.
-     */
-    path: string;
-
-    /**
-     * Connected external storage belonging to this project. If omitted, uses the
-     * project default storage, which must be external. The resolved storage ID is
-     * saved on the source.
-     */
-    id?: string;
-  }
 }
 
 export interface SourceListParams extends PaginatedResultsParams {
@@ -232,9 +227,10 @@ export interface SourceListParams extends PaginatedResultsParams {
   height?: SourceListParams.Height;
 
   /**
-   * Filter by metadata
+   * Filter by metadata. Repeat key:value pairs to match all supplied metadata
+   * conditions.
    */
-  metadata?: Array<Array<string>>;
+  metadata?: Array<string>;
 
   size?: SourceListParams.Size;
 
@@ -376,6 +372,7 @@ export namespace SourceListParams {
 export declare namespace Sources {
   export {
     type Source as Source,
+    type SourceCreateStorageParams as SourceCreateStorageParams,
     type SourcesPaginatedResults as SourcesPaginatedResults,
     type SourceCreateParams as SourceCreateParams,
     type SourceListParams as SourceListParams,
