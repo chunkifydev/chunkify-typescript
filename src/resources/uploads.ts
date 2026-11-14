@@ -360,9 +360,10 @@ export interface UploadListParams extends PaginatedResultsParams {
   created?: UploadListParams.Created;
 
   /**
-   * Filter by metadata
+   * Filter by metadata. Repeat key:value pairs to match all supplied metadata
+   * conditions.
    */
-  metadata?: Array<Array<string>>;
+  metadata?: Array<string>;
 
   /**
    * Filter by source ID
