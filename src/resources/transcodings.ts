@@ -16,7 +16,7 @@ export class Transcodings extends APIResource {
    * ```ts
    * const transcoding = await client.transcodings.create({
    *   format: { id: 'mp4_h264', height: 720 },
-   *   source_id: 'src_example',
+   *   source_id: 'src_3A0yDPVjACk8FkYZFnP7Ab5DSDV',
    * });
    * ```
    */
