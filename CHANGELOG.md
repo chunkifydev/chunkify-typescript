@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.0.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.12.0...v1.0.0) (2026-11-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **config:** declare every spec schema as an SDK model
+* **config:** restore the pre-#19 type models and declare AssetOutputError
+* mirror the OpenAPI spec for analytics params and thumbnail storage
+
+### Features
+
+* **config:** declare every spec schema as an SDK model ([8b36adc](https://github.com/chunkifydev/chunkify-typescript/commit/8b36adc3c4a32c1b0627acdee4f7b08bb13efd77))
+* mirror the OpenAPI spec for analytics params and thumbnail storage ([c37ab70](https://github.com/chunkifydev/chunkify-typescript/commit/c37ab70cda676439b3cb9062fb0cd21ee74aa6f9))
+
+
+### Bug Fixes
+
+* **config:** restore the pre-[#19](https://github.com/chunkifydev/chunkify-typescript/issues/19) type models and declare AssetOutputError ([1720785](https://github.com/chunkifydev/chunkify-typescript/commit/1720785551ab1ec35ff3f1a8a5cafe7fdf409f00))
+
+
+### Chores
+
+* **config:** publish SDK releases as full releases ([0ca3c16](https://github.com/chunkifydev/chunkify-typescript/commit/0ca3c16673d04247f8c19ed0133083a90de72296))
+* release 1.0.0 ([45bf8a5](https://github.com/chunkifydev/chunkify-typescript/commit/45bf8a5e90e45032fb124ff41c016740c2a06e1e))
+* sync OpenAPI schema from Chunkify v3.0.0 ([d01d63d](https://github.com/chunkifydev/chunkify-typescript/commit/d01d63d73feeb99a951673a888200554a35bf563))
+* sync OpenAPI schema from Chunkify v3.1.0 ([c56992d](https://github.com/chunkifydev/chunkify-typescript/commit/c56992d9e4409d64fb75fcaeee522a61b563055e))
+* sync OpenAPI schema from Chunkify v3.2.1 ([0f17b8f](https://github.com/chunkifydev/chunkify-typescript/commit/0f17b8f1148fb94cd0159c14bb6b721e2f8c43ac))
+
 ## [0.12.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.11.3...v0.12.0) (2026-11-12)
 
 
