@@ -141,6 +141,11 @@ export interface Upload {
   expires_at: string;
 
   /**
+   * Additional metadata for the upload
+   */
+  metadata: { [key: string]: string };
+
+  /**
    * Current status of the upload
    */
   status: 'waiting' | 'completed' | 'failed' | 'expired';
@@ -207,11 +212,6 @@ export interface Upload {
    * Declared file size in bytes, when supplied at creation.
    */
   file_size_bytes?: number;
-
-  /**
-   * Additional metadata for the upload
-   */
-  metadata?: { [key: string]: string };
 
   /**
    * Multipart transfer details, returned only on creation for multipart Uploads.
