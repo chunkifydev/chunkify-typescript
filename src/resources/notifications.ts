@@ -17,8 +17,8 @@ export class Notifications extends APIResource {
    * ```ts
    * const notification = await client.notifications.create({
    *   event: 'asset.playback_ready',
-   *   object_id: 'ast_A1cce6120E56e7Tu9ioP09Nhjk9',
-   *   webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
+   *   object_id: 'ast_3DyDePsxLWfKa0WCi0mXWeaNWyF',
+   *   webhook_id: 'wh_3FzKFC3SMYiIEIzN1REhY1wpEx0',
    * });
    * ```
    */
