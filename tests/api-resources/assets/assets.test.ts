@@ -11,7 +11,7 @@ const client = new Chunkify({
 describe('resource assets', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.assets.create({ source_id: 'src_example' });
+    const responsePromise = client.assets.create({ source_id: 'src_3A0yDPVjACk8FkYZFnP7Ab5DSDV' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,13 +24,13 @@ describe('resource assets', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.assets.create({
-      source_id: 'src_example',
+      source_id: 'src_3A0yDPVjACk8FkYZFnP7Ab5DSDV',
       max_resolution: '1080p',
       metadata: { key: 'value', key2: 'value2' },
       min_resolution: 'auto',
       path_template: 'videos/{metadata.VideoID}',
       preview_enabled: true,
-      storage: { id: 'stor_example' },
+      storage: { id: 'stor_3GldXEVxF304PlE1B1cFKKiykDN' },
       title: 'Launch video',
       workflow_id: 'x',
     });

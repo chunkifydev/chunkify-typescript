@@ -13,7 +13,7 @@ describe('resource transcodings', () => {
   test.skip('create: only required params', async () => {
     const responsePromise = client.transcodings.create({
       format: { id: 'mp4_h264' },
-      source_id: 'src_example',
+      source_id: 'src_3A0yDPVjACk8FkYZFnP7Ab5DSDV',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -52,9 +52,9 @@ describe('resource transcodings', () => {
         width: -2,
         x264_keyint: 60,
       },
-      source_id: 'src_example',
+      source_id: 'src_3A0yDPVjACk8FkYZFnP7Ab5DSDV',
       metadata: { foo: 'string' },
-      storage: { id: 'stor_example', path: 'exports/video.mp4' },
+      storage: { id: 'stor_3GldXEVxF304PlE1B1cFKKiykDN', path: 'exports/video.mp4' },
     });
   });
 

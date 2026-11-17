@@ -13,8 +13,8 @@ describe('resource notifications', () => {
   test.skip('create: only required params', async () => {
     const responsePromise = client.notifications.create({
       event: 'asset.playback_ready',
-      object_id: 'ast_A1cce6120E56e7Tu9ioP09Nhjk9',
-      webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
+      object_id: 'ast_3DyDePsxLWfKa0WCi0mXWeaNWyF',
+      webhook_id: 'wh_3FzKFC3SMYiIEIzN1REhY1wpEx0',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -29,8 +29,8 @@ describe('resource notifications', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.notifications.create({
       event: 'asset.playback_ready',
-      object_id: 'ast_A1cce6120E56e7Tu9ioP09Nhjk9',
-      webhook_id: 'wh_A1cce6120E56e7Tu9ioP09Nhjk9',
+      object_id: 'ast_3DyDePsxLWfKa0WCi0mXWeaNWyF',
+      webhook_id: 'wh_3FzKFC3SMYiIEIzN1REhY1wpEx0',
     });
   });
 

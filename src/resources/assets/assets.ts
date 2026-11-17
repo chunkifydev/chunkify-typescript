@@ -35,8 +35,8 @@ export class Assets extends APIResource {
    * @example
    * ```ts
    * const asset = await client.assets.create({
-   *   source_id: 'src_example',
-   *   storage: { id: 'stor_example' },
+   *   source_id: 'src_3A0yDPVjACk8FkYZFnP7Ab5DSDV',
+   *   storage: { id: 'stor_3GldXEVxF304PlE1B1cFKKiykDN' },
    * });
    * ```
    */
