@@ -16,7 +16,7 @@ export class Thumbnails extends APIResource {
    * @example
    * ```ts
    * const thumbnail = await client.thumbnails.create({
-   *   source_id: 'src_example',
+   *   source_id: 'src_3A0yDPVjACk8FkYZFnP7Ab5DSDV',
    *   count: 10,
    * });
    * ```

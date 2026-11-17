@@ -11,7 +11,7 @@ const client = new Chunkify({
 describe('resource thumbnails', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.thumbnails.create({ source_id: 'src_example' });
+    const responsePromise = client.thumbnails.create({ source_id: 'src_3A0yDPVjACk8FkYZFnP7Ab5DSDV' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,7 +24,7 @@ describe('resource thumbnails', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.thumbnails.create({
-      source_id: 'src_example',
+      source_id: 'src_3A0yDPVjACk8FkYZFnP7Ab5DSDV',
       count: 10,
       format: 'jpeg',
       metadata: { foo: 'string' },
