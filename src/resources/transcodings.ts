@@ -1378,6 +1378,17 @@ export interface TranscodingListParams extends PaginatedResultsParams {
   created?: TranscodingListParams.Created;
 
   /**
+   * Filter by Transcoding format ID.
+   */
+  format?: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'm4a_aac';
+
+  /**
+   * Filter by metadata. Repeat key:value pairs to match all supplied metadata
+   * conditions.
+   */
+  metadata?: Array<string>;
+
+  /**
    * Filter Transcodings linked to this Source. Omit to include Transcodings from all
    * Sources in the Project.
    */

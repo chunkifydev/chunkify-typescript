@@ -62,6 +62,7 @@ describe('resource uploads', () => {
           offset: 0,
           source_id: 'source_id',
           status: 'waiting',
+          storage_id: 'x',
         },
         { path: '/_stainless_unknown_path' },
       ),

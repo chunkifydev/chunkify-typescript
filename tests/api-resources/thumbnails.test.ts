@@ -73,6 +73,7 @@ describe('resource thumbnails', () => {
             sort: 'asc',
           },
           limit: 1,
+          metadata: ['key1:value1'],
           offset: 0,
           source_id: 'x',
           status: 'preparing',
