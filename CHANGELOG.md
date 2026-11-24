@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/chunkifydev/chunkify-typescript/compare/v1.0.0...v1.0.1) (2026-11-24)
+
+
+### Chores
+
+* sync OpenAPI schema from Chunkify v3.2.2 ([8ddd661](https://github.com/chunkifydev/chunkify-typescript/commit/8ddd661e82fe55a50e9de2e91f890e29e2591bd6))
+* sync OpenAPI schema from Chunkify v3.4.0 ([0f65106](https://github.com/chunkifydev/chunkify-typescript/commit/0f651068ce7dcc30ff67fdde963d32b6c3582005))
+
 ## [1.0.0](https://github.com/chunkifydev/chunkify-typescript/compare/v0.12.0...v1.0.0) (2026-11-16)
 
 
