@@ -502,6 +502,12 @@ export interface ThumbnailListParams extends PaginatedResultsParams {
   created?: ThumbnailListParams.Created;
 
   /**
+   * Filter by metadata. Repeat key:value pairs to match all supplied metadata
+   * conditions.
+   */
+  metadata?: Array<string>;
+
+  /**
    * Filter Thumbnails linked to this Source. Omit to include Thumbnails from all
    * Sources in the Project.
    */

@@ -235,6 +235,11 @@ export interface SourceListParams extends PaginatedResultsParams {
   size?: SourceListParams.Size;
 
   /**
+   * Filter by input Storage ID.
+   */
+  storage_id?: string;
+
+  /**
    * Filter by video codec
    */
   video_codec?: string;
