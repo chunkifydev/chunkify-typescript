@@ -1362,7 +1362,8 @@ export interface AssetListParams extends PaginatedResultsParams {
   created?: AssetListParams.Created;
 
   /**
-   * Repeat key:value pairs to match all supplied metadata conditions.
+   * Filter by metadata. Repeat key:value pairs to match all supplied metadata
+   * conditions.
    */
   metadata?: Array<string>;
 
