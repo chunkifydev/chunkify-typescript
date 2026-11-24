@@ -196,7 +196,7 @@ export interface StorageAws {
   slug: string;
 
   /**
-   * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+   * Optional customer-managed HTTPS delivery base URL used to build stable CDN URLs
    * for objects in this storage.
    */
   cdn_base_url?: string | null;
@@ -241,8 +241,9 @@ export interface StorageAwsCreateParams {
   base_prefix?: string;
 
   /**
-   * Optional customer-managed HTTPS delivery origin. It must not contain
-   * credentials, a path, query string, or fragment.
+   * Optional customer-managed HTTPS delivery base URL. Object keys are appended to
+   * it. It may include a path prefix, but must not contain credentials, a query
+   * string, or a fragment.
    */
   cdn_base_url?: string | null;
 
@@ -353,7 +354,7 @@ export interface StorageCloudflare {
   slug: string;
 
   /**
-   * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+   * Optional customer-managed HTTPS delivery base URL used to build stable CDN URLs
    * for objects in this storage.
    */
   cdn_base_url?: string | null;
@@ -406,8 +407,9 @@ export interface StorageCloudflareCreateParams {
   base_prefix?: string;
 
   /**
-   * Optional customer-managed HTTPS delivery origin. It must not contain
-   * credentials, a path, query string, or fragment.
+   * Optional customer-managed HTTPS delivery base URL. Object keys are appended to
+   * it. It may include a path prefix, but must not contain credentials, a query
+   * string, or a fragment.
    */
   cdn_base_url?: string | null;
 
@@ -454,8 +456,9 @@ export interface StorageS3Compatible {
   created_at: string;
 
   /**
-   * Public HTTPS origin for the S3-compatible service. Credentials, paths, queries,
-   * fragments, and non-public destinations are rejected.
+   * Public HTTPS URL of the S3-compatible service, including any fixed path prefix
+   * the service requires. Credentials, queries, fragments, and non-public
+   * destinations are rejected.
    */
   endpoint: string;
 
@@ -487,7 +490,7 @@ export interface StorageS3Compatible {
   slug: string;
 
   /**
-   * Optional customer-managed HTTPS delivery origin used to build stable CDN URLs
+   * Optional customer-managed HTTPS delivery base URL used to build stable CDN URLs
    * for objects in this storage.
    */
   cdn_base_url?: string | null;
@@ -509,8 +512,9 @@ export interface StorageS3CompatibleCreateParams {
   bucket: string;
 
   /**
-   * Public HTTPS origin for the S3-compatible service. Credentials, paths, queries,
-   * fragments, and non-public destinations are rejected.
+   * Public HTTPS URL of the S3-compatible service, including any fixed path prefix
+   * the service requires. Credentials, queries, fragments, and non-public
+   * destinations are rejected.
    */
   endpoint: string;
 
@@ -544,8 +548,9 @@ export interface StorageS3CompatibleCreateParams {
   base_prefix?: string;
 
   /**
-   * Optional customer-managed HTTPS delivery origin. It must not contain
-   * credentials, a path, query string, or fragment.
+   * Optional customer-managed HTTPS delivery base URL. Object keys are appended to
+   * it. It may include a path prefix, but must not contain credentials, a query
+   * string, or a fragment.
    */
   cdn_base_url?: string | null;
 
@@ -597,7 +602,7 @@ export interface StorageUpdateParams {
   base_prefix?: string;
 
   /**
-   * Customer-managed HTTPS delivery origin, or null to remove the current value.
+   * Customer-managed HTTPS delivery base URL, or null to remove the current value.
    */
   cdn_base_url?: string | null;
 
