@@ -374,6 +374,11 @@ export interface UploadListParams extends PaginatedResultsParams {
    * Filter by status (pending, completed, error)
    */
   status?: 'waiting' | 'completed' | 'failed' | 'expired';
+
+  /**
+   * Filter by input Storage ID.
+   */
+  storage_id?: string;
 }
 
 export namespace UploadListParams {

@@ -84,7 +84,7 @@ describe('resource assets', () => {
             sort: 'asc',
           },
           limit: 1,
-          metadata: ['J!Q0Ok0bzJb7:pro'],
+          metadata: ['key1:value1'],
           offset: 0,
           search: 'search',
           source_id: 'x',
