@@ -10,7 +10,8 @@ import { path } from '../internal/utils/path';
 
 export class Transcodings extends APIResource {
   /**
-   * Create a standalone file export with resolved encoding settings.
+   * Create a standalone Transcoding that exports a Source as an MP4, WebM, or M4A
+   * file. Encoding settings are resolved and processing starts asynchronously.
    *
    * @example
    * ```ts
@@ -31,8 +32,8 @@ export class Transcodings extends APIResource {
   }
 
   /**
-   * Retrieve the accepted settings, published files and current state of one
-   * Transcoding.
+   * Retrieve one Transcoding with its accepted encoding settings, current status and
+   * progress, and published files with their delivery URLs.
    *
    * @example
    * ```ts
@@ -51,7 +52,8 @@ export class Transcodings extends APIResource {
   }
 
   /**
-   * List Transcodings in the authenticated Project, newest first by default.
+   * List Transcodings in the authenticated Project, newest first by default. Filter
+   * by status, format, Source, Storage, metadata, or creation date.
    *
    * @example
    * ```ts
@@ -98,8 +100,8 @@ export class Transcodings extends APIResource {
   }
 
   /**
-   * Cancel a preparing Transcoding and release its unpaid reservation. Repeating an
-   * accepted cancellation succeeds.
+   * Cancel a Transcoding that is still preparing and release its unpaid reservation.
+   * Repeating an accepted cancellation succeeds without changes.
    *
    * @example
    * ```ts
@@ -1376,6 +1378,17 @@ export interface TranscodingListParams extends PaginatedResultsParams {
   id?: string;
 
   created?: TranscodingListParams.Created;
+
+  /**
+   * Filter by Transcoding format ID.
+   */
+  format?: 'mp4_h264' | 'mp4_h265' | 'mp4_av1' | 'webm_vp9' | 'm4a_aac';
+
+  /**
+   * Filter by metadata. Repeat key:value pairs to match all supplied metadata
+   * conditions.
+   */
+  metadata?: Array<string>;
 
   /**
    * Filter Transcodings linked to this Source. Omit to include Transcodings from all

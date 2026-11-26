@@ -32,8 +32,8 @@ export class Thumbnails extends APIResource {
   }
 
   /**
-   * Retrieve the accepted settings, published files and current state of one
-   * Thumbnail.
+   * Retrieve one Thumbnail request with its accepted settings, current status,
+   * sampled frames, and published image files with their delivery URLs.
    *
    * @example
    * ```ts
@@ -52,7 +52,8 @@ export class Thumbnails extends APIResource {
   }
 
   /**
-   * List Thumbnails in the authenticated Project, newest first by default.
+   * List Thumbnails in the authenticated Project, newest first by default. Filter by
+   * status, Source, Storage, metadata, or creation date.
    *
    * @example
    * ```ts
@@ -500,6 +501,12 @@ export interface ThumbnailListParams extends PaginatedResultsParams {
   id?: string;
 
   created?: ThumbnailListParams.Created;
+
+  /**
+   * Filter by metadata. Repeat key:value pairs to match all supplied metadata
+   * conditions.
+   */
+  metadata?: Array<string>;
 
   /**
    * Filter Thumbnails linked to this Source. Omit to include Thumbnails from all
