@@ -30,7 +30,8 @@ export class Assets extends APIResource {
   workflow: WorkflowAPI.Workflow = new WorkflowAPI.Workflow(this._client);
 
   /**
-   * Create an Asset from a video Source. Processing starts asynchronously.
+   * Create an Asset from a video Source to prepare it for streaming. Processing
+   * starts asynchronously, and the Asset is returned while it is preparing.
    *
    * @example
    * ```ts
@@ -51,7 +52,8 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Retrieve an Asset and its streaming, static, poster, and timeline outputs.
+   * Retrieve an Asset with its status, source metadata, and its streaming, static,
+   * poster, and timeline outputs, including their delivery URLs.
    *
    * @example
    * ```ts
@@ -68,8 +70,8 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Update the title, metadata, or public preview access. Omitted fields remain
-   * unchanged.
+   * Update an Asset's title, metadata, or whether its preview can be watched without
+   * an API token. Omitted fields remain unchanged.
    *
    * @example
    * ```ts
@@ -86,7 +88,8 @@ export class Assets extends APIResource {
   }
 
   /**
-   * List Assets in the Project, with filtering and pagination.
+   * List Assets in the Project, newest first by default. Filter by status, Source,
+   * Storage, metadata, or creation date, and search by ID or title.
    *
    * @example
    * ```ts
@@ -108,8 +111,8 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Delete an Asset after all processing finishes. Files remain in Storage unless
-   * delete_files is true.
+   * Delete an Asset after all processing finishes. Its streaming and static files
+   * remain in your Storage unless delete_files is true.
    *
    * @example
    * ```ts

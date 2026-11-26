@@ -53,7 +53,8 @@ export class Connections extends APIResource {
   }
 
   /**
-   * Retrieve non-secret connection metadata within its owning project.
+   * Retrieve one analytics connection in its owning Project, including its type,
+   * endpoint, status, and allowed origins. Secret keys are not returned.
    *
    * @example
    * ```ts
@@ -110,8 +111,8 @@ export class Connections extends APIResource {
   }
 
   /**
-   * List the saved connections for this project. No connection is activated by this
-   * request.
+   * List the analytics connections saved for a Project, with their type, endpoint,
+   * and status. Listing connections does not activate any of them.
    *
    * @example
    * ```ts
