@@ -245,6 +245,12 @@ import {
   WebmVp9,
 } from './resources/jobs/jobs';
 import {
+  PlayerAppearance,
+  PlayerAppearanceParams,
+  PlayerControl,
+  PlayerPalette,
+  PlayerPaletteParams,
+  PlayerThemeMode,
   Project,
   ProjectCreateParams,
   ProjectListResponse,
@@ -1243,6 +1249,12 @@ export declare namespace Chunkify {
 
   export {
     Projects as Projects,
+    type PlayerAppearance as PlayerAppearance,
+    type PlayerAppearanceParams as PlayerAppearanceParams,
+    type PlayerControl as PlayerControl,
+    type PlayerPalette as PlayerPalette,
+    type PlayerPaletteParams as PlayerPaletteParams,
+    type PlayerThemeMode as PlayerThemeMode,
     type Project as Project,
     type ProjectListResponse as ProjectListResponse,
     type ProjectCreateParams as ProjectCreateParams,
