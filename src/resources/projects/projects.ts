@@ -123,6 +123,12 @@ export interface Project {
   name: string;
 
   /**
+   * Player colours and controls used by Chunkify-hosted playback pages, such as
+   * embeds.
+   */
+  player_appearance: Project.PlayerAppearance;
+
+  /**
    * Slug is the slug for the project.
    */
   slug: string;
@@ -137,6 +143,78 @@ export interface Project {
    * clear it.
    */
   default_workflow_id?: string | null;
+}
+
+export namespace Project {
+  /**
+   * Player colours and controls used by Chunkify-hosted playback pages, such as
+   * embeds.
+   */
+  export interface PlayerAppearance {
+    /**
+     * Dark specifies the player colours in dark mode.
+     */
+    dark: PlayerAppearance.Dark;
+
+    /**
+     * HiddenControls lists the player buttons to hide. Other buttons appear when the
+     * browser and video support them.
+     */
+    hidden_controls: Array<'captions' | 'settings' | 'pip' | 'fullscreen' | 'cast' | 'airplay' | 'mute'>;
+
+    /**
+     * Light specifies the player colours in light mode.
+     */
+    light: PlayerAppearance.Light;
+
+    /**
+     * Mode specifies which palette the player uses. auto follows the viewer's system
+     * setting.
+     */
+    mode: 'auto' | 'light' | 'dark';
+  }
+
+  export namespace PlayerAppearance {
+    /**
+     * Dark specifies the player colours in dark mode.
+     */
+    export interface Dark {
+      /**
+       * Accent specifies the colour of progress and active controls.
+       */
+      accent: string;
+
+      /**
+       * Primary specifies the colour of text and control icons.
+       */
+      primary: string;
+
+      /**
+       * Secondary specifies the colour of player buttons.
+       */
+      secondary: string;
+    }
+
+    /**
+     * Light specifies the player colours in light mode.
+     */
+    export interface Light {
+      /**
+       * Accent specifies the colour of progress and active controls.
+       */
+      accent: string;
+
+      /**
+       * Primary specifies the colour of text and control icons.
+       */
+      primary: string;
+
+      /**
+       * Secondary specifies the colour of player buttons.
+       */
+      secondary: string;
+    }
+  }
 }
 
 /**
@@ -180,9 +258,94 @@ export interface ProjectUpdateParams {
   name?: string;
 
   /**
+   * Player colours and controls for Chunkify-hosted playback pages, such as embeds.
+   * Replaces the whole object. Omitted fields reset to their defaults. Existing
+   * embeds use the new values.
+   */
+  player_appearance?: ProjectUpdateParams.PlayerAppearance;
+
+  /**
    * ID of this Project's default Storage.
    */
   storage_id?: string;
+}
+
+export namespace ProjectUpdateParams {
+  /**
+   * Player colours and controls for Chunkify-hosted playback pages, such as embeds.
+   * Replaces the whole object. Omitted fields reset to their defaults. Existing
+   * embeds use the new values.
+   */
+  export interface PlayerAppearance {
+    /**
+     * Dark specifies the player colours in dark mode. Omit to use the default dark
+     * colours.
+     */
+    dark?: PlayerAppearance.Dark;
+
+    /**
+     * HiddenControls lists the player buttons to hide. Defaults to an empty list.
+     * Other buttons appear when the browser and video support them.
+     */
+    hidden_controls?: Array<'captions' | 'settings' | 'pip' | 'fullscreen' | 'cast' | 'airplay' | 'mute'>;
+
+    /**
+     * Light specifies the player colours in light mode. Omit to use the default light
+     * colours.
+     */
+    light?: PlayerAppearance.Light;
+
+    /**
+     * Mode specifies which palette the player uses. auto follows the viewer's system
+     * setting. An embed can override it with its theme URL parameter. Defaults to
+     * auto.
+     */
+    mode?: 'auto' | 'light' | 'dark';
+  }
+
+  export namespace PlayerAppearance {
+    /**
+     * Dark specifies the player colours in dark mode. Omit to use the default dark
+     * colours.
+     */
+    export interface Dark {
+      /**
+       * Accent specifies the colour of progress and active controls, as #rrggbb.
+       */
+      accent: string;
+
+      /**
+       * Primary specifies the colour of text and control icons, as #rrggbb.
+       */
+      primary: string;
+
+      /**
+       * Secondary specifies the colour of player buttons, as #rrggbb.
+       */
+      secondary: string;
+    }
+
+    /**
+     * Light specifies the player colours in light mode. Omit to use the default light
+     * colours.
+     */
+    export interface Light {
+      /**
+       * Accent specifies the colour of progress and active controls, as #rrggbb.
+       */
+      accent: string;
+
+      /**
+       * Primary specifies the colour of text and control icons, as #rrggbb.
+       */
+      primary: string;
+
+      /**
+       * Secondary specifies the colour of player buttons, as #rrggbb.
+       */
+      secondary: string;
+    }
+  }
 }
 
 Projects.Analytics = Analytics;
