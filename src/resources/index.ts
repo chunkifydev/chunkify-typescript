@@ -108,6 +108,12 @@ export {
 } from './notifications';
 export {
   Projects,
+  type PlayerAppearance,
+  type PlayerAppearanceParams,
+  type PlayerControl,
+  type PlayerPalette,
+  type PlayerPaletteParams,
+  type PlayerThemeMode,
   type Project,
   type ProjectListResponse,
   type ProjectCreateParams,
