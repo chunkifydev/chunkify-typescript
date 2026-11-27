@@ -176,10 +176,11 @@ export interface Asset {
   playback_ready: boolean;
 
   /**
-   * Allow public preview access without an API token. Does not control CDN or static
-   * download access. Disabling it does not revoke signed URLs already issued.
+   * Allow public playback without an API token, through the public preview page and
+   * embeds. Does not control CDN or static download access. Disabling it does not
+   * revoke signed URLs already issued.
    */
-  preview_enabled: boolean;
+  public_playback: boolean;
 
   /**
    * Original media metadata saved at Asset creation and preserved after Source
@@ -270,7 +271,7 @@ export interface Asset {
   poster?: AssetPoster;
 
   /**
-   * Public HLS preview URL. Available when playback_ready and preview_enabled are
+   * Public HLS preview URL. Available when playback_ready and public_playback are
    * true. No API token is required.
    */
   preview_url?: string;
@@ -575,10 +576,10 @@ export interface AssetDefaults {
   path_template?: string;
 
   /**
-   * Allow public preview access for new Assets without an API token. Defaults to
-   * true. Existing Assets are unchanged.
+   * Allow public playback of new Assets without an API token, through the public
+   * preview page and embeds. Defaults to true. Existing Assets are unchanged.
    */
-  preview_enabled?: boolean;
+  public_playback?: boolean;
 }
 
 export type AssetDefaultsMaxResolution = '1080p' | '2160p';
@@ -626,10 +627,10 @@ export interface AssetDefaultsParams {
   path_template?: string;
 
   /**
-   * Allow public preview access for new Assets without an API token. Defaults to
-   * true. Existing Assets are unchanged.
+   * Allow public playback of new Assets without an API token, through the public
+   * preview page and embeds. Defaults to true. Existing Assets are unchanged.
    */
-  preview_enabled?: boolean;
+  public_playback?: boolean;
 }
 
 export interface AssetError {
@@ -678,7 +679,7 @@ export interface AssetPoster {
   cdn_url?: string;
 
   /**
-   * Public poster preview URL. Available when the Asset is ready and preview_enabled
+   * Public poster preview URL. Available when the Asset is ready and public_playback
    * is true.
    */
   preview_url?: string;
@@ -695,7 +696,7 @@ export interface AssetPoster {
 
   /**
    * Signed image URL, valid for up to ten minutes. Available once the poster exists,
-   * regardless of preview_enabled.
+   * regardless of public_playback.
    */
   url?: string;
 }
@@ -894,7 +895,7 @@ export interface AssetStaticRendition {
 
   /**
    * Signed MP4 download URL, available when ready and unexpired. Valid for up to ten
-   * minutes. Retrieve the output to refresh it. Independent of preview_enabled.
+   * minutes. Retrieve the output to refresh it. Independent of public_playback.
    */
   url?: string;
 
@@ -1098,7 +1099,7 @@ export interface AssetTimelinePreviews {
 
   /**
    * Public WebVTT preview URL with signed image references. Available when the Asset
-   * is ready and preview_enabled is true.
+   * is ready and public_playback is true.
    */
   preview_url?: string;
 
@@ -1317,10 +1318,11 @@ export interface AssetCreateParams {
   path_template?: string;
 
   /**
-   * Allow public preview access without an API token. Omit to use the Project
-   * default. Does not control CDN or static download access.
+   * Allow public playback without an API token, through the public preview page and
+   * embeds. Omit to use the Project default. Does not control CDN or static download
+   * access.
    */
-  preview_enabled?: boolean;
+  public_playback?: boolean;
 
   /**
    * Output Storage. Omit to use the Project default. The path_template controls the
@@ -1349,10 +1351,11 @@ export interface AssetUpdateParams {
   metadata?: { [key: string]: string };
 
   /**
-   * Allow public preview access without an API token. Does not control CDN or static
-   * download access. Disabling it does not revoke signed URLs already issued.
+   * Allow public playback without an API token, through the public preview page and
+   * embeds. Does not control CDN or static download access. Disabling it does not
+   * revoke signed URLs already issued.
    */
-  preview_enabled?: boolean;
+  public_playback?: boolean;
 
   /**
    * Asset title, up to 256 characters. Send an empty string to clear it; omit to
