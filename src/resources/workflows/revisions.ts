@@ -8,8 +8,8 @@ import { path } from '../../internal/utils/path';
 
 export class Revisions extends APIResource {
   /**
-   * Retrieve an immutable definition revision, including revisions of archived
-   * Workflows.
+   * Retrieve an immutable Workflow definition revision and its rules, including
+   * revisions of archived Workflows, to see what a past run executed.
    *
    * @example
    * ```ts

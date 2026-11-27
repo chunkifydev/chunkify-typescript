@@ -11,8 +11,8 @@ import { path } from '../../../internal/utils/path';
  */
 export class Actions extends APIResource {
   /**
-   * List retained Workflow actions for an Asset, newest first. Direct output
-   * requests are excluded.
+   * List the retained Workflow actions for an Asset, newest first, with status,
+   * type, and date filters. Direct output requests are excluded.
    *
    * @example
    * ```ts

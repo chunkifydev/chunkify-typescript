@@ -10,8 +10,8 @@ import { path } from '../../../internal/utils/path';
 
 export class Actions extends APIResource {
   /**
-   * Retrieve one action execution in a retained Workflow run, including its resolved
-   * inputs, status, and result.
+   * Retrieve one action execution in a retained Workflow run, including the Asset it
+   * ran on, its resolved inputs, status, result, and error.
    *
    * @example
    * ```ts
