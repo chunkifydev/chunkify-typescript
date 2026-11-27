@@ -29,8 +29,8 @@ export class Sources extends APIResource {
   }
 
   /**
-   * Retrieve details of a specific source by its ID, including metadata, media
-   * properties, and associated jobs.
+   * Retrieve a Source by its ID, including its Storage location, file size,
+   * duration, dimensions, codecs, bitrates, frame rate, and metadata.
    *
    * @example
    * ```ts
@@ -70,7 +70,8 @@ export class Sources extends APIResource {
   }
 
   /**
-   * Delete a source. It will fail if there are processing jobs using this source.
+   * Delete a Source that no processing still needs and record a source.deleted
+   * event. Assets and other outputs created from the Source are preserved.
    *
    * @example
    * ```ts

@@ -13,8 +13,8 @@ export class Projects extends APIResource {
   analytics: AnalyticsAPI.Analytics = new AnalyticsAPI.Analytics(this._client);
 
   /**
-   * Create a new project with the specified name. The project will be created with
-   * default Chunkify storage settings.
+   * Create a Project in your team with a name of 4 to 32 characters. New Projects
+   * start with Chunkify storage until you connect your own Storage.
    *
    * @example
    * ```ts
@@ -34,7 +34,8 @@ export class Projects extends APIResource {
   }
 
   /**
-   * Retrieve details of a specific project by its slug
+   * Retrieve a Project in your team by its ID, including its name, slug, default
+   * Storage, Asset defaults, and default Workflow.
    *
    * @example
    * ```ts
@@ -51,8 +52,8 @@ export class Projects extends APIResource {
   }
 
   /**
-   * Update a project's name or storage settings. Only team owners can update
-   * projects.
+   * Update a Project's name, default Storage, Asset defaults, or default Workflow.
+   * Only team owners can update Projects, and project names must be unique.
    *
    * @example
    * ```ts
@@ -69,7 +70,8 @@ export class Projects extends APIResource {
   }
 
   /**
-   * Retrieve a list of all projects for a team
+   * List the Projects in the team that owns the access token, with each Project's
+   * name, slug, default Storage, and Asset defaults.
    *
    * @example
    * ```ts

@@ -13,7 +13,8 @@ export class Runs extends APIResource {
   actions: ActionsAPI.Actions = new ActionsAPI.Actions(this._client);
 
   /**
-   * Retrieve a retained run with its triggering event, status, and action counts.
+   * Retrieve a retained Workflow run with its triggering event, Asset, revision,
+   * status, and action counts, plus any error the run reported.
    *
    * @example
    * ```ts
@@ -34,8 +35,8 @@ export class Runs extends APIResource {
   }
 
   /**
-   * List retained runs for this Workflow, newest first. Each run corresponds to one
-   * matching Asset event.
+   * List retained runs for a Workflow, newest first. Each run corresponds to one
+   * matching Asset event; filter by Asset, status, event, or date.
    *
    * @example
    * ```ts

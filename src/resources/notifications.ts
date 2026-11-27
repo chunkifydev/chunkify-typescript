@@ -10,8 +10,8 @@ import { path } from '../internal/utils/path';
 
 export class Notifications extends APIResource {
   /**
-   * Send an event notification to a webhook endpoint. Recorded events replay their
-   * original payload.
+   * Send an event notification to one of the Project's webhook endpoints. Recorded
+   * events are replayed with their original payload.
    *
    * @example
    * ```ts
@@ -33,7 +33,8 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Retrieve details of a specific notification
+   * Retrieve a notification delivery, including its event, payload, target webhook,
+   * and the response status code returned by your endpoint.
    *
    * @example
    * ```ts
@@ -52,7 +53,8 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Retrieve a list of notifications with optional filtering and pagination
+   * List webhook notification deliveries in the Project. Filter by event, object,
+   * webhook, response status code, or creation date, with pagination.
    *
    * @example
    * ```ts
@@ -74,7 +76,8 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Delete a notification.
+   * Delete a delivered notification from the Project's history. Notifications still
+   * being processed cannot be deleted, and the webhook is unchanged.
    *
    * @example
    * ```ts
