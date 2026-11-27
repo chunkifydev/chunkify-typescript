@@ -29,7 +29,7 @@ describe('resource assets', () => {
       metadata: { key: 'value', key2: 'value2' },
       min_resolution: 'auto',
       path_template: 'videos/{metadata.VideoID}',
-      preview_enabled: true,
+      public_playback: true,
       storage: { id: 'stor_3GldXEVxF304PlE1B1cFKKiykDN' },
       title: 'Launch video',
       workflow_id: 'x',
