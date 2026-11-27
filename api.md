@@ -221,6 +221,12 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/projects/projects.ts">PlayerAppearance</a></code>
+- <code><a href="./src/resources/projects/projects.ts">PlayerAppearanceParams</a></code>
+- <code><a href="./src/resources/projects/projects.ts">PlayerControl</a></code>
+- <code><a href="./src/resources/projects/projects.ts">PlayerPalette</a></code>
+- <code><a href="./src/resources/projects/projects.ts">PlayerPaletteParams</a></code>
+- <code><a href="./src/resources/projects/projects.ts">PlayerThemeMode</a></code>
 - <code><a href="./src/resources/projects/projects.ts">Project</a></code>
 - <code><a href="./src/resources/projects/projects.ts">ProjectListResponse</a></code>
 
